@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint src/*.js"
+    "lint": "eslint src/*.js",
+    "flow": "flow check"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "react-native": "*"
   },
   "dependencies": {
+    "flow-bin": "^0.93.0",
     "invariant": "^2.2.4"
   }
 }

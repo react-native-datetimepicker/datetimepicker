@@ -1,1 +1,1 @@
-# react-native-datetimepicker
+# React Native DateTimePicker

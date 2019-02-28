@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a DatePicker by default 1`] = `
+<View>
+  <RCTDatePicker
+    date={1551356568737}
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  />
+</View>
+`;

@@ -18,8 +18,10 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Example Datetime Picker</Text>
-        <DatePicker date={this.state.chosenDate} onDateChange={this.setDate} />
+        <View style={styles.header}>
+          <Text style={styles.text}>Example DateTime Picker</Text>
+        </View>
+        <DatePicker value={this.state.chosenDate} onDateChange={this.setDate} />
       </View>
     );
   }
@@ -29,7 +31,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

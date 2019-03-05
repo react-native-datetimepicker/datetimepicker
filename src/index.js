@@ -9,7 +9,7 @@
  * @format
  * @flow strict-local
  */
-import RCTDatePicker from './datetimepicker';
+import DateTimePicker, {styles} from './datetimepicker';
 import invariant from 'invariant';
 import {View} from 'react-native';
 import React from 'react';
@@ -31,17 +31,7 @@ type Props = $ReadOnly<{|
   /**
    * The currently selected date.
    */
-  date?: ?Date,
-
-  /**
-   * Provides an initial value that will change when the user starts selecting
-   * a date. It is useful for simple use-cases where you do not want to deal
-   * with listening to events and updating the date prop to keep the
-   * controlled state in sync. The controlled state has known bugs which
-   * causes it to go out of sync with native. The initialDate prop is intended
-   * to allow you to have native be source of truth.
-   */
-  initialDate?: ?Date,
+  value?: ?Date,
 
   /**
    * The date picker locale.
@@ -101,62 +91,45 @@ type Props = $ReadOnly<{|
 |}>;
 
 export default class DatePicker extends React.Component<Props> {
-  static DefaultProps = {
-    mode: 'datetime',
+  static defaultProps = {
+    mode: 'date',
   };
 
-  _picker: ?React.ElementRef<typeof RCTDatePickerNativeComponent> = null;
+  _picker: ?React.ElementRef<
+    typeof RCTDatePickerNativeComponent,
+  > = React.createRef();
 
   componentDidUpdate() {
-    if (this.props.date) {
-      const propsTimeStamp = this.props.date.getTime();
-      if (this._picker) {
-        this._picker.setNativeProps({
-          date: propsTimeStamp,
-        });
-      }
+    const {onDateChange, value} = this.props;
+
+    if (onDateChange && this._picker.current) {
+      this._picker.current.setNativeProps({
+        date: value.getTime(),
+      });
     }
   }
 
   _onChange = (event: Event) => {
-    const nativeTimeStamp = event.nativeEvent.timestamp;
-    this.props.onDateChange &&
-      this.props.onDateChange(new Date(nativeTimeStamp));
-    this.props.onChange && this.props.onChange(event);
+    const {onDateChange, onChange} = this.props;
+
+    onDateChange && onDateChange(new Date(event.nativeEvent.timestamp));
+    onChange && onChange(event);
   };
 
   render() {
-    const props = this.props;
-    invariant(
-      props.date || props.initialDate,
-      'A selected date or initial date should be specified.',
-    );
+    const {value, locale, maximumDate, minimumDate, ...props} = this.props;
+    invariant(value, 'A selected date should be specified as `value`.');
+
     return (
       <View style={props.style}>
-        <RCTDatePicker
+        <DateTimePicker
           testID={props.testID}
-          ref={picker => {
-            this._picker = picker;
-          }}
-          /*          style={styles.datePickerIOS} */
-          date={
-            props.date
-              ? props.date.getTime()
-              : props.initialDate
-                ? props.initialDate.getTime()
-                : undefined
-          }
-          locale={
-            props.locale != null && props.locale !== ''
-              ? props.locale
-              : undefined
-          }
-          maximumDate={
-            props.maximumDate ? props.maximumDate.getTime() : undefined
-          }
-          minimumDate={
-            props.minimumDate ? props.minimumDate.getTime() : undefined
-          }
+          ref={this._picker}
+          style={styles.picker}
+          date={value && value.getTime()}
+          locale={locale != null && locale !== '' ? locale : undefined}
+          maximumDate={maximumDate && maximumDate.getTime()}
+          minimumDate={minimumDate && minimumDate.getTime()}
           mode={props.mode}
           minuteInterval={props.minuteInterval}
           timeZoneOffsetInMinutes={props.timeZoneOffsetInMinutes}

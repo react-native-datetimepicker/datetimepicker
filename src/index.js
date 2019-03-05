@@ -17,7 +17,7 @@ import React from 'react';
 import type {ViewProps} from 'ViewPropTypes';
 import type {SyntheticEvent} from 'CoreEventTypes';
 
-const RCTDatePickerNativeComponent = require('RCTDatePickerNativeComponent');
+//const RCTDatePickerNativeComponent = require('RCTDatePickerNativeComponent');
 
 type Event = SyntheticEvent<
   $ReadOnly<{|

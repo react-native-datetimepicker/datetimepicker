@@ -1,15 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
-import DatePicker from '../src/index.js';
+import DatePicker from 'react-native-datetimepicker';
 
 type Props = {};
 export default class App extends Component<Props> {

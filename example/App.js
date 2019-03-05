@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import DatePicker from 'react-native-datetimepicker';
 
 type Props = {};
@@ -18,6 +18,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
+        <Text>Example Datetime Picker</Text>
         <DatePicker date={this.state.chosenDate} onDateChange={this.setDate} />
       </View>
     );

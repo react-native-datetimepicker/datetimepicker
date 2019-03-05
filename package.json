@@ -2,7 +2,7 @@
   "name": "react-native-datetimepicker",
   "version": "0.0.0",
   "description": "DateTimePicker component for React Native",
-  "main": "./src",
+  "main": "./src/index.js",
   "scripts": {
     "test": "jest",
     "lint": "eslint src/*.js",
@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/react-native-community/react-native-datetimepicker#readme",
   "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/runtime": "^7.3.4",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "eslint": "^5.14.1",

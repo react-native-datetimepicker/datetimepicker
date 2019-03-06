@@ -1,20 +1,17 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "name": "example",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "eject": "expo eject"
+    "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "expo": "^32.0.0",
-    "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
+    "react": "16.6.3",
+    "react-native": "0.58.6"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^3.2.0",
-    "babel-preset-expo": "^5.0.0",
-    "escape-string-regexp": "^1.0.5"
-  },
-  "private": true
+    "escape-string-regexp": "^1.0.5",
+    "metro-react-native-babel-preset": "0.53.0"
+  }
 }

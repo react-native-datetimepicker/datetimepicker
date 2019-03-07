@@ -2,11 +2,17 @@
 
 exports[`renders a DatePicker by default 1`] = `
 <View>
-  <RCTDatePicker
-    date={1551356568737}
+  <RNDateTimePicker
+    date={1376949600000}
+    mode="time"
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "height": 216,
+      }
+    }
   />
 </View>
 `;

@@ -1,10 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders a DatePicker by default 1`] = `
+exports[`DatePicker applies styling to \`View\` wrapper 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "red",
+    }
+  }
+>
+  <RNDateTimePicker
+    date={1376949600000}
+    mode="date"
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "height": 216,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`DatePicker renders a native Component 1`] = `
 <View>
   <RNDateTimePicker
     date={1376949600000}
-    mode="time"
+    mode="date"
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}

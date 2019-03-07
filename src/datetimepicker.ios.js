@@ -1,5 +1,5 @@
 import { requireNativeComponent, StyleSheet } from 'react-native';
-const RCTDatePicker = requireNativeComponent('RCTDatePicker');
+const RNDateTimePicker = requireNativeComponent('RNDateTimePicker');
 
 const styles = StyleSheet.create({
   picker: {
@@ -8,6 +8,6 @@ const styles = StyleSheet.create({
 });
 
 export {
-  RCTDatePicker as default,
+  RNDateTimePicker as default,
   styles,
 };

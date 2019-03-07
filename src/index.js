@@ -17,6 +17,7 @@ import React from 'react';
 import type {ViewProps} from 'ViewPropTypes';
 import type {SyntheticEvent} from 'CoreEventTypes';
 
+// Should be included again for Flow type definitions.
 //const RCTDatePickerNativeComponent = require('RCTDatePickerNativeComponent');
 
 type Event = SyntheticEvent<

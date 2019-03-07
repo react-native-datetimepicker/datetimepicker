@@ -4,15 +4,12 @@ import DatePicker from 'react-native-datetimepicker';
 
 type Props = {};
 export default class App extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {chosenDate: new Date()};
+  state = {
+    date: new Date(),
+  };
 
-    this.setDate = this.setDate.bind(this);
-  }
-
-  setDate(newDate) {
-    this.setState({chosenDate: newDate});
+  setDate = date => {
+    this.setState({date});
   }
 
   render() {
@@ -21,7 +18,7 @@ export default class App extends Component<Props> {
         <View style={styles.header}>
           <Text style={styles.text}>Example DateTime Picker</Text>
         </View>
-        <DatePicker value={this.state.chosenDate} onDateChange={this.setDate} />
+        <DatePicker value={this.state.date} onDateChange={this.setDate} />
       </View>
     );
   }

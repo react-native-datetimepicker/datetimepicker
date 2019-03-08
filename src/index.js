@@ -118,22 +118,33 @@ export default class DatePicker extends React.Component<Props> {
   };
 
   render() {
-    const {value, locale, maximumDate, minimumDate, ...props} = this.props;
+    const {
+      value,
+      locale,
+      maximumDate,
+      minimumDate,
+      style,
+      testID,
+      mode,
+      minuteInterval,
+      timeZoneOffsetInMinutes,
+    } = this.props;
+
     invariant(value, 'A selected date should be specified as `value`.');
 
     return (
-      <View style={props.style}>
+      <View style={style}>
         <DateTimePicker
-          testID={props.testID}
+          testID={testID}
           ref={this._picker}
           style={styles.picker}
           date={value && value.getTime()}
           locale={locale != null && locale !== '' ? locale : undefined}
           maximumDate={maximumDate && maximumDate.getTime()}
           minimumDate={minimumDate && minimumDate.getTime()}
-          mode={props.mode}
-          minuteInterval={props.minuteInterval}
-          timeZoneOffsetInMinutes={props.timeZoneOffsetInMinutes}
+          mode={mode}
+          minuteInterval={minuteInterval}
+          timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
           onChange={this._onChange}
           onStartShouldSetResponder={() => true}
           onResponderTerminationRequest={() => false}

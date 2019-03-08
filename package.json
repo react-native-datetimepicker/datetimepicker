@@ -49,8 +49,8 @@
     "react-test-renderer": "^16.8.3"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
+    "react": ">=16.3",
+    "react-native": ">=0.55"
   },
   "dependencies": {
     "invariant": "^2.2.4"

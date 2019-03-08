@@ -39,3 +39,37 @@ exports[`DatePicker renders a native Component 1`] = `
   />
 </View>
 `;
+
+exports[`DatePicker renders with mode \`datetime\` (iOS only) 1`] = `
+<View>
+  <RNDateTimePicker
+    date={1376949600000}
+    mode="datetime"
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "height": 216,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`DatePicker renders with mode \`time\` 1`] = `
+<View>
+  <RNDateTimePicker
+    date={1376949600000}
+    mode="time"
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "height": 216,
+      }
+    }
+  />
+</View>
+`;

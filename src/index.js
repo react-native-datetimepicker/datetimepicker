@@ -93,7 +93,7 @@ type Props = $ReadOnly<{|
 
 export default class DatePicker extends React.Component<Props> {
   static defaultProps = {
-    mode: '',
+    mode: 'date',
   };
 
   _picker: ?React.ElementRef<

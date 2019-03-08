@@ -1,0 +1,58 @@
+{
+  "name": "react-native-datetimepicker",
+  "version": "0.0.0",
+  "description": "DateTimePicker component for React Native",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint src/*.js",
+    "flow": "flow check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-native-community/react-native-datetimepicker.git"
+  },
+  "keywords": [
+    "react-native-component",
+    "react-native",
+    "ios",
+    "android",
+    "datepicker",
+    "timepicker",
+    "datetime"
+  ],
+  "author": "Martijn Swaagman <mswaagman@godaddy.com> (https://github.com/swaagie)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/react-native-community/react-native-datetimepicker/issues"
+  },
+  "homepage": "https://github.com/react-native-community/react-native-datetimepicker#readme",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/runtime": "^7.3.4",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "eslint": "^5.14.1",
+    "eslint-plugin-eslint-comments": "^3.1.1",
+    "eslint-plugin-flowtype": "^3.4.2",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.3.0",
+    "eslint-plugin-react-native": "^3.6.0",
+    "flow-bin": "^0.93.0",
+    "jest": "^24.1.0",
+    "metro-react-native-babel-preset": "^0.52.0",
+    "prettier": "^1.13.7",
+    "react": "^16.8.3",
+    "react-native": "^0.58.5",
+    "react-test-renderer": "^16.8.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.3",
+    "react-native": ">=0.55"
+  },
+  "dependencies": {
+    "invariant": "^2.2.4"
+  }
+}

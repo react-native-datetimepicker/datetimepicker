@@ -10,29 +10,26 @@
 
 'use strict';
 
+import {DISPLAY_CLOCK, DISPLAY_SPINNER, DISPLAY_DEFAULT} from './constants';
 const TimePickerModule = require('NativeModules').TimePickerAndroid;
 // import type { TimePickerOptions, TimePickerResult } from './TimePickerAndroidTypes';
 
-/**
- * Opens the standard Android time picker dialog.
- *
- * ### Example
- *
- * ```
- * try {
- *   const {action, hour, minute} = await TimePickerAndroid.open({
- *     hour: 14,
- *     minute: 0,
- *     is24Hour: false, // Will display '2 PM'
- *   });
- *   if (action !== TimePickerAndroid.dismissedAction) {
- *     // Selected hour (0-23), minute (0-59)
- *   }
- * } catch ({code, message}) {
- *   console.warn('Cannot open time picker', message);
- * }
- * ```
+const allowedDisplayValues = [DISPLAY_SPINNER, DISPLAY_CLOCK, DISPLAY_DEFAULT];
+
+/*
+ * Convert a Date to a timestamp.
  */
+function _toTime(options: Options) {
+  const value = options.value;
+
+  // Is it a Date object?
+  if (typeof value === 'object' && typeof value.getMonth === 'function') {
+    options.hour = value.getHours();
+    options.minute = value.getMinutes();
+    delete options.value;
+  }
+}
+
 class TimePickerAndroid {
   /**
    * Opens the standard Android time picker dialog.
@@ -54,6 +51,12 @@ class TimePickerAndroid {
    * being undefined. **Always** check whether the `action` before reading the values.
    */
   static async open(options: TimePickerOptions): Promise<TimePickerResult> {
+    _toTime(options);
+
+    options.mode = allowedDisplayValues.includes(options.display)
+      ? options.display
+      : DISPLAY_DEFAULT;
+
     return TimePickerModule.open(options);
   }
 

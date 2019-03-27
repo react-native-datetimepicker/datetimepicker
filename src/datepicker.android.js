@@ -10,49 +10,37 @@
 
 'use strict';
 
+import {DISPLAY_CALENDAR, DISPLAY_SPINNER, DISPLAY_DEFAULT} from './constants';
 const DatePickerModule = require('NativeModules').DatePickerAndroid;
 // import type {Options, DatePickerOpenAction} from './DatePickerAndroidTypes';
+
+const allowedDisplayValues = [
+  DISPLAY_SPINNER,
+  DISPLAY_CALENDAR,
+  DISPLAY_DEFAULT,
+];
 
 /**
  * Convert a Date to a timestamp.
  */
 function _toMillis(options: Options, key: string) {
-  const dateVal = options[key];
+  const value = options[key];
+
   // Is it a Date object?
-  if (typeof dateVal === 'object' && typeof dateVal.getMonth === 'function') {
-    options[key] = dateVal.getTime();
+  if (typeof value === 'object' && typeof value.getMonth === 'function') {
+    options[key] = value.getTime();
   }
 }
 
-/**
- * Opens the standard Android date picker dialog.
- *
- * ### Example
- *
- * ```
- * try {
- *   const {action, year, month, day} = await DatePickerAndroid.open({
- *     // Use `new Date()` for current date.
- *     // May 25 2020. Month 0 is January.
- *     date: new Date(2020, 4, 25)
- *   });
- *   if (action !== DatePickerAndroid.dismissedAction) {
- *     // Selected year, month (0-11), day
- *   }
- * } catch ({code, message}) {
- *   console.warn('Cannot open date picker', message);
- * }
- * ```
- */
 export default class DatePickerAndroid {
   /**
    * Opens the standard Android date picker dialog.
    *
    * The available keys for the `options` object are:
    *
-   *   - `date` (`Date` object or timestamp in milliseconds) - date to show by default
-   *   - `minDate` (`Date` or timestamp in milliseconds) - minimum date that can be selected
-   *   - `maxDate` (`Date` object or timestamp in milliseconds) - maximum date that can be selected
+   *   - `value` (`Date` object) - date to show by default
+   *   - `minimumDate` (`Date` object) - minimum date that can be selected
+   *   - `maximumDate` (`Date` object) - maximum date that can be selected
    *   - `mode` (`enum('calendar', 'spinner', 'default')`) - To set the date-picker mode to calendar/spinner/default
    *     - 'calendar': Show a date picker in calendar mode.
    *     - 'spinner': Show a date picker in spinner mode.
@@ -64,15 +52,18 @@ export default class DatePickerAndroid {
    * being undefined. **Always** check whether the `action` before reading the values.
    *
    * Note the native date picker dialog has some UI glitches on Android 4 and lower
-   * when using the `minDate` and `maxDate` options.
+   * when using the `minimumDate` and `maximumDate` options.
    */
   static async open(options: ?Options): Promise<DatePickerOpenAction> {
-    const optionsMs = options;
-    if (optionsMs != null) {
-      _toMillis(optionsMs, 'date');
-      _toMillis(optionsMs, 'minDate');
-      _toMillis(optionsMs, 'maxDate');
-    }
+    _toMillis(options, 'value');
+    _toMillis(options, 'minimumDate');
+    _toMillis(options, 'maximumDate');
+
+    options.mode = allowedDisplayValues.includes(options.display)
+      ? options.display
+      : DISPLAY_DEFAULT;
+    options.date = options.value; // CHANGE JAVA CODE
+
     return DatePickerModule.open(options);
   }
 

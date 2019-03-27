@@ -13,9 +13,18 @@ import DateTimePicker, {styles} from './datetimepicker';
 import invariant from 'invariant';
 import {View} from 'react-native';
 import React from 'react';
-
 import type {ViewProps} from 'ViewPropTypes';
 import type {SyntheticEvent} from 'CoreEventTypes';
+
+import {
+  MODE_DATE,
+  MODE_DATETIME,
+  MODE_TIME,
+  DISPLAY_DEFAULT,
+  DISPLAY_CALENDAR,
+  DISPLAY_CLOCK,
+  DISPLAY_SPINNER,
+} from './constants';
 
 // Should be included again for Flow type definitions.
 //const RCTDatePickerNativeComponent = require('RCTDatePickerNativeComponent');
@@ -61,25 +70,25 @@ type Props = $ReadOnly<{|
   /**
    * The date picker mode.
    */
-  mode?: ?('date' | 'time' | 'datetime'),
+  mode?: ?(MODE_DATE | MODE_TIME | MODE_DATETIME),
+
+  /**
+   * The display options. (Android only)
+   */
+  display?: ?(
+    | DISPLAY_SPINNER
+    | DISPLAY_DEFAULT
+    | DISPLAY_CALENDAR
+    | DISPLAY_CLOCK
+  ),
 
   /**
    * Date change handler.
    *
    * This is called when the user changes the date or time in the UI.
-   * The first and only argument is an Event. For getting the date the picker
-   * was changed to, use onDateChange instead.
+   * The first argument is an Event, the second a selected Date.
    */
-  onChange?: ?(event: Event) => void,
-
-  /**
-   * Date change handler.
-   *
-   * This is called when the user changes the date or time in the UI.
-   * The first and only argument is a Date object representing the new
-   * date and time.
-   */
-  onDateChange: (date: Date) => void,
+  onChange?: ?(event: Event, date: Date) => void,
 
   /**
    * Timezone offset in minutes.
@@ -91,9 +100,10 @@ type Props = $ReadOnly<{|
   timeZoneOffsetInMinutes?: ?number,
 |}>;
 
-export default class DatePicker extends React.Component<Props> {
+export default class Picker extends React.Component<Props> {
   static defaultProps = {
-    mode: 'date',
+    display: DISPLAY_DEFAULT,
+    mode: MODE_DATE,
   };
 
   _picker: ?React.ElementRef<
@@ -101,9 +111,9 @@ export default class DatePicker extends React.Component<Props> {
   > = React.createRef();
 
   componentDidUpdate() {
-    const {onDateChange, value} = this.props;
+    const {onChange, value} = this.props;
 
-    if (onDateChange && this._picker.current) {
+    if (value && onChange && this._picker.current) {
       this._picker.current.setNativeProps({
         date: value.getTime(),
       });
@@ -111,10 +121,10 @@ export default class DatePicker extends React.Component<Props> {
   }
 
   _onChange = (event: Event) => {
-    const {onDateChange, onChange} = this.props;
+    const {onChange} = this.props;
+    const timestamp = event.nativeEvent.timestamp;
 
-    onDateChange && onDateChange(new Date(event.nativeEvent.timestamp));
-    onChange && onChange(event);
+    onChange && onChange(event, timestamp && new Date(timestamp));
   };
 
   render() {
@@ -128,21 +138,25 @@ export default class DatePicker extends React.Component<Props> {
       mode,
       minuteInterval,
       timeZoneOffsetInMinutes,
+      is24Hour,
+      display,
     } = this.props;
 
-    invariant(value, 'A selected date should be specified as `value`.');
+    invariant(value, 'A date or time should be specified as `value`.');
 
     return (
       <View style={style}>
         <DateTimePicker
           testID={testID}
-          ref={this._picker}
+          //ref={this._picker} // Switch by platform.
           style={styles.picker}
-          date={value && value.getTime()}
+          value={value}
           locale={locale != null && locale !== '' ? locale : undefined}
-          maximumDate={maximumDate && maximumDate.getTime()}
-          minimumDate={minimumDate && minimumDate.getTime()}
+          maximumDate={maximumDate}
+          minimumDate={minimumDate}
           mode={mode}
+          is24Hour={is24Hour}
+          display={display}
           minuteInterval={minuteInterval}
           timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
           onChange={this._onChange}

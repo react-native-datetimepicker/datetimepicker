@@ -11,7 +11,7 @@
 'use strict';
 
 import {DISPLAY_CALENDAR, DISPLAY_SPINNER, DISPLAY_DEFAULT} from './constants';
-const DatePickerModule = require('NativeModules').DatePickerAndroid;
+const DatePickerModule = require('NativeModules').RNDatePickerAndroid;
 // import type {Options, DatePickerOpenAction} from './DatePickerAndroidTypes';
 
 const allowedDisplayValues = [

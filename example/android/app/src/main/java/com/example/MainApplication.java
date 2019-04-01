@@ -1,6 +1,7 @@
 package com.example;
 
 import android.app.Application;
+import com.reactcommunity.rndatetimepicker;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;

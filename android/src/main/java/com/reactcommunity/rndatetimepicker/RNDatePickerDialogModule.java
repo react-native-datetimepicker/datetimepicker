@@ -124,7 +124,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     if (oldFragment != null) {
       oldFragment.dismiss();
     }
-    DatePickerDialogFragment fragment = new DatePickerDialogFragment();
+    RNDatePickerDialogFragment fragment = new RNDatePickerDialogFragment();
     if (options != null) {
       final Bundle args = createFragmentArguments(options);
       fragment.setArguments(args);

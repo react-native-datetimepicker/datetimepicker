@@ -63,21 +63,21 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       switch (mode) {
         case CALENDAR:
-          dialog = new DismissableDatePickerDialog(activityContext,
+          dialog = new RNDismissableDatePickerDialog(activityContext,
             activityContext.getResources().getIdentifier("CalendarDatePickerDialog", "style", activityContext.getPackageName()),
             onDateSetListener, year, month, day);
           break;
         case SPINNER:
-          dialog = new DismissableDatePickerDialog(activityContext,
+          dialog = new RNDismissableDatePickerDialog(activityContext,
             activityContext.getResources().getIdentifier("SpinnerDatePickerDialog", "style", activityContext.getPackageName()),
             onDateSetListener, year, month, day);
           break;
         case DEFAULT:
-          dialog = new DismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
+          dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
           break;
       }
     } else {
-      dialog = new DismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
+      dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
 
       switch (mode) {
         case CALENDAR:

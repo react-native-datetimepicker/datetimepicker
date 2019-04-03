@@ -11,7 +11,7 @@
 'use strict';
 
 import {DISPLAY_CLOCK, DISPLAY_SPINNER, DISPLAY_DEFAULT} from './constants';
-const TimePickerModule = require('NativeModules').TimePickerAndroid;
+const TimePickerModule = require('NativeModules').RNTimePickerAndroid;
 // import type { TimePickerOptions, TimePickerResult } from './TimePickerAndroidTypes';
 
 const allowedDisplayValues = [DISPLAY_SPINNER, DISPLAY_CLOCK, DISPLAY_DEFAULT];

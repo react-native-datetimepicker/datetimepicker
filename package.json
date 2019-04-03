@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/react-native-community/react-native-datetimepicker#readme",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/runtime": "^7.3.4",
+    "@babel/core": "^7.4.3",
+    "@babel/runtime": "^7.4.3",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "eslint": "^5.14.1",
@@ -42,15 +42,15 @@
     "eslint-plugin-react-native": "^3.6.0",
     "flow-bin": "^0.93.0",
     "jest": "^24.1.0",
-    "metro-react-native-babel-preset": "^0.52.0",
+    "metro-react-native-babel-preset": "^0.53.1",
     "prettier": "^1.13.7",
     "react": "^16.8.3",
-    "react-native": "^0.58.5",
+    "react-native": "^0.59.3",
     "react-test-renderer": "^16.8.3"
   },
   "peerDependencies": {
-    "react": ">=16.3",
-    "react-native": ">=0.55"
+    "react": ">=16.8",
+    "react-native": ">=0.59"
   },
   "dependencies": {
     "invariant": "^2.2.4"

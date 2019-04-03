@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {StyleSheet, View, Text, Button, Platform} from 'react-native';
 import DateTimePicker from 'react-native-datetimepicker';
 
 type Props = {};
@@ -14,7 +14,7 @@ export default class App extends Component<Props> {
     date = date || this.state.date;
 
     this.setState({
-      show: false,
+      show: Platform.OS === 'ios' ? true : false,
       date,
     });
   }

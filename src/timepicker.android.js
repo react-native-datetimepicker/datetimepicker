@@ -16,8 +16,8 @@ const TimePickerModule = require('NativeModules').RNTimePickerAndroid;
 
 const allowedDisplayValues = [DISPLAY_SPINNER, DISPLAY_CLOCK, DISPLAY_DEFAULT];
 
-/*
- * Convert a Date to a timestamp.
+/**
+ * Get hours and minutes from Date.
  */
 function _toTime(options: Options) {
   const value = options.value;

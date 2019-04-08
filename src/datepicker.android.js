@@ -10,7 +10,12 @@
 
 'use strict';
 
-import {DISPLAY_CALENDAR, DISPLAY_SPINNER, DISPLAY_DEFAULT} from './constants';
+import {
+  DISPLAY_CALENDAR,
+  DISPLAY_SPINNER,
+  DISPLAY_DEFAULT,
+} from './constants.js';
+import {toMilliseconds} from './utils.js';
 const DatePickerModule = require('NativeModules').RNDatePickerAndroid;
 // import type {Options, DatePickerOpenAction} from './DatePickerAndroidTypes';
 
@@ -19,18 +24,6 @@ const allowedDisplayValues = [
   DISPLAY_CALENDAR,
   DISPLAY_DEFAULT,
 ];
-
-/**
- * Convert a Date to a timestamp.
- */
-function _toMillis(options: Options, key: string) {
-  const value = options[key];
-
-  // Is it a Date object?
-  if (typeof value === 'object' && typeof value.getMonth === 'function') {
-    options[key] = value.getTime();
-  }
-}
 
 export default class DatePickerAndroid {
   /**
@@ -55,9 +48,7 @@ export default class DatePickerAndroid {
    * when using the `minimumDate` and `maximumDate` options.
    */
   static async open(options: ?Options): Promise<DatePickerOpenAction> {
-    _toMillis(options, 'value');
-    _toMillis(options, 'minimumDate');
-    _toMillis(options, 'maximumDate');
+    toMilliseconds(options, 'value', 'minimumDate', 'maximumDate');
 
     options.mode = allowedDisplayValues.includes(options.display)
       ? options.display

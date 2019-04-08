@@ -11,32 +11,18 @@
 'use strict';
 
 import {DISPLAY_CLOCK, DISPLAY_SPINNER, DISPLAY_DEFAULT} from './constants';
+import {toMilliseconds} from './utils.js';
 const TimePickerModule = require('NativeModules').RNTimePickerAndroid;
 // import type { TimePickerOptions, TimePickerResult } from './TimePickerAndroidTypes';
 
 const allowedDisplayValues = [DISPLAY_SPINNER, DISPLAY_CLOCK, DISPLAY_DEFAULT];
-
-/**
- * Get hours and minutes from Date.
- */
-function _toTime(options: Options) {
-  const value = options.value;
-
-  // Is it a Date object?
-  if (typeof value === 'object' && typeof value.getMonth === 'function') {
-    options.hour = value.getHours();
-    options.minute = value.getMinutes();
-    delete options.value;
-  }
-}
 
 class TimePickerAndroid {
   /**
    * Opens the standard Android time picker dialog.
    *
    * The available keys for the `options` object are:
-   *   * `hour` (0-23) - the hour to show, defaults to the current time
-   *   * `minute` (0-59) - the minute to show, defaults to the current time
+   *   - `value` (`Date` object) - date to show by default
    *   * `is24Hour` (boolean) - If `true`, the picker uses the 24-hour format. If `false`,
    *     the picker shows an AM/PM chooser. If undefined, the default for the current locale
    *     is used.
@@ -51,7 +37,7 @@ class TimePickerAndroid {
    * being undefined. **Always** check whether the `action` before reading the values.
    */
   static async open(options: TimePickerOptions): Promise<TimePickerResult> {
-    _toTime(options);
+    toMilliseconds(options, 'value');
 
     options.mode = allowedDisplayValues.includes(options.display)
       ? options.display

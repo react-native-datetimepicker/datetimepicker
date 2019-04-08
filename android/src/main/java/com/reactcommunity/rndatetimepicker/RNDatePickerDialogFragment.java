@@ -11,8 +11,8 @@ import javax.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.Locale;
-
 import android.annotation.SuppressLint;
+
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
@@ -24,8 +24,31 @@ import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
 import android.widget.DatePicker;
 
+class Date {
+  private int year;
+  private int month;
+  private int day;
+
+  public Date(Bundle args) {
+    final Calendar c = Calendar.getInstance();
+
+    if (args != null && args.containsKey(RNDatePickerDialogModule.ARG_DATE)) {
+      c.setTimeInMillis(args.getLong(RNDatePickerDialogModule.ARG_DATE));
+
+      this.year = c.get(Calendar.YEAR);
+      this.month = c.get(Calendar.MONTH);
+      this.day = c.get(Calendar.DAY_OF_MONTH);
+    }
+  }
+
+  public int getYear() { return this.year; }
+  public int getMonth() { return this.month; }
+  public int getDay() { return this.day; }
+}
+
 @SuppressLint("ValidFragment")
 public class RNDatePickerDialogFragment extends DialogFragment {
+  private DatePickerDialog instance;
 
   /**
    * Minimum date supported by {@link DatePicker}, 01 Jan 1900
@@ -40,20 +63,21 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     Bundle args = getArguments();
-    return createDialog(args, getActivity(), mOnDateSetListener);
+    instance = createDialog(args, getActivity(), mOnDateSetListener);
+    return instance;
   }
 
-  /*package*/ static Dialog createDialog(
-      Bundle args, Context activityContext, @Nullable OnDateSetListener onDateSetListener) {
-    final Calendar c = Calendar.getInstance();
-    if (args != null && args.containsKey(RNDatePickerDialogModule.ARG_DATE)) {
-      c.setTimeInMillis(args.getLong(RNDatePickerDialogModule.ARG_DATE));
-    }
-    final int year = c.get(Calendar.YEAR);
-    final int month = c.get(Calendar.MONTH);
-    final int day = c.get(Calendar.DAY_OF_MONTH);
+  public void updateDate(Bundle args) {
+    final Date date = new Date(args);
+    instance.updateDate(date.getYear(), date.getMonth(), date.getDay());
+  }
 
+  static DatePickerDialog createDialog(Bundle args, Context activityContext, @Nullable OnDateSetListener onDateSetListener) {
     RNDatePickerMode mode = RNDatePickerMode.DEFAULT;
+
+    final Calendar c = Calendar.getInstance();
+    final Date date = new Date(args);
+
     if (args != null && args.getString(RNDatePickerDialogModule.ARG_MODE, null) != null) {
       mode = RNDatePickerMode.valueOf(args.getString(RNDatePickerDialogModule.ARG_MODE).toUpperCase(Locale.US));
     }
@@ -65,19 +89,21 @@ public class RNDatePickerDialogFragment extends DialogFragment {
         case CALENDAR:
           dialog = new RNDismissableDatePickerDialog(activityContext,
             activityContext.getResources().getIdentifier("CalendarDatePickerDialog", "style", activityContext.getPackageName()),
-            onDateSetListener, year, month, day);
+            onDateSetListener, date.getYear(), date.getMonth(), date.getDay());
           break;
         case SPINNER:
           dialog = new RNDismissableDatePickerDialog(activityContext,
             activityContext.getResources().getIdentifier("SpinnerDatePickerDialog", "style", activityContext.getPackageName()),
-            onDateSetListener, year, month, day);
+            onDateSetListener, date.getYear(), date.getMonth(), date.getDay());
           break;
         case DEFAULT:
-          dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
+          dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener,
+            date.getYear(), date.getMonth(), date.getDay());
           break;
       }
     } else {
-      dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
+      dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener,
+        date.getYear(), date.getMonth(), date.getDay());
 
       switch (mode) {
         case CALENDAR:

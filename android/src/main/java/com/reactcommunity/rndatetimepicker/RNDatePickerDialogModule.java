@@ -7,6 +7,8 @@
 
 package com.reactcommunity.rndatetimepicker;
 
+import android.app.Dialog;
+import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
@@ -120,15 +122,25 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     }
 
     FragmentManager fragmentManager = activity.getSupportFragmentManager();
-    DialogFragment oldFragment = (DialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
-    if (oldFragment != null) {
-      oldFragment.dismiss();
+    final RNDatePickerDialogFragment oldFragment = (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+
+    if (oldFragment != null && options != null) {
+      UiThreadUtil.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          oldFragment.updateDate(createFragmentArguments(options));
+        }
+      });
+
+      return;
     }
+
     RNDatePickerDialogFragment fragment = new RNDatePickerDialogFragment();
+
     if (options != null) {
-      final Bundle args = createFragmentArguments(options);
-      fragment.setArguments(args);
+      fragment.setArguments(createFragmentArguments(options));
     }
+
     final DatePickerDialogListener listener = new DatePickerDialogListener(promise);
     fragment.setOnDismissListener(listener);
     fragment.setOnDateSetListener(listener);

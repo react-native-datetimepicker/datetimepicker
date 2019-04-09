@@ -18,6 +18,7 @@ import type {SyntheticEvent} from 'CoreEventTypes';
 import {MODE_DATE, MODE_DATETIME, MODE_TIME} from './constants';
 
 const RNDateTimePicker = requireNativeComponent('RNDateTimePicker');
+
 // Should be included again for Flow type definitions.
 //const RCTDatePickerNativeComponent = require('RCTDatePickerNativeComponent');
 const styles = StyleSheet.create({

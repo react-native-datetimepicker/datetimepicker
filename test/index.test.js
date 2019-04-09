@@ -2,7 +2,7 @@ import renderer from 'react-test-renderer';
 import DatePicker from '../src/index.js';
 import React from 'react';
 
-describe('DatePicker', function (){
+describe('DatePicker', () => {
   it('renders a native Component', () => {
     const tree = renderer.create(<DatePicker value={ new Date('08/20/2013') } />).toJSON();
 
@@ -16,8 +16,22 @@ describe('DatePicker', function (){
     expect(tree).toHaveProperty(['children', 0, 'props', 'date'], date);
   });
 
-  it.todo('calls onDateChange callback');
-  it.todo('calls onChange callback');
+  it('calls onChange callback', () => {
+    const date = new Date(156e10);
+
+    function onChange(event, date) {
+      expect(event).toHaveProperty('type', 'event');
+      expect(event).toHaveProperty('nativeEvent');
+      expect(event.nativeEvent).toHaveProperty('timestamp', date.getTime());
+    }
+
+    renderer.create(<DatePicker value={ date } onChange={ onChange } />).getInstance()._onChange({
+      type: 'event',
+      nativeEvent: {
+        timestamp: date.getTime(),
+      },
+    });
+  });
 
   it('has default mode `date`', function () {
     expect(DatePicker.defaultProps.mode).toEqual('date');

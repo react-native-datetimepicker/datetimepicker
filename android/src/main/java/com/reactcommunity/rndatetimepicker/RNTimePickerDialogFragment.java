@@ -8,6 +8,7 @@
 package com.reactcommunity.rndatetimepicker;
 
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,6 +25,7 @@ import javax.annotation.Nullable;
 
 @SuppressWarnings("ValidFragment")
 public class RNTimePickerDialogFragment extends DialogFragment {
+  private TimePickerDialog instance;
 
   @Nullable
   private OnTimeSetListener mOnTimeSetListener;
@@ -33,28 +35,28 @@ public class RNTimePickerDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     final Bundle args = getArguments();
-    return createDialog(args, getActivity(), mOnTimeSetListener);
+    instance = createDialog(args, getActivity(), mOnTimeSetListener);
+    return instance;
   }
 
-  /*package*/ static Dialog createDialog(
-      Bundle args, Context activityContext, @Nullable OnTimeSetListener onTimeSetListener
-  ) {
-    final Calendar now = Calendar.getInstance();
-    int hour = now.get(Calendar.HOUR_OF_DAY);
-    int minute = now.get(Calendar.MINUTE);
+  public void update(Bundle args) {
+    final RNDate date = new RNDate(args);
+    instance.updateTime(date.hour(), date.minute());
+  }
+
+  static TimePickerDialog createDialog(Bundle args, Context activityContext, @Nullable OnTimeSetListener onTimeSetListener) {
+    final RNDate date = new RNDate(args);
+    final int hour = date.hour();
+    final int minute = date.minute();
     boolean is24hour = DateFormat.is24HourFormat(activityContext);
 
     RNTimePickerMode mode = RNTimePickerMode.DEFAULT;
-    if (args != null && args.getString(RNTimePickerDialogModule.ARG_MODE, null) != null) {
-      mode = RNTimePickerMode.valueOf(args.getString(RNTimePickerDialogModule.ARG_MODE).toUpperCase(Locale.US));
+    if (args != null && args.getString(RNConstants.ARG_MODE, null) != null) {
+      mode = RNTimePickerMode.valueOf(args.getString(RNConstants.ARG_MODE).toUpperCase(Locale.US));
     }
 
     if (args != null) {
-      hour = args.getInt(RNTimePickerDialogModule.ARG_HOUR, now.get(Calendar.HOUR_OF_DAY));
-      minute = args.getInt(RNTimePickerDialogModule.ARG_MINUTE, now.get(Calendar.MINUTE));
-      is24hour = args.getBoolean(
-          RNTimePickerDialogModule.ARG_IS24HOUR,
-          DateFormat.is24HourFormat(activityContext));
+      is24hour = args.getBoolean(RNConstants.ARG_IS24HOUR, DateFormat.is24HourFormat(activityContext));
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

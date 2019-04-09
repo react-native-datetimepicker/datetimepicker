@@ -53,7 +53,6 @@ export default class DatePickerAndroid {
     options.mode = allowedDisplayValues.includes(options.display)
       ? options.display
       : DISPLAY_DEFAULT;
-    options.date = options.value; // CHANGE JAVA CODE
 
     return DatePickerModule.open(options);
   }

@@ -7,16 +7,14 @@
 
 package com.reactcommunity.rndatetimepicker;
 
-import android.app.Dialog;
-import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import android.widget.DatePicker;
+
 import com.facebook.react.bridge.*;
 import com.facebook.react.common.annotations.VisibleForTesting;
 import com.facebook.react.module.annotations.ReactModule;
@@ -33,16 +31,6 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
 
   @VisibleForTesting
   public static final String FRAGMENT_TAG = "RNDatePickerAndroid";
-
-  private static final String ERROR_NO_ACTIVITY = "E_NO_ACTIVITY";
-
-  /* package */ static final String ARG_DATE = "date";
-  /* package */ static final String ARG_MINDATE = "minimumDate";
-  /* package */ static final String ARG_MAXDATE = "maximumDate";
-  /* package */ static final String ARG_MODE = "mode";
-
-  /* package */ static final String ACTION_DATE_SET = "dateSetAction";
-  /* package */ static final String ACTION_DISMISSED = "dismissedAction";
 
   public RNDatePickerDialogModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -66,7 +54,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     public void onDateSet(DatePicker view, int year, int month, int day) {
       if (!mPromiseResolved && getReactApplicationContext().hasActiveCatalystInstance()) {
         WritableMap result = new WritableNativeMap();
-        result.putString("action", ACTION_DATE_SET);
+        result.putString("action", RNConstants.ACTION_DATE_SET);
         result.putInt("year", year);
         result.putInt("month", month);
         result.putInt("day", day);
@@ -79,7 +67,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     public void onDismiss(DialogInterface dialog) {
       if (!mPromiseResolved && getReactApplicationContext().hasActiveCatalystInstance()) {
         WritableMap result = new WritableNativeMap();
-        result.putString("action", ACTION_DISMISSED);
+        result.putString("action", RNConstants.ACTION_DISMISSED);
         mPromise.resolve(result);
         mPromiseResolved = true;
       }
@@ -116,7 +104,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {
       promise.reject(
-          ERROR_NO_ACTIVITY,
+          RNConstants.ERROR_NO_ACTIVITY,
           "Tried to open a DatePicker dialog while not attached to an Activity");
       return;
     }
@@ -128,7 +116,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
       UiThreadUtil.runOnUiThread(new Runnable() {
         @Override
         public void run() {
-          oldFragment.updateDate(createFragmentArguments(options));
+          oldFragment.update(createFragmentArguments(options));
         }
       });
 
@@ -149,17 +137,17 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
 
   private Bundle createFragmentArguments(ReadableMap options) {
     final Bundle args = new Bundle();
-    if (options.hasKey(ARG_DATE) && !options.isNull(ARG_DATE)) {
-      args.putLong(ARG_DATE, (long) options.getDouble(ARG_DATE));
+    if (options.hasKey(RNConstants.ARG_VALUE) && !options.isNull(RNConstants.ARG_VALUE)) {
+      args.putLong(RNConstants.ARG_VALUE, (long) options.getDouble(RNConstants.ARG_VALUE));
     }
-    if (options.hasKey(ARG_MINDATE) && !options.isNull(ARG_MINDATE)) {
-      args.putLong(ARG_MINDATE, (long) options.getDouble(ARG_MINDATE));
+    if (options.hasKey(RNConstants.ARG_MINDATE) && !options.isNull(RNConstants.ARG_MINDATE)) {
+      args.putLong(RNConstants.ARG_MINDATE, (long) options.getDouble(RNConstants.ARG_MINDATE));
     }
-    if (options.hasKey(ARG_MAXDATE) && !options.isNull(ARG_MAXDATE)) {
-      args.putLong(ARG_MAXDATE, (long) options.getDouble(ARG_MAXDATE));
+    if (options.hasKey(RNConstants.ARG_MAXDATE) && !options.isNull(RNConstants.ARG_MAXDATE)) {
+      args.putLong(RNConstants.ARG_MAXDATE, (long) options.getDouble(RNConstants.ARG_MAXDATE));
     }
-    if (options.hasKey(ARG_MODE) && !options.isNull(ARG_MODE)) {
-      args.putString(ARG_MODE, options.getString(ARG_MODE));
+    if (options.hasKey(RNConstants.ARG_MODE) && !options.isNull(RNConstants.ARG_MODE)) {
+      args.putString(RNConstants.ARG_MODE, options.getString(RNConstants.ARG_MODE));
     }
     return args;
   }

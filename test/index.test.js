@@ -19,10 +19,11 @@ describe('DatePicker', () => {
   it('calls onChange callback', () => {
     const date = new Date(156e10);
 
-    function onChange(event, date) {
+    function onChange(event, dateArg) {
       expect(event).toHaveProperty('type', 'event');
       expect(event).toHaveProperty('nativeEvent');
       expect(event.nativeEvent).toHaveProperty('timestamp', date.getTime());
+      expect(dateArg).toEqual(date);
     }
 
     renderer.create(<DatePicker value={ date } onChange={ onChange } />).getInstance()._onChange({

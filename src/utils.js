@@ -6,7 +6,7 @@ export function toMilliseconds(options: Options, ...keys: Array<string>) {
     const value = options[key];
 
     // Is it a Date object?
-    if (typeof value === 'object' && typeof value.getMonth === 'function') {
+    if (Object.prototype.toString.call(value) === '[object Date]') {
       options[key] = value.getTime();
     }
   });

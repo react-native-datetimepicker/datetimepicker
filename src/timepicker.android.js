@@ -7,17 +7,13 @@
  * @format
  * @flow strict-local
  */
+import {DISPLAY_DEFAULT, TIME_SET_ACTION, DISMISS_ACTION} from './constants';
+import {NativeModules} from 'react-native';
+import {toMilliseconds} from './utils';
 
-'use strict';
+import type {TimePickerOptions, DateTimePickerResult} from './types';
 
-import {DISPLAY_CLOCK, DISPLAY_SPINNER, DISPLAY_DEFAULT} from './constants';
-import {toMilliseconds} from './utils.js';
-const TimePickerModule = require('NativeModules').RNTimePickerAndroid;
-// import type { TimePickerOptions, TimePickerResult } from './TimePickerAndroidTypes';
-
-const allowedDisplayValues = [DISPLAY_SPINNER, DISPLAY_CLOCK, DISPLAY_DEFAULT];
-
-class TimePickerAndroid {
+export default class TimePickerAndroid {
   /**
    * Opens the standard Android time picker dialog.
    *
@@ -36,24 +32,19 @@ class TimePickerAndroid {
    * still be resolved with action being `TimePickerAndroid.dismissedAction` and all the other keys
    * being undefined. **Always** check whether the `action` before reading the values.
    */
-  static async open(options: TimePickerOptions): Promise<TimePickerResult> {
+  static async open(options: TimePickerOptions): Promise<DateTimePickerResult> {
     toMilliseconds(options, 'value');
+    options.display = options.display || DISPLAY_DEFAULT;
 
-    options.mode = allowedDisplayValues.includes(options.display)
-      ? options.display
-      : DISPLAY_DEFAULT;
-
-    return TimePickerModule.open(options);
+    return NativeModules.RNTimePickerAndroid.open(options);
   }
 
   /**
    * A time has been selected.
    */
-  static +timeSetAction: 'timeSetAction' = 'timeSetAction';
+  static +timeSetAction: 'timeSetAction' = TIME_SET_ACTION;
   /**
    * The dialog has been dismissed.
    */
-  static +dismissedAction: 'dismissedAction' = 'dismissedAction';
+  static +dismissedAction: 'dismissedAction' = DISMISS_ACTION;
 }
-
-module.exports = TimePickerAndroid;

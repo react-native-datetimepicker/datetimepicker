@@ -13,7 +13,7 @@ describe('DatePicker', () => {
     const date = new Date(156e10);
     const tree = renderer.create(<DatePicker value={ date }/>).toJSON();
 
-    expect(tree).toHaveProperty(['children', 0, 'props', 'date'], date);
+    expect(tree).toHaveProperty(['children', 0, 'props', 'date'], date.getTime());
   });
 
   it('calls onChange callback', () => {

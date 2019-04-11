@@ -7,23 +7,11 @@
  * @format
  * @flow strict-local
  */
+import {DISPLAY_DEFAULT, DATE_SET_ACTION, DISMISS_ACTION} from './constants';
+import {NativeModules} from 'react-native';
+import {toMilliseconds} from './utils';
 
-'use strict';
-
-import {
-  DISPLAY_CALENDAR,
-  DISPLAY_SPINNER,
-  DISPLAY_DEFAULT,
-} from './constants.js';
-import {toMilliseconds} from './utils.js';
-const DatePickerModule = require('NativeModules').RNDatePickerAndroid;
-// import type {Options, DatePickerOpenAction} from './DatePickerAndroidTypes';
-
-const allowedDisplayValues = [
-  DISPLAY_SPINNER,
-  DISPLAY_CALENDAR,
-  DISPLAY_DEFAULT,
-];
+import type {DatePickerOptions, DateTimePickerResult} from './types';
 
 export default class DatePickerAndroid {
   /**
@@ -34,7 +22,7 @@ export default class DatePickerAndroid {
    *   - `value` (`Date` object) - date to show by default
    *   - `minimumDate` (`Date` object) - minimum date that can be selected
    *   - `maximumDate` (`Date` object) - maximum date that can be selected
-   *   - `mode` (`enum('calendar', 'spinner', 'default')`) - To set the date-picker mode to calendar/spinner/default
+   *   - `display` (`enum('calendar', 'spinner', 'default')`) - To set the date-picker display to calendar/spinner/default
    *     - 'calendar': Show a date picker in calendar mode.
    *     - 'spinner': Show a date picker in spinner mode.
    *     - 'default': Show a default native date picker(spinner/calendar) based on android versions.
@@ -47,22 +35,19 @@ export default class DatePickerAndroid {
    * Note the native date picker dialog has some UI glitches on Android 4 and lower
    * when using the `minimumDate` and `maximumDate` options.
    */
-  static async open(options: ?Options): Promise<DatePickerOpenAction> {
+  static async open(options: DatePickerOptions): Promise<DateTimePickerResult> {
     toMilliseconds(options, 'value', 'minimumDate', 'maximumDate');
+    options.display = options.display || DISPLAY_DEFAULT;
 
-    options.mode = allowedDisplayValues.includes(options.display)
-      ? options.display
-      : DISPLAY_DEFAULT;
-
-    return DatePickerModule.open(options);
+    return NativeModules.RNDatePickerAndroid.open(options);
   }
 
   /**
    * A date has been selected.
    */
-  static +dateSetAction: 'dateSetAction' = 'dateSetAction';
+  static +dateSetAction: 'dateSetAction' = DATE_SET_ACTION;
   /**
    * The dialog has been dismissed.
    */
-  static +dismissedAction: 'dismissedAction' = 'dismissedAction';
+  static +dismissedAction: 'dismissedAction' = DISMISS_ACTION;
 }

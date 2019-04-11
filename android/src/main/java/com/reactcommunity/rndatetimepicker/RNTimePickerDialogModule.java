@@ -118,8 +118,8 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
     if (options.hasKey(RNConstants.ARG_IS24HOUR) && !options.isNull(RNConstants.ARG_IS24HOUR)) {
       args.putBoolean(RNConstants.ARG_IS24HOUR, options.getBoolean(RNConstants.ARG_IS24HOUR));
     }
-    if (options.hasKey(RNConstants.ARG_MODE) && !options.isNull(RNConstants.ARG_MODE)) {
-      args.putString(RNConstants.ARG_MODE, options.getString(RNConstants.ARG_MODE));
+    if (options.hasKey(RNConstants.ARG_DISPLAY) && !options.isNull(RNConstants.ARG_DISPLAY)) {
+      args.putString(RNConstants.ARG_DISPLAY, options.getString(RNConstants.ARG_DISPLAY));
     }
     return args;
   }

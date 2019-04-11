@@ -52,15 +52,15 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     final int month = date.month();
     final int day = date.day();
 
-    RNDatePickerMode mode = RNDatePickerMode.DEFAULT;
+    RNDatePickerDisplay display = RNDatePickerDisplay.DEFAULT;
     DatePickerDialog dialog = null;
 
-    if (args != null && args.getString(RNConstants.ARG_MODE, null) != null) {
-      mode = RNDatePickerMode.valueOf(args.getString(RNConstants.ARG_MODE).toUpperCase(Locale.US));
+    if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
+      display = RNDatePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      switch (mode) {
+      switch (display) {
         case CALENDAR:
           dialog = new RNDismissableDatePickerDialog(activityContext,
             activityContext.getResources().getIdentifier("CalendarDatePickerDialog", "style", activityContext.getPackageName()),
@@ -78,7 +78,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     } else {
       dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
 
-      switch (mode) {
+      switch (display) {
         case CALENDAR:
           dialog.getDatePicker().setCalendarViewShown(true);
           dialog.getDatePicker().setSpinnersShown(false);

@@ -90,7 +90,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
    *     to select
    *    </li>
    *   <li>
-   *      {@code mode} To set the date picker mode to 'calendar/spinner/default'
+   *      {@code display} To set the date picker display to 'calendar/spinner/default'
    *   </li>
    * </ul>
    *
@@ -146,8 +146,8 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     if (options.hasKey(RNConstants.ARG_MAXDATE) && !options.isNull(RNConstants.ARG_MAXDATE)) {
       args.putLong(RNConstants.ARG_MAXDATE, (long) options.getDouble(RNConstants.ARG_MAXDATE));
     }
-    if (options.hasKey(RNConstants.ARG_MODE) && !options.isNull(RNConstants.ARG_MODE)) {
-      args.putString(RNConstants.ARG_MODE, options.getString(RNConstants.ARG_MODE));
+    if (options.hasKey(RNConstants.ARG_DISPLAY) && !options.isNull(RNConstants.ARG_DISPLAY)) {
+      args.putString(RNConstants.ARG_DISPLAY, options.getString(RNConstants.ARG_DISPLAY));
     }
     return args;
   }

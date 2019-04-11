@@ -6,7 +6,7 @@ public final class RNConstants {
   public static final String ARG_MINDATE = "minimumDate";
   public static final String ARG_MAXDATE = "maximumDate";
   public static final String ARG_IS24HOUR = "is24Hour";
-  public static final String ARG_MODE = "mode";
+  public static final String ARG_DISPLAY = "display";
   public static final String ACTION_DATE_SET = "dateSetAction";
   public static final String ACTION_TIME_SET = "timeSetAction";
   public static final String ACTION_DISMISSED = "dismissedAction";

@@ -37,7 +37,7 @@ type BaseOptions = {|
    * This is called when the user changes the date or time in the UI.
    * The first argument is an Event, the second a selected Date.
    */
-  onChange?: ?(event: Event, date: Date) => void,
+  onChange?: ?(event: Event, date?: Date) => void,
 |};
 
 type DateOptions = {|

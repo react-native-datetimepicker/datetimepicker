@@ -49,10 +49,10 @@ export default class Picker extends React.Component<IOSNativeProps> {
   _onChange = (event: Event) => {
     const {onChange} = this.props;
     const timestamp = event.nativeEvent.timestamp;
-    const date = new Date();
+    let date;
 
     if (timestamp) {
-      date.setTime(timestamp);
+      date = new Date(timestamp);
     }
 
     onChange && onChange(event, date);

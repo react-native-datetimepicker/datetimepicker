@@ -14,8 +14,6 @@ jobs:
   list:
     executor: rn/linux_js
     steps:
-      - attach_workspace:
-          at: "./example"
       - run:
           name: list
           command: ls -la example

@@ -11,12 +11,6 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
-  list:
-    executor: rn/linux_js
-    steps:
-      - run:
-          name: list
-          command: ls -la example
   analyse:
     executor: rn/linux_js
     steps:
@@ -37,14 +31,11 @@ workflows:
   test:
     jobs:
       - checkout_code
-      - list:
-          requires:
-            - checkout_code
       - analyse:
           requires:
             - checkout_code
       - rn/android_build:
-          project_path: "./android/example"
+          project_path: "android/example"
           name: build_android_debug
           build_type: debug
           requires:

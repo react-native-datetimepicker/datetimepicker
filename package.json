@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint src/*.js",
-    "flow": "flow check"
+    "flow": "npm run flow-check-ios && npm run flow-check-android",
+    "flow-check-ios": "flow check",
+    "flow-check-android": "flow check --flowconfig-name .flowconfig.android"
   },
   "repository": {
     "type": "git",
@@ -40,7 +42,8 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.3.0",
     "eslint-plugin-react-native": "^3.6.0",
-    "flow-bin": "^0.93.0",
+    "flow-bin": "^0.95.0",
+    "flow-typed": "^2.5.1",
     "jest": "^24.1.0",
     "metro-react-native-babel-preset": "^0.53.1",
     "prettier": "^1.13.7",

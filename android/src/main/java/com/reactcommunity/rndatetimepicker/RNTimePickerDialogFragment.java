@@ -50,9 +50,9 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     final int minute = date.minute();
     boolean is24hour = DateFormat.is24HourFormat(activityContext);
 
-    RNTimePickerMode mode = RNTimePickerMode.DEFAULT;
-    if (args != null && args.getString(RNConstants.ARG_MODE, null) != null) {
-      mode = RNTimePickerMode.valueOf(args.getString(RNConstants.ARG_MODE).toUpperCase(Locale.US));
+    RNTimePickerDisplay display = RNTimePickerDisplay.DEFAULT;
+    if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
+      display = RNTimePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
     }
 
     if (args != null) {
@@ -60,7 +60,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      if (mode == RNTimePickerMode.CLOCK) {
+      if (display == RNTimePickerDisplay.CLOCK) {
         return new RNDismissableTimePickerDialog(
           activityContext,
           activityContext.getResources().getIdentifier(
@@ -73,7 +73,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
           minute,
           is24hour
         );
-      } else if (mode == RNTimePickerMode.SPINNER) {
+      } else if (display == RNTimePickerDisplay.SPINNER) {
         return new RNDismissableTimePickerDialog(
           activityContext,
           activityContext.getResources().getIdentifier(

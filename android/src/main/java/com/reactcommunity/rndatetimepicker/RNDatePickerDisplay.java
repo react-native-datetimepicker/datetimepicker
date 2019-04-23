@@ -7,8 +7,11 @@
 
 package com.reactcommunity.rndatetimepicker;
 
-public enum RNTimePickerMode {
-  CLOCK,
+/**
+ * Date picker display options.
+ */
+public enum RNDatePickerDisplay {
+  CALENDAR,
   SPINNER,
   DEFAULT
 }

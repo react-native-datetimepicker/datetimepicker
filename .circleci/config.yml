@@ -34,3 +34,16 @@ workflows:
       - analyse:
           requires:
             - checkout_code
+      - rn/android_build:
+          name: build_android_debug
+          project_path: "example/android"
+          build_type: debug
+          requires:
+            - analyse
+      - rn/ios_build:
+          project_path: "example/ios/Example.xcodeproj"
+          device: "iPhone X"
+          build_configuration: "Debug"
+          scheme: "Example"
+          requires:
+            - analyse

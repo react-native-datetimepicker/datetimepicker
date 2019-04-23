@@ -26,3 +26,11 @@ jobs:
       - run:
           name: Jest
           command: yarn run test
+
+workflows:
+  test:
+    jobs:
+      - checkout_code
+      - analyse:
+          requires:
+            - checkout_code

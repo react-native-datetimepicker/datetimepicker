@@ -40,6 +40,9 @@ workflows:
   test:
     jobs:
       - checkout_code
+      - install_example:
+          requires:
+            - checkout_code
       - analyse:
           requires:
             - checkout_code

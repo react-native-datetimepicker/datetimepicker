@@ -36,7 +36,7 @@ workflows:
             - checkout_code
       - rn/android_build:
           workspace_root: "./example"
-          name: build_android_debug
+          name: build_android_debug_v1
           build_type: debug
 
     # Add Detox tests before running this expensive job.

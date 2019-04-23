@@ -11,6 +11,14 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
+  list:
+    executor: rn/linux_js
+    steps:
+      - attach_workspace:
+          at: "./example"
+      - run:
+          name: list
+          command: ls -la
   analyse:
     executor: rn/linux_js
     steps:
@@ -31,13 +39,18 @@ workflows:
   test:
     jobs:
       - checkout_code
+      - list:
+          requires:
+            - checkout_code
       - analyse:
           requires:
             - checkout_code
       - rn/android_build:
           workspace_root: "./example"
-          name: build_android_debug_v1
+          name: build_android_debug
           build_type: debug
+          requires:
+            - checkout_code
 
     # Add Detox tests before running this expensive job.
     # - rn/ios_build_and_test:

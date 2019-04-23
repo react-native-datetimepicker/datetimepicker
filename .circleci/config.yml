@@ -11,6 +11,10 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
+  android:
+    executor: rn/android_build
+  ios:
+    executor: rn/ios_build
   analyse:
     executor: rn/linux_js
     steps:
@@ -34,13 +38,13 @@ workflows:
       - analyse:
           requires:
             - checkout_code
-      - rn/android_build:
+      - android:
           name: build_android_debug
           project_path: "example/android"
           build_type: debug
           requires:
             - analyse
-      - rn/ios_build:
+      - ios:
           project_path: "example/ios/example.xcodeproj"
           scheme: "Example"
           requires:

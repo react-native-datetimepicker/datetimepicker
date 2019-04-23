@@ -11,10 +11,6 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
-  android:
-    executor: rn/android_build
-  ios:
-    executor: rn/ios_build
   analyse:
     executor: rn/linux_js
     steps:
@@ -38,14 +34,18 @@ workflows:
       - analyse:
           requires:
             - checkout_code
-      - android:
+      - rn/android_build:
           name: build_android_debug
           project_path: "example/android"
           build_type: debug
           requires:
             - analyse
-      - ios:
-          project_path: "example/ios/example.xcodeproj"
-          scheme: "Example"
-          requires:
-            - analyse
+
+    # Add Detox tests before running this expensive job.
+    # - rn/ios_build_and_test:
+    #     project_path: "example/ios/example.xcodeproj"
+    #     device: "iPhone X"
+    #     build_configuration: "Debug"
+    #     scheme: "Example"
+    #     requires:
+    #       - analyse

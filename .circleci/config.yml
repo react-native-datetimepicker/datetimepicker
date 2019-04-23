@@ -35,7 +35,6 @@ workflows:
           requires:
             - checkout_code
       - rn/android_build:
-          workspace_root: ./example
           name: build_android_debug
           build_type: debug
 

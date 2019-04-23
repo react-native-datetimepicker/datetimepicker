@@ -83,7 +83,7 @@ export default class Picker extends React.Component<IOSNativeProps> {
           ref={this._picker}
           style={styles.picker}
           date={dates.value}
-          locale={locale != null && locale !== '' ? locale : undefined}
+          locale={locale !== null && locale !== '' ? locale : undefined}
           maximumDate={dates.maximumDate}
           minimumDate={dates.minimumDate}
           mode={mode}

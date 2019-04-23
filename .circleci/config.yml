@@ -41,9 +41,7 @@ workflows:
           requires:
             - analyse
       - rn/ios_build:
-          project_path: "example/ios/Example.xcodeproj"
-          device: "iPhone X"
-          build_configuration: "Debug"
+          project_path: "example/ios/example.xcodeproj"
           scheme: "Example"
           requires:
             - analyse

@@ -11,6 +11,15 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
+  install_example:
+    executor: rn/linux_js
+    steps:
+      - attach_workspace:
+          at: ./example
+      - rn/yarn_install
+      - persist_to_workspace:
+          root: ./example
+          paths: .
   analyse:
     executor: rn/linux_js
     steps:
@@ -39,7 +48,7 @@ workflows:
           project_path: "example/android"
           build_type: debug
           requires:
-            - analyse
+            - install_example
 
     # Add Detox tests before running this expensive job.
     # - rn/ios_build_and_test:

@@ -3,8 +3,10 @@ import DatePicker from '../src/index.js';
 import React from 'react';
 
 describe('DatePicker', () => {
+  const DATE = 1376949600000;
+
   it('renders a native Component', () => {
-    const tree = renderer.create(<DatePicker value={ new Date('08/20/2013') } />).toJSON();
+    const tree = renderer.create(<DatePicker value={ new Date(DATE) } />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });
@@ -39,13 +41,13 @@ describe('DatePicker', () => {
   });
 
   it('renders with mode `time`', function () {
-    const tree = renderer.create(<DatePicker value={ new Date('08/20/2013') } mode="time" />).toJSON();
+    const tree = renderer.create(<DatePicker value={ new Date(DATE) } mode="time" />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });
 
   it('renders with mode `datetime` (iOS only)', function () {
-    const tree = renderer.create(<DatePicker value={ new Date('08/20/2013') } mode="datetime" />).toJSON();
+    const tree = renderer.create(<DatePicker value={ new Date(DATE) } mode="datetime" />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });
@@ -56,7 +58,7 @@ describe('DatePicker', () => {
 
   it('applies styling to `View` wrapper', function () {
     const style = { backgroundColor: 'red' };
-    const tree = renderer.create(<DatePicker style={style} value={ new Date('08/20/2013') } />).toJSON();
+    const tree = renderer.create(<DatePicker style={style} value={ new Date(DATE) } />).toJSON();
 
     expect(tree).toHaveProperty('props.style.backgroundColor', style.backgroundColor);
     expect(tree).toMatchSnapshot();

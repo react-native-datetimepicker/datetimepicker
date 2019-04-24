@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  rn: react-native-community/react-native@dev:0.1.0-rc12
+  rn: react-native-community/react-native@dev:0.1.0-rc14
 
 jobs:
   checkout_code:
@@ -42,6 +42,9 @@ workflows:
     jobs:
       - checkout_code
       - analyse:
+          requires:
+            - checkout_code
+      - install_example:
           requires:
             - checkout_code
       - rn/android_build:

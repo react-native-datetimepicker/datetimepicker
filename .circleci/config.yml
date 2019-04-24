@@ -20,6 +20,9 @@ jobs:
       - run:
           name: Install example
           command: npm run install:example
+      - persist_to_workspace:
+          root: .
+          paths: .
 
   analyse:
     executor: rn/linux_js

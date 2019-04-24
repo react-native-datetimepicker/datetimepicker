@@ -15,7 +15,7 @@ jobs:
   install_example:
     executor: rn/linux_js
     steps:
-       - attach_workspace:
+      - attach_workspace:
           at: .
       - run:
           name: Install example

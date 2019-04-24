@@ -19,24 +19,22 @@ jobs:
           at: .
       - run:
           name: Install example
-          command: cd example
-      - rn/yarn_install
+          command: npm run install:example
 
   analyse:
     executor: rn/linux_js
     steps:
       - attach_workspace:
           at: .
-      - rn/yarn_install
       - run:
           name: Lint JS Code (ESLint)
-          command: yarn run lint
+          command: npm run lint
       - run:
           name: Flow
-          command: yarn run flow
+          command: npm run flow
       - run:
           name: Jest
-          command: yarn run test
+          command: npm run test
 
 workflows:
   test:

@@ -35,11 +35,11 @@ workflows:
           requires:
             - checkout_code
       - rn/android_build:
-          project_path: "android/example"
+          project_path: "example/android"
           name: build_android_debug
           build_type: debug
           requires:
-            - checkout_code
+            - analyse
 
     # Add Detox tests before running this expensive job.
     # - rn/ios_build_and_test:

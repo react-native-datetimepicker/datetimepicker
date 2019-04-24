@@ -19,7 +19,8 @@ jobs:
           at: .
       - run:
           name: Install example
-          command: cd example && rn/yarn_install
+          command: cd example
+      - rn/yarn_install
 
   analyse:
     executor: rn/linux_js

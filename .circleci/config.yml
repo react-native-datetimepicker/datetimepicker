@@ -27,6 +27,9 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Install
+          command: npm ci
+      - run:
           name: Lint JS Code (ESLint)
           command: npm run lint
       - run:

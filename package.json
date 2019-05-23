@@ -26,6 +26,9 @@
     "datetime"
   ],
   "author": "Martijn Swaagman <mswaagman@godaddy.com> (https://github.com/swaagie)",
+  "contributors": [
+    "Daniel Sanudo Vacas <dsanudovacas@godaddy.com> (https://github.com/DanielSanudo)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/react-native-community/react-native-datetimepicker/issues"

@@ -5,7 +5,8 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint src/*.js",
+    "posttest": "npm run lint",
+    "lint": "eslint '{src,test}/**/*.js'",
     "flow": "npm run flow-check-ios && npm run flow-check-android",
     "install:example": "cd example && npm ci",
     "flow-check-ios": "flow check",
@@ -25,6 +26,9 @@
     "datetime"
   ],
   "author": "Martijn Swaagman <mswaagman@godaddy.com> (https://github.com/swaagie)",
+  "contributors": [
+    "Daniel Sanudo Vacas <dsanudovacas@godaddy.com> (https://github.com/DanielSanudo)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/react-native-community/react-native-datetimepicker/issues"
@@ -33,21 +37,13 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/runtime": "^7.4.3",
-    "babel-eslint": "^10.0.1",
+    "@react-native-community/eslint-config": "0.0.5",
     "babel-jest": "^24.1.0",
-    "eslint": "^5.14.1",
-    "eslint-plugin-eslint-comments": "^3.1.1",
-    "eslint-plugin-flowtype": "^3.4.2",
-    "eslint-plugin-jest": "^22.3.0",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-react-hooks": "^1.3.0",
-    "eslint-plugin-react-native": "^3.6.0",
+    "eslint": "^5.16.0",
     "flow-bin": "^0.95.0",
     "flow-typed": "^2.5.1",
     "jest": "^24.1.0",
     "metro-react-native-babel-preset": "^0.53.1",
-    "prettier": "^1.13.7",
     "react": "^16.8.3",
     "react-native": "^0.59.3",
     "react-test-renderer": "^16.8.3"

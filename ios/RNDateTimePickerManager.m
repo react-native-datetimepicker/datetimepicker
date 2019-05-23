@@ -10,7 +10,7 @@
 #import "React/RCTBridge.h"
 #import "RNDateTimePicker.h"
 #import "React/RCTEventDispatcher.h"
-#import "UIView+React.h"
+#import "React/UIView+React.h"
 
 @implementation RCTConvert(UIDatePicker)
 

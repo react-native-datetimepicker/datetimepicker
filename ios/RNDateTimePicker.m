@@ -8,7 +8,7 @@
 #import "RNDateTimePicker.h"
 
 #import "React/RCTUtils.h"
-#import "UIView+React.h"
+#import "React/UIView+React.h"
 
 @interface RNDateTimePicker ()
 

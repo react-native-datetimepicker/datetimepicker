@@ -4,7 +4,7 @@
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest ./test",
     "posttest": "npm run lint",
     "lint": "eslint '{src,test}/**/*.js'",
     "flow": "npm run flow-check-ios && npm run flow-check-android",

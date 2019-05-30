@@ -3,7 +3,4 @@ rootProject.name = 'example'
 include ':react-native-datetimepicker'
 project(':react-native-datetimepicker').projectDir = new File(rootProject.projectDir, '../../android')
 
-include ':detox'
-project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules/detox/android/detox')
-
 include ':app'

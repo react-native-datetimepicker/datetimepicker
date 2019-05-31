@@ -39,6 +39,7 @@
     "@babel/runtime": "^7.4.3",
     "@react-native-community/eslint-config": "0.0.5",
     "babel-jest": "^24.1.0",
+    "detox": "^12.9.0",
     "eslint": "^5.16.0",
     "flow-bin": "^0.95.0",
     "flow-typed": "^2.5.1",
@@ -54,5 +55,23 @@
   },
   "dependencies": {
     "invariant": "^2.2.4"
+  },
+  "detox": {
+    "test-runner": "jest",
+    "runner-config": "example/e2e/config.json",
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "example/ios/build/Build/Products/Debug-iphonesimulator/example.app",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project example/ios/example.xcodeproj -destination 'platform=iOS Simulator,name=iPhone X' -scheme example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      },
+      "android.emu.debug": {
+        "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ../..",
+        "type": "android.emulator",
+        "name": "RN_0.59"
+      }
+    }
   }
 }

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
     "react": "16.8.3",
@@ -14,26 +14,8 @@
     "@babel/core": "7.4.3",
     "@babel/runtime": "7.4.3",
     "babel-plugin-module-resolver": "^3.2.0",
-    "detox": "^12.9.0",
     "escape-string-regexp": "^1.0.5",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "0.53.1"
-  },
-  "detox": {
-    "configurations": {
-      "ios.sim.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/example.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project ios/example.xcodeproj -destination 'platform=iOS Simulator,name=iPhone X' -scheme example -configuration Debug -derivedDataPath ios/build -UseModernBuildSystem=YES",
-        "type": "ios.simulator",
-        "name": "iPhone X"
-      },
-      "android.emu.debug": {
-        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
-        "type": "android.emulator",
-        "name": "RN_0.59"
-      }
-    },
-    "test-runner": "jest"
   }
 }

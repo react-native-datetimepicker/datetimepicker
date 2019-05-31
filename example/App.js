@@ -5,7 +5,7 @@ import DateTimePicker from 'react-native-datetimepicker';
 type Props = {};
 export default class App extends Component<Props> {
   state = {
-    date: new Date('2020-06-12T14:42:42'),
+    date: new Date('August 21, 2020 23:15:30 UTC'),
     mode: 'date',
     show: false,
   }
@@ -50,8 +50,8 @@ export default class App extends Component<Props> {
         </View>
         <View style={styles.header}>
           <Text testID='dateTimeText' style={styles.dateTimeText}>
-            { mode === 'time' && date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
-            { mode === 'date' && date.toLocaleDateString('en-US') }
+            { mode === 'time' && date.toLocaleTimeString('en-US', { timeZone: 'UTC', hour: 'numeric', minute: 'numeric', hour12: true }) }
+            { mode === 'date' && date.toLocaleDateString('en-US', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit' }) }
           </Text>
         </View>
         { show && <DateTimePicker testID='dateTimePicker' value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }

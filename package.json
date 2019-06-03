@@ -10,7 +10,8 @@
     "flow": "npm run flow-check-ios && npm run flow-check-android",
     "install:example": "cd example && npm ci",
     "flow-check-ios": "flow check",
-    "flow-check-android": "flow check --flowconfig-name .flowconfig.android"
+    "flow-check-android": "flow check --flowconfig-name .flowconfig.android",
+    "detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build"
   },
   "repository": {
     "type": "git",
@@ -66,9 +67,21 @@
         "type": "ios.simulator",
         "name": "iPhone X"
       },
+      "ios.sim.release": {
+        "binaryPath": "example/ios/build/Build/Products/Release-iphonesimulator/example.app",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project example/ios/example.xcodeproj -destination 'platform=iOS Simulator,name=iPhone X' -scheme example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      },
       "android.emu.debug": {
         "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ../..",
+        "type": "android.emulator",
+        "name": "RN_0.59"
+      },
+      "android.emu.release": {
+        "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
+        "build": "cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ../..",
         "type": "android.emulator",
         "name": "RN_0.59"
       }

@@ -54,7 +54,7 @@ export default class App extends Component<Props> {
             { mode === 'date' && date.toLocaleDateString('en-US', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit' }) }
           </Text>
         </View>
-        { show && <DateTimePicker testID='dateTimePicker' value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+        { show && <DateTimePicker testID='dateTimePicker' timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
       </View>
     );
   }

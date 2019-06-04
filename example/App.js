@@ -5,7 +5,7 @@ import DateTimePicker from 'react-native-datetimepicker';
 type Props = {};
 export default class App extends Component<Props> {
   state = {
-    date: new Date('August 21, 2020 23:15:30 UTC'),
+    date: new Date(1598051730000),
     mode: 'date',
     show: false,
   }
@@ -34,6 +34,19 @@ export default class App extends Component<Props> {
     this.show('time');
   }
 
+  mmddyyyy = (date) => {
+    var yyyy = date.getUTCFullYear();
+    var mm = date.getUTCMonth() < 9 ? '0' + (date.getUTCMonth() + 1) : (date.getUTCMonth() + 1); // getUTCMonth() is zero-based
+    var dd  = date.getUTCDate() < 10 ? '0' + date.getUTCDate() : date.getUTCDate();
+    return ''.concat(mm).concat('/').concat(dd).concat('/').concat(yyyy);
+  }
+
+  hhmm = (date) => {
+    var hh = date.getUTCHours() < 10 ? '0' + date.getUTCHours() : date.getUTCHours();
+    var min = date.getUTCMinutes() < 10 ? '0' + date.getUTCMinutes() : date.getUTCMinutes();
+    return ''.concat(hh).concat(':').concat(min);
+  }
+
   render() {
     const { show, date, mode } = this.state;
 
@@ -50,8 +63,8 @@ export default class App extends Component<Props> {
         </View>
         <View style={styles.header}>
           <Text testID='dateTimeText' style={styles.dateTimeText}>
-            { mode === 'time' && date.toLocaleTimeString('en-US', { timeZone: 'UTC', hour: 'numeric', minute: 'numeric', hour12: true }) }
-            { mode === 'date' && date.toLocaleDateString('en-US', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit' }) }
+            { mode === 'time' && this.hhmm(date) }
+            { mode === 'date' && this.mmddyyyy(date) }
           </Text>
         </View>
         { show && <DateTimePicker testID='dateTimePicker' timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }

@@ -27,16 +27,15 @@ describe('Example', () => {
     const dateTimeText = await element(by.id('dateTimeText'));
 
     if (global.device.getPlatform() === 'ios') {
-      const testElement = await element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker')));
-
-      await expect(dateTimeText).toHaveText('08/21/2020');
+      await expect(element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker')))).toBeVisible();
     } else {
       const testElement = await element(by.type('android.widget.ScrollView').withAncestor(by.type('android.widget.DatePicker')));
-      // await testElement.swipe('left', 'fast', '100');
+      await testElement.swipe('left', 'fast', '100');
+      await testElement.tapAtPoint({ x: 50, y: 200});
       await element(by.text('CANCEL')).tap();
-  
-      await expect(dateTimeText).toHaveText('08/22/20');
     }
+
+    await expect(dateTimeText).toHaveText('08/21/2020');
   });
 
   it('should update dateTimeText when date changes', async () => {
@@ -56,7 +55,7 @@ describe('Example', () => {
       await testElement.tapAtPoint({ x: 50, y: 200});
       await element(by.text('OK')).tap();
   
-      await expect(dateTimeText).toHaveText('09/13/20');
+      await expect(dateTimeText).toHaveText('09/13/2020');
     }
   });
   
@@ -75,22 +74,20 @@ describe('Example', () => {
     const dateTimeText = await element(by.id('dateTimeText'));
 
     if (global.device.getPlatform() === 'ios') {
-      const testElement = await element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker')));
-
-      await expect(dateTimeText).toHaveText('11:15 PM');
+      await expect(element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker')))).toBeVisible();
     } else {
-      // await expect(element(by.type('android.widget.TimePicker'))).toBeVisible();
-      // await expect(element(by.type('android.internal.widget.NumericTextView').and(by.text('text')))).toBeVisible();
-      // await expect(element(by.type('android.widget.NumericTextView').withAncestor(by.type('com.widget.TimePicker')))).toBeVisible();
-      // await expect(element(by.type('android.widget.RadialTimePickerView').withAncestor(by.type('com.widget.TimePicker')))).toBeVisible();
-      // await testElement.swipe('left', 'fast', '100');
-      // await element(by.text('CANCEL')).tap();
-  
-      // await expect(dateTimeText).toHaveText('06/12/20');
+      const keyboardButton = await element(by.type('androidx.appcompat.widget.AppCompatImageButton'));
+      keyboardButton.tap();
+      const testElement = await element(by.type('androidx.appcompat.widget.AppCompatEditText').and(by.text('15')));
+      testElement.tap();
+      testElement.replaceText('30');
+      await element(by.text('CANCEL')).tap();
     }
+
+    await expect(dateTimeText).toHaveText('23:15');
   });
 
-  it('should change time text when time changes', async () => {
+  it.only('should change time text when time changes', async () => {
     await element(by.id('timePickerButton')).tap();
     const dateTimeText = await element(by.id('dateTimeText'));
 
@@ -100,9 +97,16 @@ describe('Example', () => {
       await testElement.setColumnToValue(1, '44');
       await testElement.setColumnToValue(2, 'PM');
 
-      await expect(dateTimeText).toHaveText('2:44 PM');
+      await expect(dateTimeText).toHaveText('14:44');
     } else {
-      // TODO
+      const keyboardButton = await element(by.type('androidx.appcompat.widget.AppCompatImageButton'));
+      keyboardButton.tap();
+      const testElement = await element(by.type('androidx.appcompat.widget.AppCompatEditText').and(by.text('15')));
+      testElement.tap();
+      testElement.replaceText('30');
+      await element(by.text('OK')).tap();
+
+      await expect(dateTimeText).toHaveText('23:30');
     }
   });
 });

@@ -87,7 +87,7 @@ describe('Example', () => {
     await expect(dateTimeText).toHaveText('23:15');
   });
 
-  it.only('should change time text when time changes', async () => {
+  it('should change time text when time changes', async () => {
     await element(by.id('timePickerButton')).tap();
     const dateTimeText = await element(by.id('dateTimeText'));
 

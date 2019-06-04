@@ -6,7 +6,6 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "jsc-android": "^241213.1.0",
     "react": "16.8.3",
     "react-native": "0.59.3",
     "react-native-datetimepicker": "file:../"

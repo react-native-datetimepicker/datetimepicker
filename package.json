@@ -4,6 +4,9 @@
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
   "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start:android": "react-native run-android --root example/",
+    "start:ios": "react-native run-ios --project-path example/ios",
     "test": "jest ./test",
     "posttest": "npm run lint",
     "lint": "eslint '{src,test}/**/*.js'",
@@ -81,7 +84,7 @@
       },
       "android.emu.release": {
         "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
-        "build": "cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ../..",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ../..",
         "type": "android.emulator",
         "name": "RN_0.59"
       }

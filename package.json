@@ -11,7 +11,6 @@
     "posttest": "npm run lint",
     "lint": "eslint '{src,test}/**/*.js'",
     "flow": "npm run flow-check-ios && npm run flow-check-android",
-    "install:example": "cd example && npm ci",
     "flow-check-ios": "flow check",
     "flow-check-android": "flow check --flowconfig-name .flowconfig.android",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",

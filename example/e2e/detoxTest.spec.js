@@ -54,11 +54,11 @@ describe('Example', () => {
       await testElement.swipe('left', 'fast', '100');
       await testElement.tapAtPoint({ x: 50, y: 200});
       await element(by.text('OK')).tap();
-  
+
       await expect(dateTimeText).toHaveText('09/13/2020');
     }
   });
-  
+
   it('should show time picker after tapping timePicker button', async () => {
     await element(by.id('timePickerButton')).tap();
 

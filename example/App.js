@@ -51,23 +51,23 @@ export default class App extends Component<Props> {
     const { show, date, mode } = this.state;
 
     return (
-      <View testID='appRootView' style={styles.container}>
+      <View testID="appRootView" style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.text}>Example DateTime Picker</Text>
         </View>
         <View style={styles.button}>
-          <Button testID='datePickerButton' onPress={this.datepicker} title="Show date picker!" />
+          <Button testID="datePickerButton" onPress={this.datepicker} title="Show date picker!" />
         </View>
         <View style={styles.button}>
-          <Button testID='timePickerButton' onPress={this.timepicker} title="Show time picker!" />
+          <Button testID="timePickerButton" onPress={this.timepicker} title="Show time picker!" />
         </View>
         <View style={styles.header}>
-          <Text testID='dateTimeText' style={styles.dateTimeText}>
+          <Text testID="dateTimeText" style={styles.dateTimeText}>
             { mode === 'time' && this.hhmm(date) }
             { mode === 'date' && this.mmddyyyy(date) }
           </Text>
         </View>
-        { show && <DateTimePicker testID='dateTimePicker' timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+        { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
       </View>
     );
   }

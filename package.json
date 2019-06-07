@@ -9,7 +9,7 @@
     "start:ios": "react-native run-ios --project-path example/ios",
     "test": "jest ./test",
     "posttest": "npm run lint",
-    "lint": "eslint '{src,test}/**/*.js'",
+    "lint": "eslint '{example,src,test}/**/*.js'",
     "flow": "npm run flow-check-ios && npm run flow-check-android",
     "flow-check-ios": "flow check",
     "flow-check-android": "flow check --flowconfig-name .flowconfig.android",

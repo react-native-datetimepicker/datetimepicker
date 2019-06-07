@@ -87,13 +87,13 @@
         "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ../..",
         "type": "android.emulator",
-        "name": "RN_0.59"
+        "name": "TestingAVD"
       },
       "android.emu.release": {
         "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ../..",
         "type": "android.emulator",
-        "name": "RN_0.59"
+        "name": "TestingAVD"
       }
     }
   }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Button, Platform} from 'react-native';
+import moment from 'moment';
 import DateTimePicker from 'react-native-datetimepicker';
 
 type Props = {};
@@ -34,19 +35,6 @@ export default class App extends Component<Props> {
     this.show('time');
   }
 
-  mmddyyyy = (date) => {
-    var yyyy = date.getUTCFullYear();
-    var mm = date.getUTCMonth() < 9 ? '0' + (date.getUTCMonth() + 1) : (date.getUTCMonth() + 1); // getUTCMonth() is zero-based
-    var dd  = date.getUTCDate() < 10 ? '0' + date.getUTCDate() : date.getUTCDate();
-    return ''.concat(mm).concat('/').concat(dd).concat('/').concat(yyyy);
-  }
-
-  hhmm = (date) => {
-    var hh = date.getUTCHours() < 10 ? '0' + date.getUTCHours() : date.getUTCHours();
-    var min = date.getUTCMinutes() < 10 ? '0' + date.getUTCMinutes() : date.getUTCMinutes();
-    return ''.concat(hh).concat(':').concat(min);
-  }
-
   render() {
     const { show, date, mode } = this.state;
 
@@ -63,8 +51,8 @@ export default class App extends Component<Props> {
         </View>
         <View style={styles.header}>
           <Text testID="dateTimeText" style={styles.dateTimeText}>
-            { mode === 'time' && this.hhmm(date) }
-            { mode === 'date' && this.mmddyyyy(date) }
+            { mode === 'time' && moment.utc(date).format('HH:mm') }
+            { mode === 'date' && moment.utc(date).format('MM/DD/YYYY') }
           </Text>
         </View>
         { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }

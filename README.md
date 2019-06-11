@@ -1,3 +1,301 @@
 # React Native DateTimePicker
 
-[![CircleCI](https://circleci.com/gh/react-native-community/react-native-datetimepicker.svg?style=svg)](https://circleci.com/gh/react-native-community/react-native-datetimepicker)
+[![CircleCI Status](https://img.shields.io/circleci/project/github/react-native-community/react-native-datetimepicker/master.svg)](https://circleci.com/gh/react-native-community/workflows/react-native-datetimepicker/tree/master) ![Supports Android and iOS](https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg) ![MIT License](https://img.shields.io/npm/l/@react-native-community/slider.svg)
+
+React Native date & time picker component for iOS and Android
+
+## Getting started
+
+`npm install react-native-datetimepicker --save`
+
+or
+
+`yarn add react-native-datetimepicker`
+
+
+### Using React Native Link
+
+`react-native link react-native-datetimepicker`
+
+### Manual installation
+
+#### iOS
+
+- Linking project manually:
+  
+  1. In the XCode's "Project navigator", right click on your project's Libraries folder ➜ `Add Files to <...>`.
+  2. Go to `node_modules` ➜ `react-native-datetimepicker` ➜ `ios` ➜ select `RNDateTimePicker.xcodeproj`.
+  3. Add `libRNDateTimePicker.a` to `Build Phases -> Link Binary With Libraries`.
+
+- Using CocoaPods:
+- 
+  1. Install CocoaPods, here the [installation guide](https://guides.cocoapods.org/using/getting-started.html).
+  2. Inside the iOS folder run `pod init`, this will create the initial `pod` file.
+  3. Update your `pod` file to look like the following ( Remember to replace `MyApp` with your target name ):
+   
+      ```ruby
+      # Allowed sources
+      source 'https://github.com/CocoaPods/Specs.git'
+
+      target 'MyApp' do
+        # As we use Swift, ensure that `use_frameworks` is enabled.
+        use_frameworks!
+
+        # Specific iOS platform we are targetting
+        platform :ios, '8.0'
+
+        # Point to the installed version
+        pod 'RNDateTimePicker', :path => '../node_modules/react-native-datetimepicker/RNDateTimePicker.podspec'
+
+        # React/React-Native specific pods
+        pod 'React', :path => '../node_modules/react-native', :subspecs => [
+          'Core',
+          'CxxBridge',      # Include this for RN >= 0.47
+          'DevSupport',     # Include this to enable In-App Devmenu if RN >= 0.43
+          'RCTText',
+          'RCTNetwork',
+          'RCTWebSocket',   # Needed for debugging
+        ]
+
+        # Explicitly include Yoga if you are using RN >= 0.42.0
+        pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
+        # Third party deps podspec link
+        pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+        pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+        pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+
+      end
+      ```
+  4. Run `pod install` inside the same folder where the `pod` file was created
+  5. Open the `.xcworkspace` file that was created and run
+
+#### Android
+
+1. Add the following lines to `android/settings.gradle`:
+   
+   ```gradle
+   include ':react-native-datetimepicker'
+   project(':react-native-datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-datetimepicker/android')
+   ```
+
+2. Add into `android/gradle.properties`:
+   
+   ```gradle
+   android.useAndroidX=true
+   android.enableJetifier=true
+   ```
+
+3. Add the compile line to the dependencies in `android/app/build.gradle`:
+
+   ```gradle
+   dependencies {
+       ...
+       implementation project(':react-native-datetimepicker')
+   }
+   ```
+
+4. Add the import and link the package in `MainApplication.java`:
+
+   ```java
+   import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage; // <-- add this import
+
+   public class MainApplication extends Application implements ReactApplication {
+       @Override
+       protected List<ReactPackage> getPackages() {
+           return Arrays.<ReactPackage>asList(
+               new MainReactPackage(),
+               new RNDateTimePickerPackage() // <-- add this line
+           );
+       }
+   }
+   ```
+
+## Tests
+
+### Jest
+
+```
+$ npm install
+$ npm run test
+```
+
+### Detox
+
+Detox is a gray box end-to-end testing and automation library for mobile apps.
+- [Dependencies required](https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md#step-1-install-dependencies)
+
+#### iOS
+
+- debug:
+  ```sh
+  npm install
+  # Debug requires to run Metro Bundler
+  npm run start
+  npm run detox:ios:build:debug
+  npm run detox:ios:test:debug
+  ```
+
+- release:
+  
+  ```sh
+  npm install
+  npm run detox:ios:build:release
+  npm run detox:ios:test:release
+  ```
+
+For cleaning all the detox builds just run ```npm run detox:clean```.
+
+#### Android
+
+  An existing Android emulator is required to match the name defined in `detox.configurations.android.emu.debug.name` and `detox.configurations.android.emu.release.name` inside the `package.json`.
+
+  - debug:
+    ```sh
+    npm install
+    # Debug requires to run Metro Bundler
+    npm run start
+    npm run detox:android:build:debug
+    npm run detox:android:test:debug
+    ```
+
+  - release:
+    
+    ```sh
+    npm install
+    npm run detox:android:build:release
+    npm run detox:android:test:release
+    ```
+
+## Running the example app
+
+1. Run `npm install`
+2. Run `npm run start` for starting Metro Bundler
+3. Run `npm run start:ios` or `npm run start:android`
+
+## General Usage
+
+### Importing it
+
+```js
+import DateTimePicker from 'react-native-datetimepicker';
+```
+or
+
+```js
+var DateTimePicker = require('react-native-datetimepicker');
+```
+
+### Basic usage
+
+```js
+<DateTimePicker 
+  value={date} 
+  mode={mode} 
+  is24Hour={true}
+  display="default" 
+  onChange={this.setDate}
+/>
+```
+
+### Props
+
+#### `mode` (`optional`)
+
+Defines the type of the picker.
+
+List of possible values:
+- `date` (`default for iOS and Android`)
+- `time`
+- `datetime` (`iOS only`)
+- `countdown` (`iOS only`)
+
+```js
+<DateTimePicker mode="time" />
+```
+
+#### `display` (`optional`, `Android only`)
+
+Defines the visual display of the picker for Android and will be ignored for iOS.
+
+List of possible values:
+- `default`
+- `spinner`
+- `calendar`
+- `clock`
+
+```js
+<DateTimePicker display="spinner" } />
+```
+
+#### `value`
+
+Defines the date or time value used in the component.
+
+```js
+<DateTimePicker value={new Date()} />
+```
+
+#### `maximumDate` (`optional`)
+
+Defines the maximum date that can be selected.
+
+```js
+<DateTimePicker maximumDate={new Date()} />
+```
+
+#### `minimumDate` (`optional`)
+
+Defines the minimum date that can be selected.
+
+```js
+<DateTimePicker minimumDate={new Date()} />
+```
+
+#### `timeZoneOffsetInMinutes` (`optional`, `iOS only`)
+
+Allows to change the timeZone of the date picker, by default it uses the device's time zone.
+
+```js
+// GMT+1
+<DateTimePicker timeZoneOffsetInMinutes={60} />
+```
+
+#### `locale` (`optional`, `iOS only`)
+
+Allows to change the locale of the component, by default it uses the device's locale.
+
+```js
+// GMT+1
+<DateTimePicker locale="es-ES" />
+```
+
+#### `is24Hour` (`optional`, `Android only`)
+
+Allows to set the time picker to 24hour format.
+
+```js
+// GMT+1
+<DateTimePicker is24Hour={true} />
+```
+
+#### `minuteInterval` (`optional`, `iOS only`)
+
+The interval at which minutes can be selected.
+Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
+
+```js
+<DateTimePicker minuteInterval={10} />
+```
+
+#### `onChange` (`optional`)
+
+Date change handler.
+
+This is called when the user changes the date or time in the UI. It receives the event and the date as parameters.
+
+```js
+setDate = (event, date) => {}
+
+<DateTimePicker onChange={this.setDate} />
+```

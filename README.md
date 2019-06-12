@@ -28,7 +28,7 @@ or
   3. Add `libRNDateTimePicker.a` to `Build Phases -> Link Binary With Libraries`.
 
 - Using CocoaPods:
-- 
+
   1. Install CocoaPods, here the [installation guide](https://guides.cocoapods.org/using/getting-started.html).
   2. Inside the iOS folder run `pod init`, this will create the initial `pod` file.
   3. Update your `pod` file to look like the following ( Remember to replace `MyApp` with your target name ):
@@ -125,6 +125,8 @@ $ npm run test
 Detox is a gray box end-to-end testing and automation library for mobile apps.
 - [Dependencies required](https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md#step-1-install-dependencies)
 
+For cleaning all the detox builds just run `npm run detox:clean`.
+
 #### iOS
 
 - debug:
@@ -143,8 +145,6 @@ Detox is a gray box end-to-end testing and automation library for mobile apps.
   npm run detox:ios:build:release
   npm run detox:ios:test:release
   ```
-
-For cleaning all the detox builds just run ```npm run detox:clean```.
 
 #### Android
 
@@ -189,7 +189,7 @@ var DateTimePicker = require('react-native-datetimepicker');
 ### Basic usage
 
 ```js
-<DateTimePicker 
+<RNDateTimePicker 
   value={date} 
   mode={mode} 
   is24Hour={true}
@@ -205,13 +205,13 @@ var DateTimePicker = require('react-native-datetimepicker');
 Defines the type of the picker.
 
 List of possible values:
-- `date` (`default for iOS and Android`)
-- `time`
-- `datetime` (`iOS only`)
-- `countdown` (`iOS only`)
+- `"date"` (default for `iOS` and `Android)
+- `"time"`
+- `"datetime"` (`iOS` only)
+- `"countdown"` (`iOS` only)
 
 ```js
-<DateTimePicker mode="time" />
+<RNDateTimePicker mode="time" />
 ```
 
 #### `display` (`optional`, `Android only`)
@@ -219,73 +219,13 @@ List of possible values:
 Defines the visual display of the picker for Android and will be ignored for iOS.
 
 List of possible values:
-- `default`
-- `spinner`
-- `calendar`
-- `clock`
+- `"default"`
+- `"spinner"`
+- `"calendar"` (only for `date` mode)
+- `"clock"` (only for `time` mode)
 
 ```js
-<DateTimePicker display="spinner" } />
-```
-
-#### `value`
-
-Defines the date or time value used in the component.
-
-```js
-<DateTimePicker value={new Date()} />
-```
-
-#### `maximumDate` (`optional`)
-
-Defines the maximum date that can be selected.
-
-```js
-<DateTimePicker maximumDate={new Date()} />
-```
-
-#### `minimumDate` (`optional`)
-
-Defines the minimum date that can be selected.
-
-```js
-<DateTimePicker minimumDate={new Date()} />
-```
-
-#### `timeZoneOffsetInMinutes` (`optional`, `iOS only`)
-
-Allows to change the timeZone of the date picker, by default it uses the device's time zone.
-
-```js
-// GMT+1
-<DateTimePicker timeZoneOffsetInMinutes={60} />
-```
-
-#### `locale` (`optional`, `iOS only`)
-
-Allows to change the locale of the component, by default it uses the device's locale.
-
-```js
-// GMT+1
-<DateTimePicker locale="es-ES" />
-```
-
-#### `is24Hour` (`optional`, `Android only`)
-
-Allows to set the time picker to 24hour format.
-
-```js
-// GMT+1
-<DateTimePicker is24Hour={true} />
-```
-
-#### `minuteInterval` (`optional`, `iOS only`)
-
-The interval at which minutes can be selected.
-Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
-
-```js
-<DateTimePicker minuteInterval={10} />
+<RNDateTimePicker display="spinner" } />
 ```
 
 #### `onChange` (`optional`)
@@ -297,5 +237,281 @@ This is called when the user changes the date or time in the UI. It receives the
 ```js
 setDate = (event, date) => {}
 
-<DateTimePicker onChange={this.setDate} />
+<RNDateTimePicker onChange={this.setDate} />
 ```
+
+#### `value` (`required`)
+
+Defines the date or time value used in the component.
+
+```js
+<RNDateTimePicker value={new Date()} />
+```
+
+#### `maximumDate` (`optional`)
+
+Defines the maximum date that can be selected.
+
+```js
+<RNDateTimePicker maximumDate={new Date()} />
+```
+
+#### `minimumDate` (`optional`)
+
+Defines the minimum date that can be selected.
+
+```js
+<RNDateTimePicker minimumDate={new Date()} />
+```
+
+#### `timeZoneOffsetInMinutes` (`optional`, `iOS only`)
+
+Allows to change the timeZone of the date picker, by default it uses the device's time zone.
+
+```js
+// GMT+1
+<RNDateTimePicker timeZoneOffsetInMinutes={60} />
+```
+
+#### `locale` (`optional`, `iOS only`)
+
+Allows to change the locale of the component, by default it uses the device's locale.
+
+```js
+<RNDateTimePicker locale="es-ES" />
+```
+
+#### `is24Hour` (`optional`, `Android only`)
+
+Allows to set the time picker to 24hour format.
+
+```js
+<RNDateTimePicker is24Hour={true} />
+```
+
+#### `minuteInterval` (`optional`, `iOS only`)
+
+The interval at which minutes can be selected.
+Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
+
+```js
+<RNDateTimePicker minuteInterval={10} />
+```
+## Migration from the older components
+
+RNDateTimePicker is the new common name used to represent the old versions of iOS and Android.
+
+### DatePickerIOS
+
+-  `initialDate` is deprecated, use `value` instead.
+  
+    ```js
+    // Before
+    <DatePickerIOS initialValue={new Date()} />
+    ```
+
+    ```js
+    // Now
+    <RNDateTimePicker value={new Date()} />
+    ```
+
+- `date` is deprecated, use `value` instead.
+
+    ```js
+    // Before
+    <DatePickerIOS date={new Date()} />
+    ```
+
+    ```js
+    // Now
+    <RNDateTimePicker value={new Date()} />
+    ```
+
+- `onChange` now returns also the date.
+  
+    ```js
+    // Before
+    onChange = (event) => {}
+    <DatePickerIOS onChange={this.onChange} />
+    ```
+
+    ```js
+    // Now
+    onChange = (event, date) => {}
+    <RNDateTimePicker onChange={this.onChange} />
+    ```
+
+- `onDateChange` is deprecated, use `onChange` instead.
+  
+    ```js
+    // Before
+    setDate = (date) => {}
+    <DatePickerIOS onDateChange={this.setDate} />
+    ```
+
+    ```js
+    // Now
+    setDate = (event, date) => {}
+    <RNDateTimePicker onChange={this.setDate} />
+    ```
+
+### DatePickerAndroid
+
+- `date` is deprecated, use `value` instead.
+
+    ```js
+    // Before
+    try {
+      const {action, year, month, day} = await DatePickerAndroid.open({
+        date: new Date()
+      });
+    } catch ({code, message}) {
+      console.warn('Cannot open date picker', message);
+    }
+    ```
+
+    ```js
+    // Now
+    <RNDateTimePicker mode="date" value={new Date()} />
+    ```
+
+- `minDate` and `maxDate` are deprecated, use `minimumDate` and `maximumDate` instead.
+
+    ```js
+    // Before
+    try {
+      const {action, year, month, day} = await DatePickerAndroid.open({
+        minDate: new Date(),
+        maxDate: new Date()
+      });
+    } catch ({code, message}) {
+      console.warn('Cannot open date picker', message);
+    }
+    ```
+
+    ```js
+    // Now
+    <RNDateTimePicker mode="date" minimumDate={new Date()} maximumDate={new Date()} />
+    ```
+
+- `dateSetAction` is deprecated, use `onChange` instead.
+
+    ```js
+    // Before
+    try {
+      const {action, year, month, day} = await DatePickerAndroid.open();
+      if (action === DatePickerAndroid.dateSetAction) {
+        // Selected year, month (0-11), day
+      }
+    } catch ({code, message}) {
+      console.warn('Cannot open date picker', message);
+    }
+    ```
+
+    ```js
+    // Now
+    setDate = (event, date) => {
+      if (date !== undefined) {
+        // timeSetAction
+      }
+    }
+    <RNDateTimePicker mode="date" onChange={this.setDate} />
+    ```
+
+- `dismissedAction` is deprecated, use `onChange` instead.
+
+    ```js
+    // Before
+    try {
+      const {action, year, month, day} = await DatePickerAndroid.open();
+      if (action === DatePickerAndroid.dismissedAction) {
+        // Dismissed
+      }
+    } catch ({code, message}) {
+      console.warn('Cannot open date picker', message);
+    }
+    ```
+
+    ```js
+    // Now
+    setDate = (event, date) => {
+      if (date === undefined) {
+        // dismissedAction
+      }
+    }
+    <RNDateTimePicker mode="date" onChange={this.setDate} />
+    ```
+
+### TimePickerAndroid
+
+- `hour` and `minute` are deprecated, use `value` instead.
+
+    ```js
+    // Before
+    try {
+      const {action, hour, minute} = await TimePickerAndroid.open({
+        hour: 14,
+        minute: 0,
+        is24Hour: false, // Will display '2 PM'
+      });
+      if (action !== TimePickerAndroid.dismissedAction) {
+        // Selected hour (0-23), minute (0-59)
+      }
+    } catch ({code, message}) {
+      console.warn('Cannot open time picker', message);
+    }
+    ```
+
+    ```js
+    // Now
+    // It will use the hour and minute defined in date
+    <RNDateTimePicker mode="time" value={new Date()} />
+    ```
+
+- `timeSetAction` is deprecated, use `onChange` instead.
+
+    ```js
+    // Before
+    try {
+      const {action, hour, minute} = await TimePickerAndroid.open();
+      if (action === TimePickerAndroid.timeSetAction) {
+        // Selected hour (0-23), minute (0-59)
+      }
+    } catch ({code, message}) {
+      console.warn('Cannot open time picker', message);
+    }
+    ```
+
+    ```js
+    // Now
+    setTime = (event, date) => {
+      if (date !== undefined) {
+        // Use the hour and minute from the date object
+      }
+    }
+    <RNDateTimePicker mode="time" onChange={this.setTime} />
+    ```
+
+- `dismissedAction` is deprecated, use `onChange` instead.
+
+    ```js
+    // Before
+    try {
+      const {action, hour, minute} = await TimePickerAndroid.open();
+      if (action === TimePickerAndroid.dismissedAction) {
+        // Dismissed
+      }
+    } catch ({code, message}) {
+      console.warn('Cannot open time picker', message);
+    }
+    ```
+
+    ```js
+    // Now
+    setTime = (event, date) => {
+      if (date === undefined) {
+        // dismissedAction
+      }
+    }
+    <RNDateTimePicker mode="time" onChange={this.setTime} />
+    ```

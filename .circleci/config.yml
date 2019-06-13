@@ -1,25 +1,13 @@
 version: 2.1
 
 orbs:
-  rn: react-native-community/react-native@dev:0.1.0-rc14
+  rn: react-native-community/react-native@1.2.1
 
 jobs:
   checkout_code:
     executor: rn/linux_js
     steps:
       - checkout
-      - persist_to_workspace:
-          root: .
-          paths: .
-
-  install_example:
-    executor: rn/linux_js
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          name: Install example
-          command: npm run install:example
       - persist_to_workspace:
           root: .
           paths: .
@@ -49,20 +37,20 @@ workflows:
       - analyse:
           requires:
             - checkout_code
-      - install_example:
-          requires:
-            - checkout_code
       - rn/android_build:
+          name: build_android_release
           project_path: "example/android"
-          name: build_android_debug
           requires:
-            - install_example
-
-    # Add Detox tests before running this expensive job.
-    # - rn/ios_build_and_test:
-    #     project_path: "example/ios/example.xcodeproj"
-    #     device: "iPhone X"
-    #     build_configuration: "Debug"
-    #     scheme: "Example"
-    #     requires:
-    #       - analyse
+            - analyse
+      # - rn/android_test:
+      #     detox_configuration: "android.emu.release"
+      #     requires:
+      #       - build_android_release
+      # - rn/ios_build_and_test:
+      #     project_path: "example/ios/example.xcodeproj"
+      #     device: "iPhone X"
+      #     build_configuration: "Release"
+      #     scheme: "example"
+      #     detox_configuration: "ios.sim.release"
+      #     requires:
+      #       - analyse_js

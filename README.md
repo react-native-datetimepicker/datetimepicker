@@ -13,7 +13,7 @@ or
 `yarn add react-native-datetimepicker`
 
 
-### Using React Native Link
+### Install using react-native link
 
 `react-native link react-native-datetimepicker`
 
@@ -23,7 +23,7 @@ or
 
 - Linking project manually:
   
-  1. In the XCode's "Project navigator", right click on your project's Libraries folder ➜ `Add Files to <...>`.
+  1. In XCode's "Project navigator", right click on your project's Libraries folder ➜ `Add Files to <...>`.
   2. Go to `node_modules` ➜ `react-native-datetimepicker` ➜ `ios` ➜ select `RNDateTimePicker.xcodeproj`.
   3. Add `libRNDateTimePicker.a` to `Build Phases -> Link Binary With Libraries`.
 
@@ -68,7 +68,8 @@ or
       end
       ```
   4. Run `pod install` inside the same folder where the `pod` file was created
-  5. Open the `.xcworkspace` file that was created and run
+  5. `npm run start`
+  6. `npm run start:ios`
 
 #### Android
 
@@ -97,81 +98,19 @@ or
 
 4. Add the import and link the package in `MainApplication.java`:
 
-   ```java
-   import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage; // <-- add this import
+   ```diff
+   + import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
    public class MainApplication extends Application implements ReactApplication {
        @Override
        protected List<ReactPackage> getPackages() {
            return Arrays.<ReactPackage>asList(
-               new MainReactPackage(),
-               new RNDateTimePickerPackage() // <-- add this line
+              new MainReactPackage(),
+   +             new RNDateTimePickerPackage()
            );
        }
    }
    ```
-
-## Tests
-
-### Jest
-
-```
-$ npm install
-$ npm run test
-```
-
-### Detox
-
-Detox is a gray box end-to-end testing and automation library for mobile apps.
-- [Dependencies required](https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md#step-1-install-dependencies)
-
-For cleaning all the detox builds just run `npm run detox:clean`.
-
-#### iOS
-
-- debug:
-  ```sh
-  npm install
-  # Debug requires to run Metro Bundler
-  npm run start
-  npm run detox:ios:build:debug
-  npm run detox:ios:test:debug
-  ```
-
-- release:
-  
-  ```sh
-  npm install
-  npm run detox:ios:build:release
-  npm run detox:ios:test:release
-  ```
-
-#### Android
-
-  An existing Android emulator is required to match the name defined in `detox.configurations.android.emu.debug.name` and `detox.configurations.android.emu.release.name` inside the `package.json`.
-
-  - debug:
-    ```sh
-    npm install
-    # Debug requires to run Metro Bundler
-    npm run start
-    npm run detox:android:build:debug
-    npm run detox:android:test:debug
-    ```
-
-  - release:
-    
-    ```sh
-    npm install
-    npm run detox:android:build:release
-    npm run detox:android:test:release
-    ```
-
-## Running the example app
-
-1. Run `npm install`
-2. Run `npm run start` for starting Metro Bundler
-3. Run `npm run start:ios` or `npm run start:android`
 
 ## General Usage
 
@@ -186,21 +125,65 @@ or
 var DateTimePicker = require('react-native-datetimepicker');
 ```
 
-### Basic usage
+### Basic usage with state
 
 ```js
-<RNDateTimePicker 
-  value={date} 
-  mode={mode} 
-  is24Hour={true}
-  display="default" 
-  onChange={this.setDate}
-/>
+import React, {Component} from 'react';
+import {View, Button, Platform} from 'react-native';
+import DateTimePicker from 'react-native-datetimepicker';
+
+export default class App extends Component {
+  state = {
+    date: new Date('2020-06-12T14:42:42'),
+    mode: 'date',
+    show: false,
+  }
+
+  setDate = (event, date) => {
+    date = date || this.state.date;
+
+    this.setState({
+      show: Platform.OS === 'ios' ? true : false,
+      date,
+    });
+  }
+
+  show = mode => {
+    this.setState({
+      show: true,
+      mode,
+    });
+  }
+
+  datepicker = () => {
+    this.show('date');
+  }
+
+  timepicker = () => {
+    this.show('time');
+  }
+
+  render() {
+    const { show, date, mode } = this.state;
+
+    return (
+      <View>
+        <View>
+          <Button onPress={this.datepicker} title="Show date picker!" />
+        </View>
+        <View>
+          <Button onPress={this.timepicker} title="Show time picker!" />
+        </View>
+        { show && <DateTimePicker value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+      </View>
+    );
+  }
+}
 ```
 
-### Props
+## Props
 
-#### `mode` (`optional`)
+### `mode` (`optional`)
 
 Defines the type of the picker.
 
@@ -214,7 +197,7 @@ List of possible values:
 <RNDateTimePicker mode="time" />
 ```
 
-#### `display` (`optional`, `Android only`)
+### `display` (`optional`, `Android only`)
 
 Defines the visual display of the picker for Android and will be ignored for iOS.
 
@@ -228,7 +211,7 @@ List of possible values:
 <RNDateTimePicker display="spinner" } />
 ```
 
-#### `onChange` (`optional`)
+### `onChange` (`optional`)
 
 Date change handler.
 
@@ -240,7 +223,7 @@ setDate = (event, date) => {}
 <RNDateTimePicker onChange={this.setDate} />
 ```
 
-#### `value` (`required`)
+### `value` (`required`)
 
 Defines the date or time value used in the component.
 
@@ -248,23 +231,23 @@ Defines the date or time value used in the component.
 <RNDateTimePicker value={new Date()} />
 ```
 
-#### `maximumDate` (`optional`)
+### `maximumDate` (`optional`)
 
 Defines the maximum date that can be selected.
 
 ```js
-<RNDateTimePicker maximumDate={new Date()} />
+<RNDateTimePicker maximumDate={new Date(2300, 10, 20)} />
 ```
 
-#### `minimumDate` (`optional`)
+### `minimumDate` (`optional`)
 
 Defines the minimum date that can be selected.
 
 ```js
-<RNDateTimePicker minimumDate={new Date()} />
+<RNDateTimePicker minimumDate={new Date(1950, 0, 1)} />
 ```
 
-#### `timeZoneOffsetInMinutes` (`optional`, `iOS only`)
+### `timeZoneOffsetInMinutes` (`optional`, `iOS only`)
 
 Allows to change the timeZone of the date picker, by default it uses the device's time zone.
 
@@ -273,7 +256,7 @@ Allows to change the timeZone of the date picker, by default it uses the device'
 <RNDateTimePicker timeZoneOffsetInMinutes={60} />
 ```
 
-#### `locale` (`optional`, `iOS only`)
+### `locale` (`optional`, `iOS only`)
 
 Allows to change the locale of the component, by default it uses the device's locale.
 
@@ -281,7 +264,7 @@ Allows to change the locale of the component, by default it uses the device's lo
 <RNDateTimePicker locale="es-ES" />
 ```
 
-#### `is24Hour` (`optional`, `Android only`)
+### `is24Hour` (`optional`, `Android only`)
 
 Allows to set the time picker to 24hour format.
 
@@ -289,7 +272,7 @@ Allows to set the time picker to 24hour format.
 <RNDateTimePicker is24Hour={true} />
 ```
 
-#### `minuteInterval` (`optional`, `iOS only`)
+### `minuteInterval` (`optional`, `iOS only`)
 
 The interval at which minutes can be selected.
 Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
@@ -297,9 +280,12 @@ Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 ```js
 <RNDateTimePicker minuteInterval={10} />
 ```
+
 ## Migration from the older components
 
 RNDateTimePicker is the new common name used to represent the old versions of iOS and Android.
+
+On android open picker modals ( date and time ) will be updated with the changed prop value if for example a HOC holding state changes it. Previously the component used to close the modal and render a new one on consecutive calls.
 
 ### DatePickerIOS
 
@@ -515,3 +501,70 @@ RNDateTimePicker is the new common name used to represent the old versions of iO
     }
     <RNDateTimePicker mode="time" onChange={this.setTime} />
     ```
+
+## Contributing to the component
+
+### Clone, install
+
+```sh
+git clone https://github.com/react-native-community/react-native-datetimepicker.git
+cd react-native-datetimepicker
+npm install
+```
+
+### Tests
+
+#### Jest
+
+```sh
+npm install
+npm run test
+```
+
+#### Detox
+
+Detox is a gray box end-to-end testing and automation library for mobile apps.
+- [Dependencies required](https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md#step-1-install-dependencies)
+
+For cleaning all the detox builds just run `npm run detox:clean`.
+
+##### iOS
+
+- debug:
+  ```sh
+  # Debug requires to run Metro Bundler
+  npm run start
+  npm run detox:ios:build:debug
+  npm run detox:ios:test:debug
+  ```
+
+- release:
+  
+  ```sh
+  npm run detox:ios:build:release
+  npm run detox:ios:test:release
+  ```
+
+##### Android
+
+  An existing Android emulator is required to match the name defined in `detox.configurations.android.emu.debug.name` and `detox.configurations.android.emu.release.name` inside the `package.json`.
+
+  - debug:
+    ```sh
+    # Debug requires to run Metro Bundler
+    npm run start
+    npm run detox:android:build:debug
+    npm run detox:android:test:debug
+    ```
+
+  - release:
+    
+    ```sh
+    npm run detox:android:build:release
+    npm run detox:android:test:release
+    ```
+
+### Running the example app
+
+1. Run `npm run start` for starting Metro Bundler
+2. Run `npm run start:ios` or `npm run start:android`

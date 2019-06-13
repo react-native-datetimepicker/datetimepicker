@@ -285,7 +285,7 @@ Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 
 RNDateTimePicker is the new common name used to represent the old versions of iOS and Android.
 
-On android open picker modals ( date and time ) will be updated with the changed prop value if for example a HOC holding state changes it. Previously the component used to close the modal and render a new one on consecutive calls.
+On android, open picker modals will update the selected date and/or time if the prop `value` changes. For example, if a HOC holding state, updates the `value` prop. Previously the component used to close the modal and render a new one on consecutive calls.
 
 ### DatePickerIOS
 

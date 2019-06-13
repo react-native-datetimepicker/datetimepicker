@@ -4,18 +4,74 @@
 
 React Native date & time picker component for iOS and Android
 
+#### iOS
+
+  <img src="./docs/images/ios_date.png" width="260" height="420"/>
+  <img src="./docs/images/ios_time.png" width="260" height="420"/>
+
+#### Android
+  
+  <br/>
+  &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="./docs/images/android_date.png" width="200" height="400">
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="./docs/images/android_date.png" width="200" height="400"/>
+
+## Table of Contents
+
+- [React Native DateTimePicker](#react-native-datetimepicker)
+      - [iOS](#ios)
+      - [Android](#android)
+  - [Getting started](#getting-started)
+    - [Install using react-native link](#install-using-react-native-link)
+    - [Manual installation](#manual-installation)
+      - [iOS](#ios-1)
+      - [Android](#android-1)
+  - [General Usage](#general-usage)
+    - [Importing it](#importing-it)
+    - [Basic usage with state](#basic-usage-with-state)
+  - [Props](#props)
+    - [`mode` (`optional`)](#mode-optional)
+    - [`display` (`optional`, `Android only`)](#display-optional-android-only)
+    - [`onChange` (`optional`)](#onchange-optional)
+    - [`value` (`required`)](#value-required)
+    - [`maximumDate` (`optional`)](#maximumdate-optional)
+    - [`minimumDate` (`optional`)](#minimumdate-optional)
+    - [`timeZoneOffsetInMinutes` (`optional`, `iOS only`)](#timezoneoffsetinminutes-optional-ios-only)
+    - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
+    - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
+    - [`minuteInterval` (`optional`, `iOS only`)](#minuteinterval-optional-ios-only)
+  - [Migration from the older components](#migration-from-the-older-components)
+    - [DatePickerIOS](#datepickerios)
+    - [DatePickerAndroid](#datepickerandroid)
+    - [TimePickerAndroid](#timepickerandroid)
+  - [Contributing to the component](#contributing-to-the-component)
+    - [Clone, install](#clone-install)
+    - [Tests](#tests)
+      - [Jest](#jest)
+      - [Detox](#detox)
+        - [iOS](#ios-2)
+        - [Android](#android-2)
+    - [Running the example app](#running-the-example-app)
+
 ## Getting started
 
-`npm install react-native-datetimepicker --save`
+```bash
+npm install react-native-datetimepicker --save
+```
 
 or
 
-`yarn add react-native-datetimepicker`
+```bash
+yarn add react-native-datetimepicker
+```
 
 
 ### Install using react-native link
 
-`react-native link react-native-datetimepicker`
+```bash
+react-native link react-native-datetimepicker
+```
 
 ### Manual installation
 
@@ -174,7 +230,12 @@ export default class App extends Component {
         <View>
           <Button onPress={this.timepicker} title="Show time picker!" />
         </View>
-        { show && <DateTimePicker value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+        { show && <DateTimePicker value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    display="default"
+                    onChange={this.setDate} />
+        }
       </View>
     );
   }
@@ -249,7 +310,7 @@ Defines the minimum date that can be selected.
 
 ### `timeZoneOffsetInMinutes` (`optional`, `iOS only`)
 
-Allows to change the timeZone of the date picker, by default it uses the device's time zone.
+Allows changing of the timeZone of the date picker. By default it uses the device's time zone.
 
 ```js
 // GMT+1
@@ -258,7 +319,7 @@ Allows to change the timeZone of the date picker, by default it uses the device'
 
 ### `locale` (`optional`, `iOS only`)
 
-Allows to change the locale of the component, by default it uses the device's locale.
+Allows changing of the locale of the component. By default it uses the device's locale.
 
 ```js
 <RNDateTimePicker locale="es-ES" />
@@ -266,7 +327,7 @@ Allows to change the locale of the component, by default it uses the device's lo
 
 ### `is24Hour` (`optional`, `Android only`)
 
-Allows to set the time picker to 24hour format.
+Allows changing of the time picker to a 24 hour format.
 
 ```js
 <RNDateTimePicker is24Hour={true} />
@@ -283,9 +344,9 @@ Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 
 ## Migration from the older components
 
-RNDateTimePicker is the new common name used to represent the old versions of iOS and Android.
+`RNDateTimePicker` is the new common name used to represent the old versions of iOS and Android.
 
-On android, open picker modals will update the selected date and/or time if the prop `value` changes. For example, if a HOC holding state, updates the `value` prop. Previously the component used to close the modal and render a new one on consecutive calls.
+On Android, open picker modals will update the selected date and/or time if the prop `value` changes. For example, if a HOC holding state, updates the `value` prop. Previously the component used to close the modal and render a new one on consecutive calls.
 
 ### DatePickerIOS
 

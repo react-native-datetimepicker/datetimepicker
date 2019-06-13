@@ -4,13 +4,24 @@
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
   "scripts": {
-    "test": "jest",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start:android": "react-native run-android --root example/",
+    "start:ios": "react-native run-ios --project-path example/ios",
+    "test": "jest ./test",
     "posttest": "npm run lint",
-    "lint": "eslint '{src,test}/**/*.js'",
+    "lint": "eslint '{example,src,test}/**/*.js'",
     "flow": "npm run flow-check-ios && npm run flow-check-android",
-    "install:example": "cd example && npm ci",
     "flow-check-ios": "flow check",
-    "flow-check-android": "flow check --flowconfig-name .flowconfig.android"
+    "flow-check-android": "flow check --flowconfig-name .flowconfig.android",
+    "detox:ios:build:debug": "detox build -c ios.sim.debug",
+    "detox:ios:test:debug": "detox test -c ios.sim.debug",
+    "detox:ios:build:release": "detox build -c ios.sim.release",
+    "detox:ios:test:release": "detox test -c ios.sim.release",
+    "detox:android:build:debug": "detox build -c android.emu.debug",
+    "detox:android:test:debug": "detox test -c android.emu.debug",
+    "detox:android:build:release": "detox build -c android.emu.release",
+    "detox:android:test:release": "detox test -c android.emu.release",
+    "detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build"
   },
   "repository": {
     "type": "git",
@@ -39,11 +50,13 @@
     "@babel/runtime": "^7.4.3",
     "@react-native-community/eslint-config": "0.0.5",
     "babel-jest": "^24.1.0",
+    "detox": "^12.9.0",
     "eslint": "^5.16.0",
     "flow-bin": "^0.95.0",
     "flow-typed": "^2.5.1",
     "jest": "^24.1.0",
     "metro-react-native-babel-preset": "^0.53.1",
+    "moment": "^2.24.0",
     "react": "^16.8.3",
     "react-native": "^0.59.3",
     "react-test-renderer": "^16.8.3"
@@ -54,5 +67,35 @@
   },
   "dependencies": {
     "invariant": "^2.2.4"
+  },
+  "detox": {
+    "test-runner": "jest",
+    "runner-config": "example/e2e/config.json",
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "example/ios/build/Build/Products/Debug-iphonesimulator/example.app",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project example/ios/example.xcodeproj -destination 'platform=iOS Simulator,name=iPhone X' -scheme example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      },
+      "ios.sim.release": {
+        "binaryPath": "example/ios/build/Build/Products/Release-iphonesimulator/example.app",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project example/ios/example.xcodeproj -destination 'platform=iOS Simulator,name=iPhone X' -scheme example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      },
+      "android.emu.debug": {
+        "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ../..",
+        "type": "android.emulator",
+        "name": "TestingAVD"
+      },
+      "android.emu.release": {
+        "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ../..",
+        "type": "android.emulator",
+        "name": "TestingAVD"
+      }
+    }
   }
 }

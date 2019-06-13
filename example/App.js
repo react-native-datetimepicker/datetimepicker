@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Button, Platform} from 'react-native';
+import moment from 'moment';
 import DateTimePicker from 'react-native-datetimepicker';
 
 type Props = {};
 export default class App extends Component<Props> {
   state = {
-    date: new Date('2020-06-12T14:42:42'),
+    date: new Date(1598051730000),
     mode: 'date',
     show: false,
   }
@@ -38,17 +39,23 @@ export default class App extends Component<Props> {
     const { show, date, mode } = this.state;
 
     return (
-      <View style={styles.container}>
+      <View testID="appRootView" style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.text}>Example DateTime Picker</Text>
         </View>
         <View style={styles.button}>
-          <Button onPress={this.datepicker} title="Show date picker!" />
+          <Button testID="datePickerButton" onPress={this.datepicker} title="Show date picker!" />
         </View>
         <View style={styles.button}>
-          <Button onPress={this.timepicker} title="Show time picker!" />
+          <Button testID="timePickerButton" onPress={this.timepicker} title="Show time picker!" />
         </View>
-        { show && <DateTimePicker value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+        <View style={styles.header}>
+          <Text testID="dateTimeText" style={styles.dateTimeText}>
+            { mode === 'time' && moment.utc(date).format('HH:mm') }
+            { mode === 'date' && moment.utc(date).format('MM/DD/YYYY') }
+          </Text>
+        </View>
+        { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
       </View>
     );
   }
@@ -71,5 +78,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  dateTimeText: {
+    fontSize: 16,
+    fontWeight: 'normal',
   },
 });

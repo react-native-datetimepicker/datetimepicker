@@ -10,7 +10,7 @@ React Native date & time picker component for iOS and Android
   <img src="./docs/images/ios_time.png" width="260" height="420"/>
 
 #### Android
-  
+
   <br/>
   &nbsp; &nbsp; &nbsp; &nbsp;
   <img src="./docs/images/android_date.png" width="200" height="400">
@@ -57,20 +57,20 @@ React Native date & time picker component for iOS and Android
 ## Getting started
 
 ```bash
-npm install react-native-datetimepicker --save
+npm install @react-native-community/datetimepicker --save
 ```
 
 or
 
 ```bash
-yarn add react-native-datetimepicker
+yarn add @react-native-community/datetimepicker
 ```
 
 
 ### Install using react-native link
 
 ```bash
-react-native link react-native-datetimepicker
+react-native link @react-native-community/datetimepicker
 ```
 
 ### Manual installation
@@ -78,9 +78,9 @@ react-native link react-native-datetimepicker
 #### iOS
 
 - Linking project manually:
-  
+
   1. In XCode's "Project navigator", right click on your project's Libraries folder ➜ `Add Files to <...>`.
-  2. Go to `node_modules` ➜ `react-native-datetimepicker` ➜ `ios` ➜ select `RNDateTimePicker.xcodeproj`.
+  2. Go to `node_modules` ➜ `@react-native-community/datetimepicker` ➜ `ios` ➜ select `RNDateTimePicker.xcodeproj`.
   3. Add `libRNDateTimePicker.a` to `Build Phases -> Link Binary With Libraries`.
 
 - Using CocoaPods:
@@ -88,7 +88,7 @@ react-native link react-native-datetimepicker
   1. Install CocoaPods, here the [installation guide](https://guides.cocoapods.org/using/getting-started.html).
   2. Inside the iOS folder run `pod init`, this will create the initial `pod` file.
   3. Update your `pod` file to look like the following ( Remember to replace `MyApp` with your target name ):
-   
+
       ```ruby
       # Allowed sources
       source 'https://github.com/CocoaPods/Specs.git'
@@ -101,7 +101,7 @@ react-native link react-native-datetimepicker
         platform :ios, '8.0'
 
         # Point to the installed version
-        pod 'RNDateTimePicker', :path => '../node_modules/react-native-datetimepicker/RNDateTimePicker.podspec'
+        pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
 
         # React/React-Native specific pods
         pod 'React', :path => '../node_modules/react-native', :subspecs => [
@@ -130,14 +130,14 @@ react-native link react-native-datetimepicker
 #### Android
 
 1. Add the following lines to `android/settings.gradle`:
-   
+
    ```gradle
    include ':react-native-datetimepicker'
-   project(':react-native-datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-datetimepicker/android')
+   project(':react-native-datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
    ```
 
 2. Add into `android/gradle.properties`:
-   
+
    ```gradle
    android.useAndroidX=true
    android.enableJetifier=true
@@ -173,12 +173,12 @@ react-native link react-native-datetimepicker
 ### Importing it
 
 ```js
-import DateTimePicker from 'react-native-datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 ```
 or
 
 ```js
-var DateTimePicker = require('react-native-datetimepicker');
+var DateTimePicker = require('@react-native-community/datetimepicker');
 ```
 
 ### Basic usage with state
@@ -186,7 +186,7 @@ var DateTimePicker = require('react-native-datetimepicker');
 ```js
 import React, {Component} from 'react';
 import {View, Button, Platform} from 'react-native';
-import DateTimePicker from 'react-native-datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class App extends Component {
   state = {
@@ -351,7 +351,7 @@ On Android, open picker modals will update the selected date and/or time if the 
 ### DatePickerIOS
 
 -  `initialDate` is deprecated, use `value` instead.
-  
+
     ```js
     // Before
     <DatePickerIOS initialValue={new Date()} />
@@ -375,7 +375,7 @@ On Android, open picker modals will update the selected date and/or time if the 
     ```
 
 - `onChange` now returns also the date.
-  
+
     ```js
     // Before
     onChange = (event) => {}
@@ -389,7 +389,7 @@ On Android, open picker modals will update the selected date and/or time if the 
     ```
 
 - `onDateChange` is deprecated, use `onChange` instead.
-  
+
     ```js
     // Before
     setDate = (date) => {}
@@ -600,7 +600,7 @@ For cleaning all the detox builds just run `npm run detox:clean`.
   ```
 
 - release:
-  
+
   ```sh
   npm run detox:ios:build:release
   npm run detox:ios:test:release
@@ -619,7 +619,7 @@ For cleaning all the detox builds just run `npm run detox:clean`.
     ```
 
   - release:
-    
+
     ```sh
     npm run detox:android:build:release
     npm run detox:android:test:release

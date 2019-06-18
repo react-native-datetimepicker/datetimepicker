@@ -4,18 +4,18 @@
 
 React Native date & time picker component for iOS and Android
 
-#### iOS
-
-  <img src="./docs/images/ios_date.png" width="260" height="420"/>
-  <img src="./docs/images/ios_time.png" width="260" height="420"/>
-
-#### Android
-
-  <br/>
-  &nbsp; &nbsp; &nbsp; &nbsp;
-  <img src="./docs/images/android_date.png" width="200" height="400">
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-  <img src="./docs/images/android_date.png" width="200" height="400"/>
+<table>
+  <tr><td colspan=2><strong>iOS</strong></td></tr>
+  <tr>
+    <td><p align="center"><img src="./docs/images/ios_date.png" width="260" height="420"/></p></td>
+    <td><p align="center"><img src="./docs/images/ios_time.png" width="260" height="420"/></p></td>
+  </tr>
+  <tr><td colspan=2><strong>Android</strong></td></tr>
+  <tr>
+    <td><p align="center"><img src="./docs/images/android_date.png" width="200" height="400"/></p></td>
+    <td><p align="center"><img src="./docs/images/android_time.png" width="200" height="400"/></p></td>
+  </tr>
+</table>
 
 ## Table of Contents
 

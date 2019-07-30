@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "react-native start",
     "start:android": "react-native run-android --root example/",

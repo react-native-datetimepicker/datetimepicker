@@ -1,6 +1,7 @@
-import {StyleSheet, View, Text, Button, Platform} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View, Text, StatusBar, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import React, {Component} from 'react';
+import {Header,Colors} from 'react-native/Libraries/NewAppScreen';
+import React, {Fragment, Component} from 'react';
 import moment from 'moment';
 
 type Props = {};
@@ -39,29 +40,82 @@ export default class App extends Component<Props> {
     const { show, date, mode } = this.state;
 
     return (
-      <View testID="appRootView" style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.text}>Example DateTime Picker</Text>
-        </View>
-        <View style={styles.button}>
-          <Button testID="datePickerButton" onPress={this.datepicker} title="Show date picker!" />
-        </View>
-        <View style={styles.button}>
-          <Button testID="timePickerButton" onPress={this.timepicker} title="Show time picker!" />
-        </View>
-        <View style={styles.header}>
-          <Text testID="dateTimeText" style={styles.dateTimeText}>
-            { mode === 'time' && moment.utc(date).format('HH:mm') }
-            { mode === 'date' && moment.utc(date).format('MM/DD/YYYY') }
-          </Text>
-        </View>
-        { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
-      </View>
+      <Fragment>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <Header />
+            {global.HermesInternal == null ? null : (
+              <View style={styles.engine}>
+                <Text style={styles.footer}>Engine: Hermes</Text>
+              </View>
+            )}
+            <View style={styles.body}>
+              <View testID="appRootView" style={styles.container}>
+                <View style={styles.header}>
+                  <Text style={styles.text}>Example DateTime Picker</Text>
+                </View>
+                <View style={styles.button}>
+                  <Button testID="datePickerButton" onPress={this.datepicker} title="Show date picker!" />
+                </View>
+                <View style={styles.button}>
+                  <Button testID="timePickerButton" onPress={this.timepicker} title="Show time picker!" />
+                </View>
+                <View style={styles.header}>
+                  <Text testID="dateTimeText" style={styles.dateTimeText}>
+                    { mode === 'time' && moment.utc(date).format('HH:mm') }
+                    { mode === 'date' && moment.utc(date).format('MM/DD/YYYY') }
+                  </Text>
+                </View>
+                { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+              </View>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </Fragment>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: Colors.lighter,
+  },
+  engine: {
+    position: 'absolute',
+    right: 0,
+  },
+  body: {
+    backgroundColor: Colors.white,
+  },
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: Colors.black,
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+    color: Colors.dark,
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+  footer: {
+    color: Colors.dark,
+    fontSize: 12,
+    fontWeight: '600',
+    padding: 4,
+    paddingRight: 12,
+    textAlign: 'right',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

@@ -47,4 +47,4 @@ buck-out/
 .vscode
 
 # CocoaPods
-/ios/Pods/
+example/ios/Pods/

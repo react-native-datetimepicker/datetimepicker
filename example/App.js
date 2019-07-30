@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Button, Platform} from 'react-native';
 import moment from 'moment';
-import DateTimePicker from 'react-native-datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 type Props = {};
 export default class App extends Component<Props> {

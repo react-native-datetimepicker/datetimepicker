@@ -1,6 +1,8 @@
 # CHANGELOG
 
-###
+- [#13] Update to `react-native@0.60`
+
+### 1.0.0
 
 - [#7] Adding Readme.md and docs
 - [#6] Detox tests added
@@ -13,3 +15,4 @@
 [#5]: https://github.com/react-native-community/react-native-datetimepicker/pull/5
 [#6]: https://github.com/react-native-community/react-native-datetimepicker/pull/6
 [#7]: https://github.com/react-native-community/react-native-datetimepicker/pull/7
+[#13]: https://github.com/react-native-community/react-native-datetimepicker/pull/13

@@ -46,11 +46,11 @@ workflows:
     #     detox_configuration: "android.emu.release"
     #     requires:
     #       - build_android_release
-    # - rn/ios_build_and_test:
-    #     project_path: "example/ios/example.xcodeproj"
-    #     device: "iPhone X"
-    #     build_configuration: "Release"
-    #     scheme: "example"
-    #     detox_configuration: "ios.sim.release"
-    #     requires:
-    #       - analyse
+      - rn/ios_build_and_test:
+          project_path: "example/ios/example.xcodeproj"
+          device: "iPhone X"
+          build_configuration: "Release"
+          scheme: "example"
+          detox_configuration: "ios.sim.release"
+          requires:
+            - analyse

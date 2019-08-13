@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 2.0.0
+
 - [#13] Update to `react-native@0.60`
 
 ### 1.0.0

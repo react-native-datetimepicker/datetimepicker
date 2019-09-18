@@ -224,7 +224,7 @@ export default class App extends Component {
 Defines the type of the picker.
 
 List of possible values:
-- `"date"` (default for `iOS` and `Android)
+- `"date"` (default for `iOS` and `Android`)
 - `"time"`
 - `"datetime"` (`iOS` only)
 - `"countdown"` (`iOS` only)

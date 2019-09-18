@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 2.1.0
+
+- [#25] Add typescript definitions.
+- [#22] Fix backtick in documentation.
+
 ### 2.0.0
 
 - [#13] Update to `react-native@0.60`
@@ -18,3 +23,5 @@
 [#6]: https://github.com/react-native-community/react-native-datetimepicker/pull/6
 [#7]: https://github.com/react-native-community/react-native-datetimepicker/pull/7
 [#13]: https://github.com/react-native-community/react-native-datetimepicker/pull/13
+[#22]: https://github.com/react-native-community/react-native-datetimepicker/pull/22
+[#25]: https://github.com/react-native-community/react-native-datetimepicker/pull/25

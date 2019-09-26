@@ -8,7 +8,7 @@ import type {NativeComponent} from 'ReactNative';
 import type {ViewProps} from 'ViewPropTypes';
 import type {ElementRef} from 'react';
 
-type IOSMode = 'date' | 'time' | 'datetime';
+type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
 type Display = 'spinner' | 'default' | 'clock' | 'calendar';
 

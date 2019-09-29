@@ -65,6 +65,12 @@ or
 yarn add @react-native-community/datetimepicker
 ```
 
+### Install using react-native link
+```bash
+react-native link @react-native-community/datetimepicker
+```
+
+Don't forget to run `pod install` in ios and to sync Gradle in android project.
 ### Manual installation
 
 #### iOS

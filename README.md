@@ -244,7 +244,7 @@ List of possible values:
 - `"clock"` (only for `time` mode)
 
 ```js
-<RNDateTimePicker display="spinner" } />
+<RNDateTimePicker display={"spinner"} />
 ```
 
 ### `onChange` (`optional`)

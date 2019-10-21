@@ -15,13 +15,12 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Build;
 import android.os.Bundle;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import android.text.format.DateFormat;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import javax.annotation.Nullable;
 
 @SuppressWarnings("ValidFragment")
 public class RNTimePickerDialogFragment extends DialogFragment {

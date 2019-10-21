@@ -11,16 +11,15 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Bundle;
+import android.widget.DatePicker;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import android.widget.DatePicker;
 
 import com.facebook.react.bridge.*;
 import com.facebook.react.common.annotations.VisibleForTesting;
 import com.facebook.react.module.annotations.ReactModule;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * {@link NativeModule} that allows JS to show a native date picker dialog and get called back when
@@ -37,7 +36,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
   }
 
   @Override
-  public @Nonnull String getName() {
+  public @NonNull String getName() {
     return RNDatePickerDialogModule.FRAGMENT_TAG;
   }
 

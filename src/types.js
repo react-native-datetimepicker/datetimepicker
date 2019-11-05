@@ -13,6 +13,8 @@ import {ANDROID_MODE, DISPLAY, DAY_OF_WEEK} from './constants';
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
 type Display = $Keys<typeof DISPLAY>;
+type MinuteIntervalIOS = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
+type MinuteIntervalAndroid = ?(1 | 5 | 10 | 15 | 20 | 30);
 
 export type Event = SyntheticEvent<
   $ReadOnly<{|
@@ -86,7 +88,7 @@ export type IOSNativeProps = $ReadOnly<{|
   /**
    * The interval at which minutes can be selected.
    */
-  minuteInterval?: ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30),
+  minuteInterval?: MinuteIntervalIOS,
 
   /**
    * The date picker mode.
@@ -122,6 +124,12 @@ export type AndroidNativeProps = $ReadOnly<{|
    * The display options.
    */
   display: Display,
+
+  /**
+   * The interval at which minutes can be selected.
+   */
+  minuteInterval?: MinuteIntervalAndroid,
+
   onChange: (event: AndroidEvent, date?: Date) => void,
   neutralButtonLabel?: string,
 |}>;

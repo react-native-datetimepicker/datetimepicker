@@ -14,3 +14,5 @@ export const DISPLAY_CALENDAR = 'calendar';
 export const DATE_SET_ACTION = 'dateSetAction';
 export const TIME_SET_ACTION = 'timeSetAction';
 export const DISMISS_ACTION = 'dismissedAction';
+
+export const MINUTE_INTERVAL_DEFAULT = 1;

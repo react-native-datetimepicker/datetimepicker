@@ -7,7 +7,12 @@
  * @format
  * @flow strict-local
  */
-import {DISPLAY_DEFAULT, TIME_SET_ACTION, DISMISS_ACTION} from './constants';
+import {
+  DISPLAY_DEFAULT,
+  TIME_SET_ACTION,
+  DISMISS_ACTION,
+  MINUTE_INTERVAL_DEFAULT,
+} from './constants';
 import {NativeModules} from 'react-native';
 import {toMilliseconds} from './utils';
 
@@ -22,6 +27,7 @@ export default class TimePickerAndroid {
    *   * `is24Hour` (boolean) - If `true`, the picker uses the 24-hour format. If `false`,
    *     the picker shows an AM/PM chooser. If undefined, the default for the current locale
    *     is used.
+   *   * `minuteInterval` (enum(1 | 5 | 10 | 15 | 20 | 30)`) - set the time picker minutes' interval
    *   * `mode` (`enum('clock', 'spinner', 'default')`) - set the time picker mode
    *     - 'clock': Show a time picker in clock mode.
    *     - 'spinner': Show a time picker in spinner mode.
@@ -35,6 +41,7 @@ export default class TimePickerAndroid {
   static async open(options: TimePickerOptions): Promise<DateTimePickerResult> {
     toMilliseconds(options, 'value');
     options.display = options.display || DISPLAY_DEFAULT;
+    options.minuteInterval = options.minuteInterval || MINUTE_INTERVAL_DEFAULT;
 
     return NativeModules.RNTimePickerAndroid.open(options);
   }

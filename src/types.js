@@ -133,6 +133,7 @@ export type DatePickerOptions = {|
 
 export type TimePickerOptions = {|
   ...TimeOptions,
+  minuteInterval?: MinuteIntervalAndroid,
   display?: Display,
 |};
 

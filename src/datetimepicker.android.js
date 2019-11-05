@@ -24,6 +24,7 @@ export default function RNDateTimePicker({
   is24Hour,
   minimumDate,
   maximumDate,
+  minuteInterval,
 }: AndroidNativeProps) {
   invariant(value, 'A date or time should be specified as `value`.');
   let picker;
@@ -33,6 +34,7 @@ export default function RNDateTimePicker({
       picker = pickers[MODE_TIME].open({
         value,
         display,
+        minuteInterval,
         is24Hour,
       });
       break;

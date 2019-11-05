@@ -77,7 +77,8 @@ public class RNTimePickerDialogFragment extends DialogFragment {
           hour,
           minute,
           minuteInterval,
-          is24hour
+          is24hour,
+          display
         );
       } else if (display == RNTimePickerDisplay.SPINNER) {
         return new RNDismissableTimePickerDialog(
@@ -91,7 +92,8 @@ public class RNTimePickerDialogFragment extends DialogFragment {
           hour,
           minute,
           minuteInterval,
-          is24hour
+          is24hour,
+          display
         );
       }
     }
@@ -101,7 +103,8 @@ public class RNTimePickerDialogFragment extends DialogFragment {
             hour,
             minute,
             minuteInterval,
-            is24hour
+            is24hour,
+            display
     );
   }
 

@@ -1,6 +1,6 @@
 import {SafeAreaView, ScrollView, StyleSheet, View, Text, StatusBar, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Header,Colors} from 'react-native/Libraries/NewAppScreen';
+import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {Fragment, Component} from 'react';
 import moment from 'moment';
 
@@ -9,44 +9,50 @@ export default class App extends Component<Props> {
   state = {
     date: new Date(1598051730000),
     mode: 'date',
+    display: 'default',
     show: false,
-  }
+  };
 
   setDate = (event, date) => {
     date = date || this.state.date;
 
     this.setState({
-      show: Platform.OS === 'ios' ? true : false,
+      show: Platform.OS === 'ios',
       date,
     });
-  }
+  };
 
-  show = mode => {
+  show = (mode, display = 'default') => {
     this.setState({
       show: true,
       mode,
+      display,
     });
-  }
+  };
 
   datepicker = () => {
     this.show('date');
-  }
+  };
 
   timepicker = () => {
     this.show('time');
-  }
+  };
+
+  timepickerSpinner = () => {
+    this.show('time', 'spinner');
+  };
 
   render() {
-    const { show, date, mode } = this.state;
+    const {show, date, mode, display} = this.state;
 
     return (
       <Fragment>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="dark-content"/>
         <SafeAreaView>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-            <Header />
+            <Header/>
             {global.HermesInternal == null ? null : (
               <View style={styles.engine}>
                 <Text style={styles.footer}>Engine: Hermes</Text>
@@ -58,18 +64,32 @@ export default class App extends Component<Props> {
                   <Text style={styles.text}>Example DateTime Picker</Text>
                 </View>
                 <View style={styles.button}>
-                  <Button testID="datePickerButton" onPress={this.datepicker} title="Show date picker!" />
+                  <Button testID="datePickerButton" onPress={this.datepicker} title="Show date picker!"/>
                 </View>
                 <View style={styles.button}>
-                  <Button testID="timePickerButton" onPress={this.timepicker} title="Show time picker!" />
+                  <Button testID="timePickerButton" onPress={this.timepicker} title="Show time picker (default)!"/>
+                </View>
+                <View style={styles.button}>
+                  <Button testID="timePickerButton" onPress={this.timepickerSpinner} title="Show time picker (spinner)!"/>
                 </View>
                 <View style={styles.header}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    { mode === 'time' && moment.utc(date).format('HH:mm') }
-                    { mode === 'date' && moment.utc(date).format('MM/DD/YYYY') }
+                    {mode === 'time' && moment.utc(date).format('HH:mm')}
+                    {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
                   </Text>
                 </View>
-                { show && <DateTimePicker minuteInterval={5} testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+                {show && (
+                  <DateTimePicker
+                    minuteInterval={15}
+                    testID="dateTimePicker"
+                    timeZoneOffsetInMinutes={0}
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    display={display}
+                    onChange={this.setDate}
+                  />
+                )}
               </View>
             </View>
           </ScrollView>

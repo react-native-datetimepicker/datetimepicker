@@ -69,7 +69,7 @@ export default class App extends Component<Props> {
                     { mode === 'date' && moment.utc(date).format('MM/DD/YYYY') }
                   </Text>
                 </View>
-                { show && <DateTimePicker testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
+                { show && <DateTimePicker minuteInterval={5} testID="dateTimePicker" timeZoneOffsetInMinutes={0} value={date} mode={mode} is24Hour={true} display="default" onChange={this.setDate} /> }
               </View>
             </View>
           </ScrollView>

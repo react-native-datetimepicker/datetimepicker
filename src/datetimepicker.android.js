@@ -39,6 +39,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
     minimumDate,
     maximumDate,
     neutralButtonLabel,
+    minuteInterval,
   } = props;
   let picker;
 
@@ -47,6 +48,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
       picker = pickers[MODE_TIME].open({
         value,
         display,
+        minuteInterval,
         is24Hour,
         neutralButtonLabel,
       });

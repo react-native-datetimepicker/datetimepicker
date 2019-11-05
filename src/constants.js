@@ -40,3 +40,4 @@ export const DISMISS_ACTION = 'dismissedAction';
 
 export const NEUTRAL_BUTTON_LABEL = 'neutralButtonLabel';
 export const NEUTRAL_BUTTON_ACTION = 'neutralButtonAction';
+export const MINUTE_INTERVAL_DEFAULT = 1;

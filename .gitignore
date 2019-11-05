@@ -37,6 +37,14 @@ build/
 .gradle
 local.properties
 *.iml
+/example/android/app/.settings
+/example/android/app/.project
+/example/android/app/.classpath
+/example/android/.settings
+/example/android/.project
+/android/.settings
+/android/.project
+/android/.classpath
 
 # BUCK
 buck-out/

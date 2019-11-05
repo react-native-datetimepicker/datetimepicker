@@ -64,26 +64,42 @@ public class RNTimePickerDialogFragment extends DialogFragment {
       is24hour = args.getBoolean(RNConstants.ARG_IS24HOUR, DateFormat.is24HourFormat(activityContext));
     }
 
+    int minuteInterval = RNConstants.DEFAULT_TIME_PICKER_INTERVAL;
+    if (args != null && RNMinuteIntervals.isValid(args.getInt(RNConstants.ARG_INTERVAL, -1))) {
+      minuteInterval = args.getInt(RNConstants.ARG_INTERVAL);
+    }
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      switch (display) {
-        case CLOCK:
-        case SPINNER:
-          String resourceName = display == RNTimePickerDisplay.CLOCK
-                  ? "ClockTimePickerDialog"
-                  : "SpinnerTimePickerDialog";
-          return new RNDismissableTimePickerDialog(
-                  activityContext,
-                  activityContext.getResources().getIdentifier(
-                          resourceName,
-                          "style",
-                          activityContext.getPackageName()
-                  ),
-                  onTimeSetListener,
-                  hour,
-                  minute,
-                  is24hour,
-                  display
-          );
+      if (display == RNTimePickerDisplay.CLOCK) {
+        return new RNDismissableTimePickerDialog(
+          activityContext,
+          activityContext.getResources().getIdentifier(
+            "ClockTimePickerDialog",
+            "style",
+            activityContext.getPackageName()
+          ),
+          onTimeSetListener,
+          hour,
+          minute,
+          minuteInterval,
+          is24hour,
+          display
+        );
+      } else if (display == RNTimePickerDisplay.SPINNER) {
+        return new RNDismissableTimePickerDialog(
+          activityContext,
+          activityContext.getResources().getIdentifier(
+            "SpinnerTimePickerDialog",
+            "style",
+            activityContext.getPackageName()
+          ),
+          onTimeSetListener,
+          hour,
+          minute,
+          minuteInterval,
+          is24hour,
+          display
+        );
       }
     }
     return new RNDismissableTimePickerDialog(
@@ -91,6 +107,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
             onTimeSetListener,
             hour,
             minute,
+            minuteInterval,
             is24hour,
             display
     );

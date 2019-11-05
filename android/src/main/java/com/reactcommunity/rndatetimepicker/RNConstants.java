@@ -5,6 +5,7 @@ public final class RNConstants {
   public static final String ARG_VALUE = "value";
   public static final String ARG_MINDATE = "minimumDate";
   public static final String ARG_MAXDATE = "maximumDate";
+  public static final String ARG_INTERVAL = "minuteInterval";
   public static final String ARG_IS24HOUR = "is24Hour";
   public static final String ARG_DISPLAY = "display";
   public static final String ACTION_DATE_SET = "dateSetAction";
@@ -15,4 +16,9 @@ public final class RNConstants {
    * Minimum date supported by {@link DatePicker}, 01 Jan 1900
    */
   public static final long DEFAULT_MIN_DATE = -2208988800001l;
+
+  /**
+    * Minimum and default time picker minute interval
+    */
+  public static final int DEFAULT_TIME_PICKER_INTERVAL = 1;
 }

@@ -59,6 +59,11 @@ public class RNTimePickerDialogFragment extends DialogFragment {
       is24hour = args.getBoolean(RNConstants.ARG_IS24HOUR, DateFormat.is24HourFormat(activityContext));
     }
 
+    int minuteInterval = RNConstants.DEFAULT_TIME_PICKER_INTERVAL;
+    if (args != null && RNMinuteIntervals.isValid(args.getInt(RNConstants.ARG_INTERVAL, -1))) {
+      minuteInterval = args.getInt(RNConstants.ARG_INTERVAL);
+    }
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       if (display == RNTimePickerDisplay.CLOCK) {
         return new RNDismissableTimePickerDialog(
@@ -71,6 +76,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
           onTimeSetListener,
           hour,
           minute,
+          minuteInterval,
           is24hour
         );
       } else if (display == RNTimePickerDisplay.SPINNER) {
@@ -84,6 +90,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
           onTimeSetListener,
           hour,
           minute,
+          minuteInterval,
           is24hour
         );
       }
@@ -93,6 +100,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
             onTimeSetListener,
             hour,
             minute,
+            minuteInterval,
             is24hour
     );
   }

@@ -1,8 +1,9 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
- *
+ * <p>
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+ * </p>
  */
 
 package com.reactcommunity.rndatetimepicker;
@@ -15,10 +16,10 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
 import android.text.format.DateFormat;
 
-import java.util.Calendar;
+import androidx.fragment.app.DialogFragment;
+
 import java.util.Locale;
 
 import javax.annotation.Nullable;
@@ -50,18 +51,22 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     final int minute = date.minute();
     boolean is24hour = DateFormat.is24HourFormat(activityContext);
 
+    int minuteInterval = RNConstants.DEFAULT_TIME_PICKER_INTERVAL;
+    if (args != null && RNMinuteIntervals.isValid(args.getInt(RNConstants.ARG_INTERVAL, -1))) {
+      minuteInterval = args.getInt(RNConstants.ARG_INTERVAL);
+    }
+
     RNTimePickerDisplay display = RNTimePickerDisplay.DEFAULT;
     if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
-      display = RNTimePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
+      if (RNMinuteIntervals.isRadialPickerCompatible(minuteInterval)) {
+        display = RNTimePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
+      } else {
+        display = RNTimePickerDisplay.SPINNER;
+      }
     }
 
     if (args != null) {
       is24hour = args.getBoolean(RNConstants.ARG_IS24HOUR, DateFormat.is24HourFormat(activityContext));
-    }
-
-    int minuteInterval = RNConstants.DEFAULT_TIME_PICKER_INTERVAL;
-    if (args != null && RNMinuteIntervals.isValid(args.getInt(RNConstants.ARG_INTERVAL, -1))) {
-      minuteInterval = args.getInt(RNConstants.ARG_INTERVAL);
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -98,13 +103,13 @@ public class RNTimePickerDialogFragment extends DialogFragment {
       }
     }
     return new RNDismissableTimePickerDialog(
-            activityContext,
-            onTimeSetListener,
-            hour,
-            minute,
-            minuteInterval,
-            is24hour,
-            display
+      activityContext,
+      onTimeSetListener,
+      hour,
+      minute,
+      minuteInterval,
+      is24hour,
+      display
     );
   }
 

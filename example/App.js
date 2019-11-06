@@ -11,6 +11,7 @@ export default class App extends Component<Props> {
     mode: 'date',
     display: 'default',
     show: false,
+    interval: undefined,
   };
 
   setDate = (event, date) => {
@@ -22,11 +23,12 @@ export default class App extends Component<Props> {
     });
   };
 
-  show = (mode, display = 'default') => {
+  show = (mode, display = 'default', interval = 5) => {
     this.setState({
       show: true,
       mode,
       display,
+      interval,
     });
   };
 
@@ -39,12 +41,12 @@ export default class App extends Component<Props> {
   };
 
   timepickerSpinner = () => {
-    this.show('time', 'spinner');
+    this.show('time', undefined, 15);
   };
 
   render() {
-    const {show, date, mode, display} = this.state;
-
+    const {show, date, mode, display, interval} = this.state;
+    console.log('### current date:', moment(date).format('HH:mm'));
     return (
       <Fragment>
         <StatusBar barStyle="dark-content"/>
@@ -74,13 +76,13 @@ export default class App extends Component<Props> {
                 </View>
                 <View style={styles.header}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {mode === 'time' && moment.utc(date).format('HH:mm')}
-                    {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
+                    {mode === 'time' && moment(date).format('HH:mm')}
+                    {mode === 'date' && moment(date).format('MM/DD/YYYY')}
                   </Text>
                 </View>
                 {show && (
                   <DateTimePicker
-                    minuteInterval={15}
+                    minuteInterval={interval}
                     testID="dateTimePicker"
                     timeZoneOffsetInMinutes={0}
                     value={date}

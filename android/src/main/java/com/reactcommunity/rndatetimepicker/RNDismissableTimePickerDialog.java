@@ -1,21 +1,23 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
- *
+ * <p>
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+ * </p>
  */
 package com.reactcommunity.rndatetimepicker;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Build;
-import android.util.Log;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nullable;
 
@@ -35,63 +37,76 @@ import javax.annotation.Nullable;
 class CustomTimePickerDialog extends TimePickerDialog {
   private static final String LOG_TAG = CustomTimePickerDialog.class.getSimpleName();
 
-  private int TIME_PICKER_INTERVAL;
   private TimePicker mTimePicker;
+  private int mTimePickerInterval;
   private RNTimePickerDisplay mDisplay;
-
   private final OnTimeSetListener mTimeSetListener;
 
   public CustomTimePickerDialog(
-      Context context,
-      OnTimeSetListener listener,
-      int hourOfDay,
-      int minute,
-      int minuteInterval,
-      boolean is24HourView,
-      RNTimePickerDisplay display
+    Context context,
+    OnTimeSetListener listener,
+    int hourOfDay,
+    int minute,
+    int minuteInterval,
+    boolean is24HourView,
+    RNTimePickerDisplay display
   ) {
-    super(context, listener, hourOfDay, minute / minuteInterval, is24HourView);
-    TIME_PICKER_INTERVAL = minuteInterval;
+    super(context, listener, hourOfDay, minute, is24HourView);
+    mTimePickerInterval = minuteInterval;
     mTimeSetListener = listener;
     mDisplay = display;
   }
 
   public CustomTimePickerDialog(
-      Context context,
-      int theme,
-      OnTimeSetListener listener,
-      int hourOfDay,
-      int minute,
-      int minuteInterval,
-      boolean is24HourView,
-      RNTimePickerDisplay display
+    Context context,
+    int theme,
+    OnTimeSetListener listener,
+    int hourOfDay,
+    int minute,
+    int minuteInterval,
+    boolean is24HourView,
+    RNTimePickerDisplay display
   ) {
-    super(context, theme, listener, hourOfDay, minute / minuteInterval, is24HourView);
-    TIME_PICKER_INTERVAL = minuteInterval;
+    super(context, theme, listener, hourOfDay, minute, is24HourView);
+    mTimePickerInterval = minuteInterval;
     mTimeSetListener = listener;
     mDisplay = display;
+  }
+
+  private int getRealMinutes(int minute) {
+    if (mDisplay == RNTimePickerDisplay.SPINNER) {
+      return minute * mTimePickerInterval;
+    }
+
+    return minute;
+  }
+
+  private int snapMinutesToInterval(int realMinutes) {
+    float stepsInMinutes = (float) realMinutes / (float) mTimePickerInterval;
+
+    if (mDisplay == RNTimePickerDisplay.SPINNER) {
+      return Math.round(stepsInMinutes);
+    }
+
+    return Math.round(stepsInMinutes) * mTimePickerInterval;
   }
 
   @Override
   public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-    boolean isRadialClock = mDisplay != RNTimePickerDisplay.SPINNER;
-    Log.d(LOG_TAG, "isRadialClock?:" + isRadialClock);
+    int realMinutes = getRealMinutes(minute);
 
-    if (isRadialClock && minute % TIME_PICKER_INTERVAL != 0) {
-      float stepsInMinutes = minute / TIME_PICKER_INTERVAL;
-      int correctedMinutes = Math.round(stepsInMinutes * TIME_PICKER_INTERVAL);
-
-      view.setCurrentMinute(correctedMinutes);
+    if (realMinutes % mTimePickerInterval != 0) {
+      view.setCurrentMinute(snapMinutesToInterval(realMinutes));
       return;
     }
 
-    super.onTimeChanged(view, hourOfDay, minute);
+    super.onTimeChanged(view, hourOfDay, realMinutes);
   }
 
   @Override
   public void updateTime(int hourOfDay, int minuteOfHour) {
     mTimePicker.setCurrentHour(hourOfDay);
-    mTimePicker.setCurrentMinute(minuteOfHour / TIME_PICKER_INTERVAL);
+    mTimePicker.setCurrentMinute(snapMinutesToInterval(minuteOfHour));
   }
 
   @Override
@@ -99,8 +114,11 @@ class CustomTimePickerDialog extends TimePickerDialog {
     switch (which) {
       case BUTTON_POSITIVE:
         if (mTimeSetListener != null) {
-          mTimeSetListener.onTimeSet(mTimePicker, mTimePicker.getCurrentHour(),
-              mTimePicker.getCurrentMinute() * TIME_PICKER_INTERVAL);
+          mTimeSetListener.onTimeSet(
+            mTimePicker,
+            mTimePicker.getCurrentHour(),
+            getRealMinutes(mTimePicker.getCurrentMinute())
+          );
         }
         break;
       case BUTTON_NEGATIVE:
@@ -111,31 +129,36 @@ class CustomTimePickerDialog extends TimePickerDialog {
 
   /**
    * Apply visual style in 'spinner' mode
+   * Adjust minutes to correspond selected interval
    */
   @Override
   public void onAttachedToWindow() {
     super.onAttachedToWindow();
 
     try {
-      Class<?> pickerInternalClass = Class.forName("com.android.internal.R$id");
-      Log.d(LOG_TAG, "pickerInternalClass:" + pickerInternalClass);
-      mTimePicker = findViewById(pickerInternalClass.getField("timePicker").getInt(null));
+      int timePickerId = Resources.getSystem()
+        .getIdentifier("timePicker", "id", "android");
 
-      if (mDisplay != RNTimePickerDisplay.SPINNER) {
-        return;
+      mTimePicker = this.findViewById(timePickerId);
+
+      if (mDisplay == RNTimePickerDisplay.SPINNER) {
+        int minutePickerId = Resources.getSystem()
+          .getIdentifier("minute", "id", "android");
+        NumberPicker minutePicker = this.findViewById(minutePickerId);
+
+        minutePicker.setMinValue(0);
+        minutePicker.setMaxValue((60 / mTimePickerInterval) - 1);
+
+        List<String> displayedValues = new ArrayList<>();
+        for (int i = 0; i < 60; i += mTimePickerInterval) {
+          displayedValues.add(String.format(Locale.US, "%02d", i));
+        }
+
+        minutePicker.setDisplayedValues(displayedValues.toArray(new String[displayedValues.size()]));
       }
 
-      NumberPicker minuteSpinner = mTimePicker.findViewById(pickerInternalClass.getField("minute").getInt(null));
-
-      minuteSpinner.setMinValue(0);
-      minuteSpinner.setMaxValue((60 / TIME_PICKER_INTERVAL) - 1);
-
-      List<String> displayedValues = new ArrayList<>();
-      for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
-        displayedValues.add(String.format("%02d", i));
-      }
-
-      minuteSpinner.setDisplayedValues(displayedValues.toArray(new String[displayedValues.size()]));
+      int currentMinute = mTimePicker.getCurrentMinute();
+      mTimePicker.setCurrentMinute(snapMinutesToInterval(currentMinute));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -146,26 +169,26 @@ class CustomTimePickerDialog extends TimePickerDialog {
 public class RNDismissableTimePickerDialog extends CustomTimePickerDialog {
 
   public RNDismissableTimePickerDialog(
-      Context context,
-      @Nullable TimePickerDialog.OnTimeSetListener callback,
-      int hourOfDay,
-      int minute,
-      int minuteInterval,
-      boolean is24HourView,
-      RNTimePickerDisplay display
+    Context context,
+    @Nullable TimePickerDialog.OnTimeSetListener callback,
+    int hourOfDay,
+    int minute,
+    int minuteInterval,
+    boolean is24HourView,
+    RNTimePickerDisplay display
   ) {
     super(context, callback, hourOfDay, minute, minuteInterval, is24HourView, display);
   }
 
   public RNDismissableTimePickerDialog(
-      Context context,
-      int theme,
-      @Nullable TimePickerDialog.OnTimeSetListener callback,
-      int hourOfDay,
-      int minute,
-      int minuteInterval,
-      boolean is24HourView,
-      RNTimePickerDisplay display
+    Context context,
+    int theme,
+    @Nullable TimePickerDialog.OnTimeSetListener callback,
+    int hourOfDay,
+    int minute,
+    int minuteInterval,
+    boolean is24HourView,
+    RNTimePickerDisplay display
   ) {
     super(context, theme, callback, hourOfDay, minute, minuteInterval, is24HourView, display);
   }

@@ -1,8 +1,9 @@
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
- *
+ * <p>
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+ * </p>
  */
 
 package com.reactcommunity.rndatetimepicker;
@@ -17,6 +18,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.widget.TimePicker;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -87,8 +89,8 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {
       promise.reject(
-          RNConstants.ERROR_NO_ACTIVITY,
-          "Tried to open a TimePicker dialog while not attached to an Activity");
+        RNConstants.ERROR_NO_ACTIVITY,
+        "Tried to open a TimePicker dialog while not attached to an Activity");
       return;
     }
     // We want to support both android.app.Activity and the pre-Honeycomb FragmentActivity

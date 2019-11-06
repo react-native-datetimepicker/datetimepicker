@@ -34,6 +34,7 @@ export const App = () => {
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
   const [display, setDisplay] = useState('default');
+  const [interval, setMinInterval] = useState(undefined);
 
   // Windows-specific
   const [maxDate, setMinDate] = useState(new Date('2021'));
@@ -79,6 +80,21 @@ export const App = () => {
     showMode('time');
     setDisplay('spinner');
   };
+
+  const showTimepickerClockModeWithInterval = () => {
+    showMode('time');
+    setMinInterval(5);
+    setDisplay('clock');
+  };
+
+  const showTimepickerSpinnerWithInterval = () => {
+    showMode('time');
+    setMinInterval(5);
+    setDisplay('spinner');
+  };
+  const currentDateTime = moment
+    .utc(date)
+    .format(mode === 'time' ? 'HH:mm' : 'MM/DD/YYYY');
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -150,10 +166,23 @@ export const App = () => {
                 title="Show time picker spinner!"
               />
             </View>
+            <View style={styles.button}>
+              <Button
+                testID="timePickerDefaultIntervalButton"
+                onPress={showTimepickerClockModeWithInterval}
+                title="Show time picker as clock (with 5 min interval)!"
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                testID="timePickerIntervalButton"
+                onPress={showTimepickerSpinnerWithInterval}
+                title="Show time picker as spinner (with 5 min interval)!"
+              />
+            </View>
             <View style={styles.header}>
               <ThemedText testID="dateTimeText" style={styles.dateTimeText}>
-                {mode === 'time' && moment.utc(date).format('HH:mm')}
-                {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
+                {currentDateTime}
               </ThemedText>
               <Button
                 testID="hidePicker"
@@ -165,6 +194,7 @@ export const App = () => {
               <DateTimePicker
                 testID="dateTimePicker"
                 timeZoneOffsetInMinutes={0}
+                minuteInterval={interval}
                 value={date}
                 mode={mode}
                 is24Hour

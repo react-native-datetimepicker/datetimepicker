@@ -39,7 +39,7 @@ React Native date & time picker component for iOS and Android
     - [`timeZoneOffsetInMinutes` (`optional`, `iOS only`)](#timezoneoffsetinminutes-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
-    - [`minuteInterval` (`optional`, `iOS only`)](#minuteinterval-optional-ios-only)
+    - [`minuteInterval` (`optional`)](#minuteinterval-optional-ios-only)
   - [Migration from the older components](#migration-from-the-older-components)
     - [DatePickerIOS](#datepickerios)
     - [DatePickerAndroid](#datepickerandroid)
@@ -308,10 +308,16 @@ Allows changing of the time picker to a 24 hour format.
 <RNDateTimePicker is24Hour={true} />
 ```
 
-### `minuteInterval` (`optional`, `iOS only`)
+### `minuteInterval` (`optional`)
 
 The interval at which minutes can be selected.
-Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
+Possible values are:  
+
+ios | `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
+---: | :---
+android | `1, 5, 10, 15, 20, 30`
+
+>__NOTE!__ Setting `minuteInterval` on android will force you into `spinner` display mode!
 
 ```js
 <RNDateTimePicker minuteInterval={10} />

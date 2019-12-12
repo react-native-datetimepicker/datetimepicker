@@ -1,6 +1,6 @@
 import {SafeAreaView, ScrollView, StyleSheet, View, Text, StatusBar, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
+import {Header,Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {Fragment, Component} from 'react';
 import moment from 'moment';
 
@@ -23,7 +23,7 @@ export default class App extends Component<Props> {
     });
   };
 
-  show = (mode, display = 'default', interval = 5) => {
+  show = (mode, display = 'default', interval = 1) => {
     this.setState({
       show: true,
       mode,
@@ -41,12 +41,12 @@ export default class App extends Component<Props> {
   };
 
   timepickerSpinner = () => {
-    this.show('time', undefined, 15);
+    this.show('time', undefined, 5);
   };
 
   render() {
     const {show, date, mode, display, interval} = this.state;
-    console.log('### current date:', moment(date).format('HH:mm'));
+
     return (
       <Fragment>
         <StatusBar barStyle="dark-content"/>
@@ -72,12 +72,12 @@ export default class App extends Component<Props> {
                   <Button testID="timePickerButton" onPress={this.timepicker} title="Show time picker (default)!"/>
                 </View>
                 <View style={styles.button}>
-                  <Button testID="timePickerButton" onPress={this.timepickerSpinner} title="Show time picker (spinner)!"/>
+                  <Button testID="timePickerIntervalButton" onPress={this.timepickerSpinner} title="Show time picker (with 5 min interval)!"/>
                 </View>
                 <View style={styles.header}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {mode === 'time' && moment(date).format('HH:mm')}
-                    {mode === 'date' && moment(date).format('MM/DD/YYYY')}
+                    {mode === 'time' && moment.utc(date).format('HH:mm')}
+                    {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
                   </Text>
                 </View>
                 {show && (

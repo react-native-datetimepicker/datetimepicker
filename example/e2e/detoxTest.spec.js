@@ -109,4 +109,50 @@ describe('Example', () => {
       await expect(dateTimeText).toHaveText('23:30');
     }
   });
+
+  it('shouldn\'t change time text when time changes to less than half of minuteInterval', async () => {
+    await element(by.id('timePickerIntervalButton')).tap();
+    const dateTimeText = await element(by.id('dateTimeText'));
+
+    if (global.device.getPlatform() === 'ios') {
+      const testElement = await element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker')));
+      await testElement.setColumnToValue(0, '2');
+      await testElement.setColumnToValue(1, '42');
+      await testElement.setColumnToValue(2, 'PM');
+
+      await expect(dateTimeText).toHaveText('14:40');
+    } else {
+      const keyboardButton = await element(by.type('androidx.appcompat.widget.AppCompatImageButton'));
+      keyboardButton.tap();
+      const testElement = await element(by.type('androidx.appcompat.widget.AppCompatEditText').and(by.text('15')));
+      testElement.tap();
+      testElement.replaceText('17');
+      await element(by.text('OK')).tap();
+
+      await expect(dateTimeText).toHaveText('23:15');
+    }
+  });
+
+  it('should change time text when time changes to more than half of minuteInterval', async () => {
+    await element(by.id('timePickerIntervalButton')).tap();
+    const dateTimeText = await element(by.id('dateTimeText'));
+
+    if (global.device.getPlatform() === 'ios') {
+      const testElement = await element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker')));
+      await testElement.setColumnToValue(0, '2');
+      await testElement.setColumnToValue(1, '44');
+      await testElement.setColumnToValue(2, 'PM');
+
+      await expect(dateTimeText).toHaveText('14:45');
+    } else {
+      const keyboardButton = await element(by.type('androidx.appcompat.widget.AppCompatImageButton'));
+      keyboardButton.tap();
+      const testElement = await element(by.type('androidx.appcompat.widget.AppCompatEditText').and(by.text('15')));
+      testElement.tap();
+      testElement.replaceText('18');
+      await element(by.text('OK')).tap();
+
+      await expect(dateTimeText).toHaveText('23:20');
+    }
+  });
 });

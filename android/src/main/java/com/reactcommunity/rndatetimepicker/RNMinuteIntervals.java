@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * Time picker minutes' intervals.
- * NOTE: only compatible with {@link RNTimePickerDisplay.SPINNER}
+ * NOTE: any interval except for '1' and '5' only compatible with {@link RNTimePickerDisplay.SPINNER}
  */
 public final class RNMinuteIntervals {
   private final static Integer[] MinuteIntervals = new Integer[]{1, 5, 10, 15, 20, 30};

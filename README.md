@@ -317,7 +317,7 @@ ios | `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 ---: | :---
 android | `1, 5, 10, 15, 20, 30`
 
->__NOTE!__ Setting `minuteInterval` on android will force you into `spinner` display mode!
+>__NOTE!__ Setting `minuteInterval` to something other than `1` or `5` on android will force you into `spinner` display mode!
 
 ```js
 <RNDateTimePicker minuteInterval={10} />

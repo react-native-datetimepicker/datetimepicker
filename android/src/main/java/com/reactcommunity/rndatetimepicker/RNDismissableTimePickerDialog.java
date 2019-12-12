@@ -104,7 +104,8 @@ class CustomTimePickerDialog extends TimePickerDialog {
     int realMinutes = getRealMinutes(minute);
 
     if (realMinutes % mTimePickerInterval != 0) {
-      view.setMinute(snapMinutesToInterval(realMinutes));
+      view.setCurrentMinute(snapMinutesToInterval(realMinutes));
+      view.setCurrentHour(hourOfDay);
       return;
     }
 
@@ -112,32 +113,24 @@ class CustomTimePickerDialog extends TimePickerDialog {
   }
 
   @Override
-  public void updateTime(int hourOfDay, int minuteOfHour) {
-    try {
-      mTimePicker.setHour(hourOfDay);
-      mTimePicker.setMinute(snapMinutesToInterval(minuteOfHour));
-    } catch (Exception e) {
-      Log.e(LOG_TAG, "updateTime encountered an error:");
-      e.printStackTrace();
-    }
-  }
-
-  @Override
   public void onClick(DialogInterface dialog, int which) {
     switch (which) {
       case BUTTON_POSITIVE:
         if (mTimeSetListener != null) {
-          mTimeSetListener.onTimeSet(
-            mTimePicker,
-            mTimePicker.getHour(),
-            getRealMinutes(mTimePicker.getMinute())
-          );
+          mTimeSetListener.onTimeSet(mTimePicker, mTimePicker.getCurrentHour(),
+                getRealMinutes(mTimePicker.getCurrentMinute()));
         }
         break;
       case BUTTON_NEGATIVE:
         cancel();
         break;
     }
+  }
+
+  @Override
+  public void updateTime(int hourOfDay, int minuteOfHour) {
+    mTimePicker.setCurrentHour(hourOfDay);
+    mTimePicker.setCurrentMinute(snapMinutesToInterval(minuteOfHour));
   }
 
   /**
@@ -153,7 +146,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
         .getIdentifier("timePicker", "id", "android");
 
       mTimePicker = this.findViewById(timePickerId);
-      int currentMinute = mTimePicker.getMinute();
+      int currentMinute = mTimePicker.getCurrentMinute();
 
       if (mDisplay == RNTimePickerDisplay.SPINNER) {
         int minutePickerId = Resources.getSystem()
@@ -171,7 +164,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
         minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
       }
 
-      mTimePicker.setMinute(snapMinutesToInterval(currentMinute));
+      mTimePicker.setCurrentMinute(snapMinutesToInterval(currentMinute));
     } catch (Exception e) {
       Log.e(LOG_TAG, "onAttachedToWindow encountered an error:");
       e.printStackTrace();

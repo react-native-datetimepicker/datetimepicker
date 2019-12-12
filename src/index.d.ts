@@ -104,7 +104,7 @@ export type AndroidNativeProps = Readonly<BaseProps & DateOptions & TimeOptions 
 
   /**
    * The interval at which minutes can be selected.
-   * NOTE: setting minute interval will override display mode to 'spinner'!
+   * NOTE: setting minute interval other than '1' or '5' will override display mode to 'spinner'!
    */
   minuteInterval?: MinuteIntervalAndroid,
 

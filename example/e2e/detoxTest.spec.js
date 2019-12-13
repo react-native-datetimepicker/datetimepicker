@@ -185,4 +185,24 @@ describe('Example', () => {
       await expect(dateTimeText).toHaveText('23:20');
     }
   });
+
+  it('should correct input on the fly on android', async () => {
+    await element(by.id('timePickerIntervalButton')).tap();
+    const dateTimeText = await element(by.id('dateTimeText'));
+
+    if (global.device.getPlatform() !== 'ios') {
+      const keyboardButton = await element(by.type('androidx.appcompat.widget.AppCompatImageButton'));
+      keyboardButton.tap();
+
+      await element(by.type('androidx.appcompat.widget.AppCompatEditText').and(by.text('15'))).tap();
+      await element(by.type('androidx.appcompat.widget.AppCompatEditText').and(by.text('15'))).tapBackspaceKey();
+      await element(by.type('androidx.appcompat.widget.AppCompatEditText').and(by.text('1'))).typeText('8');
+
+      await expect(await element(by.type('androidx.appcompat.widget.AppCompatEditText').and(by.text('18')))).toExist()
+
+      await element(by.text('OK')).tap();
+
+      await expect(dateTimeText).toHaveText('23:20');
+    }
+  });
 });

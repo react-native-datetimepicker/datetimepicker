@@ -23,6 +23,7 @@ React Native date & time picker component for iOS and Android
       - [iOS](#ios)
       - [Android](#android)
   - [Getting started](#getting-started)
+    - [Install using react-native link](#install-using-react-native-link)
     - [Manual installation](#manual-installation)
       - [iOS](#ios-1)
       - [Android](#android-1)
@@ -146,21 +147,21 @@ yarn add @react-native-community/datetimepicker
 ## General Usage
 
 ```js
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 ```
 
 or
 
 ```js
-const RNDateTimePicker = require('@react-native-community/datetimepicker');
+const DateTimePicker = require('@react-native-community/datetimepicker');
 ```
 
 ### Basic usage with state
 
 ```js
-import React, { Component } from 'react';
-import { View, Button, Platform } from 'react-native';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import React, {Component} from 'react';
+import {View, Button, Platform} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class App extends Component {
   state = {
@@ -204,7 +205,7 @@ export default class App extends Component {
         <View>
           <Button onPress={this.timepicker} title="Show time picker!" />
         </View>
-        { show && <RNDateTimePicker value={date}
+        { show && <DateTimePicker value={date}
                     mode={mode}
                     is24Hour={true}
                     display="default"
@@ -383,7 +384,7 @@ On Android, open picker modals will update the selected date and/or time if the 
     ```js
     // Before
     try {
-      const { action, year, month, day } = await DatePickerAndroid.open({
+      const {action, year, month, day} = await DatePickerAndroid.open({
         date: new Date()
       });
     } catch ({code, message}) {
@@ -401,7 +402,7 @@ On Android, open picker modals will update the selected date and/or time if the 
     ```js
     // Before
     try {
-      const { action, year, month, day } = await DatePickerAndroid.open({
+      const {action, year, month, day} = await DatePickerAndroid.open({
         minDate: new Date(),
         maxDate: new Date()
       });

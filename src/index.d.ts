@@ -1,7 +1,7 @@
 import { FC, Ref, SyntheticEvent } from 'react'
 import { NativeComponent, ViewProps } from 'react-native'
 
-type IOSMode = 'date' | 'time' | 'datetime';
+type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
 type Display = 'spinner' | 'default' | 'clock' | 'calendar';
 

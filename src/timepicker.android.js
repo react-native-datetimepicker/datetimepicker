@@ -7,7 +7,7 @@
  * @format
  * @flow strict-local
  */
-import {DISPLAY_DEFAULT, TIME_SET_ACTION, DISMISS_ACTION} from './constants';
+import {DISPLAY_DEFAULT, TIME_SET_ACTION, DISMISS_ACTION, NEUTRAL_BUTTON_ACTION,} from './constants';
 import {NativeModules} from 'react-native';
 import {toMilliseconds} from './utils';
 
@@ -35,6 +35,7 @@ export default class TimePickerAndroid {
   static async open(options: TimePickerOptions): Promise<DateTimePickerResult> {
     toMilliseconds(options, 'value');
     options.display = options.display || DISPLAY_DEFAULT;
+    console.log({options});
 
     return NativeModules.RNTimePickerAndroid.open(options);
   }

@@ -14,6 +14,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -31,6 +32,8 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   private OnDateSetListener mOnDateSetListener;
   @Nullable
   private OnDismissListener mOnDismissListener;
+  @Nullable
+  private static OnClickListener mOnNeutralButtonActionListener;
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -87,6 +90,9 @@ public class RNDatePickerDialogFragment extends DialogFragment {
           break;
       }
     }
+    if (args != null && args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
+      dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);
+    }
 
     final DatePicker datePicker = dialog.getDatePicker();
 
@@ -132,5 +138,9 @@ public class RNDatePickerDialogFragment extends DialogFragment {
 
   /*package*/ void setOnDismissListener(@Nullable OnDismissListener onDismissListener) {
     mOnDismissListener = onDismissListener;
+  }
+
+  /*package*/ void setOnNeutralButtonActionListener(@Nullable OnClickListener onNeutralButtonActionListener) {
+    mOnNeutralButtonActionListener = onNeutralButtonActionListener;
   }
 }

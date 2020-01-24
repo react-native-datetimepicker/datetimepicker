@@ -36,6 +36,7 @@ React Native date & time picker component for iOS and Android
     - [`timeZoneOffsetInMinutes` (`optional`, `iOS only`)](#timezoneoffsetinminutes-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
+    - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
     - [`minuteInterval` (`optional`, `iOS only`)](#minuteinterval-optional-ios-only)
   - [Migration from the older components](#migration-from-the-older-components)
     - [DatePickerIOS](#datepickerios)
@@ -240,6 +241,15 @@ Allows changing of the time picker to a 24 hour format.
 
 ```js
 <RNDateTimePicker is24Hour={true} />
+```
+
+#### `neutralButtonLabel` (`optional`, `Android only`)
+
+Allows displaying neutral button on picker dialog.
+Pressing button can be observed in onChange handler as `event.type === 'neutralButtonPressed'`
+
+```js
+<RNDateTimePicker neutralButtonLabel="clear" />
 ```
 
 #### `minuteInterval` (`optional`, `iOS only`)

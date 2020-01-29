@@ -65,15 +65,15 @@ or
 yarn add @react-native-community/datetimepicker
 ```
 
-If you are using RN > 0.60 then you are done, as the linking is automatic, but don't forget to run `pod install` from the ios directory. Then rebuild your project.
+If you are using RN > 0.60, only run `pod install` from the ios directory. Then rebuild your project.
 
-For RN < 0.60, use `react-native link`:
+For RN < 0.60, you need to link the dependency using `react-native link`:
 
 ```bash
 react-native link @react-native-community/datetimepicker
 ```
 
-Don't forget to run `pod install` from the ios directory. Then rebuild your project.
+Then run `pod install` from the ios directory and rebuild your project.
 
 ### Manual installation
 

@@ -125,15 +125,15 @@ Then run `pod install` from the ios directory and rebuild your project.
 
 1. Add the following lines to `android/settings.gradle`:
    ```gradle
-   include ':react-native-datetimepicker'
-   project(':react-native-datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
+   include ':@react-native-community_datetimepicker'
+   project(':@react-native-community_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
    ```
 
 2. Add the compile line to the dependencies in `android/app/build.gradle`:
    ```gradle
    dependencies {
        ...
-       implementation project(':react-native-datetimepicker')
+       implementation project(':@react-native-community_datetimepicker')
    }
    ```
 

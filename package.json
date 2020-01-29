@@ -3,6 +3,7 @@
   "version": "2.1.0",
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
+  "types": "src/index.d.ts",
   "publishConfig": {
     "access": "public"
   },

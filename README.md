@@ -23,7 +23,6 @@ React Native date & time picker component for iOS and Android
       - [iOS](#ios)
       - [Android](#android)
   - [Getting started](#getting-started)
-    - [Install using react-native link](#install-using-react-native-link)
     - [Manual installation](#manual-installation)
       - [iOS](#ios-1)
       - [Android](#android-1)

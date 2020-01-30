@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 2.1.1
+
+- Add `countdown` option to iOSMode types (#31)
+- Added TS type definition file path to package.json (#77)
+- Improved readme #33, #39, #46, #97
+
 ### 2.1.0
 
 - [#25] Add typescript definitions.

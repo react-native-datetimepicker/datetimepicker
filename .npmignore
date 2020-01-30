@@ -12,7 +12,6 @@ yarn-error.log
 # Xcode
 #
 ios/build/
-example/ios/build
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -34,7 +33,6 @@ project.xcworkspace
 # Android/IntelliJ
 #
 build/
-example/android/app/build/
 android/build
 .idea
 .gradle
@@ -49,5 +47,8 @@ buck-out/
 # Editor config
 .vscode
 
-# CocoaPods
-example/ios/Pods/
+# example project
+example
+
+# images and etc
+docs

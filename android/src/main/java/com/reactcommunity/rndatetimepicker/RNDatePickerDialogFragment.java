@@ -7,12 +7,7 @@
 
 package com.reactcommunity.rndatetimepicker;
 
-import javax.annotation.Nullable;
-
-import java.util.Calendar;
-import java.util.Locale;
 import android.annotation.SuppressLint;
-
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
@@ -21,8 +16,12 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Build;
 import android.os.Bundle;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import android.widget.DatePicker;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 @SuppressLint("ValidFragment")
 public class RNDatePickerDialogFragment extends DialogFragment {

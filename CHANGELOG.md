@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.1.2
+
+- Fix Android Nougat datetime picker mode="spinner" [#47](https://github.com/react-native-community/react-native-datetimepicker/pull/47)
+
 ### 2.1.1
 
 - Add `countdown` option to iOSMode types (#31)

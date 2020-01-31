@@ -1,6 +1,9 @@
 # React Native DateTimePicker
 
-[![CircleCI Status](https://img.shields.io/circleci/project/github/react-native-community/react-native-datetimepicker/master.svg)](https://circleci.com/gh/react-native-community/workflows/react-native-datetimepicker/tree/master) ![Supports Android and iOS](https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg) ![MIT License](https://img.shields.io/npm/l/@react-native-community/slider.svg)
+[![CircleCI Status][circle-ci-badge]][circle-ci-status]
+![Supports Android and iOS][support-badge]
+![MIT License][license-badge]
+[![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
 React Native date & time picker component for iOS and Android
 
@@ -614,3 +617,10 @@ For cleaning all the detox builds just run `npm run detox:clean`.
 1. Install required pods in `example/ios` by running `pods install`
 1. Run `npm start` to start Metro Bundler
 1. Run `npm run start:ios` or `npm run start:android`
+
+[circle-ci-badge]:https://img.shields.io/circleci/project/github/react-native-community/react-native-datetimepicker/master.svg?style=flat-square
+[circle-ci-status]:https://circleci.com/gh/react-native-community/workflows/react-native-datetimepicker/tree/master
+[support-badge]:https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg?style=flat-square
+[license-badge]:https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square
+[lean-core-badge]: https://img.shields.io/badge/Lean%20Core-Extracted-brightgreen.svg?style=flat-square
+[lean-core-issue]: https://github.com/facebook/react-native/issues/23313

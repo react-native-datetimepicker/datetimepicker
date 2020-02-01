@@ -8,7 +8,6 @@
 package com.reactcommunity.rndatetimepicker;
 
 import android.app.DatePickerDialog;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -18,6 +17,8 @@ import androidx.annotation.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import static com.reactcommunity.rndatetimepicker.ReflectionHelper.findField;
 
 /**
  * <p>
@@ -117,22 +118,5 @@ public class RNDismissableDatePickerDialog extends DatePickerDialog {
         throw new RuntimeException(e);
       }
     }
-  }
-
-  private static Field findField(Class objectClass, Class fieldClass, String expectedName) {
-    try {
-      Field field = objectClass.getDeclaredField(expectedName);
-      field.setAccessible(true);
-      return field;
-    } catch (NoSuchFieldException e) {
-    } // ignore
-    // search for it if it wasn't found under the expected ivar name
-    for (Field searchField : objectClass.getDeclaredFields()) {
-      if (searchField.getType() == fieldClass) {
-        searchField.setAccessible(true);
-        return searchField;
-      }
-    }
-    return null;
   }
 }

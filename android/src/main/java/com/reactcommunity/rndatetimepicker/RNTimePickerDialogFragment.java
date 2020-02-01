@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import android.text.format.DateFormat;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 @SuppressWarnings("ValidFragment")

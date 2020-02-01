@@ -45,14 +45,17 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     instance.updateTime(date.hour(), date.minute());
   }
 
-  static TimePickerDialog createDialog(Bundle args, Context activityContext, @Nullable OnTimeSetListener onTimeSetListener) {
+  static TimePickerDialog getDialog(
+          Bundle args,
+          Context activityContext,
+          @Nullable OnTimeSetListener onTimeSetListener) {
+
     final RNDate date = new RNDate(args);
     final int hour = date.hour();
     final int minute = date.minute();
     boolean is24hour = DateFormat.is24HourFormat(activityContext);
 
     RNTimePickerDisplay display = RNTimePickerDisplay.DEFAULT;
-    TimePickerDialog dialog = null;
     if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
       display = RNTimePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
     }
@@ -64,52 +67,38 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       switch (display) {
         case CLOCK:
-          dialog = new RNDismissableTimePickerDialog(
-          activityContext,
-          activityContext.getResources().getIdentifier(
-            "ClockTimePickerDialog",
-            "style",
-            activityContext.getPackageName()
-          ),
-          onTimeSetListener,
-          hour,
-          minute,
-          is24hour
-        );
-          break;
         case SPINNER:
-          dialog = new RNDismissableTimePickerDialog(
-          activityContext,
-          activityContext.getResources().getIdentifier(
-            "SpinnerTimePickerDialog",
-            "style",
-            activityContext.getPackageName()
-          ),
-          onTimeSetListener,
-          hour,
-          minute,
-          is24hour
-        );
-          break;
-        case DEFAULT:
-          dialog = new RNDismissableTimePickerDialog(
-            activityContext,
-            onTimeSetListener,
-            hour,
-            minute,
-            is24hour
+          String resourceName = display == RNTimePickerDisplay.CLOCK
+                  ? "ClockTimePickerDialog"
+                  : "SpinnerTimePickerDialog";
+          return new RNDismissableTimePickerDialog(
+                  activityContext,
+                  activityContext.getResources().getIdentifier(
+                          resourceName,
+                          "style",
+                          activityContext.getPackageName()
+                  ),
+                  onTimeSetListener,
+                  hour,
+                  minute,
+                  is24hour
           );
-          break;
       }
-    } else {
-      dialog = new RNDismissableTimePickerDialog(
+    }
+    return new RNDismissableTimePickerDialog(
             activityContext,
             onTimeSetListener,
             hour,
             minute,
             is24hour
-          );
-    }
+    );
+  }
+
+  static TimePickerDialog createDialog(
+          Bundle args, Context activityContext,
+          @Nullable OnTimeSetListener onTimeSetListener) {
+
+    TimePickerDialog dialog = getDialog(args, activityContext, onTimeSetListener);
 
     if (args != null && args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
       dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);

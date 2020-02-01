@@ -1,6 +1,6 @@
-import { toMilliseconds} from '../src/utils.js';
+import {toMilliseconds} from '../src/utils.js';
 
-describe('utils', function (){
+describe('utils', function() {
   describe('toMilliseconds', () => {
     it('converts Date values by key to milliseconds', () => {
       const options = {

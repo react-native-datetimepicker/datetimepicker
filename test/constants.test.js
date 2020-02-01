@@ -1,6 +1,6 @@
 import * as constants from '../src/constants.js';
 
-describe('constants', function (){
+describe('constants', function() {
   it('exports mode values', () => {
     expect(constants).toHaveProperty('MODE_DATE', 'date');
     expect(constants).toHaveProperty('MODE_TIME', 'time');

@@ -7,15 +7,11 @@
  * @format
  * @flow strict-local
  */
-import {
-  DISPLAY_DEFAULT,
-  DATE_SET_ACTION,
-  DISMISS_ACTION
-} from './constants';
-import { NativeModules } from 'react-native';
-import { toMilliseconds } from './utils';
+import {DISPLAY_DEFAULT, DATE_SET_ACTION, DISMISS_ACTION} from './constants';
+import {NativeModules} from 'react-native';
+import {toMilliseconds} from './utils';
 
-import type { DatePickerOptions, DateTimePickerResult } from './types';
+import type {DatePickerOptions, DateTimePickerResult} from './types';
 
 export default class DatePickerAndroid {
   /**
@@ -50,8 +46,8 @@ export default class DatePickerAndroid {
    * A date has been selected.
    */
   static +dateSetAction: 'dateSetAction' = DATE_SET_ACTION;
-/**
- * The dialog has been dismissed.
- */
-static + dismissedAction: 'dismissedAction' = DISMISS_ACTION;
+  /**
+   * The dialog has been dismissed.
+   */
+  static +dismissedAction: 'dismissedAction' = DISMISS_ACTION;
 }

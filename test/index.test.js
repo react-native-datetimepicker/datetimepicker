@@ -13,7 +13,7 @@ describe('DatePicker', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('will pass timestamp to native Component', function() {
+  it('will pass timestamp to native Component', () => {
     const date = new Date(156e10);
     const tree = renderer.create(<DatePicker value={date} />).toJSON();
 
@@ -44,11 +44,11 @@ describe('DatePicker', () => {
       });
   });
 
-  it('has default mode `date`', function() {
+  it('has default mode `date`', () => {
     expect(DatePicker.defaultProps.mode).toEqual('date');
   });
 
-  it('renders with mode `time`', function() {
+  it('renders with mode `time`', () => {
     const tree = renderer
       .create(<DatePicker value={new Date(DATE)} mode="time" />)
       .toJSON();
@@ -56,7 +56,7 @@ describe('DatePicker', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('renders with mode `datetime` (iOS only)', function() {
+  it('renders with mode `datetime` (iOS only)', () => {
     const tree = renderer
       .create(<DatePicker value={new Date(DATE)} mode="datetime" />)
       .toJSON();
@@ -64,11 +64,11 @@ describe('DatePicker', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('has reference to picker', function() {
+  it('has reference to picker', () => {
     expect(new DatePicker()._picker).toBeDefined();
   });
 
-  it('applies styling to `View` wrapper', function() {
+  it('applies styling to `View` wrapper', () => {
     const style = {backgroundColor: 'red'};
     const tree = renderer
       .create(<DatePicker style={style} value={new Date(DATE)} />)

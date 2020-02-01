@@ -75,13 +75,13 @@ export default function RNDateTimePicker({
           event.type = 'neutralButtonPressed';
           onChange(event);
           break;
-      }
 
         case DISMISS_ACTION:
         default:
           event.type = 'dismissed';
           onChange(event);
           break;
+      }
     },
     function reject(error) {
       // ignore or throw `activity == null` error

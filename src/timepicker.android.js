@@ -11,12 +11,11 @@ import {
   DISPLAY_DEFAULT,
   TIME_SET_ACTION,
   DISMISS_ACTION,
-  NEUTRAL_BUTTON_ACTION,
 } from './constants';
-import {NativeModules} from 'react-native';
-import {toMilliseconds} from './utils';
+import { NativeModules } from 'react-native';
+import { toMilliseconds } from './utils';
 
-import type {TimePickerOptions, DateTimePickerResult} from './types';
+import type { TimePickerOptions, DateTimePickerResult } from './types';
 
 export default class TimePickerAndroid {
   /**
@@ -48,8 +47,8 @@ export default class TimePickerAndroid {
    * A time has been selected.
    */
   static +timeSetAction: 'timeSetAction' = TIME_SET_ACTION;
-  /**
-   * The dialog has been dismissed.
-   */
-  static +dismissedAction: 'dismissedAction' = DISMISS_ACTION;
+/**
+ * The dialog has been dismissed.
+ */
+static + dismissedAction: 'dismissedAction' = DISMISS_ACTION;
 }

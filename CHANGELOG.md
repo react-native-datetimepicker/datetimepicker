@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 2.2.0
+
+- Fix podspec to get source from tag [#103](https://github.com/react-native-community/react-native-datetimepicker/pull/103)
+- fix prettier usage [#102](https://github.com/react-native-community/react-native-datetimepicker/pull/102)
+- Introduce neutral button via neutralButtonLabel on Android pickers (#93)
+- update readme [#100](https://github.com/react-native-community/react-native-datetimepicker/pull/100)
+
 ### 2.1.2
 
 - Fix Android Nougat datetime picker mode="spinner" [#47](https://github.com/react-native-community/react-native-datetimepicker/pull/47)

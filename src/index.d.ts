@@ -100,6 +100,7 @@ export type AndroidNativeProps = Readonly<BaseProps & DateOptions & TimeOptions 
    */
   display?: Display,
   onChange?: (event: AndroidEvent, date?: Date) => void,
+  neutralButtonLabel?: string,
 }>;
 
 export type DatePickerOptions = DateOptions & {

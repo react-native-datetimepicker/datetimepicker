@@ -14,6 +14,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -31,6 +32,8 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   private OnDateSetListener mOnDateSetListener;
   @Nullable
   private OnDismissListener mOnDismissListener;
+  @Nullable
+  private static OnClickListener mOnNeutralButtonActionListener;
 
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -44,15 +47,17 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     instance.updateDate(date.year(), date.month(), date.day());
   }
 
-  static DatePickerDialog createDialog(Bundle args, Context activityContext, @Nullable OnDateSetListener onDateSetListener) {
-    final Calendar c = Calendar.getInstance();
+  static DatePickerDialog getDialog(
+          Bundle args,
+          Context activityContext,
+          @Nullable OnDateSetListener onDateSetListener) {
+
     final RNDate date = new RNDate(args);
     final int year = date.year();
     final int month = date.month();
     final int day = date.day();
 
     RNDatePickerDisplay display = RNDatePickerDisplay.DEFAULT;
-    DatePickerDialog dialog = null;
 
     if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
       display = RNDatePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
@@ -61,22 +66,31 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       switch (display) {
         case CALENDAR:
-          dialog = new RNDismissableDatePickerDialog(activityContext,
-            activityContext.getResources().getIdentifier("CalendarDatePickerDialog", "style", activityContext.getPackageName()),
-            onDateSetListener, year, month, day);
-          break;
         case SPINNER:
-          dialog = new RNDismissableDatePickerDialog(activityContext,
-            activityContext.getResources().getIdentifier("SpinnerDatePickerDialog", "style", activityContext.getPackageName()),
-            onDateSetListener, year, month, day);
-          break;
+          String resourceName = display == RNDatePickerDisplay.CALENDAR
+                  ? "CalendarDatePickerDialog"
+                  : "SpinnerDatePickerDialog";
+          return new RNDismissableDatePickerDialog(
+                  activityContext,
+                  activityContext.getResources().getIdentifier(
+                          resourceName,
+                          "style",
+                          activityContext.getPackageName()),
+                  onDateSetListener,
+                  year,
+                  month,
+                  day);
         case DEFAULT:
-          dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
-          break;
+          return new RNDismissableDatePickerDialog(
+                  activityContext,
+                  onDateSetListener,
+                  year,
+                  month,
+                  day
+          );
       }
     } else {
-      dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
-
+      DatePickerDialog dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
       switch (display) {
         case CALENDAR:
           dialog.getDatePicker().setCalendarViewShown(true);
@@ -86,6 +100,21 @@ public class RNDatePickerDialogFragment extends DialogFragment {
           dialog.getDatePicker().setCalendarViewShown(false);
           break;
       }
+      return dialog;
+    }
+  }
+
+  static DatePickerDialog createDialog(
+          Bundle args,
+          Context activityContext,
+          @Nullable OnDateSetListener onDateSetListener) {
+
+    final Calendar c = Calendar.getInstance();
+
+    DatePickerDialog dialog = getDialog(args, activityContext, onDateSetListener);
+
+    if (args != null && args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
+      dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);
     }
 
     final DatePicker datePicker = dialog.getDatePicker();
@@ -132,5 +161,9 @@ public class RNDatePickerDialogFragment extends DialogFragment {
 
   /*package*/ void setOnDismissListener(@Nullable OnDismissListener onDismissListener) {
     mOnDismissListener = onDismissListener;
+  }
+
+  /*package*/ void setOnNeutralButtonActionListener(@Nullable OnClickListener onNeutralButtonActionListener) {
+    mOnNeutralButtonActionListener = onNeutralButtonActionListener;
   }
 }

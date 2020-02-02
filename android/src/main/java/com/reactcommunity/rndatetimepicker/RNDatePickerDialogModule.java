@@ -10,6 +10,7 @@ package com.reactcommunity.rndatetimepicker;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import androidx.annotation.NonNull;
@@ -40,7 +41,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     return RNDatePickerDialogModule.FRAGMENT_TAG;
   }
 
-  private class DatePickerDialogListener implements OnDateSetListener, OnDismissListener {
+  private class DatePickerDialogListener implements OnDateSetListener, OnDismissListener, OnClickListener {
 
     private final Promise mPromise;
     private boolean mPromiseResolved = false;
@@ -67,6 +68,16 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
       if (!mPromiseResolved && getReactApplicationContext().hasActiveCatalystInstance()) {
         WritableMap result = new WritableNativeMap();
         result.putString("action", RNConstants.ACTION_DISMISSED);
+        mPromise.resolve(result);
+        mPromiseResolved = true;
+      }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+      if (!mPromiseResolved && getReactApplicationContext().hasActiveCatalystInstance()) {
+        WritableMap result = new WritableNativeMap();
+        result.putString("action", RNConstants.ACTION_NEUTRAL_BUTTON);
         mPromise.resolve(result);
         mPromiseResolved = true;
       }
@@ -131,6 +142,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     final DatePickerDialogListener listener = new DatePickerDialogListener(promise);
     fragment.setOnDismissListener(listener);
     fragment.setOnDateSetListener(listener);
+    fragment.setOnNeutralButtonActionListener(listener);
     fragment.show(fragmentManager, FRAGMENT_TAG);
   }
 
@@ -147,6 +159,9 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     }
     if (options.hasKey(RNConstants.ARG_DISPLAY) && !options.isNull(RNConstants.ARG_DISPLAY)) {
       args.putString(RNConstants.ARG_DISPLAY, options.getString(RNConstants.ARG_DISPLAY));
+    }
+    if (options.hasKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL) && !options.isNull(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
+      args.putString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL, options.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL));
     }
     return args;
   }

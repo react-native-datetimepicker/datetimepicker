@@ -8,7 +8,6 @@ target "example" do
   pod "React", :path => "#{$node_modules_path}/react-native/"
   pod "React-Core", :path => "#{$node_modules_path}/react-native/React"
   pod "React-DevSupport", :path => "#{$node_modules_path}/react-native/React"
-  pod "React-fishhook", :path => "#{$node_modules_path}/react-native/Libraries/fishhook"
   pod "React-RCTActionSheet", :path => "#{$node_modules_path}/react-native/Libraries/ActionSheetIOS"
   pod "React-RCTAnimation", :path => "#{$node_modules_path}/react-native/Libraries/NativeAnimation"
   pod "React-RCTBlob", :path => "#{$node_modules_path}/react-native/Libraries/Blob"
@@ -29,11 +28,6 @@ target "example" do
   pod "DoubleConversion", :podspec => "#{$node_modules_path}/react-native/third-party-podspecs/DoubleConversion.podspec"
   pod "glog", :podspec => "#{$node_modules_path}/react-native/third-party-podspecs/glog.podspec"
   pod "Folly", :podspec => "#{$node_modules_path}/react-native/third-party-podspecs/Folly.podspec"
-
-  target 'exampleTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
 
   use_native_modules!("../..")
 end

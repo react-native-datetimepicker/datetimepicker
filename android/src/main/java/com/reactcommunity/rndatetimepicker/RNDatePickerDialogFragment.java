@@ -80,8 +80,15 @@ public class RNDatePickerDialogFragment extends DialogFragment {
                   year,
                   month,
                   day);
+        case DEFAULT:
+          return new RNDismissableDatePickerDialog(
+                  activityContext,
+                  onDateSetListener,
+                  year,
+                  month,
+                  day
+          );
       }
-      return new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
     } else {
       DatePickerDialog dialog = new RNDismissableDatePickerDialog(activityContext, onDateSetListener, year, month, day);
       switch (display) {

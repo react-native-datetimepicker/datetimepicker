@@ -102,6 +102,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       }
       return dialog;
     }
+    return null;
   }
 
   static DatePickerDialog createDialog(

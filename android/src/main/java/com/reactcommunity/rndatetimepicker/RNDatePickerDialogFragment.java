@@ -17,6 +17,8 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import android.widget.DatePicker;
@@ -47,7 +49,8 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     instance.updateDate(date.year(), date.month(), date.day());
   }
 
-  static DatePickerDialog getDialog(
+  static @NonNull
+  DatePickerDialog getDialog(
           Bundle args,
           Context activityContext,
           @Nullable OnDateSetListener onDateSetListener) {
@@ -80,7 +83,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
                   year,
                   month,
                   day);
-        case DEFAULT:
+        default:
           return new RNDismissableDatePickerDialog(
                   activityContext,
                   onDateSetListener,

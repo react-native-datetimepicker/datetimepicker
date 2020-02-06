@@ -90,62 +90,59 @@ const DateTimePicker = require('@react-native-community/datetimepicker');
 ### Basic usage with state
 
 ```js
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default class App extends Component {
-  state = {
-    date: new Date('2020-06-12T14:42:42'),
-    mode: 'date',
-    show: false,
-  }
+const App = () => {
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
 
-  setDate = (event, date) => {
-    date = date || this.state.date;
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
 
-    this.setState({
-      show: Platform.OS === 'ios' ? true : false,
-      date,
-    });
-  }
+    setDate(currentDate);
+    setShow(Platform.OS === 'ios' ? true : false);
+  };
 
-  show = mode => {
-    this.setState({
-      show: true,
-      mode,
-    });
-  }
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
 
-  showDatepicker = () => {
-    this.show('date');
-  }
+  const showDatepicker = () => {
+    showMode('date');
+  };
 
-  showTimepicker = () => {
-    this.show('time');
-  }
+  const showTimepicker = () => {
+    showMode('time');
+  };
 
-  render() {
-    const { show, date, mode } = this.state;
-
-    return (
+  return (
+    <View>
       <View>
-        <View>
-          <Button onPress={this.showDatepicker} title="Show date picker!" />
-        </View>
-        <View>
-          <Button onPress={this.showTimepicker} title="Show time picker!" />
-        </View>
-        { show && <DateTimePicker value={date}
-                    mode={mode}
-                    is24Hour={true}
-                    display="default"
-                    onChange={this.setDate} />
-        }
+        <Button onPress={showDatepicker} title="Show date picker!" />
       </View>
-    );
-  }
-}
+      <View>
+        <Button onPress={showTimepicker} title="Show time picker!" />
+      </View>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          timeZoneOffsetInMinutes={0}
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+    </View>
+  );
+};
+
+export default App;
 ```
 
 ## Props

@@ -17,12 +17,13 @@ const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [display, setDisplay] = useState('default');
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
 
+    setShow(Platform.OS === 'ios');
     setDate(currentDate);
-    setShow(Platform.OS === 'ios' ? true : false);
   };
 
   const showMode = currentMode => {
@@ -32,6 +33,12 @@ const App = () => {
 
   const showDatepicker = () => {
     showMode('date');
+    setDisplay('default');
+  };
+
+  const showDatepickerSpinner = () => {
+    showMode('date');
+    setDisplay('spinner');
   };
 
   const showTimepicker = () => {
@@ -60,7 +67,14 @@ const App = () => {
                 <Button
                   testID="datePickerButton"
                   onPress={showDatepicker}
-                  title="Show date picker!"
+                  title="Show date picker default!"
+                />
+              </View>
+              <View style={styles.button}>
+                <Button
+                  testID="datePickerButton"
+                  onPress={showDatepickerSpinner}
+                  title="Show date picker spinner!"
                 />
               </View>
               <View style={styles.button}>
@@ -82,8 +96,8 @@ const App = () => {
                   timeZoneOffsetInMinutes={0}
                   value={date}
                   mode={mode}
-                  is24Hour={true}
-                  display="default"
+                  is24Hour
+                  display={display}
                   onChange={onChange}
                 />
               )}

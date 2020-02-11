@@ -54,7 +54,7 @@ export default function RNDateTimePicker({
 
   picker.then(
     function resolve({action, day, month, year, minute, hour}) {
-      const date = new Date();
+      const date = new Date(value);
       const event: AndroidEvent = {
         type: 'set',
         nativeEvent: {},

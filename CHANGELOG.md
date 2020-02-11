@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 2.2.2
+- Fix android time picker returning today's date instead of the given date
+
 ### 2.2.0
 
 - Fix podspec to get source from tag [#103](https://github.com/react-native-community/react-native-datetimepicker/pull/103)

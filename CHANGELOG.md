@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.2.2
+### 2.2.1
 - Fix android time picker returning today's date instead of the given date
 
 ### 2.2.0

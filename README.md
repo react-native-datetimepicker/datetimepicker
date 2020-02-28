@@ -271,7 +271,7 @@ Sets style directly on picker component within internal container.
 By default height of picker is fixed to 216px regardless of what is set in style property.
 
 ```js
-<RNDateTimePicker iOsPickerStyle={{flex: 1}} /> // will take up whole space defined in style property
+<RNDateTimePicker iOsPickerStyle={{width: '100%', height: '100% '}} /> // will take up whole space defined in style property
 ```
 
 ## Migration from the older components

@@ -6,6 +6,7 @@
 import type {SyntheticEvent} from 'CoreEventTypes';
 import type {NativeComponent} from 'ReactNative';
 import type {ViewProps} from 'ViewPropTypes';
+import type {ViewStyleProp} from 'StyleSheet';
 import type {ElementRef} from 'react';
 
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
@@ -99,6 +100,15 @@ export type IOSNativeProps = $ReadOnly<{|
    * instance, to show times in Pacific Standard Time, pass -7 * 60.
    */
   timeZoneOffsetInMinutes?: ?number,
+
+  /**
+   * Styles for internal picker component
+   *
+   * By default picker has fixed height of 216 on iOS ignoring it's parent's container constraints
+   * This allows to override this and use things like flex in relation to it's internal parent container
+   *
+   */
+  iOsPickerStyle?: ?ViewStyleProp,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|

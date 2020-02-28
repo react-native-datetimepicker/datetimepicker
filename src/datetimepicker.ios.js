@@ -82,7 +82,11 @@ export default class Picker extends React.Component<IOSNativeProps> {
         <RNDateTimePicker
           testID={testID}
           ref={this._picker}
-          style={iOsPickerStyle || styles.picker}
+          style={
+            iOsPickerStyle !== undefined && iOsPickerStyle !== null
+              ? iOsPickerStyle
+              : styles.picker
+          }
           date={dates.value}
           locale={locale !== null && locale !== '' ? locale : undefined}
           maximumDate={dates.maximumDate}

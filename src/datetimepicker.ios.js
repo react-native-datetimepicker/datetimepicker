@@ -69,7 +69,7 @@ export default class Picker extends React.Component<IOSNativeProps> {
       mode,
       minuteInterval,
       timeZoneOffsetInMinutes,
-      iOsPickerStyle,
+      iOsPickerStyle = {},
     } = this.props;
 
     invariant(value, 'A date or time should be specified as `value`.');
@@ -82,11 +82,7 @@ export default class Picker extends React.Component<IOSNativeProps> {
         <RNDateTimePicker
           testID={testID}
           ref={this._picker}
-          style={
-            iOsPickerStyle !== undefined && iOsPickerStyle !== null
-              ? iOsPickerStyle
-              : styles.picker
-          }
+          style={[styles.picker, iOsPickerStyle]}
           date={dates.value}
           locale={locale !== null && locale !== '' ? locale : undefined}
           maximumDate={dates.maximumDate}

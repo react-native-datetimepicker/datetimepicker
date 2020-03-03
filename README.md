@@ -101,9 +101,8 @@ const App = () => {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-
+    setShow(Platform.OS === 'ios');
     setDate(currentDate);
-    setShow(Platform.OS === 'ios' ? true : false);
   };
 
   const showMode = currentMode => {

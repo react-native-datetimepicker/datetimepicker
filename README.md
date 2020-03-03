@@ -25,31 +25,31 @@ React Native date & time picker component for iOS and Android
 - [React Native DateTimePicker](#react-native-datetimepicker)
   - [Table of Contents](#table-of-contents)
   - [Getting started](#getting-started)
-      - [RN >= 0.60](#rn--060)
-      - [RN < 0.60](#rn--060-1)
+    - [RN >= 0.60](#rn--060)
+    - [RN < 0.60](#rn--060-1)
   - [General Usage](#general-usage)
     - [Basic usage with state](#basic-usage-with-state)
   - [Props](#props)
-      - [`mode` (`optional`)](#mode-optional)
-      - [`display` (`optional`, `Android only`)](#display-optional-android-only)
-      - [`onChange` (`optional`)](#onchange-optional)
-      - [`value` (`required`)](#value-required)
-      - [`maximumDate` (`optional`)](#maximumdate-optional)
-      - [`minimumDate` (`optional`)](#minimumdate-optional)
-      - [`timeZoneOffsetInMinutes` (`optional`, `iOS only`)](#timezoneoffsetinminutes-optional-ios-only)
-      - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
-      - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
-      - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
-      - [`minuteInterval` (`optional`, `iOS only`)](#minuteinterval-optional-ios-only)
-      - [`iOsPickerStyle` (`optional`, `iOS only`)](#iospickerstyle-optional-ios-only)
+    - [`mode` (`optional`)](#mode-optional)
+    - [`display` (`optional`, `Android only`)](#display-optional-android-only)
+    - [`onChange` (`optional`)](#onchange-optional)
+    - [`value` (`required`)](#value-required)
+    - [`maximumDate` (`optional`)](#maximumdate-optional)
+    - [`minimumDate` (`optional`)](#minimumdate-optional)
+    - [`timeZoneOffsetInMinutes` (`optional`, `iOS only`)](#timezoneoffsetinminutes-optional-ios-only)
+    - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
+    - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
+    - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
+    - [`minuteInterval` (`optional`, `iOS only`)](#minuteinterval-optional-ios-only)
+    - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
   - [Migration from the older components](#migration-from-the-older-components)
     - [DatePickerIOS](#datepickerios)
     - [DatePickerAndroid](#datepickerandroid)
     - [TimePickerAndroid](#timepickerandroid)
   - [Contributing to the component](#contributing-to-the-component)
   - [Manual installation](#manual-installation)
-      - [iOS](#ios)
-      - [Android](#android)
+    - [iOS](#ios)
+    - [Android](#android)
   - [Running the example app](#running-the-example-app)
 
 ## Getting started
@@ -265,13 +265,13 @@ Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 <RNDateTimePicker minuteInterval={10} />
 ```
 
-#### `iOsPickerStyle` (`optional`, `iOS only`)
+#### `style` (`optional`, `iOS only`)
 
-Sets style directly on picker component within internal container.
-By default height of picker is fixed to 216px regardless of what is set in style property.
+Sets style directly on picker component.
+By default height of picker is fixed to 216px.
 
 ```js
-<RNDateTimePicker iOsPickerStyle={{width: '100%', height: '100% '}} /> // will take up whole space defined in style property
+<RNDateTimePicker style={{flex: 1}} />
 ```
 
 ## Migration from the older components

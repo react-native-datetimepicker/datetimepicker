@@ -100,15 +100,6 @@ export type IOSNativeProps = $ReadOnly<{|
    * instance, to show times in Pacific Standard Time, pass -7 * 60.
    */
   timeZoneOffsetInMinutes?: ?number,
-
-  /**
-   * Styles for internal picker component
-   *
-   * By default, picker has fixed height of 216 on iOS, ignoring its parent's container constraints
-   * This allows to override this and use things like flex in relation to it's internal parent container
-   *
-   */
-  iOsPickerStyle?: ?ViewStyleProp,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|

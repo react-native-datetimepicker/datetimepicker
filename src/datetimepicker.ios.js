@@ -69,7 +69,6 @@ export default class Picker extends React.Component<IOSNativeProps> {
       mode,
       minuteInterval,
       timeZoneOffsetInMinutes,
-      iOsPickerStyle = {},
     } = this.props;
 
     invariant(value, 'A date or time should be specified as `value`.');
@@ -78,23 +77,21 @@ export default class Picker extends React.Component<IOSNativeProps> {
     toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
 
     return (
-      <View style={style}>
-        <RNDateTimePicker
-          testID={testID}
-          ref={this._picker}
-          style={[styles.picker, iOsPickerStyle]}
-          date={dates.value}
-          locale={locale !== null && locale !== '' ? locale : undefined}
-          maximumDate={dates.maximumDate}
-          minimumDate={dates.minimumDate}
-          mode={mode}
-          minuteInterval={minuteInterval}
-          timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
-          onChange={this._onChange}
-          onStartShouldSetResponder={() => true}
-          onResponderTerminationRequest={() => false}
-        />
-      </View>
+      <RNDateTimePicker
+        testID={testID}
+        ref={this._picker}
+        style={[styles.picker, style]}
+        date={dates.value}
+        locale={locale !== null && locale !== '' ? locale : undefined}
+        maximumDate={dates.maximumDate}
+        minimumDate={dates.minimumDate}
+        mode={mode}
+        minuteInterval={minuteInterval}
+        timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+        onChange={this._onChange}
+        onStartShouldSetResponder={() => true}
+        onResponderTerminationRequest={() => false}
+      />
     );
   }
 }

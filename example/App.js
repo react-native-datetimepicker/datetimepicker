@@ -99,6 +99,7 @@ const App = () => {
                   is24Hour
                   display={display}
                   onChange={onChange}
+                  style={styles.iOsPicker}
                 />
               )}
             </View>
@@ -149,6 +150,9 @@ const styles = StyleSheet.create({
   dateTimeText: {
     fontSize: 16,
     fontWeight: 'normal',
+  },
+  iOsPicker: {
+    flex: 1,
   },
 });
 

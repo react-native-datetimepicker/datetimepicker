@@ -9,7 +9,7 @@
  * @format
  * @flow strict-local
  */
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import RNDateTimePicker from './picker';
 import {toMilliseconds} from './utils';
 import {MODE_DATE} from './constants';

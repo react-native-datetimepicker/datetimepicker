@@ -17,10 +17,7 @@ describe('DatePicker', () => {
     const date = new Date(156e10);
     const tree = renderer.create(<DatePicker value={date} />).toJSON();
 
-    expect(tree).toHaveProperty(
-      ['children', 0, 'props', 'date'],
-      date.getTime(),
-    );
+    expect(tree).toHaveProperty('props.date', date.getTime());
   });
 
   it('calls onChange callback', () => {
@@ -74,10 +71,10 @@ describe('DatePicker', () => {
       .create(<DatePicker style={style} value={new Date(DATE)} />)
       .toJSON();
 
-    expect(tree).toHaveProperty(
-      'props.style.backgroundColor',
-      style.backgroundColor,
-    );
+    expect(tree).toHaveProperty('props.style', [
+      {height: 216},
+      {backgroundColor: 'red'},
+    ]);
     expect(tree).toMatchSnapshot();
   });
 });

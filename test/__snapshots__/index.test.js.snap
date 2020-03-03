@@ -1,87 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DatePicker applies styling to \`View\` wrapper 1`] = `
-<View
+<RNDateTimePicker
+  date={1376949600000}
+  mode="date"
+  onChange={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
-    Object {
-      "backgroundColor": "red",
-    }
+    Array [
+      Object {
+        "height": 216,
+      },
+      Object {
+        "backgroundColor": "red",
+      },
+    ]
   }
->
-  <RNDateTimePicker
-    date={1376949600000}
-    mode="date"
-    onChange={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Array [
-        Object {
-          "height": 216,
-        },
-        Object {},
-      ]
-    }
-  />
-</View>
+/>
 `;
 
 exports[`DatePicker renders a native Component 1`] = `
-<View>
-  <RNDateTimePicker
-    date={1376949600000}
-    mode="date"
-    onChange={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Array [
-        Object {
-          "height": 216,
-        },
-        Object {},
-      ]
-    }
-  />
-</View>
+<RNDateTimePicker
+  date={1376949600000}
+  mode="date"
+  onChange={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "height": 216,
+      },
+      undefined,
+    ]
+  }
+/>
 `;
 
 exports[`DatePicker renders with mode \`datetime\` (iOS only) 1`] = `
-<View>
-  <RNDateTimePicker
-    date={1376949600000}
-    mode="datetime"
-    onChange={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Array [
-        Object {
-          "height": 216,
-        },
-        Object {},
-      ]
-    }
-  />
-</View>
+<RNDateTimePicker
+  date={1376949600000}
+  mode="datetime"
+  onChange={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "height": 216,
+      },
+      undefined,
+    ]
+  }
+/>
 `;
 
 exports[`DatePicker renders with mode \`time\` 1`] = `
-<View>
-  <RNDateTimePicker
-    date={1376949600000}
-    mode="time"
-    onChange={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Array [
-        Object {
-          "height": 216,
-        },
-        Object {},
-      ]
-    }
-  />
-</View>
+<RNDateTimePicker
+  date={1376949600000}
+  mode="time"
+  onChange={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "height": 216,
+      },
+      undefined,
+    ]
+  }
+/>
 `;

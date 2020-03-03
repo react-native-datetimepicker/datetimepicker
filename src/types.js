@@ -6,7 +6,6 @@
 import type {SyntheticEvent} from 'CoreEventTypes';
 import type {NativeComponent} from 'ReactNative';
 import type {ViewProps} from 'ViewPropTypes';
-import type {ViewStyleProp} from 'StyleSheet';
 import type {ElementRef} from 'react';
 
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';

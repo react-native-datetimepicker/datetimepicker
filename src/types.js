@@ -104,7 +104,7 @@ export type IOSNativeProps = $ReadOnly<{|
   /**
    * Styles for internal picker component
    *
-   * By default picker has fixed height of 216 on iOS ignoring it's parent's container constraints
+   * By default, picker has fixed height of 216 on iOS, ignoring its parent's container constraints
    * This allows to override this and use things like flex in relation to it's internal parent container
    *
    */

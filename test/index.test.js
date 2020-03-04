@@ -65,7 +65,7 @@ describe('DatePicker', () => {
     expect(new DatePicker()._picker).toBeDefined();
   });
 
-  it('applies styling to `View` wrapper', () => {
+  it('applies styling to DatePicker', () => {
     const style = {backgroundColor: 'red'};
     const tree = renderer
       .create(<DatePicker style={style} value={new Date(DATE)} />)

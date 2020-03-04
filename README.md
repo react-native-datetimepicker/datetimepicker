@@ -23,7 +23,10 @@ React Native date & time picker component for iOS and Android
 ## Table of Contents
 
 - [React Native DateTimePicker](#react-native-datetimepicker)
+  - [Table of Contents](#table-of-contents)
   - [Getting started](#getting-started)
+    - [RN >= 0.60](#rn--060)
+    - [RN < 0.60](#rn--060-1)
   - [General Usage](#general-usage)
     - [Basic usage with state](#basic-usage-with-state)
   - [Props](#props)
@@ -38,14 +41,16 @@ React Native date & time picker component for iOS and Android
     - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
     - [`minuteInterval` (`optional`, `iOS only`)](#minuteinterval-optional-ios-only)
+    - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
   - [Migration from the older components](#migration-from-the-older-components)
     - [DatePickerIOS](#datepickerios)
     - [DatePickerAndroid](#datepickerandroid)
     - [TimePickerAndroid](#timepickerandroid)
   - [Contributing to the component](#contributing-to-the-component)
   - [Manual installation](#manual-installation)
+    - [iOS](#ios)
+    - [Android](#android)
   - [Running the example app](#running-the-example-app)
-
 
 ## Getting started
 
@@ -146,8 +151,8 @@ export default App;
 
 ## Props
 
-> Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android. 
-> 
+> Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android.
+>
 > These native classes offer only limited configuration, while there are dozens of possible options you as a developer may need. It follows that if your requirement is not supported by the backing native views, this libray will _not_ be able to implement your requirement. When you open an issue with a feature request, please document if (or how) the feature can be implemented using the aforementioned native views. If those views do not support what you need, such feature requests will be closed as not actionable.
 
 #### `mode` (`optional`)
@@ -155,6 +160,7 @@ export default App;
 Defines the type of the picker.
 
 List of possible values:
+
 - `"date"` (default for `iOS` and `Android`)
 - `"time"`
 - `"datetime"` (`iOS` only)
@@ -169,6 +175,7 @@ List of possible values:
 Defines the visual display of the picker for Android and will be ignored for iOS.
 
 List of possible values:
+
 - `"default"`
 - `"spinner"`
 - `"calendar"` (only for `date` mode)
@@ -185,9 +192,9 @@ Date change handler.
 This is called when the user changes the date or time in the UI. It receives the event and the date as parameters.
 
 ```js
-setDate = (event, date) => {}
+setDate = (event, date) => {};
 
-<RNDateTimePicker onChange={this.setDate} />
+<RNDateTimePicker onChange={this.setDate} />;
 ```
 
 #### `value` (`required`)
@@ -257,6 +264,15 @@ Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 <RNDateTimePicker minuteInterval={10} />
 ```
 
+#### `style` (`optional`, `iOS only`)
+
+Sets style directly on picker component.
+By default height of picker is fixed to 216px.
+
+```js
+<RNDateTimePicker style={{flex: 1}} />
+```
+
 ## Migration from the older components
 
 `RNDateTimePicker` is the new common name used to represent the old versions of iOS and Android.
@@ -265,218 +281,222 @@ On Android, open picker modals will update the selected date and/or time if the 
 
 ### DatePickerIOS
 
--  `initialDate` is deprecated, use `value` instead.
+- `initialDate` is deprecated, use `value` instead.
 
-    ```js
-    // Before
-    <DatePickerIOS initialValue={new Date()} />
-    ```
+  ```js
+  // Before
+  <DatePickerIOS initialValue={new Date()} />
+  ```
 
-    ```js
-    // Now
-    <RNDateTimePicker value={new Date()} />
-    ```
+  ```js
+  // Now
+  <RNDateTimePicker value={new Date()} />
+  ```
 
 - `date` is deprecated, use `value` instead.
 
-    ```js
-    // Before
-    <DatePickerIOS date={new Date()} />
-    ```
+  ```js
+  // Before
+  <DatePickerIOS date={new Date()} />
+  ```
 
-    ```js
-    // Now
-    <RNDateTimePicker value={new Date()} />
-    ```
+  ```js
+  // Now
+  <RNDateTimePicker value={new Date()} />
+  ```
 
 - `onChange` now returns also the date.
 
-    ```js
-    // Before
-    onChange = (event) => {}
-    <DatePickerIOS onChange={this.onChange} />
-    ```
+  ```js
+  // Before
+  onChange = event => {};
+  <DatePickerIOS onChange={this.onChange} />;
+  ```
 
-    ```js
-    // Now
-    onChange = (event, date) => {}
-    <RNDateTimePicker onChange={this.onChange} />
-    ```
+  ```js
+  // Now
+  onChange = (event, date) => {};
+  <RNDateTimePicker onChange={this.onChange} />;
+  ```
 
 - `onDateChange` is deprecated, use `onChange` instead.
 
-    ```js
-    // Before
-    setDate = (date) => {}
-    <DatePickerIOS onDateChange={this.setDate} />
-    ```
+  ```js
+  // Before
+  setDate = date => {};
+  <DatePickerIOS onDateChange={this.setDate} />;
+  ```
 
-    ```js
-    // Now
-    setDate = (event, date) => {}
-    <RNDateTimePicker onChange={this.setDate} />
-    ```
+  ```js
+  // Now
+  setDate = (event, date) => {};
+  <RNDateTimePicker onChange={this.setDate} />;
+  ```
 
 ### DatePickerAndroid
 
 - `date` is deprecated, use `value` instead.
 
-    ```js
-    // Before
-    try {
-      const {action, year, month, day} = await DatePickerAndroid.open({
-        date: new Date()
-      });
-    } catch ({code, message}) {
-      console.warn('Cannot open date picker', message);
-    }
-    ```
+  ```js
+  // Before
+  try {
+    const {action, year, month, day} = await DatePickerAndroid.open({
+      date: new Date(),
+    });
+  } catch ({code, message}) {
+    console.warn('Cannot open date picker', message);
+  }
+  ```
 
-    ```js
-    // Now
-    <RNDateTimePicker mode="date" value={new Date()} />
-    ```
+  ```js
+  // Now
+  <RNDateTimePicker mode="date" value={new Date()} />
+  ```
 
 - `minDate` and `maxDate` are deprecated, use `minimumDate` and `maximumDate` instead.
 
-    ```js
-    // Before
-    try {
-      const {action, year, month, day} = await DatePickerAndroid.open({
-        minDate: new Date(),
-        maxDate: new Date()
-      });
-    } catch ({code, message}) {
-      console.warn('Cannot open date picker', message);
-    }
-    ```
+  ```js
+  // Before
+  try {
+    const {action, year, month, day} = await DatePickerAndroid.open({
+      minDate: new Date(),
+      maxDate: new Date(),
+    });
+  } catch ({code, message}) {
+    console.warn('Cannot open date picker', message);
+  }
+  ```
 
-    ```js
-    // Now
-    <RNDateTimePicker mode="date" minimumDate={new Date()} maximumDate={new Date()} />
-    ```
+  ```js
+  // Now
+  <RNDateTimePicker
+    mode="date"
+    minimumDate={new Date()}
+    maximumDate={new Date()}
+  />
+  ```
 
 - `dateSetAction` is deprecated, use `onChange` instead.
 
-    ```js
-    // Before
-    try {
-      const {action, year, month, day} = await DatePickerAndroid.open();
-      if (action === DatePickerAndroid.dateSetAction) {
-        // Selected year, month (0-11), day
-      }
-    } catch ({code, message}) {
-      console.warn('Cannot open date picker', message);
+  ```js
+  // Before
+  try {
+    const {action, year, month, day} = await DatePickerAndroid.open();
+    if (action === DatePickerAndroid.dateSetAction) {
+      // Selected year, month (0-11), day
     }
-    ```
+  } catch ({code, message}) {
+    console.warn('Cannot open date picker', message);
+  }
+  ```
 
-    ```js
-    // Now
-    setDate = (event, date) => {
-      if (date !== undefined) {
-        // timeSetAction
-      }
+  ```js
+  // Now
+  setDate = (event, date) => {
+    if (date !== undefined) {
+      // timeSetAction
     }
-    <RNDateTimePicker mode="date" onChange={this.setDate} />
-    ```
+  };
+  <RNDateTimePicker mode="date" onChange={this.setDate} />;
+  ```
 
 - `dismissedAction` is deprecated, use `onChange` instead.
 
-    ```js
-    // Before
-    try {
-      const {action, year, month, day} = await DatePickerAndroid.open();
-      if (action === DatePickerAndroid.dismissedAction) {
-        // Dismissed
-      }
-    } catch ({code, message}) {
-      console.warn('Cannot open date picker', message);
+  ```js
+  // Before
+  try {
+    const {action, year, month, day} = await DatePickerAndroid.open();
+    if (action === DatePickerAndroid.dismissedAction) {
+      // Dismissed
     }
-    ```
+  } catch ({code, message}) {
+    console.warn('Cannot open date picker', message);
+  }
+  ```
 
-    ```js
-    // Now
-    setDate = (event, date) => {
-      if (date === undefined) {
-        // dismissedAction
-      }
+  ```js
+  // Now
+  setDate = (event, date) => {
+    if (date === undefined) {
+      // dismissedAction
     }
-    <RNDateTimePicker mode="date" onChange={this.setDate} />
-    ```
+  };
+  <RNDateTimePicker mode="date" onChange={this.setDate} />;
+  ```
 
 ### TimePickerAndroid
 
 - `hour` and `minute` are deprecated, use `value` instead.
 
-    ```js
-    // Before
-    try {
-      const {action, hour, minute} = await TimePickerAndroid.open({
-        hour: 14,
-        minute: 0,
-        is24Hour: false, // Will display '2 PM'
-      });
-      if (action !== TimePickerAndroid.dismissedAction) {
-        // Selected hour (0-23), minute (0-59)
-      }
-    } catch ({code, message}) {
-      console.warn('Cannot open time picker', message);
+  ```js
+  // Before
+  try {
+    const {action, hour, minute} = await TimePickerAndroid.open({
+      hour: 14,
+      minute: 0,
+      is24Hour: false, // Will display '2 PM'
+    });
+    if (action !== TimePickerAndroid.dismissedAction) {
+      // Selected hour (0-23), minute (0-59)
     }
-    ```
+  } catch ({code, message}) {
+    console.warn('Cannot open time picker', message);
+  }
+  ```
 
-    ```js
-    // Now
-    // It will use the hour and minute defined in date
-    <RNDateTimePicker mode="time" value={new Date()} />
-    ```
+  ```js
+  // Now
+  // It will use the hour and minute defined in date
+  <RNDateTimePicker mode="time" value={new Date()} />
+  ```
 
 - `timeSetAction` is deprecated, use `onChange` instead.
 
-    ```js
-    // Before
-    try {
-      const {action, hour, minute} = await TimePickerAndroid.open();
-      if (action === TimePickerAndroid.timeSetAction) {
-        // Selected hour (0-23), minute (0-59)
-      }
-    } catch ({code, message}) {
-      console.warn('Cannot open time picker', message);
+  ```js
+  // Before
+  try {
+    const {action, hour, minute} = await TimePickerAndroid.open();
+    if (action === TimePickerAndroid.timeSetAction) {
+      // Selected hour (0-23), minute (0-59)
     }
-    ```
+  } catch ({code, message}) {
+    console.warn('Cannot open time picker', message);
+  }
+  ```
 
-    ```js
-    // Now
-    setTime = (event, date) => {
-      if (date !== undefined) {
-        // Use the hour and minute from the date object
-      }
+  ```js
+  // Now
+  setTime = (event, date) => {
+    if (date !== undefined) {
+      // Use the hour and minute from the date object
     }
-    <RNDateTimePicker mode="time" onChange={this.setTime} />
-    ```
+  };
+  <RNDateTimePicker mode="time" onChange={this.setTime} />;
+  ```
 
 - `dismissedAction` is deprecated, use `onChange` instead.
 
-    ```js
-    // Before
-    try {
-      const {action, hour, minute} = await TimePickerAndroid.open();
-      if (action === TimePickerAndroid.dismissedAction) {
-        // Dismissed
-      }
-    } catch ({code, message}) {
-      console.warn('Cannot open time picker', message);
+  ```js
+  // Before
+  try {
+    const {action, hour, minute} = await TimePickerAndroid.open();
+    if (action === TimePickerAndroid.dismissedAction) {
+      // Dismissed
     }
-    ```
+  } catch ({code, message}) {
+    console.warn('Cannot open time picker', message);
+  }
+  ```
 
-    ```js
-    // Now
-    setTime = (event, date) => {
-      if (date === undefined) {
-        // dismissedAction
-      }
+  ```js
+  // Now
+  setTime = (event, date) => {
+    if (date === undefined) {
+      // dismissedAction
     }
-    <RNDateTimePicker mode="time" onChange={this.setTime} />
-    ```
+  };
+  <RNDateTimePicker mode="time" onChange={this.setTime} />;
+  ```
 
 ## Contributing to the component
 
@@ -490,40 +510,41 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 2. Inside the iOS folder run `pod init`, this will create the initial `pod` file.
 3. Update your `pod` file to look like the following ( Remember to replace `MyApp` with your target name ):
 
-    ```ruby
-    # Allowed sources
-    source 'https://github.com/CocoaPods/Specs.git'
+   ```ruby
+   # Allowed sources
+   source 'https://github.com/CocoaPods/Specs.git'
 
-    target 'MyApp' do
-      # As we use Swift, ensure that `use_frameworks` is enabled.
-      use_frameworks!
+   target 'MyApp' do
+     # As we use Swift, ensure that `use_frameworks` is enabled.
+     use_frameworks!
 
-      # Specific iOS platform we are targetting
-      platform :ios, '8.0'
+     # Specific iOS platform we are targetting
+     platform :ios, '8.0'
 
-      # Point to the installed version
-      pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
+     # Point to the installed version
+     pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
 
-      # React/React-Native specific pods
-      pod 'React', :path => '../node_modules/react-native', :subspecs => [
-        'Core',
-        'CxxBridge',      # Include this for RN >= 0.47
-        'DevSupport',     # Include this to enable In-App Devmenu if RN >= 0.43
-        'RCTText',
-        'RCTNetwork',
-        'RCTWebSocket',   # Needed for debugging
-      ]
+     # React/React-Native specific pods
+     pod 'React', :path => '../node_modules/react-native', :subspecs => [
+       'Core',
+       'CxxBridge',      # Include this for RN >= 0.47
+       'DevSupport',     # Include this to enable In-App Devmenu if RN >= 0.43
+       'RCTText',
+       'RCTNetwork',
+       'RCTWebSocket',   # Needed for debugging
+     ]
 
-      # Explicitly include Yoga if you are using RN >= 0.42.0
-      pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+     # Explicitly include Yoga if you are using RN >= 0.42.0
+     pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
-      # Third party deps podspec link
-      pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-      pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
-      pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+     # Third party deps podspec link
+     pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+     pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+     pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-    end
-    ```
+   end
+   ```
+
 4. Run `pod install` inside the same folder where the `pod` file was created
 5. `npm run start`
 6. `npm run start:ios`
@@ -531,12 +552,14 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 #### Android
 
 1. Add the following lines to `android/settings.gradle`:
+
    ```gradle
    include ':@react-native-community_datetimepicker'
    project(':@react-native-community_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
    ```
 
 2. Add the compile line to the dependencies in `android/app/build.gradle`:
+
    ```gradle
    dependencies {
        ...
@@ -545,6 +568,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
    ```
 
 3. Add the import and link the package in `MainApplication.java`:
+
    ```diff
    + import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
@@ -561,16 +585,15 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
    }
    ```
 
-
 ## Running the example app
 
 1. Install required pods in `example/ios` by running `pods install`
 1. Run `npm start` to start Metro Bundler
 1. Run `npm run start:ios` or `npm run start:android`
 
-[circle-ci-badge]:https://img.shields.io/circleci/project/github/react-native-community/react-native-datetimepicker/master.svg?style=flat-square
-[circle-ci-status]:https://circleci.com/gh/react-native-community/workflows/react-native-datetimepicker/tree/master
-[support-badge]:https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg?style=flat-square
-[license-badge]:https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square
+[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/react-native-datetimepicker/master.svg?style=flat-square
+[circle-ci-status]: https://circleci.com/gh/react-native-community/workflows/react-native-datetimepicker/tree/master
+[support-badge]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg?style=flat-square
+[license-badge]: https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square
 [lean-core-badge]: https://img.shields.io/badge/Lean%20Core-Extracted-brightgreen.svg?style=flat-square
 [lean-core-issue]: https://github.com/facebook/react-native/issues/23313

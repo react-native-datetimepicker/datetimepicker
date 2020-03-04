@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 2.2.3
+
+- Fix iOS picker's styling bug where picker would be fixed to 216px height no matter what `style` was applied to the picker. Now it can correctly apply specific height settings and flex. NOTE: this only works with View style property type. [#120](https://github.com/react-native-community/react-native-datetimepicker/pull/120)
+- update readme example code [#124](https://github.com/react-native-community/react-native-datetimepicker/pull/124)
+
 ### 2.2.2
 
 - Fix android time picker returning today's date instead of the given date [#115](https://github.com/react-native-community/react-native-datetimepicker/pull/115)

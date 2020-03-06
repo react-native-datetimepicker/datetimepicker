@@ -1,7 +1,7 @@
 import { FC, Ref, SyntheticEvent } from 'react'
 import { NativeComponent, ViewProps } from 'react-native'
 
-type IOSMode = 'date' | 'time' | 'datetime';
+type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
 type Display = 'spinner' | 'default' | 'clock' | 'calendar';
 type MinuteIntervalIOS = (1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
@@ -109,6 +109,7 @@ export type AndroidNativeProps = Readonly<BaseProps & DateOptions & TimeOptions 
   minuteInterval?: MinuteIntervalAndroid,
 
   onChange?: (event: AndroidEvent, date?: Date) => void,
+  neutralButtonLabel?: string,
 }>;
 
 export type DatePickerOptions = DateOptions & {

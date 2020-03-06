@@ -1,8 +1,9 @@
 {
   "name": "@react-native-community/datetimepicker",
-  "version": "2.2.0",
+  "version": "2.2.3",
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
+  "types": "src/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -39,7 +40,9 @@
   ],
   "author": "Martijn Swaagman <mswaagman@godaddy.com> (https://github.com/swaagie)",
   "contributors": [
-    "Daniel Sanudo Vacas <dsanudovacas@godaddy.com> (https://github.com/DanielSanudo)"
+    "Daniel Sanudo Vacas <dsanudovacas@godaddy.com> (https://github.com/DanielSanudo)",
+    "Vojtech Novak <vonovak@gmail.com> (https://github.com/vonovak)",
+    "Pavel Balint <lochness42@gmail.com> (https://github.com/lochness42)"
   ],
   "license": "MIT",
   "bugs": {
@@ -49,10 +52,10 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",
-    "@react-native-community/eslint-config": "^0.0.5",
+    "@react-native-community/eslint-config": "^0.0.7",
     "babel-jest": "^24.8.0",
     "detox": "^14.0.2",
-    "eslint": "^6.4.0",
+    "eslint": "^6.8.0",
     "flow-bin": "^0.98.0",
     "flow-typed": "^2.6.0",
     "jest": "^24.8.0",

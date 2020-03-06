@@ -9,7 +9,7 @@
  * @format
  * @flow strict-local
  */
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import RNDateTimePicker from './picker';
 import {toMilliseconds} from './utils';
 import {MODE_DATE} from './constants';
@@ -77,23 +77,21 @@ export default class Picker extends React.Component<IOSNativeProps> {
     toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
 
     return (
-      <View style={style}>
-        <RNDateTimePicker
-          testID={testID}
-          ref={this._picker}
-          style={styles.picker}
-          date={dates.value}
-          locale={locale !== null && locale !== '' ? locale : undefined}
-          maximumDate={dates.maximumDate}
-          minimumDate={dates.minimumDate}
-          mode={mode}
-          minuteInterval={minuteInterval}
-          timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
-          onChange={this._onChange}
-          onStartShouldSetResponder={() => true}
-          onResponderTerminationRequest={() => false}
-        />
-      </View>
+      <RNDateTimePicker
+        testID={testID}
+        ref={this._picker}
+        style={[styles.picker, style]}
+        date={dates.value}
+        locale={locale !== null && locale !== '' ? locale : undefined}
+        maximumDate={dates.maximumDate}
+        minimumDate={dates.minimumDate}
+        mode={mode}
+        minuteInterval={minuteInterval}
+        timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+        onChange={this._onChange}
+        onStartShouldSetResponder={() => true}
+        onResponderTerminationRequest={() => false}
+      />
     );
   }
 }

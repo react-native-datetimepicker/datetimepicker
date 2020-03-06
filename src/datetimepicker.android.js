@@ -9,6 +9,7 @@ import {
   DATE_SET_ACTION,
   TIME_SET_ACTION,
   DISMISS_ACTION,
+  NEUTRAL_BUTTON_ACTION,
 } from './constants';
 import pickers from './picker';
 import invariant from 'invariant';
@@ -25,6 +26,7 @@ export default function RNDateTimePicker({
   minimumDate,
   maximumDate,
   minuteInterval,
+  neutralButtonLabel,
 }: AndroidNativeProps) {
   invariant(value, 'A date or time should be specified as `value`.');
   let picker;
@@ -36,6 +38,7 @@ export default function RNDateTimePicker({
         display,
         minuteInterval,
         is24Hour,
+        neutralButtonLabel,
       });
       break;
 
@@ -46,13 +49,14 @@ export default function RNDateTimePicker({
         display,
         minimumDate,
         maximumDate,
+        neutralButtonLabel,
       });
       break;
   }
 
   picker.then(
     function resolve({action, day, month, year, minute, hour}) {
-      const date = new Date();
+      const date = new Date(value);
       const event: AndroidEvent = {
         type: 'set',
         nativeEvent: {},
@@ -67,6 +71,11 @@ export default function RNDateTimePicker({
         case TIME_SET_ACTION:
           event.nativeEvent.timestamp = date.setHours(hour, minute);
           onChange(event, date);
+          break;
+
+        case NEUTRAL_BUTTON_ACTION:
+          event.type = 'neutralButtonPressed';
+          onChange(event);
           break;
 
         case DISMISS_ACTION:

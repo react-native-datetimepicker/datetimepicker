@@ -8,7 +8,7 @@ import type {NativeComponent} from 'ReactNative';
 import type {ViewProps} from 'ViewPropTypes';
 import type {ElementRef} from 'react';
 
-type IOSMode = 'date' | 'time' | 'datetime';
+type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
 type Display = 'spinner' | 'default' | 'clock' | 'calendar';
 type MinuteIntervalIOS = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
@@ -125,6 +125,7 @@ export type AndroidNativeProps = $ReadOnly<{|
   minuteInterval?: MinuteIntervalAndroid,
 
   onChange: (event: AndroidEvent, date?: Date) => void,
+  neutralButtonLabel?: string,
 |}>;
 
 export type DatePickerOptions = {|

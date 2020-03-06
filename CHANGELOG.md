@@ -1,5 +1,35 @@
 # CHANGELOG
 
+### 2.2.3
+
+- Fix iOS picker's styling bug where picker would be fixed to 216px height no matter what `style` was applied to the picker. This is because previously, the picker was always wrapped in a `View` which was now removed. Since `style` prop was never documented in this package, we do not consider this a breaking change. Now `style` can correctly apply specific height settings and flex. NOTE: this only works with View style property type. [#120](https://github.com/react-native-community/react-native-datetimepicker/pull/120)
+- update readme example code [#124](https://github.com/react-native-community/react-native-datetimepicker/pull/124)
+
+### 2.2.2
+
+- Fix android time picker returning today's date instead of the given date [#115](https://github.com/react-native-community/react-native-datetimepicker/pull/115)
+
+### 2.2.1
+
+- Fix missing return statement [#107](https://github.com/react-native-community/react-native-datetimepicker/pull/107)
+
+### 2.2.0
+
+- Fix podspec to get source from tag [#103](https://github.com/react-native-community/react-native-datetimepicker/pull/103)
+- fix prettier usage [#102](https://github.com/react-native-community/react-native-datetimepicker/pull/102)
+- Introduce neutral button via neutralButtonLabel on Android pickers [#93](https://github.com/react-native-community/react-native-datetimepicker/pull/93)
+- update readme [#100](https://github.com/react-native-community/react-native-datetimepicker/pull/100)
+
+### 2.1.2
+
+- Fix Android Nougat datetime picker mode="spinner" [#47](https://github.com/react-native-community/react-native-datetimepicker/pull/47)
+
+### 2.1.1
+
+- Add `countdown` option to iOSMode types [#31](https://github.com/react-native-community/react-native-datetimepicker/pull/31)
+- Added TS type definition file path to package.json [#77](https://github.com/react-native-community/react-native-datetimepicker/pull/77)
+- Improved readme [#33](https://github.com/react-native-community/react-native-datetimepicker/pull/33), [#39](https://github.com/react-native-community/react-native-datetimepicker/pull/39), [#46](https://github.com/react-native-community/react-native-datetimepicker/pull/46), [#97](https://github.com/react-native-community/react-native-datetimepicker/pull/97)
+
 ### 2.1.0
 
 - [#25] Add typescript definitions.

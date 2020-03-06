@@ -16,3 +16,6 @@ export const TIME_SET_ACTION = 'timeSetAction';
 export const DISMISS_ACTION = 'dismissedAction';
 
 export const MINUTE_INTERVAL_DEFAULT = 1;
+
+export const NEUTRAL_BUTTON_LABEL = 'neutralButtonLabel';
+export const NEUTRAL_BUTTON_ACTION = 'neutralButtonAction';

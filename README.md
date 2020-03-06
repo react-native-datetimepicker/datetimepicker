@@ -230,6 +230,15 @@ Allows changing of the timeZone of the date picker. By default it uses the devic
 <RNDateTimePicker timeZoneOffsetInMinutes={60} />
 ```
 
+#### `textColor` (`optional`, `iOS only`)
+
+Allows changing of the textColor of the date picker.
+
+```js
+// GMT+1
+<RNDateTimePicker textColor={'red'} />
+```
+
 #### `locale` (`optional`, `iOS only`)
 
 Allows changing of the locale of the component. By default it uses the device's locale.

@@ -100,6 +100,7 @@ const App = () => {
                   display={display}
                   onChange={onChange}
                   style={styles.iOsPicker}
+                  textColor={'red'}
                 />
               )}
             </View>

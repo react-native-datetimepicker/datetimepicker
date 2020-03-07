@@ -5,8 +5,8 @@ Development can be done using the example app. Follow readme instructions on run
 ### Clone, install
 
 ```sh
-git clone https://github.com/react-native-community/react-native-datetimepicker.git
-cd react-native-datetimepicker
+git clone https://github.com/react-native-community/datetimepicker.git
+cd datetimepicker
 npm install
 ```
 

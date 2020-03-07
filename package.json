@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-native-community/react-native-datetimepicker.git"
+    "url": "git+https://github.com/react-native-community/datetimepicker.git"
   },
   "keywords": [
     "react-native-component",
@@ -46,9 +46,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/react-native-community/react-native-datetimepicker/issues"
+    "url": "https://github.com/react-native-community/datetimepicker/issues"
   },
-  "homepage": "https://github.com/react-native-community/react-native-datetimepicker#readme",
+  "homepage": "https://github.com/react-native-community/datetimepicker#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",

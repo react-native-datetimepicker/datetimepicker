@@ -9,7 +9,7 @@
  * @format
  * @flow strict-local
  */
-import {StyleSheet} from 'react-native';
+import {StyleSheet, processColor} from 'react-native';
 import RNDateTimePicker from './picker';
 import {toMilliseconds} from './utils';
 import {MODE_DATE} from './constants';
@@ -69,10 +69,16 @@ export default class Picker extends React.Component<IOSNativeProps> {
       mode,
       minuteInterval,
       timeZoneOffsetInMinutes,
-      textColor,
+      textColor: _textColor,
     } = this.props;
 
     invariant(value, 'A date or time should be specified as `value`.');
+
+    const textColor = processColor(_textColor);
+    invariant(
+      textColor == null || typeof textColor === 'number',
+      'Unexpected color given for props.textColor',
+    );
 
     const dates: DatePickerOptions = {value, maximumDate, minimumDate};
     toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');

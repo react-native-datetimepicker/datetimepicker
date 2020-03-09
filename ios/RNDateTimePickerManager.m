@@ -40,8 +40,10 @@ RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 RCT_REMAP_VIEW_PROPERTY(mode, datePickerMode, UIDatePickerMode)
 RCT_REMAP_VIEW_PROPERTY(timeZoneOffsetInMinutes, timeZone, NSTimeZone)
 
-RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNDateTimePicker)
+RCT_CUSTOM_VIEW_PROPERTY(textColor, NSNumber, RNDateTimePicker)
 {
+  if (!json) return;
+    
   [view setValue:[RCTConvert UIColor:json] forKey:@"textColor"];
   [view setValue:@NO forKey:@"highlightsToday"];
 }

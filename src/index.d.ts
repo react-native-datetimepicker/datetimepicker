@@ -92,7 +92,7 @@ export type IOSNativeProps = Readonly<BaseProps & {
   /**
    * The date picker text color.
    */
-  textColor?: ColorValue,
+  textColor?: ?ColorValue,
 }>;
 
 export type AndroidNativeProps = Readonly<BaseProps & DateOptions & TimeOptions & {

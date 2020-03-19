@@ -104,7 +104,7 @@ export type IOSNativeProps = $ReadOnly<{|
   /**
    * The date picker text color.
    */
-  textColor?: ?number,
+  textColor?: ?ColorValue,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|

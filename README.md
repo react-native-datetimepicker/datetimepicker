@@ -235,7 +235,7 @@ Allows changing of the timeZone of the date picker. By default it uses the devic
 Allows changing of the textColor of the date picker.
 
 ```js
-<RNDateTimePicker textColor={'red'} />
+<RNDateTimePicker textColor="red" />
 ```
 
 #### `locale` (`optional`, `iOS only`)

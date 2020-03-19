@@ -69,6 +69,7 @@ export default class Picker extends React.Component<IOSNativeProps> {
       mode,
       minuteInterval,
       timeZoneOffsetInMinutes,
+      textColor,
     } = this.props;
 
     invariant(value, 'A date or time should be specified as `value`.');
@@ -89,6 +90,7 @@ export default class Picker extends React.Component<IOSNativeProps> {
         minuteInterval={minuteInterval}
         timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
         onChange={this._onChange}
+        textColor={textColor}
         onStartShouldSetResponder={() => true}
         onResponderTerminationRequest={() => false}
       />

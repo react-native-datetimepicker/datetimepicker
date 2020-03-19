@@ -235,7 +235,6 @@ Allows changing of the timeZone of the date picker. By default it uses the devic
 Allows changing of the textColor of the date picker.
 
 ```js
-// GMT+1
 <RNDateTimePicker textColor={'red'} />
 ```
 

@@ -1,6 +1,6 @@
-import { FC, Ref, SyntheticEvent } from 'react'
-import { NativeComponent, ViewProps } from 'react-native'
-import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import { FC, Ref, SyntheticEvent } from 'react';
+import { NativeComponent, ViewProps } from 'react-native';
+import { ColorValue } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';

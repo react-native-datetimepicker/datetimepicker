@@ -2,7 +2,7 @@
 
 ### 2.3.1
 
-- fix typescript compilation errors #138
+- fix typescript compilation errors #138, #143
 - use yarn for managing deps (this should not influence consumers)
 
 ### 2.3.0

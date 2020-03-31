@@ -13,7 +13,7 @@
     "start:ios": "react-native run-ios --project-path example/ios",
     "test": "jest ./test",
     "posttest": "npm run lint",
-    "lint": "eslint {example,src,test}/**/*.js",
+    "lint": "eslint {example,src,test}/**/*.js src/index.d.ts",
     "flow": "flow check",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",
     "detox:ios:test:debug": "detox test -c ios.sim.debug",

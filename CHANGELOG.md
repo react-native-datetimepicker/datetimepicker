@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 2.3.1
+
+- fix typescript compilation errors #138
+- use yarn for managing deps (this should not influence consumers)
+
 ### 2.3.0
 
 - add `textColor` prop for iOS: [#127](https://github.com/react-native-community/datetimepicker/pull/127)

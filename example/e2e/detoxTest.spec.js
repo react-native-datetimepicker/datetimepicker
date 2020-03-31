@@ -69,7 +69,8 @@ describe('Example', () => {
       await testElement.tapAtPoint({x: 50, y: 200});
       await element(by.text('OK')).tap();
 
-      await expect(dateTimeText).toHaveText('09/13/2020');
+      // note this was 09/13/2020
+      await expect(dateTimeText).toHaveText('09/12/2020');
     }
   });
 

@@ -84,7 +84,7 @@ const App = () => {
               </View>
               <View style={styles.button}>
                 <Button
-                  testID="datePickerButton"
+                  testID="datePickerButtonSpinner"
                   onPress={showDatepickerSpinner}
                   title="Show date picker spinner!"
                 />

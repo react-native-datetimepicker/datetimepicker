@@ -1,6 +1,5 @@
 import { FC, Ref, SyntheticEvent } from 'react';
 import { NativeComponent, ViewProps } from 'react-native';
-import { ColorValue } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
@@ -92,7 +91,7 @@ export type IOSNativeProps = Readonly<BaseProps & {
   /**
    * The date picker text color.
    */
-  textColor?: ?ColorValue,
+  textColor?: string,
 }>;
 
 export type AndroidNativeProps = Readonly<BaseProps & DateOptions & TimeOptions & {

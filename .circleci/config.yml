@@ -140,7 +140,7 @@ commands:
             @<<parameters.device_name>> -version
 
             $ANDROID_HOME/emulator/emulator
-            @<<parameters.device_name>> -skin 470x860 -cores 1 -gpu auto -accel on
+            @<<parameters.device_name>> -skin 1080x1920 -cores 1 -gpu auto -accel on
             -memory 1024 -no-audio -no-snapshot -no-boot-anim -no-window -logcat *:W
             | grep -i 'ReactNative\|<<parameters.logcat_grep>>'
           name: Start Android Emulator (background)
@@ -216,11 +216,11 @@ jobs:
           command: yarn detox:ios:test:release
           name: test detox
   e2e_release_android:
+    # we need to use mac to run emulator with acceleration
+    # see https://support.circleci.com/hc/en-us/articles/360000028928-Testing-with-Android-emulator-on-CircleCI-2-0
     executor:
       name: rn/macos
       xcode_version: "11.4.0"
-#    executor:
-#      name: rn/linux_android
     steps:
       - attach_workspace:
           at: .
@@ -256,22 +256,6 @@ workflows:
       - e2e_release_ios:
           requires:
             - analyse_js
-      - e2e_release_android:
-          requires:
-            - analyse_js
-
-#      - rn/ios_build_and_test:
-#          on_after_initialize: |
-#            mkdir -p example/ios/build/Build/Products/Release-iphonesimulator/example.app
-#            node node_modules/react-native/cli.js bundle --entry-file example/index.js --platform ios --dev false --reset-cache --bundle-output example/ios/build/Build/Products/Release-iphonesimulator/example.app/main.jsbundle --assets-dest example/ios/build/Build/Products/Release-iphonesimulator/example.app
-#          pod_install_directory: 'example/ios'
-#          build_configuration: Release
-#          detox_configuration: ios.sim.release
-#          device: iPhone 11
-#          derived_data_path: example/ios/build
-#          node_version: '12.10.0'
-#          project_path: example/ios/example.xcworkspace
-#          project_type: workspace
+#      - e2e_release_android:
 #          requires:
 #            - analyse_js
-#          scheme: example

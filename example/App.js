@@ -46,6 +46,12 @@ const App = () => {
   const showTimepicker = () => {
     showMode('time');
   };
+
+  const showTimepickerSpinner = () => {
+    showMode('time');
+    setDisplay('spinner');
+  };
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -84,7 +90,7 @@ const App = () => {
               </View>
               <View style={styles.button}>
                 <Button
-                  testID="datePickerButton"
+                  testID="datePickerButtonSpinner"
                   onPress={showDatepickerSpinner}
                   title="Show date picker spinner!"
                 />
@@ -94,6 +100,13 @@ const App = () => {
                   testID="timePickerButton"
                   onPress={showTimepicker}
                   title="Show time picker!"
+                />
+              </View>
+              <View style={styles.button}>
+                <Button
+                  testID="timePickerButtonSpinner"
+                  onPress={showTimepickerSpinner}
+                  title="Show time picker spinner!"
                 />
               </View>
               <View style={styles.header}>

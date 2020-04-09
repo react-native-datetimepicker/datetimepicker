@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.3.2
+
+- Fix android nougat display spinner [#118](https://github.com/react-native-community/datetimepicker/pull/118)
+
 ### 2.3.1
 
 - fix typescript compilation errors #138, #143

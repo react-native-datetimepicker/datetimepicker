@@ -45,6 +45,7 @@ const App = () => {
 
   const showTimepicker = () => {
     showMode('time');
+    setDisplay('default');
   };
 
   const showTimepickerSpinner = () => {

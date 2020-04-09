@@ -53,24 +53,25 @@
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",
     "@react-native-community/eslint-config": "^1.0.0",
+    "@react-native-community/datetimepicker": "./",
     "babel-jest": "^24.8.0",
     "detox": "^14.0.2",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "flow-bin": "^0.98.0",
+    "flow-bin": "^0.113.0",
     "flow-typed": "^2.6.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.55.0",
-    "moment": "^2.24.0",
-    "react": "^16.8.6",
-    "react-native": "^0.60.4",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "^16.11.0"
   },
   "peerDependencies": {
-    "react": ">=16.8",
-    "react-native": ">=0.59"
+    "react": ">=16.11.0",
+    "react-native": ">=0.60"
   },
   "dependencies": {
+    "moment": "^2.24.0",
+    "react": "^16.11.0",
+    "react-native": "^0.62.2",
     "invariant": "^2.2.4"
   },
   "detox": {

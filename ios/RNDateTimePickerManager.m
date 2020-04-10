@@ -48,7 +48,9 @@ RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNDateTimePicker)
   } else {
     UIColor* defaultColor;
     if (@available(iOS 13.0, *)) {
+#ifdef __IPHONE_13_0
         defaultColor = [UIColor labelColor];
+#endif
     } else {
         defaultColor = [UIColor blackColor];
     }

@@ -24,7 +24,7 @@ function validateProps(props: AndroidNativeProps) {
   invariant(
     !(display === DISPLAY.calendar && mode === ANDROID_MODE.time) &&
       !(display === DISPLAY.clock && mode === ANDROID_MODE.date),
-    `display: ${display} and mode: ${mode} cannot be used together.`
+    `display: ${display} and mode: ${mode} cannot be used together.`,
   );
 }
 
@@ -98,7 +98,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
     function reject(error) {
       // ignore or throw `activity == null` error
       throw error;
-    }
+    },
   );
 
   return null;

@@ -17,7 +17,7 @@ type Display = $Keys<typeof DISPLAY>;
 export type Event = SyntheticEvent<
   $ReadOnly<{|
     timestamp: number,
-  |}>
+  |}>,
 >;
 
 export type AndroidEvent = {|

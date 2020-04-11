@@ -1,14 +1,13 @@
 import renderer from 'react-test-renderer';
 import DatePicker from '../src/index.js';
+import AndroidDateTimePicker from '../src/datetimepicker.android';
 import React from 'react';
 
 describe('DatePicker', () => {
   const DATE = 1376949600000;
 
   it('renders a native Component', () => {
-    const tree = renderer
-      .create(<DatePicker value={new Date(DATE)} />)
-      .toJSON();
+    const tree = renderer.create(<DatePicker value={new Date(DATE)} />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });
@@ -46,17 +45,13 @@ describe('DatePicker', () => {
   });
 
   it('renders with mode `time`', () => {
-    const tree = renderer
-      .create(<DatePicker value={new Date(DATE)} mode="time" />)
-      .toJSON();
+    const tree = renderer.create(<DatePicker value={new Date(DATE)} mode="time" />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });
 
   it('renders with mode `datetime` (iOS only)', () => {
-    const tree = renderer
-      .create(<DatePicker value={new Date(DATE)} mode="datetime" />)
-      .toJSON();
+    const tree = renderer.create(<DatePicker value={new Date(DATE)} mode="datetime" />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });
@@ -65,16 +60,25 @@ describe('DatePicker', () => {
     expect(new DatePicker()._picker).toBeDefined();
   });
 
+  it.each([
+    [{}, 'A date or time should be specified as `value`.'],
+    [
+      {display: 'calendar', mode: 'time', value: new Date()},
+      'display: calendar and mode: time cannot be used together.',
+    ],
+    [
+      {display: 'clock', mode: 'date', value: new Date()},
+      'display: clock and mode: date cannot be used together.',
+    ],
+  ])('AndroidDateTimePicker throws when invalid props are passed', (props, expected) => {
+    expect(() => AndroidDateTimePicker(props)).toThrow(expected);
+  });
+
   it('applies styling to DatePicker', () => {
     const style = {backgroundColor: 'red'};
-    const tree = renderer
-      .create(<DatePicker style={style} value={new Date(DATE)} />)
-      .toJSON();
+    const tree = renderer.create(<DatePicker style={style} value={new Date(DATE)} />).toJSON();
 
-    expect(tree).toHaveProperty('props.style', [
-      {height: 216},
-      {backgroundColor: 'red'},
-    ]);
+    expect(tree).toHaveProperty('props.style', [{height: 216}, {backgroundColor: 'red'}]);
     expect(tree).toMatchSnapshot();
   });
 });

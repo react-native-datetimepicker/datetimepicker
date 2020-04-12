@@ -1,5 +1,6 @@
 import renderer from 'react-test-renderer';
 import DatePicker from '../src/index.js';
+import AndroidDateTimePicker from '../src/datetimepicker.android';
 import React from 'react';
 
 describe('DatePicker', () => {
@@ -64,6 +65,23 @@ describe('DatePicker', () => {
   it('has reference to picker', () => {
     expect(new DatePicker()._picker).toBeDefined();
   });
+
+  it.each([
+    [{}, 'A date or time should be specified as `value`.'],
+    [
+      {display: 'calendar', mode: 'time', value: new Date()},
+      'display: calendar and mode: time cannot be used together.',
+    ],
+    [
+      {display: 'clock', mode: 'date', value: new Date()},
+      'display: clock and mode: date cannot be used together.',
+    ],
+  ])(
+    'AndroidDateTimePicker throws when invalid props are passed',
+    (props, expected) => {
+      expect(() => AndroidDateTimePicker(props)).toThrow(expected);
+    },
+  );
 
   it('applies styling to DatePicker', () => {
     const style = {backgroundColor: 'red'};

@@ -8,10 +8,11 @@ import type {NativeComponent} from 'ReactNative';
 import type {ViewProps} from 'ViewPropTypes';
 import type {ElementRef} from 'react';
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import {ANDROID_MODE, DISPLAY} from './constants';
 
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
-type AndroidMode = 'date' | 'time';
-type Display = 'spinner' | 'default' | 'clock' | 'calendar';
+type AndroidMode = $Keys<typeof ANDROID_MODE>;
+type Display = $Keys<typeof DISPLAY>;
 
 export type Event = SyntheticEvent<
   $ReadOnly<{|

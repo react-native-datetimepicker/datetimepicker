@@ -52,6 +52,10 @@ React Native date & time picker component for iOS and Android
     - [Android](#android)
   - [Running the example app](#running-the-example-app)
 
+## Requirements
+
+- Xcode 11 with iOS 13 SDK
+
 ## Getting started
 
 ```bash

@@ -24,7 +24,7 @@ RCT_ENUM_CONVERTER(UIDatePickerMode, (@{
 
 @implementation RNDateTimePickerManager
 
-RCT_EXPORT_MODULE(RNDateTimePicker)
+RCT_EXPORT_MODULE()
 
 - (UIView *)view
 {

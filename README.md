@@ -52,6 +52,10 @@ React Native date & time picker component for iOS and Android
     - [Android](#android)
   - [Running the example app](#running-the-example-app)
 
+## Requirements
+
+- Xcode >= 11; please open a PR if you need to support building with older Xcode versions - see [#133](https://github.com/react-native-community/datetimepicker/issues/133). Please note that we support iOS >= 10 but you need Xcode 11 to build.
+
 ## Getting started
 
 ```bash
@@ -599,7 +603,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 1. Run `npm start` to start Metro Bundler
 1. Run `npm run start:ios` or `npm run start:android`
 
-[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/react-native-datetimepicker/master.svg?style=flat-square
+[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-community/workflows/react-native-datetimepicker/tree/master
 [support-badge]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg?style=flat-square
 [license-badge]: https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square

@@ -1,0 +1,8 @@
+namespace DateTimePicker {
+
+    [default_interface]
+    runtimeclass DateTimePickerView : Windows.UI.Xaml.Controls.CalendarDatePicker {
+        DateTimePickerView(Microsoft.ReactNative.IReactContext context);
+        void UpdateProperties(Microsoft.ReactNative.IJSValueReader reader);
+    };
+}

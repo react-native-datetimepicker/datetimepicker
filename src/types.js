@@ -8,7 +8,7 @@ import type {NativeComponent} from 'ReactNative';
 import type {ViewProps} from 'ViewPropTypes';
 import type {ElementRef} from 'react';
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import {ANDROID_MODE, DISPLAY} from './constants';
+import {ANDROID_MODE, DISPLAY, DAY_OF_WEEK} from './constants';
 
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
@@ -149,3 +149,28 @@ export type RCTDateTimePickerNative = Class<NativeComponent<IOSNativeProps>>;
 export type NativeRef = {
   current: ElementRef<RCTDateTimePickerNative> | null,
 };
+
+export type WindowsDatePickerChangeEvent = {|
+  nativeEvent: {|
+    newDate: number,
+  |}
+|};
+
+
+export type WindowsNativeProps = $ReadOnly<{|
+  ...BaseProps,
+  onChange?: (event: WindowsDatePickerChangeEvent, date: Date) => void,
+
+  placeholderText?: string;
+  dateFormat?:
+    | 'day month year'
+    | 'dayofweek day month'
+    | 'longdate'
+    | 'shortdate';
+  dayOfWeekFormat?:
+    | '{dayofweek.abbreviated(2)}'
+    | '{dayofweek.abbreviated(3)}'
+    | '{dayofweek.full}';
+  firstDayOfWeek?: DAY_OF_WEEK;
+  timeZoneOffsetInSeconds?: number;
+|}>;

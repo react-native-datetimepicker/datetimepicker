@@ -24,6 +24,16 @@ export const ANDROID_MODE = Object.freeze({
   time: 'time',
 });
 
+export const DAY_OF_WEEK = Object.freeze({
+  Sunday: 0,
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6
+});
+
 export const DATE_SET_ACTION = 'dateSetAction';
 export const TIME_SET_ACTION = 'timeSetAction';
 export const DISMISS_ACTION = 'dismissedAction';

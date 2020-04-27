@@ -1,9 +1,15 @@
-const root = process.cwd();
-
 module.exports = {
   dependencies: {
     datetimepicker: {
-      root,
+      root: __dirname,
+    },
+  },
+  project: {
+    android: {
+      sourceDir: './example/android',
+    },
+    ios: {
+      project: './example/ios/example.xcodeproj',
     },
   },
 };

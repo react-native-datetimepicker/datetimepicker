@@ -23,7 +23,7 @@
     "detox:android:build:debug": "detox build -c android.emu.debug",
     "detox:android:test:debug": "detox test -c android.emu.debug",
     "detox:android:build:release": "detox build -c android.emu.release",
-    "detox:android:test:release": "detox test -c android.emu.release",
+    "detox:android:test:release": "detox test -c android.emu.release --record-videos all --record-logs all --headless -l verbose",
     "detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build"
   },
   "repository": {
@@ -54,14 +54,15 @@
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",
     "@react-native-community/eslint-config": "^1.0.0",
-    "babel-jest": "^24.8.0",
-    "detox": "^14.0.2",
+    "babel-jest": "^25.4.0",
+    "detox": "^16.3.0",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
     "flow-bin": "^0.113.0",
-    "flow-typed": "^2.6.0",
-    "jest": "^24.8.0",
-    "metro-react-native-babel-preset": "^0.55.0",
+    "flow-typed": "^3.1.0",
+    "jest": "^25.4.0",
+    "jest-circus": "^25.4.0",
+    "metro-react-native-babel-preset": "^0.58.0",
     "moment": "^2.24.0",
     "react": "^16.11.0",
     "react-native": "^0.62.2",
@@ -82,27 +83,35 @@
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "example/ios/build/Build/Products/Debug-iphonesimulator/example.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project example/ios/example.xcodeproj -destination 'platform=iOS Simulator,name=iPhone X' -scheme example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11' -scheme example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
         "type": "ios.simulator",
-        "name": "iPhone X"
+        "device": {
+          "type": "iPhone 11"
+        }
       },
       "ios.sim.release": {
         "binaryPath": "example/ios/build/Build/Products/Release-iphonesimulator/example.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project example/ios/example.xcodeproj -destination 'platform=iOS Simulator,name=iPhone X' -scheme example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "build": "./scripts/bundle-ios.sh && export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11' -scheme example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
         "type": "ios.simulator",
-        "name": "iPhone X"
+        "device": {
+          "type": "iPhone 11"
+        }
       },
       "android.emu.debug": {
         "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ../..",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
         "type": "android.emulator",
-        "name": "TestingAVD"
+        "device": {
+          "avdName": "TestingAVD"
+        }
       },
       "android.emu.release": {
         "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ../..",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release)",
         "type": "android.emulator",
-        "name": "TestingAVD"
+        "device": {
+          "avdName": "TestingAVD"
+        }
       }
     }
   }

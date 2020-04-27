@@ -10,6 +10,8 @@ module.exports = {
     beforeEach: true,
     afterAll: true,
     jest: true,
-    jasmine: true
+    jasmine: true,
+    waitFor: true,
+    detoxCircus: true
   }
 };

@@ -16,7 +16,7 @@ import {Picker} from 'react-native-windows';
 import moment from 'moment';
 import {DAY_OF_WEEK} from '../src/constants';
 
-const App = () => {
+export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -79,7 +79,9 @@ const App = () => {
             <Header />
             {global.HermesInternal !== null && (
               <View style={styles.engine}>
-                <Text style={styles.footer}>Engine: Hermes</Text>
+                <Text testID="hermesIndicator" style={styles.footer}>
+                  Engine: Hermes
+                </Text>
               </View>
             )}
             <View style={styles.body}>
@@ -325,5 +327,3 @@ const styles = StyleSheet.create({
     width: 350,
   },
 });
-
-export default App;

@@ -75,7 +75,8 @@ target "example" do
   pod "glog", :podspec => "#{$node_modules_path}/react-native/third-party-podspecs/glog.podspec"
   pod "Folly", :podspec => "#{$node_modules_path}/react-native/third-party-podspecs/Folly.podspec"
 
-  pod 'RNDateTimePicker', :path => '../../RNDateTimePicker.podspec'
+  use_native_modules!
+  # pod 'RNDateTimePicker', :path => '../../RNDateTimePicker.podspec'
 
   # Enables Flipper.
   #

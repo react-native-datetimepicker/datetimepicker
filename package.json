@@ -10,7 +10,7 @@
   "scripts": {
     "start": "react-native start",
     "start:android": "react-native run-android --no-jetifier",
-    "start:ios": "react-native run-ios --project-path example/ios",
+    "start:ios": "react-native run-ios",
     "test": "jest ./test",
     "posttest": "npm run lint",
     "lint": "eslint {example,src,test}/**/*.js src/index.d.ts",

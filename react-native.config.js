@@ -6,4 +6,9 @@ module.exports = {
       root,
     },
   },
+  project: {
+    android: {
+      sourceDir: './example/android',
+    },
+  },
 };

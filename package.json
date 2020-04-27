@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "react-native start",
-    "start:android": "react-native run-android --root example/",
+    "start:android": "react-native run-android --no-jetifier",
     "start:ios": "react-native run-ios --project-path example/ios",
     "test": "jest ./test",
     "posttest": "npm run lint",
@@ -53,7 +53,6 @@
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",
     "@react-native-community/eslint-config": "^1.0.0",
-    "@react-native-community/datetimepicker": "./",
     "babel-jest": "^24.8.0",
     "detox": "^14.0.2",
     "eslint": "^6.8.0",

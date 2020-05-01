@@ -16,7 +16,7 @@ import { Picker } from 'react-native-windows';
 import moment from 'moment';
 import {DAY_OF_WEEK} from '../src/constants';
 
-const App = () => { //1598051730000
+const App = () => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);

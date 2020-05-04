@@ -17,14 +17,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const RNDateTimePickerWindows = requireNativeComponent('RNDateTimePickerWindows');
+const RNDateTimePickerWindows = requireNativeComponent(
+  'RNDateTimePickerWindows',
+);
 
 export default class DateTimePickerWindows extends React.Component<WindowsNativeProps> {
-  static defaultProps: WindowsNativeProps = {
-    dateFormat: 'day month year',
-    dayOfWeekFormat: '{dayofweek.abbreviated(3)}'
-  };
-
   constructor(props: WindowsNativeProps) {
     super(props);
   }
@@ -33,21 +30,27 @@ export default class DateTimePickerWindows extends React.Component<WindowsNative
       dayOfWeekFormat: this.props.dayOfWeekFormat,
       dateFormat: this.props.dateFormat,
       firstDayOfWeek: this.props.firstDayOfWeek,
-      maxDate: this.props.maximumDate ? this.props.maximumDate.getTime() : undefined, // time in milliseconds
-      minDate: this.props.minimumDate ? this.props.minimumDate.getTime() : undefined, // time in milliseconds
+      maxDate: this.props.maximumDate
+        ? this.props.maximumDate.getTime()
+        : undefined, // time in milliseconds
+      minDate: this.props.minimumDate
+        ? this.props.minimumDate.getTime()
+        : undefined, // time in milliseconds
       onChange: this.props.onChange,
       placeholderText: this.props.placeholderText,
-      selectedDate: this.props.value
-        ? this.props.value.getTime()
-        : undefined, // time in milliseconds
+      selectedDate: this.props.value ? this.props.value.getTime() : undefined, // time in milliseconds
       style: [styles.rnDatePicker, this.props.style],
     };
 
     // The Date object returns timezone in minutes. Convert that to seconds
-    // and multiply by -1 so that the offset can be added to GMT time to get
+    // and multiply by -1 so that the offset can be added to UTC+0 time to get
     // the correct value on the native side.
-    const timeZoneOffsetInSeconds = (this.props.timeZoneOffsetInSeconds != undefined) ?
-     this.props.timeZoneOffsetInSeconds : (this.props.value ? (-1 * this.props.value.getTimezoneOffset() * 60) : undefined);
+    const timeZoneOffsetInSeconds =
+      this.props.timeZoneOffsetInSeconds != undefined
+        ? this.props.timeZoneOffsetInSeconds
+        : this.props.value
+        ? -1 * this.props.value.getTimezoneOffset() * 60
+        : undefined;
 
     return (
       <RNDateTimePickerWindows
@@ -59,6 +62,7 @@ export default class DateTimePickerWindows extends React.Component<WindowsNative
   }
 
   _onChange = (event: WindowsDatePickerChangeEvent) => {
-    this.props.onChange && this.props.onChange(event, new Date(+event.nativeEvent.newDate));
+    this.props.onChange &&
+      this.props.onChange(event, new Date(+event.nativeEvent.newDate));
   };
 }

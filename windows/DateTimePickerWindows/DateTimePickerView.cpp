@@ -6,12 +6,12 @@
 #include "DateTimePickerView.h"
 #include "DateTimePickerView.g.cpp"
 
+#include <limits>
+#include <stdexcept>
+
 namespace winrt {
     using namespace Microsoft::ReactNative;
     using namespace Windows::Foundation;
-    using namespace Windows::UI;
-    using namespace Windows::UI::Xaml;
-    using namespace Windows::UI::Xaml::Controls;
 }
 
 namespace winrt::DateTimePicker::implementation {
@@ -44,7 +44,7 @@ namespace winrt::DateTimePicker::implementation {
 
             if (propertyName == "dayOfWeekFormat") {
                 if (propertyValue.IsNull()) {
-                    this->ClearValue(winrt::CalendarDatePicker::DayOfWeekFormatProperty());
+                    this->ClearValue(xaml::Controls::CalendarDatePicker::DayOfWeekFormatProperty());
                 }
                 else {
                     this->DayOfWeekFormat(to_hstring(propertyValue.AsString()));
@@ -52,7 +52,7 @@ namespace winrt::DateTimePicker::implementation {
             }
             else if (propertyName == "dateFormat") {
                 if (propertyValue.IsNull()) {
-                    this->ClearValue(winrt::CalendarDatePicker::DateFormatProperty());
+                    this->ClearValue(xaml::Controls::CalendarDatePicker::DateFormatProperty());
                 }
                 else {
                     this->DateFormat(to_hstring(propertyValue.AsString()));
@@ -60,7 +60,7 @@ namespace winrt::DateTimePicker::implementation {
             }
             else if (propertyName == "firstDayOfWeek") {
                 if (propertyValue.IsNull()) {
-                    this->ClearValue(winrt::CalendarDatePicker::FirstDayOfWeekProperty());
+                    this->ClearValue(xaml::Controls::CalendarDatePicker::FirstDayOfWeekProperty());
                 }
                 else {
                     auto firstDayOfWeek = propertyValue.AsInt32();
@@ -69,7 +69,7 @@ namespace winrt::DateTimePicker::implementation {
             }
             else if (propertyName == "maxDate") {
                 if (propertyValue.IsNull()) {
-                    this->ClearValue(winrt::CalendarDatePicker::MaxDateProperty());
+                    this->ClearValue(xaml::Controls::CalendarDatePicker::MaxDateProperty());
                 }
                 else {
                     m_maxTime = propertyValue.AsInt64();
@@ -78,7 +78,7 @@ namespace winrt::DateTimePicker::implementation {
             }
             else if (propertyName == "minDate") {
                 if (propertyValue.IsNull()) {
-                    this->ClearValue(winrt::CalendarDatePicker::MinDateProperty());
+                    this->ClearValue(xaml::Controls::CalendarDatePicker::MinDateProperty());
                 }
                 else {
                     m_minTime = propertyValue.AsInt64();
@@ -87,7 +87,7 @@ namespace winrt::DateTimePicker::implementation {
             }
             else if (propertyName == "placeholderText") {
                 if (propertyValue.IsNull()) {
-                    this->ClearValue(winrt::CalendarDatePicker::PlaceholderTextProperty());
+                    this->ClearValue(xaml::Controls::CalendarDatePicker::PlaceholderTextProperty());
                 }
                 else {
                     this->PlaceholderText(to_hstring(propertyValue.AsString()));
@@ -95,7 +95,7 @@ namespace winrt::DateTimePicker::implementation {
             }
             else if (propertyName == "selectedDate") {
                 if (propertyValue.IsNull()) {
-                    this->ClearValue(winrt::CalendarDatePicker::DateProperty());
+                    this->ClearValue(xaml::Controls::CalendarDatePicker::DateProperty());
                 }
                 else {
                     m_selectedTime = propertyValue.AsInt64();
@@ -125,7 +125,7 @@ namespace winrt::DateTimePicker::implementation {
         m_updating = false;
     }
 
-    void DateTimePickerView::OnDateChanged(winrt::IInspectable const& /*sender*/, winrt::CalendarDatePickerDateChangedEventArgs const& args){
+    void DateTimePickerView::OnDateChanged(winrt::IInspectable const& /*sender*/, xaml::Controls::CalendarDatePickerDateChangedEventArgs const& args){
         if (!m_updating && args.NewDate() != nullptr) {
             auto timeInMilliseconds = DateTimeToMiliseconds(args.NewDate().Value(), m_timeZoneOffsetInSeconds);
 
@@ -143,7 +143,7 @@ namespace winrt::DateTimePicker::implementation {
     }
 
     winrt::DateTime DateTimePickerView::DateTimeFrom(int64_t timeInMilliSeconds, int64_t timeZoneOffsetInSeconds) {
-        auto timeInSeconds = timeInMilliSeconds / 1000;
+        const auto timeInSeconds = timeInMilliSeconds / 1000;
         time_t ttWithTimeZoneOffset = static_cast<time_t>(timeInSeconds) + timeZoneOffsetInSeconds;
         winrt::DateTime dateTime = winrt::clock::from_time_t(ttWithTimeZoneOffset);
 
@@ -151,8 +151,11 @@ namespace winrt::DateTimePicker::implementation {
     }
 
     int64_t DateTimePickerView::DateTimeToMiliseconds(winrt::DateTime dateTime, int64_t timeZoneOffsetInSeconds) {
-        time_t ttInSeconds = winrt::clock::to_time_t(dateTime);
+        const time_t ttInSeconds = winrt::clock::to_time_t(dateTime);
         auto timeInUtc = ttInSeconds - timeZoneOffsetInSeconds;
+        if (std::numeric_limits<int64_t>::max() / 1000 < timeInUtc) {
+            throw new std::overflow_error("Provided date value is too large.");
+        }
         auto ttInMilliseconds = static_cast<int64_t>(timeInUtc) * 1000;
 
         return ttInMilliseconds;

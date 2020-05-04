@@ -12,7 +12,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useState} from 'react';
-import { Picker } from 'react-native-windows';
+import {Picker} from 'react-native-windows';
 import moment from 'moment';
 import {DAY_OF_WEEK} from '../src/constants';
 
@@ -22,20 +22,23 @@ const App = () => {
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
   const [display, setDisplay] = useState('default');
-  
+
   // Windows-specific
   const [maxDate, setMinDate] = useState(new Date('2021'));
   const [minDate, setMaxDate] = useState(new Date('2018'));
   const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Monday);
   const [dateFormat, setDateFormat] = useState('longdate');
-  const [dayOfWeekFormat, setDayOfWeekFormat] = useState('{dayofweek.abbreviated(2)}')
-  
-  const handleResetPress = () => {setDate( undefined )};
-  //
+  const [dayOfWeekFormat, setDayOfWeekFormat] = useState(
+    '{dayofweek.abbreviated(2)}',
+  );
+
+  const handleResetPress = () => {
+    setDate(undefined);
+  };
 
   const onChange = (event, selectedDate) => {
-    let currentDate = selectedDate || date;
-    
+    const currentDate = selectedDate || date;
+
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
   };
@@ -64,7 +67,7 @@ const App = () => {
     showMode('time');
     setDisplay('spinner');
   };
-  
+
   if (Platform.OS !== 'windows') {
     return (
       <>
@@ -85,7 +88,9 @@ const App = () => {
                   <Text style={styles.text}>Example DateTime Picker</Text>
                 </View>
                 <View style={styles.header}>
-                  <Text style={{margin: 10, flex: 1}}>text color (iOS only)</Text>
+                  <Text style={{margin: 10, flex: 1}}>
+                    text color (iOS only)
+                  </Text>
                   <TextInput
                     value={color}
                     style={{height: 60, flex: 1}}
@@ -145,16 +150,15 @@ const App = () => {
                     onChange={onChange}
                     style={styles.iOsPicker}
                     textColor={color || undefined}
-                  />) 
-                 }
+                  />
+                )}
               </View>
             </View>
           </ScrollView>
         </SafeAreaView>
       </>
     );
-  }
-  else {
+  } else {
     return (
       <>
         <StatusBar barStyle="dark-content" />
@@ -178,25 +182,37 @@ const App = () => {
                     style={{width: 200, height: 35}}
                     selectedValue={dateFormat}
                     onValueChange={value => setDateFormat(value)}>
-                    <Picker.Item label="day month year" value="day month year" />
-                    <Picker.Item label="dayofweek day month" value="dayofweek day month"/>
+                    <Picker.Item
+                      label="day month year"
+                      value="day month year"
+                    />
+                    <Picker.Item
+                      label="dayofweek day month"
+                      value="dayofweek day month"
+                    />
                     <Picker.Item label="longdate" value="longdate" />
                     <Picker.Item label="shortdate" value="shortdate" />
                   </Picker>
                 </View>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{padding: 10}}>Day Of week format: </Text>
+                  <Text style={{padding: 10}}>Day of week format: </Text>
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={dayOfWeekFormat}
                     onValueChange={value => setDayOfWeekFormat(value)}>
-                    <Picker.Item label="abbreviated(2)" value="{dayofweek.abbreviated(2)}"/>
-                    <Picker.Item label="abbreviated(3)" value="{dayofweek.abbreviated(3)}"/>
+                    <Picker.Item
+                      label="abbreviated(2)"
+                      value="{dayofweek.abbreviated(2)}"
+                    />
+                    <Picker.Item
+                      label="abbreviated(3)"
+                      value="{dayofweek.abbreviated(3)}"
+                    />
                     <Picker.Item label="full" value="{dayofweek.full}" />
                   </Picker>
                 </View>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{padding: 10}}>First day Of week: </Text>
+                  <Text style={{padding: 10}}>First day of week: </Text>
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={firstDayOfWeek}
@@ -204,15 +220,26 @@ const App = () => {
                     <Picker.Item label="Sunday" value={DAY_OF_WEEK.Sunday} />
                     <Picker.Item label="Monday" value={DAY_OF_WEEK.Monday} />
                     <Picker.Item label="Tuesday" value={DAY_OF_WEEK.Tuesday} />
-                    <Picker.Item label="Wednesday" value={DAY_OF_WEEK.Wednesday} />
-                    <Picker.Item label="Thursday" value={DAY_OF_WEEK.Thursday} />
+                    <Picker.Item
+                      label="Wednesday"
+                      value={DAY_OF_WEEK.Wednesday}
+                    />
+                    <Picker.Item
+                      label="Thursday"
+                      value={DAY_OF_WEEK.Thursday}
+                    />
                     <Picker.Item label="Friday" value={DAY_OF_WEEK.Friday} />
-                    <Picker.Item label="Saturday" value={DAY_OF_WEEK.Saturday} />
+                    <Picker.Item
+                      label="Saturday"
+                      value={DAY_OF_WEEK.Saturday}
+                    />
                   </Picker>
                 </View>
                 <View style={styles.header}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {date != undefined ? moment(date).format('MM/DD/YYYY') : moment().format('MM/DD/YYYY')}
+                    {date !== undefined
+                      ? moment(date).format('MM/DD/YYYY')
+                      : moment().format('MM/DD/YYYY')}
                   </Text>
                 </View>
 
@@ -227,10 +254,14 @@ const App = () => {
                   dateFormat={dateFormat}
                   dayOfWeekFormat={dayOfWeekFormat}
                   placeholderText="select date"
+                />
+                <View style={{width: 200}}>
+                  <Button
+                    style={styles.resetButton}
+                    title="Reset calendar"
+                    onPress={handleResetPress}
                   />
-                  <View style={{ width: 200}}>
-                    <Button style={styles.resetButton} title="Reset calendar" onPress={handleResetPress}/>
-                  </View>
+                </View>
               </View>
             </View>
           </ScrollView>
@@ -238,7 +269,6 @@ const App = () => {
       </>
     );
   }
-  
 };
 
 const styles = StyleSheet.create({
@@ -292,8 +322,8 @@ const styles = StyleSheet.create({
   windowsPicker: {
     flex: 1,
     paddingTop: 10,
-    width: 350
-  }
+    width: 350,
+  },
 });
 
 export default App;

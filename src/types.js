@@ -153,24 +153,23 @@ export type NativeRef = {
 export type WindowsDatePickerChangeEvent = {|
   nativeEvent: {|
     newDate: number,
-  |}
+  |},
 |};
-
 
 export type WindowsNativeProps = $ReadOnly<{|
   ...BaseProps,
   onChange?: (event: WindowsDatePickerChangeEvent, date: Date) => void,
 
-  placeholderText?: string;
+  placeholderText?: string,
   dateFormat?:
     | 'day month year'
     | 'dayofweek day month'
     | 'longdate'
-    | 'shortdate';
+    | 'shortdate',
   dayOfWeekFormat?:
     | '{dayofweek.abbreviated(2)}'
     | '{dayofweek.abbreviated(3)}'
-    | '{dayofweek.full}';
-  firstDayOfWeek?: DAY_OF_WEEK;
-  timeZoneOffsetInSeconds?: number;
+    | '{dayofweek.full}',
+  firstDayOfWeek?: DAY_OF_WEEK,
+  timeZoneOffsetInSeconds?: number,
 |}>;

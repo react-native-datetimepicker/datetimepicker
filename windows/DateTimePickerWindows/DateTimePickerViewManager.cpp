@@ -9,7 +9,8 @@
 namespace winrt {
     using namespace Microsoft::ReactNative;
     using namespace Windows::Foundation::Collections;
-    using namespace Windows::UI::Xaml;
+
+    namespace xaml = winrt::Windows::UI::Xaml;
 }
 
 namespace winrt::DateTimePicker::implementation {
@@ -21,7 +22,7 @@ namespace winrt::DateTimePicker::implementation {
         return L"RNDateTimePickerWindows";
     }
 
-    winrt::FrameworkElement DateTimePickerViewManager::CreateView() noexcept {
+    xaml::FrameworkElement DateTimePickerViewManager::CreateView() noexcept {
         return winrt::DateTimePicker::DateTimePickerView(m_reactContext);
     }
 
@@ -50,10 +51,12 @@ namespace winrt::DateTimePicker::implementation {
         return nativeProps.GetView();
     }
 
-    void DateTimePickerViewManager::UpdateProperties(FrameworkElement const& view,
+    void DateTimePickerViewManager::UpdateProperties(xaml::FrameworkElement const& view,
         IJSValueReader const& propertyMapReader) noexcept {
         if (auto dateTimePickerView = view.try_as<DateTimePickerView>()) {
             dateTimePickerView->UpdateProperties(propertyMapReader);
+        } else {
+            OutputDebugStringW(L"Type deduction for DateTimePickerView failed.");
         }
     }
 

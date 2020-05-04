@@ -7,8 +7,8 @@
   IgnorableNamespaces="uap mp">
 
  <Identity
-    Name="1a8165d9-9e81-4962-b325-9b4ca067b645"
-    Publisher="CN=igklemen"
+    Name="RNWDateTimePickerTest"
+    Publisher="CN=Microsoft Corporation"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="1a8165d9-9e81-4962-b325-9b4ca067b645" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>

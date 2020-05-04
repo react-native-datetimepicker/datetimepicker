@@ -8,7 +8,9 @@
 #include "NativeModules.h"
 
 namespace winrt::DateTimePicker::implementation {
-
+    
+    namespace xaml = winrt::Windows::UI::Xaml;
+    
     class DateTimePickerView : public DateTimePickerViewT<DateTimePickerView> {
     public:
         DateTimePickerView(Microsoft::ReactNative::IReactContext const& reactContext);
@@ -17,10 +19,10 @@ namespace winrt::DateTimePicker::implementation {
     private:
         Microsoft::ReactNative::IReactContext m_reactContext{ nullptr };
         bool m_updating{ false };
-        winrt::Windows::UI::Xaml::Controls::CalendarDatePicker::DateChanged_revoker m_dataPickerDateChangedRevoker{};
+        xaml::Controls::CalendarDatePicker::DateChanged_revoker m_dataPickerDateChangedRevoker{};
 
         void RegisterEvents();
-        void OnDateChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::CalendarDatePickerDateChangedEventArgs const& args);
+        void OnDateChanged(winrt::Windows::Foundation::IInspectable const& sender, xaml::Controls::CalendarDatePickerDateChangedEventArgs const& args);
         winrt::Windows::Foundation::DateTime DateTimeFrom(int64_t timeInMilliSeconds, int64_t timeZoneOffsetInSeconds);
         int64_t DateTimeToMiliseconds(winrt::Windows::Foundation::DateTime dateTime, int64_t timeZoneOffsetInSeconds);
 

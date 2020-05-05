@@ -63,6 +63,6 @@ export default class DateTimePickerWindows extends React.Component<WindowsNative
 
   _onChange = (event: WindowsDatePickerChangeEvent) => {
     this.props.onChange &&
-      this.props.onChange(event, new Date(+event.nativeEvent.newDate));
+      this.props.onChange(event, new Date(event.nativeEvent.newDate));
   };
 }

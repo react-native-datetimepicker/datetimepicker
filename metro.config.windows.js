@@ -25,7 +25,7 @@ module.exports = {
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
     platforms: ['ios', 'android', 'windesktop', 'windows', 'web', 'macos'],
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
-    // This should go in RN 0.61 when haste is removed
+    // This should go in RN 0.62 when haste is removed
     blacklistRE: blacklist([
       new RegExp(
         `${path.join(path.resolve(rnPath), path.sep).replace(/[/\\]/g, '/')}.*`,

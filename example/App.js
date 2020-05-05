@@ -17,7 +17,7 @@ import moment from 'moment';
 import {DAY_OF_WEEK} from '../src/constants';
 
 const App = () => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();

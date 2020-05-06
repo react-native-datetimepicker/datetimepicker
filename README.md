@@ -70,7 +70,7 @@ yarn add @react-native-community/datetimepicker
 
 #### RN >= 0.60
 
-If you are using RN >= 0.60, only run `pod install` from the ios directory. Then rebuild your project.
+If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
 
 #### RN < 0.60
 
@@ -80,7 +80,7 @@ For RN < 0.60, you need to link the dependency using `react-native link`:
 react-native link @react-native-community/datetimepicker
 ```
 
-Then run `pod install` from the ios directory and rebuild your project.
+Then run `npx pod-install` and rebuild your project.
 
 If this does not work, see [Manual installation](#manual-installation).
 

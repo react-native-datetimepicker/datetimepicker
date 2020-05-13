@@ -45,18 +45,16 @@ export default class DateTimePickerWindows extends React.Component<WindowsNative
     // The Date object returns timezone in minutes. Convert that to seconds
     // and multiply by -1 so that the offset can be added to UTC+0 time to get
     // the correct value on the native side.
-    const timeZoneOffsetInSeconds =
-      this.props.timeZoneOffsetInSeconds != undefined
-        ? this.props.timeZoneOffsetInSeconds
-        : this.props.value
-        ? -1 * this.props.value.getTimezoneOffset() * 60
-        : undefined;
+    let timezoneOffsetInSeconds = this.props.timeZoneOffsetInSeconds;
+    if (timezoneOffsetInSeconds == null && this.props.value != null) {
+      timezoneOffsetInSeconds = -60 * this.props.value.getTimezoneOffset();
+    }
 
     return (
       <RNDateTimePickerWindows
         {...props}
         onChange={this._onChange}
-        timeZoneOffsetInSeconds={timeZoneOffsetInSeconds}
+        timeZoneOffsetInSeconds={timezoneOffsetInSeconds}
       />
     );
   }

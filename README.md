@@ -58,27 +58,12 @@ React Native date & time picker component for iOS and Android
   - [Manual installation](#manual-installation)
     - [iOS](#ios)
     - [Android](#android)
+    - [Windows](#windows)
   - [Running the example app](#running-the-example-app)
 
 ## Requirements
 
 - Xcode >= 11; please open a PR if you need to support building with older Xcode versions - see [#133](https://github.com/react-native-community/datetimepicker/issues/133). Please note that we support iOS >= 10 but you need Xcode 11 to build.
-### Windows
-#### Add the DateTimePickerWindows project to your solution
-
-1. Open the solution in Visual Studio 2019
-2. Right-click solution icon in Solution Explorer > Add > Existing Project
-   Select 'D:\pathToYourApp\node_modules\@react-native-community\datetimepicker\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj'
-##### **windows/myapp.sln**
-Add a reference to `DateTimePickerWindows` to your main application project. From Visual Studio 2019:
-
-Right-click main application project > Add > Reference...
-  Check 'DateTimePickerWindows' from the 'Project > Solution' tab on the left.
-##### **pch.h** 
-
-Add `#include "winrt/DateTimePicker.h"`.  
-##### **app.cpp**
-Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` before `InitializeComponent();`.
 
 ## Getting started
 
@@ -91,6 +76,8 @@ or
 ```bash
 yarn add @react-native-community/datetimepicker
 ```
+
+Autolinking is not yet implemented on Windows, so [Manual installation](#windows) is needed.
 
 #### RN >= 0.60
 
@@ -263,7 +250,7 @@ Allows changing of the timeZone of the date picker. By default it uses the devic
 Allows changing of the time zone of the date picker. By default it uses the device's time zone.
 
 ```js
-// GMT+1
+// UTC+1
 <RNDateTimePicker timeZoneOffsetInSeconds={3600} />
 ```
 
@@ -273,7 +260,6 @@ Sets the display format for the day of the week headers.
 Reference: https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.calendarview.dayofweekformat?view=winrt-18362#remarks
 
 ```js
-// GMT+1
 <RNDateTimePicker dayOfWeekFormat={"{dayofweek.abbreviated(2)}"} />
 ```
 
@@ -283,7 +269,6 @@ Sets the display format for the date value in the picker's text box.
 Reference: https://docs.microsoft.com/en-us/uwp/api/windows.globalization.datetimeformatting.datetimeformatter?view=winrt-18362#examples
 
 ```js
-// GMT+1
 <RNDateTimePicker dateFormat={"dayofweek day month"} />
 ```
 
@@ -292,7 +277,6 @@ Reference: https://docs.microsoft.com/en-us/uwp/api/windows.globalization.dateti
 Indicates which day is shown as the first day of the week.
 
 ```js
-// GMT+1
 <RNDateTimePicker firstDayOfWeek={DAY_OF_WEEK.Wednesday} /> 
 // The native parameter type is an enum defined in defined https://docs.microsoft.com/en-us/uwp/api/windows.globalization.dayofweek?view=winrt-18362 - meaning an integer needs to passed here (DAY_OF_WEEK). 
 ```
@@ -660,6 +644,22 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
    }
    ```
 
+#### Windows
+
+##### Add the DateTimePickerWindows project to your solution
+1. Open the solution in Visual Studio 2019
+2. Right-click solution icon in Solution Explorer > Add > Existing Project
+   Select 'D:\pathToYourApp\node_modules\@react-native-community\datetimepicker\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj'
+##### **windows/myapp.sln**
+Add a reference to `DateTimePickerWindows` to your main application project. From Visual Studio 2019:
+
+Right-click main application project > Add > Reference...
+  Check 'DateTimePickerWindows' from the 'Project > Solution' tab on the left.
+##### **pch.h** 
+
+Add `#include "winrt/DateTimePicker.h"`.  
+##### **app.cpp**
+Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` before `InitializeComponent();`.
 ## Running the example app
 
 1. Install required pods in `example/ios` by running `pods install`

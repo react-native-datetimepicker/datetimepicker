@@ -52,6 +52,10 @@ React Native date & time picker component for iOS and Android
     - [Android](#android)
   - [Running the example app](#running-the-example-app)
 
+## Requirements
+
+- Xcode >= 11; please open a PR if you need to support building with older Xcode versions - see [#133](https://github.com/react-native-community/datetimepicker/issues/133). Please note that we support iOS >= 10 but you need Xcode 11 to build.
+
 ## Getting started
 
 ```bash
@@ -66,7 +70,7 @@ yarn add @react-native-community/datetimepicker
 
 #### RN >= 0.60
 
-If you are using RN >= 0.60, only run `pod install` from the ios directory. Then rebuild your project.
+If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
 
 #### RN < 0.60
 
@@ -76,7 +80,7 @@ For RN < 0.60, you need to link the dependency using `react-native link`:
 react-native link @react-native-community/datetimepicker
 ```
 
-Then run `pod install` from the ios directory and rebuild your project.
+Then run `npx pod-install` and rebuild your project.
 
 If this does not work, see [Manual installation](#manual-installation).
 
@@ -228,6 +232,14 @@ Allows changing of the timeZone of the date picker. By default it uses the devic
 ```js
 // GMT+1
 <RNDateTimePicker timeZoneOffsetInMinutes={60} />
+```
+
+#### `textColor` (`optional`, `iOS only`)
+
+Allows changing of the textColor of the date picker.
+
+```js
+<RNDateTimePicker textColor="red" />
 ```
 
 #### `locale` (`optional`, `iOS only`)
@@ -597,7 +609,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 1. Run `npm start` to start Metro Bundler
 1. Run `npm run start:ios` or `npm run start:android`
 
-[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/react-native-datetimepicker/master.svg?style=flat-square
+[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-community/workflows/react-native-datetimepicker/tree/master
 [support-badge]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg?style=flat-square
 [license-badge]: https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square

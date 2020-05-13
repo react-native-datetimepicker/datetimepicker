@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  rn: react-native-community/react-native@1.2.1
+  rn: react-native-community/react-native@4.0.0
 
 jobs:
   checkout_code:
@@ -19,16 +19,16 @@ jobs:
           at: .
       - run:
           name: Install
-          command: npm ci
+          command: yarn install --frozen-lockfile
       - run:
           name: Lint JS Code (ESLint)
-          command: npm run lint
+          command: yarn run lint
       - run:
           name: Flow
-          command: npm run flow
+          command: yarn run flow
       - run:
           name: Jest
-          command: npm run test
+          command: yarn run test
 
 workflows:
   test:

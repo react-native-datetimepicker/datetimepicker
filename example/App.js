@@ -7,6 +7,7 @@ import {
   StatusBar,
   Button,
   Platform,
+  TextInput,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
@@ -17,6 +18,7 @@ const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [color, setColor] = useState();
   const [display, setDisplay] = useState('default');
   const [interval, setMinInterval] = useState(undefined);
 
@@ -45,6 +47,12 @@ const App = () => {
 
   const showTimepicker = () => {
     showMode('time');
+    setDisplay('default');
+  };
+
+  const showTimepickerSpinner = () => {
+    showMode('time');
+    setDisplay('spinner');
   };
 
   const showTimepickerWithInterval = () => {
@@ -61,7 +69,7 @@ const App = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Header />
-          {global.HermesInternal == null ? null : (
+          {global.HermesInternal !== null && (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
@@ -70,6 +78,17 @@ const App = () => {
             <View testID="appRootView" style={styles.container}>
               <View style={styles.header}>
                 <Text style={styles.text}>Example DateTime Picker</Text>
+              </View>
+              <View style={styles.header}>
+                <Text style={{margin: 10, flex: 1}}>text color (iOS only)</Text>
+                <TextInput
+                  value={color}
+                  style={{height: 60, flex: 1}}
+                  onChangeText={text => {
+                    setColor(text.toLowerCase());
+                  }}
+                  placeholder="color"
+                />
               </View>
               <View style={styles.button}>
                 <Button
@@ -80,7 +99,7 @@ const App = () => {
               </View>
               <View style={styles.button}>
                 <Button
-                  testID="datePickerButton"
+                  testID="datePickerButtonSpinner"
                   onPress={showDatepickerSpinner}
                   title="Show date picker spinner!"
                 />
@@ -99,11 +118,23 @@ const App = () => {
                   title="Show time picker (with 5 min interval)!"
                 />
               </View>
+              <View style={styles.button}>
+                <Button
+                  testID="timePickerButtonSpinner"
+                  onPress={showTimepickerSpinner}
+                  title="Show time picker spinner!"
+                />
+              </View>
               <View style={styles.header}>
                 <Text testID="dateTimeText" style={styles.dateTimeText}>
                   {mode === 'time' && moment.utc(date).format('HH:mm')}
                   {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
                 </Text>
+                <Button
+                  testID="hidePicker"
+                  onPress={() => setShow(false)}
+                  title="hide picker"
+                />
               </View>
               {show && (
                 <DateTimePicker
@@ -116,6 +147,7 @@ const App = () => {
                   display={display}
                   onChange={onChange}
                   style={styles.iOsPicker}
+                  textColor={color || undefined}
                 />
               )}
             </View>
@@ -152,12 +184,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   header: {
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    flexDirection: 'row',
   },
   button: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   text: {
     fontSize: 20,

@@ -8,19 +8,20 @@
 
 package com.reactcommunity.rndatetimepicker;
 
-import java.text.DateFormat;
-import java.util.Locale;
-
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import javafx.scene.control.Dialog;
+import android.text.format.DateFormat;
+
+import java.util.Locale;
 
 @SuppressWarnings("ValidFragment")
 public class RNTimePickerDialogFragment extends DialogFragment {

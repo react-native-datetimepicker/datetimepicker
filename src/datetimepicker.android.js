@@ -10,25 +10,37 @@ import {
   TIME_SET_ACTION,
   DISMISS_ACTION,
   NEUTRAL_BUTTON_ACTION,
+  DISPLAY,
+  ANDROID_MODE,
 } from './constants';
 import pickers from './picker';
 import invariant from 'invariant';
-import React, {Fragment} from 'react';
 
 import type {AndroidEvent, AndroidNativeProps} from './types';
 
-export default function RNDateTimePicker({
-  mode,
-  value,
-  display,
-  onChange,
-  is24Hour,
-  minimumDate,
-  maximumDate,
-  minuteInterval,
-  neutralButtonLabel,
-}: AndroidNativeProps) {
+function validateProps(props: AndroidNativeProps) {
+  const {mode, value, display} = props;
   invariant(value, 'A date or time should be specified as `value`.');
+  invariant(
+    !(display === DISPLAY.calendar && mode === ANDROID_MODE.time) &&
+      !(display === DISPLAY.clock && mode === ANDROID_MODE.date),
+    `display: ${display} and mode: ${mode} cannot be used together.`,
+  );
+}
+
+export default function RNDateTimePicker(props: AndroidNativeProps) {
+  validateProps(props);
+  const {
+    mode,
+    value,
+    display,
+    onChange,
+    is24Hour,
+    minimumDate,
+    maximumDate,
+    minuteInterval,
+    neutralButtonLabel,
+  } = props;
   let picker;
 
   switch (mode) {
@@ -91,7 +103,7 @@ export default function RNDateTimePicker({
     },
   );
 
-  return <Fragment />;
+  return null;
 }
 
 RNDateTimePicker.defaultProps = {

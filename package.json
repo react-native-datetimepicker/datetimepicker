@@ -1,6 +1,6 @@
 {
   "name": "@react-native-community/datetimepicker",
-  "version": "2.2.3",
+  "version": "2.3.2",
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
   "types": "src/index.d.ts",
@@ -9,11 +9,11 @@
   },
   "scripts": {
     "start": "react-native start",
-    "start:android": "react-native run-android --root example/",
-    "start:ios": "react-native run-ios --project-path example/ios",
+    "start:android": "react-native run-android --no-jetifier",
+    "start:ios": "react-native run-ios",
     "test": "jest ./test",
     "posttest": "npm run lint",
-    "lint": "eslint {example,src,test}/**/*.js",
+    "lint": "eslint {example,src,test}/**/*.js src/index.d.ts",
     "flow": "flow check",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",
     "detox:ios:test:debug": "detox test -c ios.sim.debug",
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-native-community/react-native-datetimepicker.git"
+    "url": "git+https://github.com/react-native-community/datetimepicker.git"
   },
   "keywords": [
     "react-native-component",
@@ -46,28 +46,29 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/react-native-community/react-native-datetimepicker/issues"
+    "url": "https://github.com/react-native-community/datetimepicker/issues"
   },
-  "homepage": "https://github.com/react-native-community/react-native-datetimepicker#readme",
+  "homepage": "https://github.com/react-native-community/datetimepicker#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",
-    "@react-native-community/eslint-config": "^0.0.7",
+    "@react-native-community/eslint-config": "^1.0.0",
     "babel-jest": "^24.8.0",
     "detox": "^14.0.2",
     "eslint": "^6.8.0",
-    "flow-bin": "^0.98.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "flow-bin": "^0.113.0",
     "flow-typed": "^2.6.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.55.0",
     "moment": "^2.24.0",
-    "react": "^16.8.6",
-    "react-native": "^0.60.4",
-    "react-test-renderer": "^16.8.6"
+    "react": "^16.11.0",
+    "react-native": "^0.62.2",
+    "react-test-renderer": "^16.11.0"
   },
   "peerDependencies": {
-    "react": ">=16.8",
-    "react-native": ">=0.59"
+    "react": ">=16.11",
+    "react-native": ">=0.60"
   },
   "dependencies": {
     "invariant": "^2.2.4"

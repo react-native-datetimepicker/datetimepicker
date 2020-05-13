@@ -1,5 +1,18 @@
 # CHANGELOG
 
+### 2.3.2
+
+- Fix android nougat display spinner [#118](https://github.com/react-native-community/datetimepicker/pull/118)
+
+### 2.3.1
+
+- fix typescript compilation errors #138, #143
+- use yarn for managing deps (this should not influence consumers)
+
+### 2.3.0
+
+- add `textColor` prop for iOS: [#127](https://github.com/react-native-community/datetimepicker/pull/127)
+
 ### 2.2.3
 
 - Fix iOS picker's styling bug where picker would be fixed to 216px height no matter what `style` was applied to the picker. This is because previously, the picker was always wrapped in a `View` which was now removed. Since `style` prop was never documented in this package, we do not consider this a breaking change. Now `style` can correctly apply specific height settings and flex. NOTE: this only works with View style property type. [#120](https://github.com/react-native-community/react-native-datetimepicker/pull/120)

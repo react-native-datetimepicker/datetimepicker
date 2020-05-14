@@ -54,12 +54,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
   private final OnTimeSetListener mTimeSetListener;
   private Handler handler = new Handler();
   private Runnable runnable;
-
-  private final int textInputPickerID = Resources.getSystem()
-    .getIdentifier("input_mode", "id", "android");
-
-  private final int timePickerId = Resources.getSystem()
-    .getIdentifier("timePicker", "id", "android");
+  private Context mContext;
 
   public CustomTimePickerDialog(
     Context context,
@@ -74,6 +69,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
     mTimePickerInterval = minuteInterval;
     mTimeSetListener = listener;
     mDisplay = display;
+    mContext = context;
   }
 
   public CustomTimePickerDialog(
@@ -90,6 +86,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
     mTimePickerInterval = minuteInterval;
     mTimeSetListener = listener;
     mDisplay = display;
+    mContext = context;
   }
 
   /**
@@ -135,7 +132,8 @@ class CustomTimePickerDialog extends TimePickerDialog {
    * Determines if the picker is in text input mode (keyboard icon in 'clock' mode)
    */
   private boolean pickerIsInTextInputMode() {
-    final View textInputPicker = this.findViewById(textInputPickerID);
+    int textInputPickerId = mContext.getResources().getIdentifier("input_mode", "id", "android");
+    final View textInputPicker = this.findViewById(textInputPickerId);
 
     return textInputPicker != null && textInputPicker.hasFocus();
   }
@@ -192,7 +190,6 @@ class CustomTimePickerDialog extends TimePickerDialog {
 
   @Override
   public void onClick(DialogInterface dialog, int which) {
-    Log.d(LOG_TAG, "onClick" + which);
     switch (which) {
       case BUTTON_POSITIVE:
         final int hours = mTimePicker.getCurrentHour();
@@ -226,14 +223,14 @@ class CustomTimePickerDialog extends TimePickerDialog {
   @Override
   public void onAttachedToWindow() {
     super.onAttachedToWindow();
+    int timePickerId = mContext.getResources().getIdentifier("timePicker", "id", "android");
 
     try {
       mTimePicker = this.findViewById(timePickerId);
       int currentMinute = mTimePicker.getCurrentMinute();
 
       if (mDisplay == RNTimePickerDisplay.SPINNER) {
-        int minutePickerId = Resources.getSystem()
-          .getIdentifier("minute", "id", "android");
+        int minutePickerId = mContext.getResources().getIdentifier("minute", "id", "android");
         NumberPicker minutePicker = this.findViewById(minutePickerId);
 
         minutePicker.setMinValue(0);
@@ -249,7 +246,6 @@ class CustomTimePickerDialog extends TimePickerDialog {
 
       mTimePicker.setCurrentMinute(snapMinutesToInterval(currentMinute));
     } catch (Exception e) {
-      Log.e(LOG_TAG, "onAttachedToWindow encountered an error:");
       e.printStackTrace();
     }
   }
@@ -267,8 +263,8 @@ public class RNDismissableTimePickerDialog extends CustomTimePickerDialog {
     boolean is24HourView,
     RNTimePickerDisplay display
   ) {
-    fixSpinner(context, hourOfDay, minute, is24HourView, display);
     super(context, callback, hourOfDay, minute, minuteInterval, is24HourView, display);
+    fixSpinner(context, hourOfDay, minute, is24HourView, display);
   }
 
   public RNDismissableTimePickerDialog(
@@ -281,8 +277,8 @@ public class RNDismissableTimePickerDialog extends CustomTimePickerDialog {
     boolean is24HourView,
     RNTimePickerDisplay display
   ) {
-    fixSpinner(context, hourOfDay, minute, is24HourView, display);
     super(context, theme, callback, hourOfDay, minute, minuteInterval, is24HourView, display);
+    fixSpinner(context, hourOfDay, minute, is24HourView, display);
   }
 
   @Override

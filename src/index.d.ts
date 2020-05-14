@@ -108,10 +108,12 @@ export type AndroidNativeProps = Readonly<
 
       /**
        * The interval at which minutes can be selected.
+       * NOTE: setting minute interval other than '1' or '5' will override display mode to 'spinner'!
        */
       minuteInterval?: MinuteIntervalAndroid;
 
       onChange?: (event: AndroidEvent, date?: Date) => void;
+      neutralButtonLabel?: string;
     }
 >;
 

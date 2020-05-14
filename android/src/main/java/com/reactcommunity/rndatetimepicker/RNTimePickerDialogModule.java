@@ -8,9 +8,6 @@
 
 package com.reactcommunity.rndatetimepicker;
 
-import javax.annotation.Nullable;
-
-import com.facebook.react.bridge.*;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;

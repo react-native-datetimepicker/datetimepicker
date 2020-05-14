@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 2.4.0
+
+- Add Windows date picker [#157](https://github.com/react-native-community/datetimepicker/pull/157)
+- Update Example App to RN 0.62.2 [#146](https://github.com/react-native-community/datetimepicker/pull/146)
+- throw when invalid props are passed to android picker [#148](https://github.com/react-native-community/datetimepicker/pull/148)
+- Recommend npx pod-install for setup instructions [#159](https://github.com/react-native-community/datetimepicker/pull/159)
+
 ### 2.3.2
 
 - Fix android nougat display spinner [#118](https://github.com/react-native-community/datetimepicker/pull/118)

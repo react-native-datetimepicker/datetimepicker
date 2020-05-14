@@ -1,0 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace DateTimePicker
+{
+    [webhosthidden]
+    [default_interface]
+    runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+    {
+        ReactPackageProvider();
+    };
+}

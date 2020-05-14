@@ -11,6 +11,7 @@
     "start": "react-native start",
     "start:android": "react-native run-android --no-jetifier",
     "start:ios": "react-native run-ios",
+    "start:windows": "react-native start --use-react-native-windows",
     "test": "jest ./test",
     "posttest": "npm run lint",
     "lint": "eslint {example,src,test}/**/*.js src/index.d.ts",
@@ -64,11 +65,13 @@
     "moment": "^2.24.0",
     "react": "^16.11.0",
     "react-native": "^0.62.2",
+    "react-native-windows": "^0.62.0-preview.1",
     "react-test-renderer": "^16.11.0"
   },
   "peerDependencies": {
     "react": ">=16.11",
-    "react-native": ">=0.60"
+    "react-native": ">=0.61",
+    "react-native-windows": "^0.62.0-preview.1"
   },
   "dependencies": {
     "invariant": "^2.2.4"

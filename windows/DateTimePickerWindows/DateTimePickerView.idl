@@ -1,0 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace DateTimePicker {
+
+    [default_interface]
+    runtimeclass DateTimePickerView : Windows.UI.Xaml.Controls.CalendarDatePicker {
+        DateTimePickerView(Microsoft.ReactNative.IReactContext context);
+        void UpdateProperties(Microsoft.ReactNative.IJSValueReader reader);
+    };
+}

@@ -18,6 +18,10 @@ React Native date & time picker component for iOS and Android
     <td><p align="center"><img src="./docs/images/android_date.png" width="200" height="400"/></p></td>
     <td><p align="center"><img src="./docs/images/android_time.png" width="200" height="400"/></p></td>
   </tr>
+  <tr><td colspan=1><strong>Windows</strong></td></tr>
+  <tr>
+    <td><p align="center"><img src="./docs/images/windows_date.png" width="380" height="430"/></p></td>
+  </tr>
 </table>
 
 ## Table of Contents
@@ -37,6 +41,10 @@ React Native date & time picker component for iOS and Android
     - [`maximumDate` (`optional`)](#maximumdate-optional)
     - [`minimumDate` (`optional`)](#minimumdate-optional)
     - [`timeZoneOffsetInMinutes` (`optional`, `iOS only`)](#timezoneoffsetinminutes-optional-ios-only)
+    - [`timeZoneOffsetInSeconds` (`optional`, `Windows only`)](#timezoneoffsetinsecond-optional-windows-only)
+    - [`dayOfWeekFormat` (`optional`, `Windows only`)](#dayOfWeekFormat-optional-windows-only)
+    - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)
+    - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
@@ -50,6 +58,7 @@ React Native date & time picker component for iOS and Android
   - [Manual installation](#manual-installation)
     - [iOS](#ios)
     - [Android](#android)
+    - [Windows](#windows)
   - [Running the example app](#running-the-example-app)
 
 ## Requirements
@@ -67,6 +76,8 @@ or
 ```bash
 yarn add @react-native-community/datetimepicker
 ```
+
+Autolinking is not yet implemented on Windows, so [Manual installation](#windows) is needed.
 
 #### RN >= 0.60
 
@@ -155,7 +166,7 @@ export default App;
 
 ## Props
 
-> Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android.
+> Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android, and [`CalendarDatePicker`] (https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/calendar-date-picker) on Windows.
 >
 > These native classes offer only limited configuration, while there are dozens of possible options you as a developer may need. It follows that if your requirement is not supported by the backing native views, this libray will _not_ be able to implement your requirement. When you open an issue with a feature request, please document if (or how) the feature can be implemented using the aforementioned native views. If those views do not support what you need, such feature requests will be closed as not actionable.
 
@@ -165,8 +176,8 @@ Defines the type of the picker.
 
 List of possible values:
 
-- `"date"` (default for `iOS` and `Android`)
-- `"time"`
+- `"date"` (default for `iOS` and `Android` and `Windows`)
+- `"time"` (currently unavailable on `Windows`, work tracked by microsoft/react-native-windows#4695)
 - `"datetime"` (`iOS` only)
 - `"countdown"` (`iOS` only)
 
@@ -232,6 +243,42 @@ Allows changing of the timeZone of the date picker. By default it uses the devic
 ```js
 // GMT+1
 <RNDateTimePicker timeZoneOffsetInMinutes={60} />
+```
+
+#### `timeZoneOffsetInSeconds` (`optional`, `Windows only`)
+
+Allows changing of the time zone of the date picker. By default it uses the device's time zone.
+
+```js
+// UTC+1
+<RNDateTimePicker timeZoneOffsetInSeconds={3600} />
+```
+
+#### `dayOfWeekFormat` (`optional`, `Windows only`)
+
+Sets the display format for the day of the week headers.
+Reference: https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.calendarview.dayofweekformat?view=winrt-18362#remarks
+
+```js
+<RNDateTimePicker dayOfWeekFormat={"{dayofweek.abbreviated(2)}"} />
+```
+
+#### `dateFormat` (`optional`, `Windows only`)
+
+Sets the display format for the date value in the picker's text box.
+Reference: https://docs.microsoft.com/en-us/uwp/api/windows.globalization.datetimeformatting.datetimeformatter?view=winrt-18362#examples
+
+```js
+<RNDateTimePicker dateFormat={"dayofweek day month"} />
+```
+
+#### `firstDayOfWeek` (`optional`, `Windows only`)
+
+Indicates which day is shown as the first day of the week.
+
+```js
+<RNDateTimePicker firstDayOfWeek={DAY_OF_WEEK.Wednesday} /> 
+// The native parameter type is an enum defined in defined https://docs.microsoft.com/en-us/uwp/api/windows.globalization.dayofweek?view=winrt-18362 - meaning an integer needs to passed here (DAY_OF_WEEK). 
 ```
 
 #### `textColor` (`optional`, `iOS only`)
@@ -597,11 +644,27 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
    }
    ```
 
+#### Windows
+
+##### Add the DateTimePickerWindows project to your solution
+1. Open the solution in Visual Studio 2019
+2. Right-click solution icon in Solution Explorer > Add > Existing Project
+   Select 'D:\pathToYourApp\node_modules\@react-native-community\datetimepicker\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj'
+##### **windows/myapp.sln**
+Add a reference to `DateTimePickerWindows` to your main application project. From Visual Studio 2019:
+
+Right-click main application project > Add > Reference...
+  Check 'DateTimePickerWindows' from the 'Project > Solution' tab on the left.
+##### **pch.h** 
+
+Add `#include "winrt/DateTimePicker.h"`.  
+##### **app.cpp**
+Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` before `InitializeComponent();`.
 ## Running the example app
 
 1. Install required pods in `example/ios` by running `pods install`
 1. Run `npm start` to start Metro Bundler
-1. Run `npm run start:ios` or `npm run start:android`
+1. Run `npm run start:ios` or `npm run start:android` or `npm run start:windows` (or `yarn run start:windows`)
 
 [circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-community/workflows/react-native-datetimepicker/tree/master

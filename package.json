@@ -91,7 +91,7 @@
       },
       "ios.sim.release": {
         "binaryPath": "example/ios/build/Build/Products/Release-iphonesimulator/example.app",
-        "build": "./scripts/bundle-ios.sh && export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11' -scheme example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11' -scheme example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
         "type": "ios.simulator",
         "device": {
           "type": "iPhone 11"

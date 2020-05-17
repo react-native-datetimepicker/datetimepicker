@@ -114,7 +114,10 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - rn/yarn_install
+      # - rn/yarn_install
+      - run:
+          command: yarn install --frozen-lockfile
+          name: yarn install
       - run:
           command: yarn lint
           name: Run ESLint
@@ -135,7 +138,10 @@ jobs:
           node_version: '12.10.0'
       - rn/ios_simulator_start:
           device: 'iPhone 11'
-      - rn/yarn_install
+      # - rn/yarn_install
+      - run:
+          command: yarn install --frozen-lockfile
+          name: yarn install
       - rn/pod_install:
           pod_install_directory: 'example/ios'
       - run:
@@ -157,7 +163,10 @@ jobs:
           at: .
       - rn/setup_macos_executor:
           node_version: '12.10.0'
-      - rn/yarn_install
+      # - rn/yarn_install
+      - run:
+          command: yarn install --frozen-lockfile
+          name: yarn install
       - android_emulator_start:
           logcat_grep: 'com.reactcommunity.rndatetimepicker'
       - run:

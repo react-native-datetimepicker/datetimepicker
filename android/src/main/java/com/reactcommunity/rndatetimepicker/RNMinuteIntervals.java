@@ -12,8 +12,4 @@ public final class RNMinuteIntervals {
   public static boolean isValid(Integer interval) {
     return Arrays.asList(MinuteIntervals).contains(interval);
   }
-
-  public static boolean isRadialPickerCompatible(Integer interval) {
-    return MinuteIntervals[0].equals(interval) || MinuteIntervals[1].equals(interval);
-  }
 }

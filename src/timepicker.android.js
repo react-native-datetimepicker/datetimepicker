@@ -9,7 +9,6 @@
  */
 import {
   DISPLAY_DEFAULT,
-  DISPLAY_SPINNER,
   TIME_SET_ACTION,
   DISMISS_ACTION,
   MINUTE_INTERVAL_DEFAULT,
@@ -18,10 +17,6 @@ import {NativeModules} from 'react-native';
 import {toMilliseconds} from './utils';
 
 import type {TimePickerOptions, DateTimePickerResult} from './types';
-
-const isRadialPickerCompatible = (interval: number) => {
-  return interval === 1 || interval === 5;
-};
 
 export default class TimePickerAndroid {
   /**
@@ -45,10 +40,8 @@ export default class TimePickerAndroid {
    */
   static async open(options: TimePickerOptions): Promise<DateTimePickerResult> {
     toMilliseconds(options, 'value');
+    options.display = options.display || DISPLAY_DEFAULT;
     options.minuteInterval = options.minuteInterval || MINUTE_INTERVAL_DEFAULT;
-    options.display = isRadialPickerCompatible(options.minuteInterval)
-      ? options.display || DISPLAY_DEFAULT
-      : DISPLAY_SPINNER;
 
     return NativeModules.RNTimePickerAndroid.open(options);
   }

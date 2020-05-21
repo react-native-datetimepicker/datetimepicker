@@ -312,12 +312,10 @@ Pressing button can be observed in onChange handler as `event.type === 'neutralB
 <RNDateTimePicker neutralButtonLabel="clear" />
 ```
 
-### `minuteInterval` (`optional`)
+#### `minuteInterval` (`optional`)
 
 The interval at which minutes can be selected.
 Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
-
->__NOTE!__ Setting `minuteInterval` to something other than `1` or `5` on android will force you into `spinner` display mode!
 
 ```js
 <RNDateTimePicker minuteInterval={10} />

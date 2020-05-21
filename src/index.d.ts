@@ -89,6 +89,11 @@ export type IOSNativeProps = Readonly<
      * instance, to show times in Pacific Standard Time, pass -7 * 60.
      */
     timeZoneOffsetInMinutes?: number;
+
+    /**
+     * The date picker text color.
+     */
+    textColor?: string;
   }
 >;
 

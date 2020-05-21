@@ -35,6 +35,7 @@
     "react-native",
     "ios",
     "android",
+    "windows",
     "datepicker",
     "timepicker",
     "datetime"

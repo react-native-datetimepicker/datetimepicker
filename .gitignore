@@ -29,6 +29,9 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+#Detox
+#
+artifacts
 
 # Android/IntelliJ
 #

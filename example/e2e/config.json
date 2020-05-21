@@ -1,6 +1,7 @@
 {
-    "setupFilesAfterEnv": ["./init.js"],
-    "testEnvironment": "node",
-    "reporters": ["detox/runners/jest/streamlineReporter"],
-    "verbose": true
+  "setupFilesAfterEnv": ["./init.js"],
+  "testEnvironment": "detox/runners/jest/JestCircusEnvironment",
+  "testRunner": "jest-circus/runner",
+  "reporters": ["detox/runners/jest/streamlineReporter"],
+  "verbose": true
 }

@@ -2,6 +2,7 @@
   package="com.example">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--   https://github.com/wix/Detox/blob/master/docs/Introduction.Android.md#problem-the-app-loads-but-tests-fail-to-start-in-sdk-28     -->
 
     <application
       android:name=".MainApplication"
@@ -9,11 +10,13 @@
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
+      android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme">
-      <activity
+        <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+        android:launchMode="singleTask"
         android:windowSoftInputMode="adjustResize">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

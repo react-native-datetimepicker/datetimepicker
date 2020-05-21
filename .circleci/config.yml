@@ -1,56 +1,102 @@
 version: 2.1
 
 orbs:
-  rn: react-native-community/react-native@4.0.0
+  rn: react-native-community/react-native@4.4.2
+
+# - rn/yarn_install
+# fails with Error untarring cache: Error extracting tarball /var/folders/bq/mjrgbpkx5h1g_b22fpv0tlzc0000gn/T/cache376822577 : tmp/yarn/: Cannot extract through symlink tmp/yarn tmp/yarn/v6/: Cannot extract through symlink tmp/yarn/v6 tmp/yarn/v6/.tmp/: Cannot extract through symlink tmp/yarn/v6/.tmp tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/code-frame/: Cannot extract: exit status 1
+# that is why we use yarn install --frozen-lockfile but that is SLOW! help us to fix this!
 
 jobs:
   checkout_code:
-    executor: rn/linux_js
+    executor:
+      name: rn/linux_js
+      node_version: '12.10.0'
     steps:
       - checkout
       - persist_to_workspace:
-          root: .
           paths: .
-
-  analyse:
+          root: .
+  analyse_js:
     executor: rn/linux_js
     steps:
       - attach_workspace:
           at: .
+      # - rn/yarn_install
+      # fails with Error untarring cache: Error extracting tarball /var/folders/bq/mjrgbpkx5h1g_b22fpv0tlzc0000gn/T/cache376822577 : tmp/yarn/: Cannot extract through symlink tmp/yarn tmp/yarn/v6/: Cannot extract through symlink tmp/yarn/v6 tmp/yarn/v6/.tmp/: Cannot extract through symlink tmp/yarn/v6/.tmp tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/code-frame/: Cannot extract: exit status 1
       - run:
-          name: Install
           command: yarn install --frozen-lockfile
+          name: yarn install
       - run:
-          name: Lint JS Code (ESLint)
-          command: yarn run lint
+          command: yarn lint
+          name: Run ESLint
       - run:
+          command: yarn flow
           name: Flow
-          command: yarn run flow
       - run:
+          command: yarn test
           name: Jest
-          command: yarn run test
+  e2e_release_ios:
+    executor:
+      name: rn/macos
+      xcode_version: '11.4.0'
+    steps:
+      - attach_workspace:
+          at: .
+      - rn/setup_macos_executor:
+          node_version: '12.10.0'
+      - rn/ios_simulator_start:
+          device: 'iPhone 11'
+      # - rn/yarn_install
+      - run:
+          command: yarn install --frozen-lockfile
+          name: yarn install
+      - rn/pod_install:
+          pod_install_directory: 'example/ios'
+      - run:
+          command: yarn detox:ios:build:release
+          name: build for detox
+      - run:
+          command: yarn detox:ios:test:release
+          name: test detox
+      - store_artifacts:
+          path: ./artifacts
+  e2e_release_android:
+    # we need to use mac to run emulator with acceleration
+    # see https://support.circleci.com/hc/en-us/articles/360000028928-Testing-with-Android-emulator-on-CircleCI-2-0
+    executor:
+      name: rn/macos
+      xcode_version: '11.4.0'
+    steps:
+      - attach_workspace:
+          at: .
+      - rn/setup_macos_executor:
+          node_version: '12.10.0'
+      # - rn/yarn_install
+      - run:
+          command: yarn install --frozen-lockfile
+          name: yarn install
+      - rn/android_emulator_start:
+          logcat_grep: 'com.reactcommunity.rndatetimepicker'
+      - run:
+          command: yarn detox:android:build:release
+          name: build for detox
+      - run:
+          command: yarn detox:android:test:release
+          name: test detox
+      - store_artifacts:
+          path: ./artifacts
 
 workflows:
   test:
     jobs:
       - checkout_code
-      - analyse:
+      - analyse_js:
           requires:
             - checkout_code
-    # - rn/android_build:
-    #     name: build_android_release
-    #     project_path: "example/android"
-    #     requires:
-    #       - analyse
-    # - rn/android_test:
-    #     detox_configuration: "android.emu.release"
-    #     requires:
-    #       - build_android_release
-    # - rn/ios_build_and_test:
-    #     project_path: "example/ios/example.xcodeproj"
-    #     device: "iPhone X"
-    #     build_configuration: "Release"
-    #     scheme: "example"
-    #     detox_configuration: "ios.sim.release"
-    #     requires:
-    #       - analyse
+      - e2e_release_ios:
+          requires:
+            - analyse_js
+      - e2e_release_android:
+          requires:
+            - analyse_js

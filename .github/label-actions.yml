@@ -14,10 +14,12 @@ actions:
       Please create a new issue with this and we'll be happy to review it!
     # Lock the thread
     lock: true
+    close: true
   # Actions taken when the `repro-required` label is removed
   -repro-required:
     # Unlock the thread
     unlock: true
+    open: true
 
   question:
     # Post a comment
@@ -27,10 +29,12 @@ actions:
       Seems you have a usage question. Please ask the question on [StackOverflow](https://stackoverflow.com/questions/tagged/react-native). You can also chat with other community members on [Reactiflux Discord server](https://www.reactiflux.com/).
     # Lock the thread
     lock: true
+    close: true
   # Actions taken when the `repro-required` label is removed
   -question:
     # Unlock the thread
     unlock: true
+    open: true
 # Limit to only `issues` or `pulls`
 # only: issues
 

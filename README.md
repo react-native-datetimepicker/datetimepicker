@@ -222,7 +222,7 @@ Defines the date or time value used in the component.
 
 #### `maximumDate` (`optional`)
 
-Defines the maximum date that can be selected.
+Defines the maximum date that can be selected. Note that on Android, this only works for `date` mode because [TimePicker](https://developer.android.com/reference/android/widget/TimePicker) does not support this.
 
 ```js
 <RNDateTimePicker maximumDate={new Date(2300, 10, 20)} />
@@ -230,7 +230,7 @@ Defines the maximum date that can be selected.
 
 #### `minimumDate` (`optional`)
 
-Defines the minimum date that can be selected.
+Defines the minimum date that can be selected. Note that on Android, this only works for `date` mode because [TimePicker](https://developer.android.com/reference/android/widget/TimePicker) does not support this.
 
 ```js
 <RNDateTimePicker minimumDate={new Date(1950, 0, 1)} />
@@ -260,7 +260,7 @@ Sets the display format for the day of the week headers.
 Reference: https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.calendarview.dayofweekformat?view=winrt-18362#remarks
 
 ```js
-<RNDateTimePicker dayOfWeekFormat={"{dayofweek.abbreviated(2)}"} />
+<RNDateTimePicker dayOfWeekFormat={'{dayofweek.abbreviated(2)}'} />
 ```
 
 #### `dateFormat` (`optional`, `Windows only`)
@@ -269,7 +269,7 @@ Sets the display format for the date value in the picker's text box.
 Reference: https://docs.microsoft.com/en-us/uwp/api/windows.globalization.datetimeformatting.datetimeformatter?view=winrt-18362#examples
 
 ```js
-<RNDateTimePicker dateFormat={"dayofweek day month"} />
+<RNDateTimePicker dateFormat="dayofweek day month" />
 ```
 
 #### `firstDayOfWeek` (`optional`, `Windows only`)
@@ -277,8 +277,8 @@ Reference: https://docs.microsoft.com/en-us/uwp/api/windows.globalization.dateti
 Indicates which day is shown as the first day of the week.
 
 ```js
-<RNDateTimePicker firstDayOfWeek={DAY_OF_WEEK.Wednesday} /> 
-// The native parameter type is an enum defined in defined https://docs.microsoft.com/en-us/uwp/api/windows.globalization.dayofweek?view=winrt-18362 - meaning an integer needs to passed here (DAY_OF_WEEK). 
+<RNDateTimePicker firstDayOfWeek={DAY_OF_WEEK.Wednesday} />
+// The native parameter type is an enum defined in defined https://docs.microsoft.com/en-us/uwp/api/windows.globalization.dayofweek?view=winrt-18362 - meaning an integer needs to passed here (DAY_OF_WEEK).
 ```
 
 #### `textColor` (`optional`, `iOS only`)
@@ -299,7 +299,7 @@ Allows changing of the locale of the component. By default it uses the device's 
 
 #### `is24Hour` (`optional`, `Android only`)
 
-Allows changing of the time picker to a 24 hour format.
+Allows changing of the time picker to a 24 hour format. By default, this value is decided automatcially based on the user's chosen locale and other preferences.
 
 ```js
 <RNDateTimePicker is24Hour={true} />
@@ -647,19 +647,26 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 #### Windows
 
 ##### Add the DateTimePickerWindows project to your solution
+
 1. Open the solution in Visual Studio 2019
 2. Right-click solution icon in Solution Explorer > Add > Existing Project
    Select 'D:\pathToYourApp\node_modules\@react-native-community\datetimepicker\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj'
+
 ##### **windows/myapp.sln**
+
 Add a reference to `DateTimePickerWindows` to your main application project. From Visual Studio 2019:
 
 Right-click main application project > Add > Reference...
-  Check 'DateTimePickerWindows' from the 'Project > Solution' tab on the left.
-##### **pch.h** 
+Check 'DateTimePickerWindows' from the 'Project > Solution' tab on the left.
 
-Add `#include "winrt/DateTimePicker.h"`.  
+##### **pch.h**
+
+Add `#include "winrt/DateTimePicker.h"`.
+
 ##### **app.cpp**
+
 Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` before `InitializeComponent();`.
+
 ## Running the example app
 
 1. Install required pods in `example/ios` by running `pods install`

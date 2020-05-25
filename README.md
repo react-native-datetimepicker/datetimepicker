@@ -149,7 +149,6 @@ const App = () => {
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
           value={date}
           mode={mode}
           is24Hour={true}

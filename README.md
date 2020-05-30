@@ -63,7 +63,7 @@ React Native date & time picker component for iOS and Android
 
 ## Requirements
 
-- Xcode >= 11; please open a PR if you need to support building with older Xcode versions - see [#133](https://github.com/react-native-community/datetimepicker/issues/133). Please note that we support iOS >= 10 but you need Xcode 11 to build.
+- Xcode >= 10
 
 ## Getting started
 

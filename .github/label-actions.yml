@@ -1,0 +1,42 @@
+# Configuration for Label Actions - https://github.com/dessant/label-actions
+
+# Specify actions for issues and pull requests
+actions:
+  # Actions taken when the `repro-required` label is added
+  repro-required:
+    # Post a comment
+    comment: >
+      :wave: @{issue-author}, sorry you're having an issue. As the issue template explains, we require that you provide a runnable example that reproduces your issue (please read the [issue template](https://raw.githubusercontent.com/react-native-community/.github/master/.github/ISSUE_TEMPLATE/bug_report.md)).
+      This means you need to provide a code snippet that we can copy-paste into an empty project and see the error ourselves, or provide a git repository with the issue.
+
+      The reason is that maintainers do not have time to try reproduce bugs themselves. Please try to minimize the superfluous code and focus only on reproducing the bug.
+
+      Please create a new issue with this and we'll be happy to review it!
+    # Lock the thread
+    lock: true
+    close: true
+  # Actions taken when the `repro-required` label is removed
+  -repro-required:
+    # Unlock the thread
+    unlock: true
+    open: true
+
+  question:
+    # Post a comment
+    comment: >
+      :wave: @{issue-author}, thanks for opening the issue. The issue tracker is intended for tracking bug reports and feature requests only. 
+
+      Seems you have a usage question. Please ask the question on [StackOverflow](https://stackoverflow.com/questions/tagged/react-native). You can also chat with other community members on [Reactiflux Discord server](https://www.reactiflux.com/).
+    # Lock the thread
+    lock: true
+    close: true
+  # Actions taken when the `repro-required` label is removed
+  -question:
+    # Unlock the thread
+    unlock: true
+    open: true
+# Limit to only `issues` or `pulls`
+# only: issues
+
+# Repository to extend settings from
+# _extends: repo

@@ -191,9 +191,10 @@ class CustomTimePickerDialog extends TimePickerDialog {
   @Override
   public void onAttachedToWindow() {
     super.onAttachedToWindow();
-    int timePickerId = mContext.getResources().getIdentifier("timePicker", "id", "android");
 
-    try {
+    if (mTimePickerInterval > RNConstants.DEFAULT_TIME_PICKER_INTERVAL) {
+      int timePickerId = mContext.getResources().getIdentifier("timePicker", "id", "android");
+
       mTimePicker = this.findViewById(timePickerId);
       int currentMinute = mTimePicker.getCurrentMinute();
 
@@ -206,15 +207,13 @@ class CustomTimePickerDialog extends TimePickerDialog {
 
         List<String> displayedValues = new ArrayList<>();
         for (int i = 0; i < 60; i += mTimePickerInterval) {
-          displayedValues.add(String.format(Locale.US, "%02d", i));
+          displayedValues.add(String.format("%02d", i));
         }
 
         minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
       }
 
       mTimePicker.setCurrentMinute(snapMinutesToInterval(currentMinute));
-    } catch (Exception e) {
-      e.printStackTrace();
     }
   }
 }

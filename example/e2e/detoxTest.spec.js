@@ -18,6 +18,9 @@ describe('Example', () => {
       await device.reloadReactNative();
     } else {
       await device.launchApp({newInstance: true});
+      await waitFor(element(by.text('Example DateTime Picker')))
+        .toBeVisible()
+        .withTimeout(10000);
     }
   });
 
@@ -36,6 +39,10 @@ describe('Example', () => {
         element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
       ).toBeVisible();
     } else {
+      await waitFor(element(by.type('android.widget.DatePicker')))
+        .toBeVisible()
+        .withTimeout(10000);
+
       await expect(element(by.type('android.widget.DatePicker'))).toBeVisible();
     }
   });
@@ -49,11 +56,11 @@ describe('Example', () => {
         element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
       ).toBeVisible();
     } else {
-      const testElement = element(
-        by
-          .type('android.widget.ScrollView')
-          .withAncestor(by.type('android.widget.DatePicker')),
-      );
+      await waitFor(element(by.type('android.widget.DatePicker')))
+        .toBeVisible()
+        .withTimeout(10000);
+
+      const testElement = element(by.type('android.widget.DatePicker'));
       await testElement.swipe('left', 'fast', '100');
       await testElement.tapAtPoint({x: 50, y: 200});
       await element(by.text('CANCEL')).tap();

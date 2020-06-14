@@ -71,12 +71,14 @@
     "react-test-renderer": "^16.11.0"
   },
   "peerDependencies": {
-    "react": ">=16.11",
-    "react-native": ">=0.61",
-    "react-native-windows": "^0.62.0-preview.1"
+    "react": ">=16.8.3",
+    "react-native": ">=0.59"
   },
   "dependencies": {
     "invariant": "^2.2.4"
+  },
+  "optionalDependencies": {
+    "react-native-windows": "^0.62.0-preview.1"
   },
   "detox": {
     "test-runner": "jest",

@@ -666,7 +666,7 @@ Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` 
 
 ## Running the example app
 
-1. Install required pods in `example/ios` by running `pods install`
+1. Install required pods in `example/ios` by running `npx pod-install`
 1. Run `npm start` to start Metro Bundler
 1. Run `npm run start:ios` or `npm run start:android` or `npm run start:windows` (or `yarn run start:windows`)
 

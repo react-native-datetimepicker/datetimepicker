@@ -1,7 +1,12 @@
 # CHANGELOG
+
 ### 2.4.2
 
 - Make react-native-windows optional [#191](https://github.com/react-native-community/datetimepicker/pull/191)
+
+### 2.4.1
+
+- allow compiling with xcode 10 [#186](https://github.com/react-native-community/datetimepicker/pull/186)
 
 ### 2.4.0
 

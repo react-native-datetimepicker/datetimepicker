@@ -114,7 +114,7 @@ import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const App = () => {
+export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -159,8 +159,6 @@ const App = () => {
     </View>
   );
 };
-
-export default App;
 ```
 
 ## Props
@@ -190,7 +188,7 @@ Defines the visual display of the picker for Android and will be ignored for iOS
 
 List of possible values:
 
-- `"default"`
+- `"default"` - Show a default date picker (spinner/calendar/clock) based on `mode` and android version.
 - `"spinner"`
 - `"calendar"` (only for `date` mode)
 - `"clock"` (only for `time` mode)

@@ -9,12 +9,14 @@
  * @format
  * @flow strict-local
  */
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import invariant from 'invariant';
+
 import RNDateTimePicker from './picker';
 import {toMilliseconds} from './utils';
 import {MODE_DATE} from './constants';
-import invariant from 'invariant';
-import React from 'react';
 
 import type {
   Event,
@@ -29,26 +31,39 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Picker extends React.Component<IOSNativeProps> {
-  static defaultProps = {
-    mode: MODE_DATE,
-  };
+function Picker({
+  mode = MODE_DATE,
+  value,
+  locale,
+  maximumDate,
+  minimumDate,
+  style,
+  testID,
+  minuteInterval,
+  timeZoneOffsetInMinutes,
+  textColor,
+  onChange,
+  isDarkModeEnabled,
+}: IOSNativeProps) {
+  const dates: DatePickerOptions = {value, maximumDate, minimumDate};
+  const picker: NativeRef = React.createRef();
+  const textColorByDarkModeEnabled = isDarkModeEnabled
+    ? Colors.white
+    : Colors.black;
 
-  _picker: NativeRef = React.createRef();
-
-  componentDidUpdate() {
-    const {onChange, value} = this.props;
-
-    if (value && onChange && this._picker.current) {
-      this._picker.current.setNativeProps({
+  useEffect(() => {
+    if (value && onChange && picker.current) {
+      picker.current.setNativeProps({
         date: value.getTime(),
       });
     }
-  }
+  }, [onChange, picker, value]);
 
-  _onChange = (event: Event) => {
-    const {onChange} = this.props;
-    const timestamp = event.nativeEvent.timestamp;
+  function onChangeValue(event: Event) {
+    const {
+      nativeEvent: {timestamp},
+    } = event;
+
     let date;
 
     if (timestamp) {
@@ -56,44 +71,30 @@ export default class Picker extends React.Component<IOSNativeProps> {
     }
 
     onChange && onChange(event, date);
-  };
-
-  render() {
-    const {
-      value,
-      locale,
-      maximumDate,
-      minimumDate,
-      style,
-      testID,
-      mode,
-      minuteInterval,
-      timeZoneOffsetInMinutes,
-      textColor,
-    } = this.props;
-
-    invariant(value, 'A date or time should be specified as `value`.');
-
-    const dates: DatePickerOptions = {value, maximumDate, minimumDate};
-    toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
-
-    return (
-      <RNDateTimePicker
-        testID={testID}
-        ref={this._picker}
-        style={[styles.picker, style]}
-        date={dates.value}
-        locale={locale !== null && locale !== '' ? locale : undefined}
-        maximumDate={dates.maximumDate}
-        minimumDate={dates.minimumDate}
-        mode={mode}
-        minuteInterval={minuteInterval}
-        timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
-        onChange={this._onChange}
-        textColor={textColor}
-        onStartShouldSetResponder={() => true}
-        onResponderTerminationRequest={() => false}
-      />
-    );
   }
+
+  invariant(value, 'A date or time should be specified as `value`.');
+
+  toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
+
+  return (
+    <RNDateTimePicker
+      testID={testID}
+      ref={picker}
+      style={[styles.picker, style]}
+      date={dates.value}
+      locale={locale !== null && locale !== '' ? locale : undefined}
+      maximumDate={dates.maximumDate}
+      minimumDate={dates.minimumDate}
+      mode={mode}
+      minuteInterval={minuteInterval}
+      timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+      onChange={onChangeValue}
+      textColor={textColor || textColorByDarkModeEnabled}
+      onStartShouldSetResponder={() => true}
+      onResponderTerminationRequest={() => false}
+    />
+  );
 }
+
+export default Picker;

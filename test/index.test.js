@@ -23,27 +23,31 @@ describe('DatePicker', () => {
 
   it('calls onChange callback', () => {
     const date = new Date(156e10);
+    const onChange = jest.fn();
 
-    function onChange(event, dateArg) {
-      expect(event).toHaveProperty('type', 'event');
-      expect(event).toHaveProperty('nativeEvent');
-      expect(event.nativeEvent).toHaveProperty('timestamp', date.getTime());
-      expect(dateArg).toEqual(date);
-    }
-
-    renderer
+    const tree = renderer
       .create(<DatePicker value={date} onChange={onChange} />)
-      .getInstance()
-      ._onChange({
-        type: 'event',
-        nativeEvent: {
-          timestamp: date.getTime(),
-        },
-      });
+      .toJSON();
+
+    const timestamp = date.getTime();
+    const event = {nativeEvent: {timestamp}};
+
+    tree.props.onChange(event);
+
+    expect(onChange).toBeCalledWith(
+      {
+        nativeEvent: {timestamp: timestamp},
+      },
+      new Date(timestamp),
+    );
   });
 
   it('has default mode `date`', () => {
-    expect(DatePicker.defaultProps.mode).toEqual('date');
+    const tree = renderer
+      .create(<DatePicker value={new Date(DATE)} />)
+      .toJSON();
+
+    expect(tree.props.mode).toEqual('date');
   });
 
   it('renders with mode `time`', () => {
@@ -63,7 +67,10 @@ describe('DatePicker', () => {
   });
 
   it('has reference to picker', () => {
-    expect(new DatePicker()._picker).toBeDefined();
+    const tree = renderer
+      .create(<DatePicker value={new Date(DATE)} />)
+      .toJSON();
+    expect(tree).toBeDefined();
   });
 
   it.each([

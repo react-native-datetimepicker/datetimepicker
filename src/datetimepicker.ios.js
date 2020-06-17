@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Picker({
+export default function Picker({
   mode = MODE_DATE,
   value,
   locale,
@@ -96,5 +96,3 @@ function Picker({
     />
   );
 }
-
-export default Picker;

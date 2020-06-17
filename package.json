@@ -13,7 +13,7 @@
     "start:ios": "react-native run-ios",
     "start:windows": "react-native start --use-react-native-windows",
     "test": "jest ./test",
-    "posttest": "npm run lint",
+    "posttest": "yarn lint",
     "lint": "eslint {example,src,test}/**/*.js src/index.d.ts",
     "flow": "flow check",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",

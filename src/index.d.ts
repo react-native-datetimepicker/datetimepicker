@@ -1,5 +1,5 @@
 import {FC, Ref, SyntheticEvent} from 'react';
-import {NativeComponent, ViewProps} from 'react-native';
+import {NativeMethods, ViewProps} from 'react-native';
 
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
@@ -130,7 +130,7 @@ export type DateTimePickerResult = Readonly<{
   minute: number;
 }>;
 
-export type RCTDateTimePickerNative = typeof NativeComponent;
+export type RCTDateTimePickerNative = NativeMethods;
 export type NativeRef = {
   current: Ref<RCTDateTimePickerNative> | null;
 };

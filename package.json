@@ -75,7 +75,8 @@
     "react-native": ">=0.59"
   },
   "dependencies": {
-    "invariant": "^2.2.4"
+    "invariant": "^2.2.4",
+    "react-native-appstate-hook": "^1.0.4"
   },
   "optionalDependencies": {
     "react-native-windows": "^0.62.0-preview.1"

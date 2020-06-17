@@ -8,20 +8,25 @@ import {
   Button,
   Platform,
   TextInput,
+  Appearance,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment';
+import useAppState from 'react-native-appstate-hook';
 import {DAY_OF_WEEK} from '../src/constants';
 
 export const App = () => {
+  let isDarkModeEnabled = Appearance.getColorScheme() === 'dark';
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
   const [display, setDisplay] = useState('default');
+  const backgroundColorByMode = isDarkModeEnabled ? Colors.black : Colors.white;
+  const textColorByMode = isDarkModeEnabled ? Colors.white : Colors.black;
 
   // Windows-specific
   const [maxDate, setMinDate] = useState(new Date('2021'));
@@ -31,6 +36,14 @@ export const App = () => {
   const [dayOfWeekFormat, setDayOfWeekFormat] = useState(
     '{dayofweek.abbreviated(2)}',
   );
+
+  const setDarkModeEnabled = newState => {
+    if (newState === 'active') {
+      isDarkModeEnabled = Appearance.getColorScheme() === 'dark';
+    }
+  };
+
+  useAppState({onChange: setDarkModeEnabled});
 
   const handleResetPress = () => {
     setDate(undefined);
@@ -70,27 +83,33 @@ export const App = () => {
 
   if (Platform.OS !== 'windows') {
     return (
-      <>
-        <StatusBar barStyle="dark-content" />
+      <View
+        style={[
+          styles.rootContainer,
+          {backgroundColor: backgroundColorByMode},
+        ]}>
+        <StatusBar
+          barStyle={isDarkModeEnabled ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundColorByMode}
+        />
         <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
-            <Header />
-            {global.HermesInternal !== null && (
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            {global.HermesInternal !== null && Platform.OS === 'android' && (
               <View style={styles.engine}>
                 <Text testID="hermesIndicator" style={styles.footer}>
                   Engine: Hermes
                 </Text>
               </View>
             )}
-            <View style={styles.body}>
+            <View>
               <View testID="appRootView" style={styles.container}>
                 <View style={styles.header}>
-                  <Text style={styles.text}>Example DateTime Picker</Text>
+                  <Text style={[styles.text, {color: textColorByMode}]}>
+                    Example DateTime Picker
+                  </Text>
                 </View>
                 <View style={styles.header}>
-                  <Text style={{margin: 10, flex: 1}}>
+                  <Text style={{margin: 10, flex: 1, color: textColorByMode}}>
                     text color (iOS only)
                   </Text>
                   <TextInput
@@ -131,7 +150,9 @@ export const App = () => {
                   />
                 </View>
                 <View style={styles.header}>
-                  <Text testID="dateTimeText" style={styles.dateTimeText}>
+                  <Text
+                    testID="dateTimeText"
+                    style={[styles.dateTimeText, {color: textColorByMode}]}>
                     {mode === 'time' && moment.utc(date).format('HH:mm')}
                     {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
                   </Text>
@@ -151,6 +172,7 @@ export const App = () => {
                     display={display}
                     onChange={onChange}
                     style={styles.iOsPicker}
+                    isDarkModeEnabled={isDarkModeEnabled}
                     textColor={color || undefined}
                   />
                 )}
@@ -158,7 +180,7 @@ export const App = () => {
             </View>
           </ScrollView>
         </SafeAreaView>
-      </>
+      </View>
     );
   } else {
     return (
@@ -292,11 +314,13 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
+  rootContainer: {
+    flex: 1,
+  },
   container: {
     marginTop: 32,
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
   },
   header: {
     justifyContent: 'center',

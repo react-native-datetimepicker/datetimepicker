@@ -6084,6 +6084,11 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-appstate-hook@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-appstate-hook/-/react-native-appstate-hook-1.0.4.tgz#2d0f0b58464f2fa2afa7c569f84cccf1b9f49da2"
+  integrity sha512-CBTKswnDovcSQdWEvjS69NZLgqIx6rONzL8+R7Kbp1NIDUBbJuow+RMCZD5mQC1xGRPwVpfCR/dK9C1oLo1sZg==
+
 react-native-windows@^0.62.0-preview.1:
   version "0.62.0-preview.1"
   resolved "https://registry.yarnpkg.com/react-native-windows/-/react-native-windows-0.62.0-preview.1.tgz#b2ca639b12aa29a93ac2d2e44742ddd78551e5e6"

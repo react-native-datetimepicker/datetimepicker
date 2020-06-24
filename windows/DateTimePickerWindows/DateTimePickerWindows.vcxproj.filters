@@ -13,10 +13,12 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="DateTimePickerViewManager.cpp" />
+    <ClCompile Include="TimePickerViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="DateTimePickerViewManager.h" />
+    <ClInclude Include="TimePickerViewManager.h" />
     <ClInclude Include="ReactPackageProvider.h" />
   </ItemGroup>
   <ItemGroup>

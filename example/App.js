@@ -17,7 +17,7 @@ import {Picker} from 'react-native-windows';
 import moment from 'moment';
 import {DAY_OF_WEEK} from '../src/constants';
 
-const ThemedText = props => {
+const ThemedText = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const textColorByMode = {color: isDarkMode ? Colors.white : Colors.black};
@@ -30,15 +30,18 @@ const ThemedText = props => {
 
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
+  const [time, setTime] = useState(undefined);
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
   const [display, setDisplay] = useState('default');
   const [interval, setMinInterval] = useState(undefined);
+  const [minuteInterval, setMinuteInterval] = useState(15);
 
   // Windows-specific
   const [maxDate, setMinDate] = useState(new Date('2021'));
   const [minDate, setMaxDate] = useState(new Date('2018'));
+  const [is24Hours, set24Hours] = useState(false);
   const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Monday);
   const [dateFormat, setDateFormat] = useState('longdate');
   const [dayOfWeekFormat, setDayOfWeekFormat] = useState(
@@ -56,7 +59,13 @@ export const App = () => {
     setDate(currentDate);
   };
 
-  const showMode = currentMode => {
+  const onTimeChange = (event: any, newTime?: Date) => {
+    if (Platform.OS === 'windows') {
+      setTime(newTime);
+    }
+  };
+
+  const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
   };
@@ -128,7 +137,7 @@ export const App = () => {
               <TextInput
                 value={color}
                 style={{height: 60, flex: 1}}
-                onChangeText={text => {
+                onChangeText={(text) => {
                   setColor(text.toLowerCase());
                 }}
                 placeholder="color"
@@ -222,7 +231,7 @@ export const App = () => {
               </View>
             )}
             <View style={styles.body}>
-              <View testID="appRootView" style={styles.container}>
+              <View testID="appRootView" style={styles.containerWindows}>
                 <View style={styles.header}>
                   <Text style={styles.text}>Example DateTime Picker</Text>
                 </View>
@@ -231,7 +240,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={dateFormat}
-                    onValueChange={value => setDateFormat(value)}>
+                    onValueChange={(value) => setDateFormat(value)}>
                     <Picker.Item
                       label="day month year"
                       value="day month year"
@@ -249,7 +258,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={dayOfWeekFormat}
-                    onValueChange={value => setDayOfWeekFormat(value)}>
+                    onValueChange={(value) => setDayOfWeekFormat(value)}>
                     <Picker.Item
                       label="abbreviated(2)"
                       value="{dayofweek.abbreviated(2)}"
@@ -266,7 +275,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={firstDayOfWeek}
-                    onValueChange={value => setFirstDayOfWeek(value)}>
+                    onValueChange={(value) => setFirstDayOfWeek(value)}>
                     <Picker.Item label="Sunday" value={DAY_OF_WEEK.Sunday} />
                     <Picker.Item label="Monday" value={DAY_OF_WEEK.Monday} />
                     <Picker.Item label="Tuesday" value={DAY_OF_WEEK.Tuesday} />
@@ -285,13 +294,6 @@ export const App = () => {
                     />
                   </Picker>
                 </View>
-                <View style={styles.header}>
-                  <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {date !== undefined
-                      ? moment(date).format('MM/DD/YYYY')
-                      : moment().format('MM/DD/YYYY')}
-                  </Text>
-                </View>
 
                 <DateTimePicker
                   testID="dateTimePicker"
@@ -304,13 +306,57 @@ export const App = () => {
                   dateFormat={dateFormat}
                   dayOfWeekFormat={dayOfWeekFormat}
                   placeholderText="select date"
+                  mode="date"
                 />
-                <View style={{width: 200}}>
+                <View style={{width: 200, marginTop: 15}}>
+                  <Text testID="dateTimeText" style={styles.dateTimeText}>
+                    {date !== undefined
+                      ? moment(date).format('MM/DD/YYYY')
+                      : moment().format('MM/DD/YYYY')}
+                  </Text>
                   <Button
                     style={styles.resetButton}
                     title="Reset calendar"
                     onPress={handleResetPress}
                   />
+                </View>
+
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{padding: 10, marginTop: 10}}>
+                    Clock format (AM/PM):{' '}
+                  </Text>
+                  <Picker
+                    style={{width: 200, height: 35, marginTop: 10}}
+                    selectedValue={is24Hours}
+                    onValueChange={(value) => set24Hours(value)}>
+                    <Picker.Item label="12-hour clock" value={false} />
+                    <Picker.Item label="24-hour clock" value={true} />
+                  </Picker>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{padding: 10}}>Minute interval: </Text>
+                  <Picker
+                    style={{width: 200, height: 35}}
+                    selectedValue={minuteInterval}
+                    onValueChange={(value) => setMinuteInterval(value)}>
+                    <Picker.Item label="12 minute step" value={12} />
+                    <Picker.Item label="15 minute step" value={15} />
+                    <Picker.Item label="17 minute step" value={17} />
+                  </Picker>
+                </View>
+                <DateTimePicker
+                  mode="time"
+                  value={time}
+                  style={{width: 300, opacity: 1, height: 30, marginTop: 50}}
+                  onChange={onTimeChange}
+                  is24Hour={is24Hours}
+                  minuteInterval={minuteInterval}
+                />
+                <View style={styles.header}>
+                  <Text style={styles.dateTimeText}>
+                    {time !== undefined ? 'Time changed event response:\n' : ''}
+                    {time !== undefined ? time.toUTCString() : ''}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -344,6 +390,13 @@ const styles = StyleSheet.create({
     marginTop: 32,
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  containerWindows: {
+    marginTop: 32,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   header: {

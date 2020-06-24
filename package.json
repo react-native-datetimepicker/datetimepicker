@@ -67,7 +67,8 @@
     "moment": "^2.24.0",
     "react": "^16.11.0",
     "react-native": "^0.62.2",
-    "react-native-windows": "^0.62.0-preview.1",
+    "react-native-windows": "^0.62.0-0",
+    "@react-native-community/picker": "^1.6.5",
     "react-test-renderer": "^16.11.0"
   },
   "peerDependencies": {
@@ -78,7 +79,7 @@
     "invariant": "^2.2.4"
   },
   "optionalDependencies": {
-    "react-native-windows": "^0.62.0-preview.1"
+    "react-native-windows": "^0.62.0-0"
   },
   "detox": {
     "test-runner": "jest",

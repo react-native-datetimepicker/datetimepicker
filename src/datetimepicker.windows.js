@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 const RNDateTimePickerWindows = requireNativeComponent(
   'RNDateTimePickerWindows',
 );
+const RNTimePickerWindows = requireNativeComponent('RNTimePickerWindows');
 
 export default class DateTimePickerWindows extends React.Component<WindowsNativeProps> {
   constructor(props: WindowsNativeProps) {
@@ -50,13 +51,26 @@ export default class DateTimePickerWindows extends React.Component<WindowsNative
       timezoneOffsetInSeconds = -60 * this.props.value.getTimezoneOffset();
     }
 
-    return (
-      <RNDateTimePickerWindows
-        {...props}
-        onChange={this._onChange}
-        timeZoneOffsetInSeconds={timezoneOffsetInSeconds}
-      />
-    );
+    // 'date' is the default mode
+    if (this.props.mode === 'date' || this.props.mode === undefined) {
+      return (
+        <RNDateTimePickerWindows
+          {...props}
+          onChange={this._onChange}
+          timeZoneOffsetInSeconds={timezoneOffsetInSeconds}
+        />
+      );
+    } else if (this.props.mode === 'time') {
+      return (
+        <RNTimePickerWindows
+          style={this.props.style}
+          is24Hour={this.props.is24Hour}
+          selectedTime={this.props.value}
+          minuteInterval={this.props.minuteInterval}
+          onChange={this._onChange}
+        />
+      );
+    }
   }
 
   _onChange = (event: WindowsDatePickerChangeEvent) => {

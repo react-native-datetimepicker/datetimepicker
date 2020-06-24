@@ -21,6 +21,10 @@ React Native date & time picker component for iOS and Android
   <tr><td colspan=1><strong>Windows</strong></td></tr>
   <tr>
     <td><p align="center"><img src="./docs/images/windows_date.png" width="380" height="430"/></p></td>
+    <td><p align="center"><img src="./docs/images/windows_time_2.png" width="380" height="430"/></p></td>
+  </tr>
+  <tr>
+    <td><p align="center"><img src="./docs/images/windows_time_1.png" width="310" height="40"/></p></td>
   </tr>
 </table>
 
@@ -164,7 +168,7 @@ export const App = () => {
 
 ## Props
 
-> Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android, and [`CalendarDatePicker`](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/calendar-date-picker) on Windows.
+> Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android, and [`CalendarDatePicker`](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/calendar-date-picker) +[TimePicker](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.timepicker?view=winrt-19041) on Windows.
 >
 > These native classes offer only limited configuration, while there are dozens of possible options you as a developer may need. It follows that if your requirement is not supported by the backing native views, this library will _not_ be able to implement your requirement. When you open an issue with a feature request, please document if (or how) the feature can be implemented using the aforementioned native views. If those views do not support what you need, such feature requests will be closed as not actionable.
 
@@ -175,7 +179,7 @@ Defines the type of the picker.
 List of possible values:
 
 - `"date"` (default for `iOS` and `Android` and `Windows`)
-- `"time"` (currently unavailable on `Windows`, work tracked by microsoft/react-native-windows#4695)
+- `"time"`
 - `"datetime"` (`iOS` only)
 - `"countdown"` (`iOS` only)
 
@@ -295,7 +299,7 @@ Allows changing of the locale of the component. By default it uses the device's 
 <RNDateTimePicker locale="es-ES" />
 ```
 
-#### `is24Hour` (`optional`, `Android only`)
+#### `is24Hour` (`optional`, `Windows and Android only`)
 
 Allows changing of the time picker to a 24 hour format. By default, this value is decided automatcially based on the user's chosen locale and other preferences.
 
@@ -316,6 +320,8 @@ Pressing button can be observed in onChange handler as `event.type === 'neutralB
 
 The interval at which minutes can be selected.
 Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
+
+(On Windows, this can be any number between 0-59.)
 
 ```js
 <RNDateTimePicker minuteInterval={10} />

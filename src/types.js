@@ -180,4 +180,6 @@ export type WindowsNativeProps = $ReadOnly<{|
     | '{dayofweek.full}',
   firstDayOfWeek?: DAY_OF_WEEK,
   timeZoneOffsetInSeconds?: number,
+  is24Hour?: boolean,
+  minuteInterval?: number,
 |}>;

@@ -49,6 +49,7 @@ React Native date & time picker component for iOS and Android
     - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
     - [`minuteInterval` (`optional`, `iOS only`)](#minuteinterval-optional-ios-only)
+    - [`isDarkModeEnabled`](#isDarkModeEnabled)
     - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
   - [Migration from the older components](#migration-from-the-older-components)
     - [DatePickerIOS](#datepickerios)
@@ -318,6 +319,14 @@ Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 
 ```js
 <RNDateTimePicker minuteInterval={10} />
+```
+
+#### `isDarkModeEnabled`
+
+Allow changing text color to white and background color to black when the value is `true`
+
+```
+<RNDateTimePicker isDarkModeEnabled={true} />
 ```
 
 #### `style` (`optional`, `iOS only`)

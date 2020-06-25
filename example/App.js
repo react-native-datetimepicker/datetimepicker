@@ -8,6 +8,7 @@ import {
   Button,
   Platform,
   TextInput,
+  useColorScheme,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
@@ -15,6 +16,17 @@ import React, {useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment';
 import {DAY_OF_WEEK} from '../src/constants';
+
+const ThemedText = props => {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const textColorByMode = {color: isDarkMode ? Colors.white : Colors.black};
+
+  const TextElement = React.createElement(Text, props);
+  return React.cloneElement(TextElement, {
+    style: [props.style, textColorByMode],
+  });
+};
 
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
@@ -68,97 +80,103 @@ export const App = () => {
     setDisplay('spinner');
   };
 
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
+  };
+
   if (Platform.OS !== 'windows') {
     return (
-      <>
+      <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
-            <Header />
-            {global.HermesInternal !== null && (
-              <View style={styles.engine}>
-                <Text testID="hermesIndicator" style={styles.footer}>
-                  Engine: Hermes
-                </Text>
-              </View>
-            )}
-            <View style={styles.body}>
-              <View testID="appRootView" style={styles.container}>
-                <View style={styles.header}>
-                  <Text style={styles.text}>Example DateTime Picker</Text>
-                </View>
-                <View style={styles.header}>
-                  <Text style={{margin: 10, flex: 1}}>
-                    text color (iOS only)
-                  </Text>
-                  <TextInput
-                    value={color}
-                    style={{height: 60, flex: 1}}
-                    onChangeText={text => {
-                      setColor(text.toLowerCase());
-                    }}
-                    placeholder="color"
-                  />
-                </View>
-                <View style={styles.button}>
-                  <Button
-                    testID="datePickerButton"
-                    onPress={showDatepicker}
-                    title="Show date picker default!"
-                  />
-                </View>
-                <View style={styles.button}>
-                  <Button
-                    testID="datePickerButtonSpinner"
-                    onPress={showDatepickerSpinner}
-                    title="Show date picker spinner!"
-                  />
-                </View>
-                <View style={styles.button}>
-                  <Button
-                    testID="timePickerButton"
-                    onPress={showTimepicker}
-                    title="Show time picker!"
-                  />
-                </View>
-                <View style={styles.button}>
-                  <Button
-                    testID="timePickerButtonSpinner"
-                    onPress={showTimepickerSpinner}
-                    title="Show time picker spinner!"
-                  />
-                </View>
-                <View style={styles.header}>
-                  <Text testID="dateTimeText" style={styles.dateTimeText}>
-                    {mode === 'time' && moment.utc(date).format('HH:mm')}
-                    {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
-                  </Text>
-                  <Button
-                    testID="hidePicker"
-                    onPress={() => setShow(false)}
-                    title="hide picker"
-                  />
-                </View>
-                {show && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    timeZoneOffsetInMinutes={0}
-                    value={date}
-                    mode={mode}
-                    is24Hour
-                    display={display}
-                    onChange={onChange}
-                    style={styles.iOsPicker}
-                    textColor={color || undefined}
-                  />
-                )}
-              </View>
+        <ScrollView>
+          <Header />
+          {global.HermesInternal != null && (
+            <View style={styles.engine}>
+              <Text testID="hermesIndicator" style={styles.footer}>
+                Engine: Hermes
+              </Text>
             </View>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+          )}
+          <View
+            testID="appRootView"
+            style={{
+              backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            }}>
+            <View style={styles.header}>
+              <ThemedText style={styles.text}>
+                Example DateTime Picker
+              </ThemedText>
+            </View>
+            <View style={styles.header}>
+              <ThemedText style={{margin: 10, flex: 1}}>
+                text color (iOS only)
+              </ThemedText>
+              <TextInput
+                value={color}
+                style={{height: 60, flex: 1}}
+                onChangeText={text => {
+                  setColor(text.toLowerCase());
+                }}
+                placeholder="color"
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                testID="datePickerButton"
+                onPress={showDatepicker}
+                title="Show date picker default!"
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                testID="datePickerButtonSpinner"
+                onPress={showDatepickerSpinner}
+                title="Show date picker spinner!"
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                testID="timePickerButton"
+                onPress={showTimepicker}
+                title="Show time picker!"
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                testID="timePickerButtonSpinner"
+                onPress={showTimepickerSpinner}
+                title="Show time picker spinner!"
+              />
+            </View>
+            <View style={styles.header}>
+              <ThemedText testID="dateTimeText" style={styles.dateTimeText}>
+                {mode === 'time' && moment.utc(date).format('HH:mm')}
+                {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
+              </ThemedText>
+              <Button
+                testID="hidePicker"
+                onPress={() => setShow(false)}
+                title="hide picker"
+              />
+            </View>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                timeZoneOffsetInMinutes={0}
+                value={date}
+                mode={mode}
+                is24Hour
+                display={display}
+                onChange={onChange}
+                style={styles.iOsPicker}
+                textColor={color || undefined}
+              />
+            )}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   } else {
     return (

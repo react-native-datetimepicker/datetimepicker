@@ -45,6 +45,7 @@ React Native date & time picker component for iOS and Android
     - [`dayOfWeekFormat` (`optional`, `Windows only`)](#dayOfWeekFormat-optional-windows-only)
     - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)
     - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
+    - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
@@ -322,8 +323,11 @@ Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 
 #### `style` (`optional`, `iOS only`)
 
-Sets style directly on picker component.
-By default height of picker is fixed to 216px.
+Sets style directly on picker component. By default, the picker height is fixed to 216px.
+
+Please note that by default, picker's text color is controlled by the application theme (light / dark mode). In dark mode, text is white and in light mode, text is black.
+
+This means that eg. if the device has dark mode turned on, and your screen background color is white, you will not see the picker. Please use the `Appearance` api to adjust the picker's background color so that it is visible, as we do in the [example App](/example/App.js) or [opt-out from dark mode](https://stackoverflow.com/a/56546554/2070942).
 
 ```js
 <RNDateTimePicker style={{flex: 1}} />

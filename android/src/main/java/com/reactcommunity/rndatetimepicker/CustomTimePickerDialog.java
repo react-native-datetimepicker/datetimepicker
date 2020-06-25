@@ -3,6 +3,7 @@ package com.reactcommunity.rndatetimepicker;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Context;
@@ -54,43 +55,63 @@ class CustomTimePickerDialog extends TimePickerDialog {
         mContext = context;
     }
 
+    private boolean timePickerHasCustomMinuteInterval() {
+        return mTimePickerInterval != RNConstants.DEFAULT_TIME_PICKER_INTERVAL;
+    }
+
+    private boolean isSpinner() {
+        return mDisplay == RNTimePickerDisplay.SPINNER;
+    }
+
     /**
      * Converts values returned from picker to actual minutes
      *
-     * @param minute the internal value of what the user had selected on picker
+     * @param minutesOrSpinnerIndex the internal value of what the user had selected
      * @return returns 'real' minutes (0-59)
      */
-    private int getRealMinutes(int minute) {
+    private int getRealMinutes(int minutesOrSpinnerIndex) {
         if (mDisplay == RNTimePickerDisplay.SPINNER) {
-            return minute * mTimePickerInterval;
+            return minutesOrSpinnerIndex * mTimePickerInterval;
         }
 
-        return minute;
+        return minutesOrSpinnerIndex;
+    }
+
+    private int getRealMinutes() {
+        int minute = mTimePicker.getCurrentMinute();
+        return getRealMinutes(minute);
     }
 
     /**
-     * 'Snaps' real minutes to nearest valid value
+     * 'Snaps' real minutes or spinner value index to nearest valid value
+     * in spinner mode you need to make sure to transform the picked value (which is an index)
+     * to a real value before passing!
      *
      * @param realMinutes 'real' minutes (0-59)
-     * @return nearest valid value
+     * @return nearest valid real minute
      */
-    private int snapMinutesToInterval(int realMinutes) {
+    private int snapRealMinutesToInterval(int realMinutes) {
         float stepsInMinutes = (float) realMinutes / (float) mTimePickerInterval;
 
-        if (mDisplay == RNTimePickerDisplay.SPINNER) {
-            return Math.round(stepsInMinutes);
-        }
-
-        return Math.round(stepsInMinutes) * mTimePickerInterval;
+        int rounded = Math.round(stepsInMinutes) * mTimePickerInterval;
+        return rounded == 60 ? rounded - mTimePickerInterval : rounded;
     }
 
     /**
-     * Determines if real minutes align setted minuteInterval
+     * Determines if picked real minutes are ok with the minuteInterval
      *
      * @param realMinutes 'real' minutes (0-59)
      */
-    private boolean minutesAreInvalid(int realMinutes) {
-        return realMinutes % mTimePickerInterval != 0;
+    private boolean minutesNeedCorrection(int realMinutes) {
+        assertNotSpinner("minutesNeedCorrection is not intended to be used with spinner");
+
+        return timePickerHasCustomMinuteInterval() && realMinutes != snapRealMinutesToInterval(realMinutes);
+    }
+
+    private void assertNotSpinner(String s) {
+        if (isSpinner()) {
+            throw new RuntimeException(s);
+        }
     }
 
     /**
@@ -109,13 +130,14 @@ class CustomTimePickerDialog extends TimePickerDialog {
      * If the picker is in text input mode, correction will be postponed slightly to let the user
      * finish the input
      * <p>
-     * If the picker is not in text input mode, correction will take place immidiately
+     * If the picker is not in text input mode, correction will take place immediately.
      *
      * @param view        the picker's view
      * @param hourOfDay   the picker's selected hours
-     * @param realMinutes 'real' minutes (0-59)
+     * @param correctedMinutes 'real' minutes (0-59) aligned to minute interval
      */
-    private void correctEnteredMinutes(final TimePicker view, final int hourOfDay, final int realMinutes) {
+    private void correctEnteredMinutes(final TimePicker view, final int hourOfDay, final int correctedMinutes) {
+        assertNotSpinner("spinner never needs to be corrected because wrong values are not offered to user!");
         if (pickerIsInTextInputMode()) {
             final EditText textInput = (EditText) view.findFocus();
 
@@ -124,68 +146,65 @@ class CustomTimePickerDialog extends TimePickerDialog {
                 @Override
                 public void run() {
                     // set valid minutes && move caret to the end of input
-                    view.setCurrentMinute(snapMinutesToInterval(realMinutes));
+                    view.setCurrentMinute(correctedMinutes);
                     view.setCurrentHour(hourOfDay);
                     textInput.setSelection(textInput.getText().length());
                 }
             };
 
             handler.postDelayed(runnable, 500);
-            return;
+        } else {
+            view.setCurrentMinute(correctedMinutes);
+            view.setCurrentHour(hourOfDay);
         }
-
-        view.setCurrentMinute(snapMinutesToInterval(realMinutes));
-        view.setCurrentHour(hourOfDay);
     }
 
     @Override
     public void onTimeChanged(final TimePicker view, final int hourOfDay, final int minute) {
         final int realMinutes = getRealMinutes(minute);
-
-        // remove pending 'validation' callbacks if any
+        // remove pending 'validation' callbacks, if any
         handler.removeCallbacks(runnable);
 
-        if (minutesAreInvalid(realMinutes)) {
-            correctEnteredMinutes(view, hourOfDay, realMinutes);
-            return;
-        }
+        if (!isSpinner() && minutesNeedCorrection(realMinutes)) {
+            int correctedMinutes = snapRealMinutesToInterval(realMinutes);
 
-        super.onTimeChanged(view, hourOfDay, realMinutes);
+            // will fire another onTimeChanged
+            correctEnteredMinutes(view, hourOfDay, correctedMinutes);
+        } else {
+            super.onTimeChanged(view, hourOfDay, minute);
+        }
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        if (mTimePickerInterval == RNConstants.DEFAULT_TIME_PICKER_INTERVAL) {
-            super.onClick(dialog, which);
-        } else {
-            switch (which) {
-                case BUTTON_POSITIVE:
-                    final int hours = mTimePicker.getCurrentHour();
-                    int minutes = mTimePicker.getCurrentMinute();
+        if (mTimePicker != null && which == BUTTON_POSITIVE && timePickerHasCustomMinuteInterval()) {
+            final int hours = mTimePicker.getCurrentHour();
 
-                    if (mTimePickerInterval > RNConstants.DEFAULT_TIME_PICKER_INTERVAL) {
-                        final int realMinutes = getRealMinutes(minutes);
-                        minutes = realMinutes;
+            final int realMinutes = getRealMinutes();
+            int validMinutes = isSpinner() ? realMinutes : snapRealMinutesToInterval(realMinutes);
 
-                        if (pickerIsInTextInputMode() && minutesAreInvalid(realMinutes)) {
-                            minutes = snapMinutesToInterval(realMinutes);
-                        }
-                    }
-
-                    if (mTimeSetListener != null) {
-                        mTimeSetListener.onTimeSet(mTimePicker, hours, minutes);
-                    }
-                    break;
-                case BUTTON_NEGATIVE:
-                    cancel();
-                    break;
+            if (mTimeSetListener != null) {
+                mTimeSetListener.onTimeSet(mTimePicker, hours, validMinutes);
             }
+        } else {
+            super.onClick(dialog, which);
         }
     }
 
+    // might be called programmatically
     @Override
     public void updateTime(int hourOfDay, int minuteOfHour) {
-        mTimePicker.setCurrentMinute(snapMinutesToInterval(minuteOfHour));
+        if (timePickerHasCustomMinuteInterval()) {
+            if (isSpinner()) {
+                final int realMinutes = getRealMinutes();
+                int selectedIndex = snapRealMinutesToInterval(realMinutes) / mTimePickerInterval;
+                super.updateTime(hourOfDay, selectedIndex);
+            } else {
+                super.updateTime(hourOfDay, snapRealMinutesToInterval(minuteOfHour));
+            }
+        } else {
+            super.updateTime(hourOfDay, minuteOfHour);
+        }
     }
 
     /**
@@ -196,28 +215,42 @@ class CustomTimePickerDialog extends TimePickerDialog {
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if (mTimePickerInterval > RNConstants.DEFAULT_TIME_PICKER_INTERVAL) {
+        if (timePickerHasCustomMinuteInterval()) {
             int timePickerId = mContext.getResources().getIdentifier("timePicker", "id", "android");
-
             mTimePicker = this.findViewById(timePickerId);
-            int currentMinute = mTimePicker.getCurrentMinute();
 
-            if (mDisplay == RNTimePickerDisplay.SPINNER) {
-                int minutePickerId = mContext.getResources().getIdentifier("minute", "id", "android");
-                NumberPicker minutePicker = this.findViewById(minutePickerId);
+            int realMinuteBackup = mTimePicker.getCurrentMinute();
 
-                minutePicker.setMinValue(0);
-                minutePicker.setMaxValue((60 / mTimePickerInterval) - 1);
-
-                List<String> displayedValues = new ArrayList<>();
-                for (int i = 0; i < 60; i += mTimePickerInterval) {
-                    displayedValues.add(String.format("%02d", i));
-                }
-
-                minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
+            if (isSpinner()) {
+                setSpinnerDisplayedValues();
+                int selectedIndex = snapRealMinutesToInterval(realMinuteBackup) / mTimePickerInterval;
+                mTimePicker.setCurrentMinute(selectedIndex);
+            } else {
+                int snappedRealMinute = snapRealMinutesToInterval(realMinuteBackup);
+                mTimePicker.setCurrentMinute(snappedRealMinute);
             }
-
-            mTimePicker.setCurrentMinute(snapMinutesToInterval(currentMinute));
         }
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void setSpinnerDisplayedValues() {
+        int minutePickerId = mContext.getResources().getIdentifier("minute", "id", "android");
+        NumberPicker minutePicker = this.findViewById(minutePickerId);
+
+        minutePicker.setMinValue(0);
+        minutePicker.setMaxValue((60 / mTimePickerInterval) - 1);
+
+        List<String> displayedValues = new ArrayList<>(60 / mTimePickerInterval);
+        for (int displayedMinute = 0; displayedMinute < 60; displayedMinute += mTimePickerInterval) {
+            displayedValues.add(String.format("%02d", displayedMinute));
+        }
+
+        minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        handler.removeCallbacks(runnable);
+        super.onDetachedFromWindow();
     }
 }

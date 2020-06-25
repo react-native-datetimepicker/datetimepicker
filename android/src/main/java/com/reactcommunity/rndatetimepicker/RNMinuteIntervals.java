@@ -1,14 +1,12 @@
 package com.reactcommunity.rndatetimepicker;
 
-import java.util.Arrays;
 
 /**
  * Time picker minutes' intervals.
  */
 public final class RNMinuteIntervals {
-  private final static Integer[] MinuteIntervals = new Integer[]{1, 5, 10, 15, 20, 30};
 
-  public static boolean isValid(Integer interval) {
-    return Arrays.asList(MinuteIntervals).contains(interval);
+  public static boolean isValid(int interval) {
+    return 60 % interval == 0 && interval <= 30;
   }
 }

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 2.4.3
+
+- Fix TS typings [#197](https://github.com/react-native-community/datetimepicker/pull/197)
+- document working with dark mode [#204](https://github.com/react-native-community/datetimepicker/pull/204)
+
 ### 2.4.2
 
 - Make react-native-windows optional [#191](https://github.com/react-native-community/datetimepicker/pull/191)

@@ -138,31 +138,33 @@ class CustomTimePickerDialog extends TimePickerDialog {
      */
     private void correctEnteredMinutes(final TimePicker view, final int hourOfDay, final int correctedMinutes) {
         assertNotSpinner("spinner never needs to be corrected because wrong values are not offered to user!");
-        if (pickerIsInTextInputMode()) {
-            final EditText textInput = (EditText) view.findFocus();
+        final EditText textInput = (EditText) view.findFocus();
 
-            // 'correction' callback
-            runnable = new Runnable() {
-                @Override
-                public void run() {
+        // 'correction' callback
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (pickerIsInTextInputMode()) {
                     // set valid minutes && move caret to the end of input
-                    view.setCurrentMinute(correctedMinutes);
                     view.setCurrentHour(hourOfDay);
+                    view.setCurrentMinute(correctedMinutes);
                     textInput.setSelection(textInput.getText().length());
+                } else {
+                    view.setCurrentHour(hourOfDay);
+                    // we need to set minutes to 0 for this to work on older android devices
+                    view.setCurrentMinute(0);
+                    view.setCurrentMinute(correctedMinutes);
                 }
-            };
+            }
+        };
 
-            handler.postDelayed(runnable, 500);
-        } else {
-            view.setCurrentMinute(correctedMinutes);
-            view.setCurrentHour(hourOfDay);
-        }
+        handler.postDelayed(runnable, 500);
     }
 
     @Override
     public void onTimeChanged(final TimePicker view, final int hourOfDay, final int minute) {
         final int realMinutes = getRealMinutes(minute);
-        // remove pending 'validation' callbacks, if any
+        // *always* remove pending 'validation' callbacks, if any. Otherwise a valid value might be rewritten
         handler.removeCallbacks(runnable);
 
         if (!isSpinner() && minutesNeedCorrection(realMinutes)) {

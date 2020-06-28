@@ -18,10 +18,10 @@ describe('Example', () => {
       await device.reloadReactNative();
     } else {
       await device.launchApp({newInstance: true});
-      await waitFor(element(by.text('Example DateTime Picker')))
-        .toBeVisible()
-        .withTimeout(10000);
     }
+    await waitFor(element(by.text('Example DateTime Picker')))
+      .toBeVisible()
+      .withTimeout(5000);
   });
 
   it('should have title and hermes indicator on android', async () => {
@@ -39,15 +39,11 @@ describe('Example', () => {
         element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
       ).toBeVisible();
     } else {
-      await waitFor(element(by.type('android.widget.DatePicker')))
-        .toBeVisible()
-        .withTimeout(10000);
-
       await expect(element(by.type('android.widget.DatePicker'))).toBeVisible();
     }
   });
 
-  it('Nothing should happen if date doesn`t change', async () => {
+  it('Nothing should happen if date does not change', async () => {
     await element(by.id('datePickerButton')).tap();
     const dateTimeText = element(by.id('dateTimeText'));
 
@@ -56,11 +52,11 @@ describe('Example', () => {
         element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
       ).toBeVisible();
     } else {
-      await waitFor(element(by.type('android.widget.DatePicker')))
-        .toBeVisible()
-        .withTimeout(10000);
-
-      const testElement = element(by.type('android.widget.DatePicker'));
+      const testElement = element(
+        by
+          .type('android.widget.ScrollView')
+          .withAncestor(by.type('android.widget.DatePicker')),
+      );
       await testElement.swipe('left', 'fast', '100');
       await testElement.tapAtPoint({x: 50, y: 200});
       await element(by.text('CANCEL')).tap();
@@ -145,76 +141,49 @@ describe('Example', () => {
     }
   });
 
-  it('should correct time text when using minuteInterval', async () => {
-    await element(by.id('timePickerDefaultIntervalButton')).tap();
-    const dateTimeText = element(by.id('dateTimeText'));
-
-    if (global.device.getPlatform() === 'ios') {
-      const testElement = element(
-        by.type('UIPickerView').withAncestor(by.id('dateTimePicker')),
-      );
-      await testElement.setColumnToValue(0, '2');
-      await testElement.setColumnToValue(1, '45');
-      await testElement.setColumnToValue(2, 'PM');
-
-      await expect(dateTimeText).toHaveText('14:45');
-    } else {
+  describe.only('given 5-minute interval', () => {
+    beforeEach(async () => {
+      await element(by.id('timePickerDefaultIntervalButton')).tap();
+    });
+    it(':android: picker should correct 18-minute selection to 20-minute one', async () => {
       const keyboardButton = element(
         by.type('androidx.appcompat.widget.AppCompatImageButton'),
       );
       await keyboardButton.tap();
       const testElement = element(
-        by
-          .type('androidx.appcompat.widget.AppCompatEditText')
-          .and(by.text('15')),
-      );
+        by.type('androidx.appcompat.widget.AppCompatEditText'),
+      ).atIndex(1);
       await testElement.tap();
       await testElement.replaceText('18');
       await element(by.text('OK')).tap();
 
+      const dateTimeText = element(by.id('dateTimeText'));
       await expect(dateTimeText).toHaveText('23:20');
-    }
-  });
+    });
 
-  it('should change minutes when pressing in default interval button', async () => {
-    await element(by.id('timePickerDefaultIntervalButton')).tap();
-    const dateTimeText = element(by.id('dateTimeText'));
-
-    if (global.device.getPlatform() === 'android') {
-      const keyboardButton = element(
-        by.type('androidx.appcompat.widget.AppCompatImageButton'),
+    it(':ios: picker should offer only options divisible by 5 (0, 5, 10,...)', async () => {
+      const testElement = element(
+        by.type('UIPickerView').withAncestor(by.id('dateTimePicker')),
       );
-      await keyboardButton.tap();
+      await testElement.setColumnToValue(0, '2');
+      await testElement.setColumnToValue(2, 'PM');
+      const dateTimeText = element(by.id('dateTimeText'));
 
-      await element(
-        by
-          .type('androidx.appcompat.widget.AppCompatEditText')
-          .and(by.text('15')),
-      ).tap();
+      await expect(dateTimeText).toHaveText('14:15');
 
-      await element(
-        by
-          .type('androidx.appcompat.widget.AppCompatEditText')
-          .and(by.text('15')),
-      ).tapBackspaceKey();
+      try {
+        await testElement.setColumnToValue(1, '18');
+      } catch (err) {
+        if (
+          err.message.includes('UIPickerView does not contain desired value')
+        ) {
+          await testElement.setColumnToValue(1, '45');
+        }
+      }
 
-      const minuteTextinput = element(
-        by.type('androidx.appcompat.widget.AppCompatEditText'),
-      ).atIndex(1);
+      await expect(dateTimeText).toHaveText('14:45');
+    });
 
-      await minuteTextinput.replaceText('55');
-
-      await expect(
-        element(
-          by
-            .type('androidx.appcompat.widget.AppCompatEditText')
-            .and(by.text('55')),
-        ),
-      ).toBeVisible();
-
-      await element(by.text('OK')).tap();
-
-      await expect(dateTimeText).toHaveText('23:55');
-    }
+    // TODO android spinner
   });
 });

@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
-class CustomTimePickerDialog extends TimePickerDialog {
+class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
     private TimePicker mTimePicker;
     private int mTimePickerInterval;
     private RNTimePickerDisplay mDisplay;
@@ -22,7 +22,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
     private Runnable runnable;
     private Context mContext;
 
-    public CustomTimePickerDialog(
+    public MinuteIntervalSnappableTimePickerDialog(
             Context context,
             OnTimeSetListener listener,
             int hourOfDay,
@@ -38,7 +38,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
         mContext = context;
     }
 
-    public CustomTimePickerDialog(
+    public MinuteIntervalSnappableTimePickerDialog(
             Context context,
             int theme,
             OnTimeSetListener listener,

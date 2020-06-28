@@ -14,22 +14,12 @@ import java.lang.reflect.Field;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * <p>
@@ -44,7 +34,7 @@ import java.util.Locale;
  * </p>
  */
 
-public class RNDismissableTimePickerDialog extends CustomTimePickerDialog {
+public class RNDismissableTimePickerDialog extends MinuteIntervalSnappableTimePickerDialog {
 
   public RNDismissableTimePickerDialog(
     Context context,

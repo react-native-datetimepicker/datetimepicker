@@ -58,7 +58,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     boolean is24hour = DateFormat.is24HourFormat(activityContext);
 
     int minuteInterval = RNConstants.DEFAULT_TIME_PICKER_INTERVAL;
-    if (args != null && RNMinuteIntervals.isValid(args.getInt(RNConstants.ARG_INTERVAL, -1))) {
+    if (args != null && RNMinuteIntervals.isValid(args.getInt(RNConstants.ARG_INTERVAL))) {
       minuteInterval = args.getInt(RNConstants.ARG_INTERVAL);
     }
 

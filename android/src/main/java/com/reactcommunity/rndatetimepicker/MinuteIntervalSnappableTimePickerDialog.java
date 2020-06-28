@@ -56,7 +56,7 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
     }
 
     public static boolean isValidMinuteInterval(int interval) {
-      return 60 % interval == 0 && interval >= 1 && interval <= 30;
+      return interval >= 1 && interval <= 30 && 60 % interval == 0;
     }
 
     private boolean timePickerHasCustomMinuteInterval() {

@@ -11,7 +11,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment';
@@ -104,7 +104,6 @@ export const App = () => {
       <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
         <StatusBar barStyle="dark-content" />
         <ScrollView>
-          <Header />
           {global.HermesInternal != null && (
             <View style={styles.engine}>
               <Text testID="hermesIndicator" style={styles.footer}>

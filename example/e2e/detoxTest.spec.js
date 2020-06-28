@@ -1,3 +1,5 @@
+const {getTimeText, getDateText} = require('./utils/matchers');
+
 async function userChangesMinuteValue() {
   const keyboardIconButton = element(
     by.type('androidx.appcompat.widget.AppCompatImageButton'),
@@ -45,7 +47,6 @@ describe('Example', () => {
 
   it('Nothing should happen if date does not change', async () => {
     await element(by.id('datePickerButton')).tap();
-    const dateTimeText = element(by.id('dateTimeText'));
 
     if (global.device.getPlatform() === 'ios') {
       await expect(
@@ -62,12 +63,13 @@ describe('Example', () => {
       await element(by.text('CANCEL')).tap();
     }
 
-    await expect(dateTimeText).toHaveText('08/21/2020');
+    const dateText = getDateText();
+    await expect(dateText).toHaveText('08/21/2020');
   });
 
   it('should update dateTimeText when date changes', async () => {
     await element(by.id('datePickerButton')).tap();
-    const dateTimeText = element(by.id('dateTimeText'));
+    const dateText = getDateText();
 
     if (global.device.getPlatform() === 'ios') {
       const testElement = element(
@@ -77,7 +79,7 @@ describe('Example', () => {
       await testElement.setColumnToValue(1, '3');
       await testElement.setColumnToValue(2, '1800');
 
-      await expect(dateTimeText).toHaveText('11/03/1800');
+      await expect(dateText).toHaveText('11/03/1800');
     } else {
       const testElement = element(
         by
@@ -88,7 +90,7 @@ describe('Example', () => {
       await testElement.tapAtPoint({x: 50, y: 200});
       await element(by.text('OK')).tap();
 
-      await expect(dateTimeText).toHaveText('09/13/2020');
+      await expect(dateText).toHaveText('09/13/2020');
     }
   });
 
@@ -106,7 +108,6 @@ describe('Example', () => {
 
   it('Nothing should happen if time does not change', async () => {
     await element(by.id('timePickerButton')).tap();
-    const dateTimeText = element(by.id('dateTimeText'));
 
     if (global.device.getPlatform() === 'ios') {
       await expect(
@@ -116,13 +117,13 @@ describe('Example', () => {
       await userChangesMinuteValue();
       await element(by.text('CANCEL')).tap();
     }
-
-    await expect(dateTimeText).toHaveText('23:15');
+    const timeText = getTimeText();
+    await expect(timeText).toHaveText('23:15');
   });
 
   it('should change time text when time changes', async () => {
     await element(by.id('timePickerButton')).tap();
-    const dateTimeText = element(by.id('dateTimeText'));
+    const timeText = getTimeText();
 
     if (global.device.getPlatform() === 'ios') {
       const testElement = element(
@@ -132,58 +133,88 @@ describe('Example', () => {
       await testElement.setColumnToValue(1, '44');
       await testElement.setColumnToValue(2, 'PM');
 
-      await expect(dateTimeText).toHaveText('14:44');
+      await expect(timeText).toHaveText('14:44');
     } else {
       await userChangesMinuteValue();
       await element(by.text('OK')).tap();
 
-      await expect(dateTimeText).toHaveText('23:30');
+      await expect(timeText).toHaveText('23:30');
     }
   });
 
-  describe.only('given 5-minute interval', () => {
-    beforeEach(async () => {
-      await element(by.id('timePickerDefaultIntervalButton')).tap();
-    });
-    it(':android: picker should correct 18-minute selection to 20-minute one', async () => {
-      const keyboardButton = element(
-        by.type('androidx.appcompat.widget.AppCompatImageButton'),
-      );
-      await keyboardButton.tap();
-      const testElement = element(
-        by.type('androidx.appcompat.widget.AppCompatEditText'),
-      ).atIndex(1);
-      await testElement.tap();
-      await testElement.replaceText('18');
-      await element(by.text('OK')).tap();
+  describe('given 5-minute interval', () => {
+    it(':android: clock picker should correct 18-minute selection to 20-minute one', async () => {
+      try {
+        await element(by.id('timePickerDefaultIntervalButton')).tap();
 
-      const dateTimeText = element(by.id('dateTimeText'));
-      await expect(dateTimeText).toHaveText('23:20');
+        const keyboardButton = element(
+          by.type('androidx.appcompat.widget.AppCompatImageButton'),
+        );
+        await keyboardButton.tap();
+        const testElement = element(
+          by.type('androidx.appcompat.widget.AppCompatEditText'),
+        ).atIndex(1);
+        await testElement.tap();
+        await testElement.replaceText('18');
+        await element(by.text('OK')).tap();
+
+        const timeText = getTimeText();
+        await expect(timeText).toHaveText('23:20');
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    it(':android: given picker is shown as a spinner, swiping it down changes selected time', async () => {
+      try {
+        const timeText = getTimeText();
+
+        await expect(timeText).toHaveText('23:15');
+
+        await element(by.id('timePickerSpinnerIntervalButton')).tap();
+
+        const minutePicker = element(
+          by.type('android.widget.NumberPicker'),
+        ).atIndex(1);
+        await minutePicker.swipe('up', 'slow', '33');
+        await element(by.text('OK')).tap();
+
+        await expect(timeText).toHaveText('23:25');
+      } catch (err) {
+        console.error(err);
+      }
     });
 
     it(':ios: picker should offer only options divisible by 5 (0, 5, 10,...)', async () => {
+      await element(by.id('timePickerDefaultIntervalButton')).tap();
+
       const testElement = element(
         by.type('UIPickerView').withAncestor(by.id('dateTimePicker')),
       );
       await testElement.setColumnToValue(0, '2');
       await testElement.setColumnToValue(2, 'PM');
-      const dateTimeText = element(by.id('dateTimeText'));
+      const timeText = getTimeText();
 
-      await expect(dateTimeText).toHaveText('14:15');
+      await expect(timeText).toHaveText('14:15');
 
+      const valueThatShouldNotBePresented = '18';
       try {
-        await testElement.setColumnToValue(1, '18');
+        await testElement.setColumnToValue(1, valueThatShouldNotBePresented);
       } catch (err) {
         if (
           err.message.includes('UIPickerView does not contain desired value')
         ) {
           await testElement.setColumnToValue(1, '45');
+        } else {
+          throw new Error(
+            'because time interval of 5 minutes was set, Picker should not contain value ' +
+              valueThatShouldNotBePresented +
+              ' but it was displayed in the list.',
+          );
         }
       }
 
-      await expect(dateTimeText).toHaveText('14:45');
+      await expect(timeText).toHaveText('14:45');
     });
-
-    // TODO android spinner
   });
 });

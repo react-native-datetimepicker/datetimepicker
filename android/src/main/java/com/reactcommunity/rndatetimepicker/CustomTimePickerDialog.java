@@ -103,7 +103,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
      * @param realMinutes 'real' minutes (0-59)
      */
     private boolean minutesNeedCorrection(int realMinutes) {
-        assertNotSpinner("minutesNeedCorrection is not intended to be used with spinner");
+        assertNotSpinner("minutesNeedCorrection is not intended to be used with spinner, spinner won't allow picking invalid values");
 
         return timePickerHasCustomMinuteInterval() && realMinutes != snapRealMinutesToInterval(realMinutes);
     }
@@ -127,17 +127,16 @@ class CustomTimePickerDialog extends TimePickerDialog {
     /**
      * Corrects minute values if they don't align with minuteInterval
      * <p>
-     * If the picker is in text input mode, correction will be postponed slightly to let the user
-     * finish the input
+     * in text input mode, correction will be postponed slightly to let the user finish the input
+     * in clock mode we also delay it to give user visual cue about the correction
      * <p>
-     * If the picker is not in text input mode, correction will take place immediately.
      *
      * @param view        the picker's view
      * @param hourOfDay   the picker's selected hours
      * @param correctedMinutes 'real' minutes (0-59) aligned to minute interval
      */
     private void correctEnteredMinutes(final TimePicker view, final int hourOfDay, final int correctedMinutes) {
-        assertNotSpinner("spinner never needs to be corrected because wrong values are not offered to user!");
+        assertNotSpinner("spinner never needs to be corrected because wrong values are not offered to user (both in scrolling and textInput mode)!");
         final EditText textInput = (EditText) view.findFocus();
 
         // 'correction' callback
@@ -164,7 +163,7 @@ class CustomTimePickerDialog extends TimePickerDialog {
     @Override
     public void onTimeChanged(final TimePicker view, final int hourOfDay, final int minute) {
         final int realMinutes = getRealMinutes(minute);
-        // *always* remove pending 'validation' callbacks, if any. Otherwise a valid value might be rewritten
+        // *always* remove pending 'validation' callbacks, otherwise a valid value might be rewritten
         handler.removeCallbacks(runnable);
 
         if (!isSpinner() && minutesNeedCorrection(realMinutes)) {
@@ -193,7 +192,6 @@ class CustomTimePickerDialog extends TimePickerDialog {
         }
     }
 
-    // might be called programmatically
     @Override
     public void updateTime(int hourOfDay, int minuteOfHour) {
         if (timePickerHasCustomMinuteInterval()) {

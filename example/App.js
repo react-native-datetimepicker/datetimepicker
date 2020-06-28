@@ -92,9 +92,6 @@ export const App = () => {
     setMinInterval(5);
     setDisplay('spinner');
   };
-  const currentDateTime = moment
-    .utc(date)
-    .format(mode === 'time' ? 'HH:mm' : 'MM/DD/YYYY');
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -175,14 +172,18 @@ export const App = () => {
             </View>
             <View style={styles.button}>
               <Button
-                testID="timePickerIntervalButton"
+                testID="timePickerSpinnerIntervalButton"
                 onPress={showTimepickerSpinnerWithInterval}
                 title="Show time picker as spinner (with 5 min interval)!"
               />
             </View>
             <View style={styles.header}>
-              <ThemedText testID="dateTimeText" style={styles.dateTimeText}>
-                {currentDateTime}
+              <ThemedText testID="dateText" style={styles.dateTimeText}>
+                {moment.utc(date).format('MM/DD/YYYY')}
+              </ThemedText>
+              <Text> </Text>
+              <ThemedText testID="timeText" style={styles.dateTimeText}>
+                {moment.utc(date).format('HH:mm')}
               </ThemedText>
               <Button
                 testID="hidePicker"

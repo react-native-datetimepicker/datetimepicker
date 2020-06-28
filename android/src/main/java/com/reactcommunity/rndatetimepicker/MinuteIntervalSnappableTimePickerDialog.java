@@ -55,6 +55,10 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
         mContext = context;
     }
 
+    public static boolean isValidMinuteInterval(int interval) {
+      return 60 % interval == 0 && interval >= 1 && interval <= 30;
+    }
+
     private boolean timePickerHasCustomMinuteInterval() {
         return mTimePickerInterval != RNConstants.DEFAULT_TIME_PICKER_INTERVAL;
     }
@@ -97,6 +101,12 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
         return rounded == 60 ? rounded - mTimePickerInterval : rounded;
     }
 
+    private void assertNotSpinner(String s) {
+        if (isSpinner()) {
+            throw new RuntimeException(s);
+        }
+    }
+
     /**
      * Determines if picked real minutes are ok with the minuteInterval
      *
@@ -106,12 +116,6 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
         assertNotSpinner("minutesNeedCorrection is not intended to be used with spinner, spinner won't allow picking invalid values");
 
         return timePickerHasCustomMinuteInterval() && realMinutes != snapRealMinutesToInterval(realMinutes);
-    }
-
-    private void assertNotSpinner(String s) {
-        if (isSpinner()) {
-            throw new RuntimeException(s);
-        }
     }
 
     /**
@@ -216,19 +220,23 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
         super.onAttachedToWindow();
 
         if (timePickerHasCustomMinuteInterval()) {
-            int timePickerId = mContext.getResources().getIdentifier("timePicker", "id", "android");
-            mTimePicker = this.findViewById(timePickerId);
+            setupPickerDialog();
+        }
+    }
 
-            int realMinuteBackup = mTimePicker.getCurrentMinute();
+    private void setupPickerDialog() {
+        int timePickerId = mContext.getResources().getIdentifier("timePicker", "id", "android");
+        mTimePicker = this.findViewById(timePickerId);
 
-            if (isSpinner()) {
-                setSpinnerDisplayedValues();
-                int selectedIndex = snapRealMinutesToInterval(realMinuteBackup) / mTimePickerInterval;
-                mTimePicker.setCurrentMinute(selectedIndex);
-            } else {
-                int snappedRealMinute = snapRealMinutesToInterval(realMinuteBackup);
-                mTimePicker.setCurrentMinute(snappedRealMinute);
-            }
+        int realMinuteBackup = mTimePicker.getCurrentMinute();
+
+        if (isSpinner()) {
+            setSpinnerDisplayedValues();
+            int selectedIndex = snapRealMinutesToInterval(realMinuteBackup) / mTimePickerInterval;
+            mTimePicker.setCurrentMinute(selectedIndex);
+        } else {
+            int snappedRealMinute = snapRealMinutesToInterval(realMinuteBackup);
+            mTimePicker.setCurrentMinute(snappedRealMinute);
         }
     }
 

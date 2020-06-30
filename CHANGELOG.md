@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.5.0
+
+- feat: add minute interval on Android [#177](https://github.com/react-native-community/datetimepicker/pull/177)
+
 ### 2.4.3
 
 - Fix TS typings [#197](https://github.com/react-native-community/datetimepicker/pull/197)

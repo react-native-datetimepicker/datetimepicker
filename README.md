@@ -51,7 +51,7 @@ React Native date & time picker component for iOS and Android
     - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
     - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
-    - [`is24Hour` (`optional`, `Android only`)](#is24hour-optional-android-only)
+    - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
     - [`minuteInterval` (`optional`)](#minuteinterval-optional)
     - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)

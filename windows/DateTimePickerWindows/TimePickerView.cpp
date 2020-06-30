@@ -44,7 +44,12 @@ namespace winrt::DateTimePicker::implementation {
                     this->ClearValue(xaml::Controls::TimePicker::TimeProperty());
                 }
                 else {
-                    m_selectedTime = propertyValue.AsInt64();
+                    // Incoming value will be in milliseconds from Jan 1, 1970.
+                    // Need to extract hours and minutes elapsed since midnight today.
+                    auto minutesSinceEpoch = propertyValue.AsInt64() / (1000 * 60);
+                    auto minutesToday = minutesSinceEpoch % (24 * 60);
+                    m_selectedTime = minutesToday;
+
                     updateSelectedTime = true;
                 }
             } else if (propertyName == "is24Hour") {
@@ -71,7 +76,7 @@ namespace winrt::DateTimePicker::implementation {
         }
 
         if (updateSelectedTime) {
-            this->Time(winrt::TimeSpan{ m_selectedTime });
+            this->Time(winrt::TimeSpan{ m_selectedTime * 60 * 1000 * 10000 });
         }
 
         m_updating = false;

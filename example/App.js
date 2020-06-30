@@ -36,11 +36,11 @@ export const App = () => {
   const [color, setColor] = useState();
   const [display, setDisplay] = useState('default');
   const [interval, setMinInterval] = useState(undefined);
-  const [minuteInterval, setMinuteInterval] = useState(15);
+  const [minuteInterval, setMinuteInterval] = useState(1);
 
   // Windows-specific
-  const [maxDate, setMinDate] = useState(new Date('2021'));
-  const [minDate, setMaxDate] = useState(new Date('2018'));
+  const maxDate = useState(new Date('2021'));
+  const minDate = useState(new Date('2018'));
   const [is24Hours, set24Hours] = useState(false);
   const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Monday);
   const [dateFormat, setDateFormat] = useState('longdate');
@@ -339,6 +339,7 @@ export const App = () => {
                     style={{width: 200, height: 35}}
                     selectedValue={minuteInterval}
                     onValueChange={(value) => setMinuteInterval(value)}>
+                    <Picker.Item label="1 minute step" value={1} />
                     <Picker.Item label="12 minute step" value={12} />
                     <Picker.Item label="15 minute step" value={15} />
                     <Picker.Item label="17 minute step" value={17} />

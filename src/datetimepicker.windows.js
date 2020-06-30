@@ -65,7 +65,7 @@ export default class DateTimePickerWindows extends React.Component<WindowsNative
         <RNTimePickerWindows
           style={this.props.style}
           is24Hour={this.props.is24Hour}
-          selectedTime={this.props.value}
+          selectedTime={props.selectedDate}
           minuteInterval={this.props.minuteInterval}
           onChange={this._onChange}
         />

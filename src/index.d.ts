@@ -4,6 +4,7 @@ import {NativeMethods, ViewProps} from 'react-native';
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
 type Display = 'spinner' | 'default' | 'clock' | 'calendar';
+type MinuteInterval = 1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30;
 
 export type Event = SyntheticEvent<
   Readonly<{
@@ -72,7 +73,7 @@ export type IOSNativeProps = Readonly<
     /**
      * The interval at which minutes can be selected.
      */
-    minuteInterval?: 1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30;
+    minuteInterval?: MinuteInterval;
 
     /**
      * The date picker mode.
@@ -108,6 +109,12 @@ export type AndroidNativeProps = Readonly<
        * The display options.
        */
       display?: Display;
+
+      /**
+       * The interval at which minutes can be selected.
+       */
+      minuteInterval?: MinuteInterval;
+
       onChange?: (event: AndroidEvent, date?: Date) => void;
       neutralButtonLabel?: string;
     }

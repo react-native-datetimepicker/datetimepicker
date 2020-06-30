@@ -11,7 +11,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment';
@@ -34,6 +34,7 @@ export const App = () => {
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
   const [display, setDisplay] = useState('default');
+  const [interval, setMinInterval] = useState(undefined);
 
   // Windows-specific
   const [maxDate, setMinDate] = useState(new Date('2021'));
@@ -80,6 +81,18 @@ export const App = () => {
     setDisplay('spinner');
   };
 
+  const showTimepickerClockModeWithInterval = () => {
+    showMode('time');
+    setMinInterval(5);
+    setDisplay('clock');
+  };
+
+  const showTimepickerSpinnerWithInterval = () => {
+    showMode('time');
+    setMinInterval(5);
+    setDisplay('spinner');
+  };
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -91,7 +104,6 @@ export const App = () => {
       <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
         <StatusBar barStyle="dark-content" />
         <ScrollView>
-          <Header />
           {global.HermesInternal != null && (
             <View style={styles.engine}>
               <Text testID="hermesIndicator" style={styles.footer}>
@@ -150,10 +162,27 @@ export const App = () => {
                 title="Show time picker spinner!"
               />
             </View>
+            <View style={styles.button}>
+              <Button
+                testID="timePickerDefaultIntervalButton"
+                onPress={showTimepickerClockModeWithInterval}
+                title="Show time picker as clock (with 5 min interval)!"
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                testID="timePickerSpinnerIntervalButton"
+                onPress={showTimepickerSpinnerWithInterval}
+                title="Show time picker as spinner (with 5 min interval)!"
+              />
+            </View>
             <View style={styles.header}>
-              <ThemedText testID="dateTimeText" style={styles.dateTimeText}>
-                {mode === 'time' && moment.utc(date).format('HH:mm')}
-                {mode === 'date' && moment.utc(date).format('MM/DD/YYYY')}
+              <ThemedText testID="dateText" style={styles.dateTimeText}>
+                {moment.utc(date).format('MM/DD/YYYY')}
+              </ThemedText>
+              <Text> </Text>
+              <ThemedText testID="timeText" style={styles.dateTimeText}>
+                {moment.utc(date).format('HH:mm')}
               </ThemedText>
               <Button
                 testID="hidePicker"
@@ -165,6 +194,7 @@ export const App = () => {
               <DateTimePicker
                 testID="dateTimePicker"
                 timeZoneOffsetInMinutes={0}
+                minuteInterval={interval}
                 value={date}
                 mode={mode}
                 is24Hour

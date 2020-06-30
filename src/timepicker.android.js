@@ -22,6 +22,7 @@ export default class TimePickerAndroid {
    *   * `is24Hour` (boolean) - If `true`, the picker uses the 24-hour format. If `false`,
    *     the picker shows an AM/PM chooser. If undefined, the default for the current locale
    *     is used.
+   *   * `minuteInterval` (enum(1 | 5 | 10 | 15 | 20 | 30)`) - set the time picker minutes' interval
    *   * `mode` (`enum('clock', 'spinner', 'default')`) - set the time picker mode
    *     - 'clock': Show a time picker in clock mode.
    *     - 'spinner': Show a time picker in spinner mode.

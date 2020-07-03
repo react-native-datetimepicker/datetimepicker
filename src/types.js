@@ -10,6 +10,7 @@ import type {ElementRef} from 'react';
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import {ANDROID_MODE, DISPLAY, DAY_OF_WEEK} from './constants';
 
+type IOSAppearance = 'automatic' | 'compact' | 'inline' | 'wheels';
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
 type Display = $Keys<typeof DISPLAY>;
@@ -107,6 +108,11 @@ export type IOSNativeProps = $ReadOnly<{|
    * The date picker text color.
    */
   textColor?: ?ColorValue,
+
+  /**
+   *
+   */
+  appearance?: IOSAppearance,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|

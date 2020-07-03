@@ -70,13 +70,15 @@ export default class Picker extends React.Component<IOSNativeProps> {
       minuteInterval,
       timeZoneOffsetInMinutes,
       textColor,
+      appearance,
     } = this.props;
 
     invariant(value, 'A date or time should be specified as `value`.');
 
     const dates: DatePickerOptions = {value, maximumDate, minimumDate};
     toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
-
+    console.log(appearance);
+    console.log('hi');
     return (
       <RNDateTimePicker
         testID={testID}
@@ -93,6 +95,7 @@ export default class Picker extends React.Component<IOSNativeProps> {
         textColor={textColor}
         onStartShouldSetResponder={() => true}
         onResponderTerminationRequest={() => false}
+        appearance={appearance}
       />
     );
   }

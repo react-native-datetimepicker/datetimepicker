@@ -211,6 +211,7 @@ export const App = () => {
                 onChange={onChange}
                 style={styles.iOsPicker}
                 textColor={color || undefined}
+                appearance="wheels"
               />
             )}
           </View>

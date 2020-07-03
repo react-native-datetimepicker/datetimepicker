@@ -42,6 +42,7 @@ RCT_EXPORT_VIEW_PROPERTY(locale, NSLocale)
 RCT_EXPORT_VIEW_PROPERTY(minimumDate, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(maximumDate, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(minuteInterval, NSInteger)
+//RCT_EXPORT_VIEW_PROPERTY(appearance, NSString)
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 RCT_REMAP_VIEW_PROPERTY(mode, datePickerMode, UIDatePickerMode)
 RCT_REMAP_VIEW_PROPERTY(timeZoneOffsetInMinutes, timeZone, NSTimeZone)
@@ -59,8 +60,19 @@ RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNDateTimePicker)
         defaultColor = [UIColor blackColor];
     }
     [view setValue:defaultColor forKey:@"textColor"];
+//    [view setValue:appearance forKey:@"preferredDatePickerStyle"];
     [view setValue:@(YES) forKey:@"highlightsToday"];
   }
 }
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
+RCT_CUSTOM_VIEW_PROPERTY(appearance, NSString, RNDateTimePicker)
+{
+    if (json) {
+        if ([RCTConvert NSString:json] == @"wheels")
+            [view setValue:UIDatePickerStyleWheels forKey:@"preferredDatePickerStyle"];
+    }
+}
+#endif
 
 @end

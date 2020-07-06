@@ -306,7 +306,6 @@ export const App = () => {
                   dateFormat={dateFormat}
                   dayOfWeekFormat={dayOfWeekFormat}
                   placeholderText="select date"
-                  mode="date"
                 />
                 <View style={{width: 200, marginTop: 15}}>
                   <Text testID="dateTimeText" style={styles.dateTimeText}>

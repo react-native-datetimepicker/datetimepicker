@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.6.0
+
+- Add time picker for Windows [#206](https://github.com/react-native-community/datetimepicker/pull/206)
+
 ### 2.5.0
 
 - feat: add minute interval on Android [#177](https://github.com/react-native-community/datetimepicker/pull/177)

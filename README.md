@@ -5,7 +5,7 @@
 ![MIT License][license-badge]
 [![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
-React Native date & time picker component for iOS and Android
+React Native date & time picker component for iOS, Android and Windows.
 
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>

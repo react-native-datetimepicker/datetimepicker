@@ -16,12 +16,10 @@ public final class RNConstants {
   public static final String ARG_LOCALE = "locale";
   public static final String ARG_POSITIVE_BUTTON_LABEL = "positiveButtonLabel";
   public static final String ARG_NEGATIVE_BUTTON_LABEL = "negativeButtonLabel";
-
   /**
    * Minimum date supported by {@link DatePicker}, 01 Jan 1900
    */
   public static final long DEFAULT_MIN_DATE = -2208988800001l;
-
   /**
     * Minimum and default time picker minute interval
     */

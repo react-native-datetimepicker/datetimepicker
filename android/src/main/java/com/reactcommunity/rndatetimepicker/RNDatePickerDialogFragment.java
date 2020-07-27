@@ -26,6 +26,7 @@ import android.widget.DatePicker;
 import java.util.Calendar;
 import java.util.Locale;
 
+
 @SuppressLint("ValidFragment")
 public class RNDatePickerDialogFragment extends DialogFragment {
   private DatePickerDialog instance;
@@ -65,7 +66,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
       display = RNDatePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
     }
-
+    
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       switch (display) {
         case CALENDAR:
@@ -123,7 +124,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       // for calendar's month and days of the week (NOTE: must be set before Calendar instance)
       activityContext.getResources().getConfiguration().setLocale(getLocale(args));
     }
-        
+    
     final Calendar c = Calendar.getInstance();
 
     DatePickerDialog dialog = getDialog(args, activityContext, onDateSetListener);

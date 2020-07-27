@@ -54,6 +54,9 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
         minuteInterval,
         is24Hour,
         neutralButtonLabel,
+        locale,
+        positiveButtonLabel,
+        negativeButtonLabel,
       });
       break;
 

@@ -1,7 +1,5 @@
 # CHANGELOG
 
-- Fix iOS issue where quick value changes would reset the Picker
-
 ### 2.6.0
 
 - Add time picker for Windows [#206](https://github.com/react-native-community/datetimepicker/pull/206)

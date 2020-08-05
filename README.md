@@ -32,6 +32,7 @@ React Native date & time picker component for iOS, Android and Windows.
 
 - [React Native DateTimePicker](#react-native-datetimepicker)
   - [Table of Contents](#table-of-contents)
+  - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
     - [RN >= 0.60](#rn--060)
     - [RN < 0.60](#rn--060-1)
@@ -69,6 +70,10 @@ React Native date & time picker component for iOS, Android and Windows.
 ## Requirements
 
 - Xcode >= 10
+
+## Expo users notice
+
+This module is part of Expo - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo SDK may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available in Expo. Use the command `expo install @react-native-community/datetimepicker` (not `yarn` or `npm`) to install this module - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
 
 ## Getting started
 
@@ -130,7 +135,7 @@ export const App = () => {
     setDate(currentDate);
   };
 
-  const showMode = currentMode => {
+  const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
   };
@@ -375,7 +380,7 @@ On Android, open picker modals will update the selected date and/or time if the 
 
   ```js
   // Before
-  onChange = event => {};
+  onChange = (event) => {};
   <DatePickerIOS onChange={this.onChange} />;
   ```
 
@@ -389,7 +394,7 @@ On Android, open picker modals will update the selected date and/or time if the 
 
   ```js
   // Before
-  setDate = date => {};
+  setDate = (date) => {};
   <DatePickerIOS onDateChange={this.setDate} />;
   ```
 

@@ -110,7 +110,7 @@
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
         "type": "android.emulator",
         "device": {
-          "adbName": "TestingAVD"
+          "avdName": "TestingAVD"
         }
       },
       "android.emu.release": {

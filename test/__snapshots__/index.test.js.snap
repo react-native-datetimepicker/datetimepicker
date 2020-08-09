@@ -30,12 +30,9 @@ exports[`DatePicker renders a native Component 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "height": 216,
-      },
-      undefined,
-    ]
+    Object {
+      "height": 216,
+    }
   }
 />
 `;
@@ -49,12 +46,9 @@ exports[`DatePicker renders with mode countdown 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "height": 216,
-      },
-      undefined,
-    ]
+    Object {
+      "height": 216,
+    }
   }
 />
 `;
@@ -68,12 +62,9 @@ exports[`DatePicker renders with mode datetime 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "height": 216,
-      },
-      undefined,
-    ]
+    Object {
+      "height": 216,
+    }
   }
 />
 `;
@@ -87,12 +78,9 @@ exports[`DatePicker renders with mode time 1`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
-        "height": 216,
-      },
-      undefined,
-    ]
+    Object {
+      "height": 216,
+    }
   }
 />
 `;

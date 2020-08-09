@@ -15,7 +15,7 @@ import {IOS_DISPLAY, MODE_DATE} from './constants';
 import invariant from 'invariant';
 import React, {useEffect, useState} from 'react';
 import {getPickerHeightStyle} from './layoutUtilsIOS';
-import {Platform} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 import type {
   Event,
@@ -32,7 +32,7 @@ const getDisplaySafe = (display: IOSDisplay) => {
     return IOS_DISPLAY.spinner;
   }
   if (majorVersionIOS < 14) {
-    // TODO this should compare against 13.4, not 14 according to https://developer.apple.com/documentation/uikit/uidatepickerstyle/uidatepickerstylecompact?changes=latest_minor&language=objc
+    // NOTE this should compare against 13.4, not 14 according to https://developer.apple.com/documentation/uikit/uidatepickerstyle/uidatepickerstylecompact?changes=latest_minor&language=objc
     // but UIDatePickerStyleCompact does not seem to work prior to 14
     // only the spinner display (UIDatePickerStyleWheels) is thus available below 14
     return IOS_DISPLAY.spinner;
@@ -110,7 +110,7 @@ export default function Picker({
     <RNDateTimePicker
       testID={testID}
       ref={_picker}
-      style={[heightStyle, style]}
+      style={StyleSheet.compose(heightStyle, style)}
       date={dates.value}
       locale={locale !== null && locale !== '' ? locale : undefined}
       maximumDate={dates.maximumDate}

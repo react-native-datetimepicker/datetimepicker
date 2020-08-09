@@ -86,7 +86,6 @@ RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNDateTimePicker)
 }
 
 // TODO vonovak setting preferredDatePickerStyle invalidates minuteinterval
-// TODO handle older xcode
 RCT_CUSTOM_VIEW_PROPERTY(displayIOS, NSString, RNDateTimePicker)
 {
     if (@available(iOS 13.4, *)) {

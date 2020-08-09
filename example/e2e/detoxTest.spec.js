@@ -25,22 +25,22 @@ async function userOpensPicker({mode, display, interval}) {
 
 async function userTapsCancelButtonAndroid() {
   // selecting element by text does not work consistently :/
-  // const cancelButton = element(by.text('Cancel'));
-  const cancelButton = element(
-    by
-      .type('androidx.appcompat.widget.AppCompatButton')
-      .withAncestor(by.type('android.widget.ScrollView')),
-  ).atIndex(0);
+  const cancelButton = element(by.text('Cancel'));
+  // const cancelButton = element(
+  //   by
+  //     .type('androidx.appcompat.widget.AppCompatButton')
+  //     .withAncestor(by.type('android.widget.ScrollView')),
+  // ).atIndex(0);
   await cancelButton.tap();
 }
 async function userTapsOkButtonAndroid() {
   // selecting element by text does not work consistently :/
-  // const okButton = element(by.text('OK'));
-  const okButton = element(
-    by
-      .type('androidx.appcompat.widget.AppCompatButton')
-      .withAncestor(by.type('android.widget.ScrollView')),
-  ).atIndex(1);
+  const okButton = element(by.text('OK'));
+  // const okButton = element(
+  //   by
+  //     .type('androidx.appcompat.widget.AppCompatButton')
+  //     .withAncestor(by.type('android.widget.ScrollView')),
+  // ).atIndex(1);
   await okButton.tap();
 }
 

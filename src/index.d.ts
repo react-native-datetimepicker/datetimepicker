@@ -96,7 +96,7 @@ export type IOSNativeProps = Readonly<
     textColor?: string;
 
     /**
-     *
+     * Sets the preferredDatePickerStyle for picker
      */
     display?: IOSDisplay;
   }

@@ -203,7 +203,7 @@ List of possible values for Android
 - `"calendar"` (only for `date` mode)
 - `"clock"` (only for `time` mode)
 
-List of possible values for iOS.
+List of possible values for iOS (maps to [preferredDatePickerStyle](https://developer.apple.com/documentation/uikit/uidatepicker/3526124-preferreddatepickerstyle?changes=latest_minor&language=objc))
 
 - `"default"` - Automatically pick the best style available for the current platform & mode.
 - `"spinner"` - the usual appearance with a wheel from which you choose values

@@ -116,7 +116,7 @@ export type IOSNativeProps = $ReadOnly<{|
   textColor?: ?ColorValue,
 
   /**
-   *
+   * Sets the preferredDatePickerStyle for picker
    */
   display?: IOSDisplay,
 |}>;

@@ -54,13 +54,13 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",
-    "@react-native-community/eslint-config": "^1.0.0",
-    "@semantic-release/git": "^9.0.0",
+    "@react-native-community/eslint-config": "^2.0.0",
     "@react-native-community/segmented-control": "^2.1.0",
+    "@semantic-release/git": "^9.0.0",
     "@testing-library/react-native": "^7.0.1",
     "babel-jest": "^26.0.1",
     "detox": "^16.5.1",
-    "eslint": "^6.8.0",
+    "eslint": "^7.6.0",
     "eslint-plugin-prettier": "^3.1.2",
     "flow-bin": "^0.113.0",
     "flow-typed": "^3.1.0",
@@ -68,6 +68,7 @@
     "jest-circus": "^26.0.1",
     "metro-react-native-babel-preset": "^0.58.0",
     "moment": "^2.24.0",
+    "prettier": "^2.0.5",
     "react": "^16.11.0",
     "react-native": "^0.62.2",
     "react-native-windows": "^0.62.0-0",
@@ -107,9 +108,9 @@
       "android.emu.debug": {
         "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
-        "type": "android.attached",
+        "type": "android.emulator",
         "device": {
-          "adbName": "34HDU19716000753"
+          "adbName": "TestingAVD"
         }
       },
       "android.emu.release": {

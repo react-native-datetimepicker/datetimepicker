@@ -24,7 +24,7 @@ import {
   IOS_DISPLAY,
 } from '../src/constants';
 
-const ThemedText = props => {
+const ThemedText = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const textColorByMode = {color: isDarkMode ? Colors.white : Colors.black};
@@ -105,7 +105,7 @@ export const App = () => {
             <SegmentedControl
               values={MODE_VALUES}
               selectedIndex={MODE_VALUES.indexOf(mode)}
-              onChange={event => {
+              onChange={(event) => {
                 setMode(MODE_VALUES[event.nativeEvent.selectedSegmentIndex]);
               }}
             />
@@ -113,7 +113,7 @@ export const App = () => {
             <SegmentedControl
               values={DISPLAY_VALUES}
               selectedIndex={DISPLAY_VALUES.indexOf(display)}
-              onChange={event => {
+              onChange={(event) => {
                 setDisplay(
                   DISPLAY_VALUES[event.nativeEvent.selectedSegmentIndex],
                 );
@@ -123,7 +123,7 @@ export const App = () => {
             <SegmentedControl
               values={MINUTE_INTERVALS.map(String)}
               selectedIndex={MINUTE_INTERVALS.indexOf(interval)}
-              onChange={event => {
+              onChange={(event) => {
                 setMinInterval(
                   MINUTE_INTERVALS[event.nativeEvent.selectedSegmentIndex],
                 );
@@ -136,7 +136,7 @@ export const App = () => {
               <TextInput
                 value={color}
                 style={{height: 60, flex: 1}}
-                onChangeText={text => {
+                onChangeText={(text) => {
                   setColor(text.toLowerCase());
                 }}
                 placeholder="color"
@@ -208,7 +208,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={dateFormat}
-                    onValueChange={value => setDateFormat(value)}>
+                    onValueChange={(value) => setDateFormat(value)}>
                     <Picker.Item
                       label="day month year"
                       value="day month year"
@@ -226,7 +226,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={dayOfWeekFormat}
-                    onValueChange={value => setDayOfWeekFormat(value)}>
+                    onValueChange={(value) => setDayOfWeekFormat(value)}>
                     <Picker.Item
                       label="abbreviated(2)"
                       value="{dayofweek.abbreviated(2)}"
@@ -243,7 +243,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={firstDayOfWeek}
-                    onValueChange={value => setFirstDayOfWeek(value)}>
+                    onValueChange={(value) => setFirstDayOfWeek(value)}>
                     <Picker.Item label="Sunday" value={DAY_OF_WEEK.Sunday} />
                     <Picker.Item label="Monday" value={DAY_OF_WEEK.Monday} />
                     <Picker.Item label="Tuesday" value={DAY_OF_WEEK.Tuesday} />

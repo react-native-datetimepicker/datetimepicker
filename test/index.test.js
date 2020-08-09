@@ -6,7 +6,7 @@ import {render, fireEvent, waitFor} from '@testing-library/react-native';
 
 const DATE = 1376949600000;
 
-const renderPicker = async props => {
+const renderPicker = async (props) => {
   const utils = render(<DatePicker value={new Date(DATE)} {...props} />);
   await waitFor(() => utils.UNSAFE_getByType(DatePicker));
   return utils;
@@ -54,7 +54,7 @@ describe('DatePicker', () => {
 
   it.each([['time'], ['datetime'], ['countdown']])(
     'renders with mode %s',
-    async mode => {
+    async (mode) => {
       const {toJSON} = await renderPicker({
         mode,
       });

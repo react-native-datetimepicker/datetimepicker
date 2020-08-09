@@ -7,7 +7,8 @@ const inlineHeightForTimePicker = 49.5;
 const compactHeight = 34.5;
 
 // NOTE these styles are only supported from ios 14
-// the numbers may not be 100% accurate but were taken the same way as the measure() method works in the native module
+// the numbers may not be 100% accurate but were measured by calling `layoutIfNeeded`
+// while the proper mode and preferredDatePickerStyle were set in the native module
 const styles = StyleSheet.create({
   [`${IOS_DISPLAY.inline}_${IOS_MODE.date}`]: {
     height: inlineHeightForDatePicker + inlineHeightForTimePicker,

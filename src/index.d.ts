@@ -4,7 +4,7 @@ import {NativeMethods, ViewProps} from 'react-native';
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
 type Display = 'spinner' | 'default' | 'clock' | 'calendar';
-type IOSAppearance = 'automatic' | 'compact' | 'inline' | 'wheels';
+type IOSDisplay = 'default' | 'compact' | 'inline' | 'spinner';
 type MinuteInterval = 1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30;
 
 export type Event = SyntheticEvent<
@@ -98,7 +98,7 @@ export type IOSNativeProps = Readonly<
     /**
      *
      */
-    appearance?: IOSAppearance;
+    display?: IOSDisplay;
   }
 >;
 

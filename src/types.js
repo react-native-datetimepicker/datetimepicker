@@ -8,12 +8,18 @@ import type {NativeComponent} from 'ReactNative';
 import type {ViewProps} from 'ViewPropTypes';
 import type {ElementRef} from 'react';
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-import {ANDROID_MODE, DISPLAY, DAY_OF_WEEK} from './constants';
+import {
+  ANDROID_MODE,
+  ANDROID_DISPLAY,
+  DAY_OF_WEEK,
+  IOS_DISPLAY,
+  IOS_MODE,
+} from './constants';
 
-type IOSAppearance = 'automatic' | 'compact' | 'inline' | 'wheels';
-type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
+export type IOSDisplay = $Keys<typeof IOS_DISPLAY>;
+export type IOSMode = $Keys<typeof IOS_MODE>;
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
-type Display = $Keys<typeof DISPLAY>;
+type Display = $Keys<typeof ANDROID_DISPLAY>;
 type MinuteInterval = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
 
 export type Event = SyntheticEvent<
@@ -112,7 +118,7 @@ export type IOSNativeProps = $ReadOnly<{|
   /**
    *
    */
-  appearance?: IOSAppearance,
+  display?: IOSDisplay,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|

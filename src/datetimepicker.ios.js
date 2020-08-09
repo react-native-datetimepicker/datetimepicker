@@ -9,45 +9,83 @@
  * @format
  * @flow strict-local
  */
-import {StyleSheet} from 'react-native';
 import RNDateTimePicker from './picker';
 import {toMilliseconds} from './utils';
-import {MODE_DATE} from './constants';
+import {IOS_DISPLAY, MODE_DATE} from './constants';
 import invariant from 'invariant';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {getPickerHeightStyle} from './layoutUtilsIOS';
+import {Platform} from 'react-native';
 
 import type {
   Event,
   NativeRef,
   IOSNativeProps,
   DatePickerOptions,
+  IOSDisplay,
 } from './types';
 
-const styles = StyleSheet.create({
-  picker: {
-    height: 216,
-  },
-});
-
-export default class Picker extends React.Component<IOSNativeProps> {
-  static defaultProps = {
-    mode: MODE_DATE,
-  };
-
-  _picker: NativeRef = React.createRef();
-
-  componentDidUpdate() {
-    const {onChange, value} = this.props;
-
-    if (value && onChange && this._picker.current) {
-      this._picker.current.setNativeProps({
-        date: value.getTime(),
-      });
-    }
+const getDisplaySafe = (display: IOSDisplay) => {
+  const majorVersionIOS = parseInt(Platform.Version, 10);
+  if (display === IOS_DISPLAY.inline && majorVersionIOS < 14) {
+    // inline is available since 14.0
+    return IOS_DISPLAY.spinner;
+  }
+  if (majorVersionIOS < 14) {
+    // TODO this should compare against 13.4, not 14 according to https://developer.apple.com/documentation/uikit/uidatepickerstyle/uidatepickerstylecompact?changes=latest_minor&language=objc
+    // but UIDatePickerStyleCompact does not seem to work prior to 14
+    // only the spinner display (UIDatePickerStyleWheels) is thus available below 14
+    return IOS_DISPLAY.spinner;
   }
 
-  _onChange = (event: Event) => {
-    const {onChange} = this.props;
+  return display;
+};
+
+export default function Picker({
+  value,
+  locale,
+  maximumDate,
+  minimumDate,
+  style,
+  testID,
+  mode,
+  minuteInterval,
+  timeZoneOffsetInMinutes,
+  textColor,
+  onChange,
+  ...otherProps
+}: IOSNativeProps) {
+  const [heightStyle, setHeightStyle] = useState(undefined);
+  const _picker: NativeRef = React.useRef();
+  const display = getDisplaySafe(otherProps.display);
+
+  useEffect(
+    function ensureNativeIsInSyncWithJS() {
+      const {current} = _picker;
+
+      if (value && onChange && current) {
+        const timestamp = value.getTime();
+        current.setNativeProps({
+          date: timestamp,
+        });
+      }
+    },
+    [onChange, value],
+  );
+
+  useEffect(
+    function ensureCorrectHeight() {
+      const height = getPickerHeightStyle(display, mode);
+      if (height instanceof Promise) {
+        height.then(measuredStyle => setHeightStyle(measuredStyle));
+      } else {
+        setHeightStyle(height);
+      }
+    },
+    [display, mode],
+  );
+
+  const _onChange = (event: Event) => {
     const timestamp = event.nativeEvent.timestamp;
     let date;
 
@@ -58,45 +96,38 @@ export default class Picker extends React.Component<IOSNativeProps> {
     onChange && onChange(event, date);
   };
 
-  render() {
-    const {
-      value,
-      locale,
-      maximumDate,
-      minimumDate,
-      style,
-      testID,
-      mode,
-      minuteInterval,
-      timeZoneOffsetInMinutes,
-      textColor,
-      appearance,
-    } = this.props;
+  invariant(value, 'A date or time should be specified as `value`.');
 
-    invariant(value, 'A date or time should be specified as `value`.');
-
-    const dates: DatePickerOptions = {value, maximumDate, minimumDate};
-    toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
-    console.log(appearance);
-    console.log('hi');
-    return (
-      <RNDateTimePicker
-        testID={testID}
-        ref={this._picker}
-        style={[styles.picker, style]}
-        date={dates.value}
-        locale={locale !== null && locale !== '' ? locale : undefined}
-        maximumDate={dates.maximumDate}
-        minimumDate={dates.minimumDate}
-        mode={mode}
-        minuteInterval={minuteInterval}
-        timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
-        onChange={this._onChange}
-        textColor={textColor}
-        onStartShouldSetResponder={() => true}
-        onResponderTerminationRequest={() => false}
-        appearance={appearance}
-      />
-    );
+  if (!heightStyle) {
+    // wait for height to be available in state
+    return null;
   }
+
+  const dates: DatePickerOptions = {value, maximumDate, minimumDate};
+  toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
+
+  return (
+    <RNDateTimePicker
+      testID={testID}
+      ref={_picker}
+      style={[heightStyle, style]}
+      date={dates.value}
+      locale={locale !== null && locale !== '' ? locale : undefined}
+      maximumDate={dates.maximumDate}
+      minimumDate={dates.minimumDate}
+      mode={mode}
+      minuteInterval={minuteInterval}
+      timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+      onChange={_onChange}
+      textColor={textColor}
+      onStartShouldSetResponder={() => true}
+      onResponderTerminationRequest={() => false}
+      displayIOS={display}
+    />
+  );
 }
+
+Picker.defaultProps = {
+  mode: MODE_DATE,
+  display: IOS_DISPLAY.default,
+};

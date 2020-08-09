@@ -27,29 +27,28 @@ const styles = StyleSheet.create({
   },
 });
 
+function getHeightStyleFromKnowValues(display, mode) {
+  if (display === IOS_DISPLAY.compact) {
+    return styles.compact;
+  }
+  const key = `${display}_${mode}`;
+  const maybeKnownStyle = styles[key];
+  return maybeKnownStyle || styles.default;
+}
+
 export function getPickerHeightStyle(
   display: IOSDisplay,
   mode: IOSMode,
 ): {|height: number|} | Promise<{|height: number|}> {
-  if (display === IOS_DISPLAY.compact) {
-    return styles.compact;
-  }
   if (display === IOS_DISPLAY.default && mode !== IOS_MODE.countdown) {
     // when display is UIDatePickerStyleAutomatic, ios will "Automatically pick the best style available for the current platform & mode."
-    // because we don't know what that is going to be, we need to ask native to measure that first
+    // because we don't know what that is going to be, we need to ask native for it
     // TODO vonovak this value could be cached
-    return NativeModules.RNDateTimePickerManager.measure().then(
-      ({autoHeightForDatePicker, autoHeightForTimePicker}) => {
-        const height =
-          mode === IOS_MODE.time
-            ? autoHeightForTimePicker
-            : autoHeightForDatePicker;
-        return {height};
-      },
-    );
+    return NativeModules.RNDateTimePickerManager.getDefaultDisplayValue({
+      mode,
+    }).then(({determinedDisplayValue}) => {
+      return getHeightStyleFromKnowValues(determinedDisplayValue, mode);
+    });
   }
-
-  const key = `${display}_${mode}`;
-  const maybeKnownStyle = styles[key];
-  return maybeKnownStyle || styles.default;
+  return getHeightStyleFromKnowValues(display, mode);
 }

@@ -12,12 +12,6 @@
 #import "RNDateTimePicker.h"
 #import <React/UIView+React.h>
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < 130000
-@interface UIColor (Xcode10)
-+ (instancetype) labelColor;
-@end
-#endif
-
 @implementation RCTConvert(UIDatePicker)
 
 RCT_ENUM_CONVERTER(UIDatePickerMode, (@{
@@ -25,6 +19,15 @@ RCT_ENUM_CONVERTER(UIDatePickerMode, (@{
   @"date": @(UIDatePickerModeDate),
   @"datetime": @(UIDatePickerModeDateAndTime),
 }), UIDatePickerModeTime, integerValue)
+
+RCT_ENUM_CONVERTER(UIDatePickerStyle, (@{
+    @"default": @(UIDatePickerStyleAutomatic),
+    @"compact": @(UIDatePickerStyleCompact),
+    @"spinner": @(UIDatePickerStyleWheels),
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
+    @"inline": @(UIDatePickerStyleInline),
+#endif
+}), UIDatePickerStyleAutomatic, integerValue)
 
 @end
 
@@ -37,24 +40,37 @@ RCT_EXPORT_MODULE()
   return [RNDateTimePicker new];
 }
 
-RCT_EXPORT_METHOD(measure:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
++ (NSString*) datepickerStyleToString: (UIDatePickerStyle) style {
+    // RCTConvert does not handle this.?
+    switch (style) {
+        case UIDatePickerStyleCompact:
+            return @"compact";
+        case UIDatePickerStyleWheels:
+            return @"spinner";
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
+        case UIDatePickerStyleInline:
+            return @"inline";
+#endif
+        default:
+            [NSException raise:@"Unsupported style value" format:@"UIDatePickerStyle of %ld is unsupported", (long)style];
+            return @"";
+    }
+}
+
+RCT_EXPORT_METHOD(getDefaultDisplayValue:(NSDictionary *)options resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         UIDatePicker* view = [RNDateTimePicker new];
-
-        view.datePickerMode = UIDatePickerModeDate;
-        view.preferredDatePickerStyle = UIDatePickerStyleAutomatic;
-        [view layoutIfNeeded];
-        CGFloat autoHeightForDatePicker = CGRectGetHeight(view.frame);
         
-        view.datePickerMode = UIDatePickerModeTime;
         view.preferredDatePickerStyle = UIDatePickerStyleAutomatic;
-        [view layoutIfNeeded];
-        CGFloat autoHeightForTimePicker = CGRectGetHeight(view.frame);
+        UIDatePickerMode renderedMode = [RCTConvert UIDatePickerMode:options[@"mode"]];
+        view.datePickerMode = renderedMode;
+        // NOTE afaict we do not need to measure the actual dimensions here, but if we do, just look at the original PR
+        
+        UIDatePickerStyle determinedDisplayValue = view.datePickerStyle;
 
         resolve(@{
-                 @"autoHeightForDatePicker": @(autoHeightForDatePicker),
-                 @"autoHeightForTimePicker": @(autoHeightForTimePicker),
+                 @"determinedDisplayValue": [RNDateTimePickerManager datepickerStyleToString:determinedDisplayValue],
                 });
     });
 }
@@ -86,25 +102,12 @@ RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNDateTimePicker)
 }
 
 // TODO vonovak setting preferredDatePickerStyle invalidates minuteinterval
-RCT_CUSTOM_VIEW_PROPERTY(displayIOS, NSString, RNDateTimePicker)
+RCT_CUSTOM_VIEW_PROPERTY(displayIOS, UIDatePickerStyle, RNDateTimePicker)
 {
     if (@available(iOS 13.4, *)) {
         if (json) {
-            NSString* propValue = [RCTConvert NSString:json];
-            if ([propValue isEqualToString:@"compact"]) {
-                view.preferredDatePickerStyle = UIDatePickerStyleCompact;
-            } else if ([propValue isEqualToString:@"spinner"]) {
-                view.preferredDatePickerStyle = UIDatePickerStyleWheels;
-            } else if ([propValue isEqualToString:@"inline"]) {
-                #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
-                if (@available(iOS 14.0, *)) {
-                    view.preferredDatePickerStyle = UIDatePickerStyleInline;
-                }
-                #endif
-            } else {
-                // propValue is "default"
-                view.preferredDatePickerStyle = UIDatePickerStyleAutomatic;
-            }
+            UIDatePickerStyle propValue = [RCTConvert UIDatePickerStyle:json];
+            view.preferredDatePickerStyle = propValue;
         } else {
             view.preferredDatePickerStyle = UIDatePickerStyleAutomatic;
         }

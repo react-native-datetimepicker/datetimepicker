@@ -69,7 +69,7 @@ React Native date & time picker component for iOS, Android and Windows.
 
 ## Requirements
 
-- Xcode >= 10
+- Xcode >= 11
 
 ## Expo users notice
 

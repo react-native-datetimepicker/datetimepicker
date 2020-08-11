@@ -113,6 +113,14 @@
           "avdName": "TestingAVD"
         }
       },
+      "android.device.debug": {
+        "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
+        "type": "android.attached",
+        "device": {
+          "adbName": "34HDU19716000753"
+        }
+      },
       "android.emu.release": {
         "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release)",

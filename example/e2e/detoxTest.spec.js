@@ -1,72 +1,40 @@
-const {getTimeText, getDateText} = require('./utils/matchers');
-
-async function userChangesMinuteValue() {
-  const keyboardIconButton = element(
-    by.type('androidx.appcompat.widget.AppCompatImageButton'),
-  );
-
-  await keyboardIconButton.tap();
-
-  const minuteTextinput = element(
-    by.type('androidx.appcompat.widget.AppCompatEditText'),
-  ).atIndex(1);
-
-  await minuteTextinput.replaceText('30');
-}
-
-async function userOpensPicker({mode, display, interval}) {
-  await element(by.text(mode)).tap();
-  await element(by.text(display)).tap();
-  if (interval) {
-    await element(by.text(String(interval))).tap();
-  }
-  await element(by.id('showPickerButton')).tap();
-}
-
-async function userTapsCancelButtonAndroid() {
-  // selecting element by text does not work consistently :/
-  const cancelButton = element(by.text('Cancel'));
-  // const cancelButton = element(
-  //   by
-  //     .type('androidx.appcompat.widget.AppCompatButton')
-  //     .withAncestor(by.type('android.widget.ScrollView')),
-  // ).atIndex(0);
-  await cancelButton.tap();
-}
-async function userTapsOkButtonAndroid() {
-  // selecting element by text does not work consistently :/
-  const okButton = element(by.text('OK'));
-  // const okButton = element(
-  //   by
-  //     .type('androidx.appcompat.widget.AppCompatButton')
-  //     .withAncestor(by.type('android.widget.ScrollView')),
-  // ).atIndex(1);
-  await okButton.tap();
-}
+const {
+  getTimeText,
+  getDateText,
+  elementById,
+  elementByText,
+} = require('./utils/matchers');
+const {
+  userChangesMinuteValue,
+  userOpensPicker,
+  userTapsCancelButtonAndroid,
+  userTapsOkButtonAndroid,
+} = require('./utils/actions');
+const {isAndroid, isIOS} = require('./utils/utils');
 
 describe('Example', () => {
   beforeEach(async () => {
-    if (global.device.getPlatform() === 'ios') {
+    if (device.getPlatform() === 'ios') {
       await device.reloadReactNative();
     } else {
       await device.launchApp({newInstance: true});
     }
-    await waitFor(element(by.text('Example DateTime Picker')))
+    await waitFor(elementByText('Example DateTime Picker'))
       .toBeVisible()
       .withTimeout(5000);
   });
 
   it('should have title and hermes indicator on android', async () => {
-    await expect(element(by.text('Example DateTime Picker'))).toBeVisible();
-    if (device.getPlatform() === 'android') {
-      await expect(element(by.id('hermesIndicator'))).toExist();
+    await expect(elementByText('Example DateTime Picker')).toBeVisible();
+    if (isAndroid()) {
+      await expect(elementById('hermesIndicator')).toExist();
     }
   });
 
   it('should show date picker after tapping datePicker button', async () => {
     await userOpensPicker({mode: 'date', display: 'default'});
 
-    if (global.device.getPlatform() === 'ios') {
+    if (isIOS()) {
       await expect(
         element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
       ).toBeVisible();
@@ -78,7 +46,7 @@ describe('Example', () => {
   it('Nothing should happen if date does not change', async () => {
     await userOpensPicker({mode: 'date', display: 'default'});
 
-    if (global.device.getPlatform() === 'ios') {
+    if (isIOS()) {
       await expect(
         element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
       ).toBeVisible();
@@ -101,7 +69,7 @@ describe('Example', () => {
     await userOpensPicker({mode: 'date', display: 'default'});
     const dateText = getDateText();
 
-    if (global.device.getPlatform() === 'ios') {
+    if (isIOS()) {
       const testElement = element(
         by.type('UIPickerView').withAncestor(by.id('dateTimePicker')),
       );
@@ -127,7 +95,7 @@ describe('Example', () => {
   it('should show time picker after tapping timePicker button', async () => {
     await userOpensPicker({mode: 'time', display: 'default'});
 
-    if (global.device.getPlatform() === 'ios') {
+    if (isIOS()) {
       await expect(
         element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
       ).toBeVisible();
@@ -139,7 +107,7 @@ describe('Example', () => {
   it('Nothing should happen if time does not change', async () => {
     await userOpensPicker({mode: 'time', display: 'default'});
 
-    if (global.device.getPlatform() === 'ios') {
+    if (isIOS()) {
       await expect(
         element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
       ).toBeVisible();
@@ -155,7 +123,7 @@ describe('Example', () => {
     await userOpensPicker({mode: 'time', display: 'default'});
     const timeText = getTimeText();
 
-    if (global.device.getPlatform() === 'ios') {
+    if (isIOS()) {
       const testElement = element(
         by.type('UIPickerView').withAncestor(by.id('dateTimePicker')),
       );
@@ -170,6 +138,15 @@ describe('Example', () => {
 
       await expect(timeText).toHaveText('23:30');
     }
+  });
+
+  it(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to beginning of the unix time epoch', async () => {
+    await elementById('neutralButtonLabelTextInput').typeText('clear');
+    await userOpensPicker({mode: 'time', display: 'default'});
+    await elementByText('clear').tap();
+
+    const dateText = getDateText();
+    await expect(dateText).toHaveText('01/01/1970');
   });
 
   describe('given 5-minute interval', () => {

@@ -42,6 +42,7 @@ const ThemedTextInput = (props) => {
   const TextElement = React.createElement(TextInput, props);
   return React.cloneElement(TextElement, {
     style: [props.style, textColorByMode],
+    placeholderTextColor: isDarkMode ? Colors.white : Colors.black,
   });
 };
 

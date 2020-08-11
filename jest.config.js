@@ -4,5 +4,4 @@ module.exports = {
   transform: {
     '^.+\\.js$': require.resolve('react-native/jest/preprocessor.js'),
   },
-  setupFiles: ['./test/setup.js'],
 };

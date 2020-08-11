@@ -1,27 +1,35 @@
-import renderer from 'react-test-renderer';
-import DatePicker from '../src/index.js';
-import AndroidDateTimePicker from '../src/datetimepicker.android';
 import React from 'react';
+import DatePicker from '../src/index.js';
+import RNDateTimePickerIOS from '../src/picker.ios';
+import AndroidDateTimePicker from '../src/datetimepicker.android';
+import {render, fireEvent, waitFor} from '@testing-library/react-native';
+
+const DATE = 1376949600000;
+
+const renderPicker = async (props) => {
+  const utils = render(<DatePicker value={new Date(DATE)} {...props} />);
+  await waitFor(() => utils.UNSAFE_getByType(DatePicker));
+  return utils;
+};
 
 describe('DatePicker', () => {
-  const DATE = 1376949600000;
+  it('renders a native Component', async () => {
+    const {toJSON} = await renderPicker({});
 
-  it('renders a native Component', () => {
-    const tree = renderer
-      .create(<DatePicker value={new Date(DATE)} />)
-      .toJSON();
-
-    expect(tree).toMatchSnapshot();
+    expect(toJSON()).toMatchSnapshot();
   });
 
-  it('will pass timestamp to native Component', () => {
+  it('will pass timestamp to native Component', async () => {
     const date = new Date(156e10);
-    const tree = renderer.create(<DatePicker value={date} />).toJSON();
+    const {toJSON} = await renderPicker({
+      value: date,
+    });
 
-    expect(tree).toHaveProperty('props.date', date.getTime());
+    expect(toJSON()).toHaveProperty('props.date', date.getTime());
   });
 
-  it('calls onChange callback', () => {
+  it('calls onChange callback', async () => {
+    expect.assertions(4);
     const date = new Date(156e10);
 
     function onChange(event, dateArg) {
@@ -30,41 +38,29 @@ describe('DatePicker', () => {
       expect(event.nativeEvent).toHaveProperty('timestamp', date.getTime());
       expect(dateArg).toEqual(date);
     }
+    const {UNSAFE_getByType} = await renderPicker({onChange});
 
-    renderer
-      .create(<DatePicker value={date} onChange={onChange} />)
-      .getInstance()
-      ._onChange({
-        type: 'event',
-        nativeEvent: {
-          timestamp: date.getTime(),
-        },
-      });
+    fireEvent(UNSAFE_getByType(RNDateTimePickerIOS), 'onChange', {
+      type: 'event',
+      nativeEvent: {
+        timestamp: date.getTime(),
+      },
+    });
   });
 
   it('has default mode `date`', () => {
     expect(DatePicker.defaultProps.mode).toEqual('date');
   });
 
-  it('renders with mode `time`', () => {
-    const tree = renderer
-      .create(<DatePicker value={new Date(DATE)} mode="time" />)
-      .toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('renders with mode `datetime` (iOS only)', () => {
-    const tree = renderer
-      .create(<DatePicker value={new Date(DATE)} mode="datetime" />)
-      .toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('has reference to picker', () => {
-    expect(new DatePicker()._picker).toBeDefined();
-  });
+  it.each([['time'], ['datetime'], ['countdown']])(
+    'renders with mode %s',
+    async (mode) => {
+      const {toJSON} = await renderPicker({
+        mode,
+      });
+      expect(toJSON()).toMatchSnapshot();
+    },
+  );
 
   it.each([
     [{}, 'A date or time should be specified as `value`.'],
@@ -83,16 +79,16 @@ describe('DatePicker', () => {
     },
   );
 
-  it('applies styling to DatePicker', () => {
+  it('applies styling to DatePicker', async () => {
     const style = {backgroundColor: 'red'};
-    const tree = renderer
-      .create(<DatePicker style={style} value={new Date(DATE)} />)
-      .toJSON();
-
-    expect(tree).toHaveProperty('props.style', [
+    const {toJSON} = await renderPicker({
+      style,
+    });
+    const snapshot = toJSON();
+    expect(snapshot).toHaveProperty('props.style', [
       {height: 216},
       {backgroundColor: 'red'},
     ]);
-    expect(tree).toMatchSnapshot();
+    expect(snapshot).toMatchSnapshot();
   });
 });

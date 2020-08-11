@@ -11,11 +11,18 @@ import {
   useColorScheme,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import SegmentedControl from '@react-native-community/segmented-control';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment';
-import {DAY_OF_WEEK} from '../src/constants';
+import {
+  ANDROID_MODE,
+  DAY_OF_WEEK,
+  IOS_MODE,
+  ANDROID_DISPLAY,
+  IOS_DISPLAY,
+} from '../src/constants';
 
 const ThemedText = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -28,19 +35,28 @@ const ThemedText = (props) => {
   });
 };
 
+const MODE_VALUES = Platform.select({
+  ios: Object.values(IOS_MODE),
+  android: Object.values(ANDROID_MODE),
+});
+const DISPLAY_VALUES = Platform.select({
+  ios: Object.values(IOS_DISPLAY),
+  android: Object.values(ANDROID_DISPLAY),
+});
+const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
+
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
-  const [time, setTime] = useState(undefined);
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState(MODE_VALUES[0]);
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
-  const [display, setDisplay] = useState('default');
-  const [interval, setMinInterval] = useState(undefined);
-  const [minuteInterval, setMinuteInterval] = useState(1);
+  const [display, setDisplay] = useState(DISPLAY_VALUES[0]);
+  const [interval, setMinInterval] = useState(1);
 
   // Windows-specific
-  const maxDate = useState(new Date('2021'));
-  const minDate = useState(new Date('2018'));
+  const [time, setTime] = useState(undefined);
+  const [maxDate, setMinDate] = useState(new Date('2021'));
+  const [minDate, setMaxDate] = useState(new Date('2018'));
   const [is24Hours, set24Hours] = useState(false);
   const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Monday);
   const [dateFormat, setDateFormat] = useState('longdate');
@@ -63,43 +79,6 @@ export const App = () => {
     if (Platform.OS === 'windows') {
       setTime(newTime);
     }
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-    setDisplay('default');
-  };
-
-  const showDatepickerSpinner = () => {
-    showMode('date');
-    setDisplay('spinner');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-    setDisplay('default');
-  };
-
-  const showTimepickerSpinner = () => {
-    showMode('time');
-    setDisplay('spinner');
-  };
-
-  const showTimepickerClockModeWithInterval = () => {
-    showMode('time');
-    setMinInterval(5);
-    setDisplay('clock');
-  };
-
-  const showTimepickerSpinnerWithInterval = () => {
-    showMode('time');
-    setMinInterval(5);
-    setDisplay('spinner');
   };
 
   const isDarkMode = useColorScheme() === 'dark';
@@ -130,6 +109,34 @@ export const App = () => {
                 Example DateTime Picker
               </ThemedText>
             </View>
+            <ThemedText>mode prop:</ThemedText>
+            <SegmentedControl
+              values={MODE_VALUES}
+              selectedIndex={MODE_VALUES.indexOf(mode)}
+              onChange={(event) => {
+                setMode(MODE_VALUES[event.nativeEvent.selectedSegmentIndex]);
+              }}
+            />
+            <ThemedText>display prop:</ThemedText>
+            <SegmentedControl
+              values={DISPLAY_VALUES}
+              selectedIndex={DISPLAY_VALUES.indexOf(display)}
+              onChange={(event) => {
+                setDisplay(
+                  DISPLAY_VALUES[event.nativeEvent.selectedSegmentIndex],
+                );
+              }}
+            />
+            <ThemedText>minute interval prop:</ThemedText>
+            <SegmentedControl
+              values={MINUTE_INTERVALS.map(String)}
+              selectedIndex={MINUTE_INTERVALS.indexOf(interval)}
+              onChange={(event) => {
+                setMinInterval(
+                  MINUTE_INTERVALS[event.nativeEvent.selectedSegmentIndex],
+                );
+              }}
+            />
             <View style={styles.header}>
               <ThemedText style={{margin: 10, flex: 1}}>
                 text color (iOS only)
@@ -145,46 +152,14 @@ export const App = () => {
             </View>
             <View style={styles.button}>
               <Button
-                testID="datePickerButton"
-                onPress={showDatepicker}
-                title="Show date picker default!"
+                testID="showPickerButton"
+                onPress={() => {
+                  setShow(true);
+                }}
+                title="Show picker!"
               />
             </View>
-            <View style={styles.button}>
-              <Button
-                testID="datePickerButtonSpinner"
-                onPress={showDatepickerSpinner}
-                title="Show date picker spinner!"
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                testID="timePickerButton"
-                onPress={showTimepicker}
-                title="Show time picker!"
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                testID="timePickerButtonSpinner"
-                onPress={showTimepickerSpinner}
-                title="Show time picker spinner!"
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                testID="timePickerDefaultIntervalButton"
-                onPress={showTimepickerClockModeWithInterval}
-                title="Show time picker as clock (with 5 min interval)!"
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                testID="timePickerSpinnerIntervalButton"
-                onPress={showTimepickerSpinnerWithInterval}
-                title="Show time picker as spinner (with 5 min interval)!"
-              />
-            </View>
+
             <View style={styles.header}>
               <ThemedText testID="dateText" style={styles.dateTimeText}>
                 {moment.utc(date).format('MM/DD/YYYY')}
@@ -336,8 +311,8 @@ export const App = () => {
                   <Text style={{padding: 10}}>Minute interval: </Text>
                   <Picker
                     style={{width: 200, height: 35}}
-                    selectedValue={minuteInterval}
-                    onValueChange={(value) => setMinuteInterval(value)}>
+                    selectedValue={interval}
+                    onValueChange={(value) => setMinInterval(value)}>
                     <Picker.Item label="1 minute step" value={1} />
                     <Picker.Item label="12 minute step" value={12} />
                     <Picker.Item label="15 minute step" value={15} />
@@ -350,7 +325,7 @@ export const App = () => {
                   style={{width: 300, opacity: 1, height: 30, marginTop: 50}}
                   onChange={onTimeChange}
                   is24Hour={is24Hours}
-                  minuteInterval={minuteInterval}
+                  minuteInterval={interval}
                 />
                 <View style={styles.header}>
                   <Text style={styles.dateTimeText}>

@@ -10,7 +10,7 @@ import {
   TIME_SET_ACTION,
   DISMISS_ACTION,
   NEUTRAL_BUTTON_ACTION,
-  ANDROID_DISPLAY,
+  DISPLAY,
   ANDROID_MODE,
 } from './constants';
 import pickers from './picker';
@@ -22,8 +22,8 @@ function validateProps(props: AndroidNativeProps) {
   const {mode, value, display} = props;
   invariant(value, 'A date or time should be specified as `value`.');
   invariant(
-    !(display === ANDROID_DISPLAY.calendar && mode === ANDROID_MODE.time) &&
-      !(display === ANDROID_DISPLAY.clock && mode === ANDROID_MODE.date),
+    !(display === DISPLAY.calendar && mode === ANDROID_MODE.time) &&
+      !(display === DISPLAY.clock && mode === ANDROID_MODE.date),
     `display: ${display} and mode: ${mode} cannot be used together.`,
   );
 }

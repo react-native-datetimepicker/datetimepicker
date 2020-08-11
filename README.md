@@ -40,7 +40,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [Basic usage with state](#basic-usage-with-state)
   - [Props](#props)
     - [`mode` (`optional`)](#mode-optional)
-    - [`display` (`optional`)](#display-optional)
+    - [`display` (`optional`, `Android only`)](#display-optional-android-only)
     - [`onChange` (`optional`)](#onchange-optional)
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
@@ -69,7 +69,7 @@ React Native date & time picker component for iOS, Android and Windows.
 
 ## Requirements
 
-- Xcode >= 11
+- Xcode >= 10
 
 ## Expo users notice
 
@@ -192,23 +192,16 @@ List of possible values:
 <RNDateTimePicker mode="time" />
 ```
 
-#### `display` (`optional`)
+#### `display` (`optional`, `Android only`)
 
-Defines the visual display of the picker. The default value is `"default"`.
+Defines the visual display of the picker for Android and will be ignored for iOS.
 
-List of possible values for Android
+List of possible values:
 
-- `"default"` - Show a default date picker (spinner/calendar/clock) based on `mode` and Android version.
+- `"default"` - Show a default date picker (spinner/calendar/clock) based on `mode` and android version.
 - `"spinner"`
 - `"calendar"` (only for `date` mode)
 - `"clock"` (only for `time` mode)
-
-List of possible values for iOS (maps to [preferredDatePickerStyle](https://developer.apple.com/documentation/uikit/uidatepicker/3526124-preferreddatepickerstyle?changes=latest_minor&language=objc))
-
-- `"default"` - Automatically pick the best style available for the current platform & mode.
-- `"spinner"` - the usual appearance with a wheel from which you choose values
-- `"compact"` - Affects only iOS 14 and later. Will fall back to "spinner" if not supported.
-- `"inline"` - Affects only iOS 14 and later. Will fall back to "spinner" if not supported.
 
 ```js
 <RNDateTimePicker display="spinner" />

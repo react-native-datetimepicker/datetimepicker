@@ -297,7 +297,7 @@ Indicates which day is shown as the first day of the week.
 
 #### `textColor` (`optional`, `iOS only`)
 
-Allows changing of the textColor of the date picker.
+Allows changing of the textColor of the date picker. Has effect only when `display` is `"spinner"`.
 
 ```js
 <RNDateTimePicker textColor="red" />

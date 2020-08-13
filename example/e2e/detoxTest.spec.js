@@ -14,7 +14,7 @@ const {isAndroid, isIOS} = require('./utils/utils');
 
 describe('Example', () => {
   beforeEach(async () => {
-    if (device.getPlatform() === 'ios') {
+    if (isIOS()) {
       await device.reloadReactNative();
     } else {
       await device.launchApp({newInstance: true});

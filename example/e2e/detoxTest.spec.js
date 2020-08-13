@@ -43,7 +43,7 @@ describe('Example', () => {
     }
   });
 
-  it('Nothing should happen if date does not change', async () => {
+  it('nothing should happen if date does not change', async () => {
     await userOpensPicker({mode: 'date', display: 'default'});
 
     if (isIOS()) {
@@ -104,7 +104,7 @@ describe('Example', () => {
     }
   });
 
-  it('Nothing should happen if time does not change', async () => {
+  it('nothing should happen if time does not change', async () => {
     await userOpensPicker({mode: 'time', display: 'default'});
 
     if (isIOS()) {
@@ -140,7 +140,7 @@ describe('Example', () => {
     }
   });
 
-  it(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to beginning of the unix time epoch', async () => {
+  it(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to the beginning of the unix time epoch', async () => {
     await elementById('neutralButtonLabelTextInput').typeText('clear');
     await userOpensPicker({mode: 'time', display: 'default'});
     await elementByText('clear').tap();
@@ -172,7 +172,7 @@ describe('Example', () => {
       }
     });
 
-    it(':android: given picker is shown as a spinner, swiping it down changes selected time', async () => {
+    it(':android: when the picker is shown as "spinner", swiping it down changes selected time', async () => {
       try {
         const timeText = getTimeText();
 

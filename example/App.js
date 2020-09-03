@@ -49,10 +49,12 @@ const ThemedTextInput = (props) => {
 const MODE_VALUES = Platform.select({
   ios: Object.values(IOS_MODE),
   android: Object.values(ANDROID_MODE),
+  windows: [],
 });
 const DISPLAY_VALUES = Platform.select({
   ios: Object.values(IOS_DISPLAY),
   android: Object.values(ANDROID_DISPLAY),
+  windows: [],
 });
 const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
 

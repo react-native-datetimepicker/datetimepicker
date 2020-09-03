@@ -69,21 +69,19 @@
     "metro-react-native-babel-preset": "^0.58.0",
     "moment": "^2.24.0",
     "prettier": "^2.0.5",
-    "react": "^16.11.0",
+    "react": "16.11.0",
     "react-native": "^0.62.2",
     "react-native-windows": "^0.62.0-0",
-    "react-test-renderer": "^16.11.0",
+    "react-test-renderer": "16.11.0",
     "semantic-release": "^17.1.1"
   },
   "peerDependencies": {
     "react": ">=16.8.3",
-    "react-native": ">=0.59"
+    "react-native": ">=0.59",
+    "react-native-windows": ">=0.62"
   },
   "dependencies": {
     "invariant": "^2.2.4"
-  },
-  "optionalDependencies": {
-    "react-native-windows": "^0.62.0-0"
   },
   "detox": {
     "test-runner": "jest",

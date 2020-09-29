@@ -1,9 +1,10 @@
 ### Looking for support
 
-Hello! This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
-The module is still published on npm under the old namespace (as documented) but will be published under a new npm namespace at some point soon, with a major version bump.
+This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
+The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace soon, with a major version bump.
 
-Let us use this opportunity to ask you for help: this module has a number of bugs, missing features and open issues that require someone's attention. We're a very small team of active maintainers (2) and we're looking for new collaborators that would help us with these. If you're interested, please don't hesitate to contribute - we'll help you.
+Let us use this opportunity to ask you for help: this module has a number of bugs, missing features and open issues that require someone's attention. We're a very small team (2) of very busy maintainers and we're looking for new collaborators that would help us with these. If you're interested, please don't hesitate to contribute - we'll help you if needed.
+
 Alternatively, if you don't have time to help, consider supporting us through our [opencollective](https://opencollective.com/react-native-datetimepicker) that we'll use to fund the work (new features, issue handling, better docs and more) on this project.
 
 Thank you!

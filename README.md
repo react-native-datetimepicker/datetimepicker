@@ -1,3 +1,14 @@
+### Looking for support
+
+This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
+The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace soon, with a major version bump.
+
+Let us use this opportunity to ask you for help: this module has a number of bugs, missing features and open issues that require someone's attention. We're a very small team (2) of very busy maintainers and we're looking for new collaborators that would help us with these. If you're interested, please don't hesitate to contribute - we'll help you if needed.
+
+Alternatively, consider supporting us through our [opencollective](https://opencollective.com/react-native-datetimepicker) that we'll use to fund the work (new features, issue handling, better docs and more) on this project.
+
+Thank you!
+
 # React Native DateTimePicker
 
 [![CircleCI Status][circle-ci-badge]][circle-ci-status]
@@ -694,7 +705,7 @@ Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` 
 
 [circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-community/workflows/datetimepicker/tree/master
-[support-badge]: https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey.svg?style=flat-square
+[support-badge]: https://img.shields.io/badge/platforms-android%20%7C%20ios%20%7C%20windows-lightgrey.svg?style=flat-square
 [license-badge]: https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square
 [lean-core-badge]: https://img.shields.io/badge/Lean%20Core-Extracted-brightgreen.svg?style=flat-square
 [lean-core-issue]: https://github.com/facebook/react-native/issues/23313

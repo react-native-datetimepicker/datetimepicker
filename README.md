@@ -1,6 +1,6 @@
 ### Looking for collaborators
 
-🚧🚧 See the [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313) 🚧🚧
+🚧🚧 See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313) 🚧🚧
 
 This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
 The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace soon, with a major version bump.

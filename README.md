@@ -1,4 +1,4 @@
-### Looking for support
+### Looking for collaborators
 
 🚧🚧 See the [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313) 🚧🚧
 

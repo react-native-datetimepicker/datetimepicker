@@ -4,6 +4,14 @@
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
   "types": "src/index.d.ts",
+  "files": [
+    "ios",
+    "android",
+    "src",
+    "flow-typed",
+    "windows",
+    "RNDateTimePicker.podspec"
+  ],
   "publishConfig": {
     "access": "public"
   },

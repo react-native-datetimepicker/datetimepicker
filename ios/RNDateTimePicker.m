@@ -31,6 +31,14 @@
 
 RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+  [super willMoveToSuperview:newSuperview];
+  NSDate *dateCopy = [[NSDate alloc] initWithTimeInterval:0 sinceDate:self.date];
+  [self setDate:[NSDate dateWithTimeIntervalSince1970:0]];
+  [self setDate:dateCopy animated:YES];
+}
+
 - (void)didChange
 {
   if (_onChange) {

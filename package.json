@@ -85,7 +85,7 @@
   },
   "peerDependencies": {
     "react": ">=16.8.3",
-    "react-native": ">=0.59",
+    "react-native": ">=0.60",
     "react-native-windows": ">=0.62"
   },
   "dependencies": {

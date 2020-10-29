@@ -100,6 +100,9 @@ Autolinking is not yet implemented on Windows, so [Manual installation](#windows
 
 If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
 
+### BREAKING CHANGES to can use v3
+you need XCode 11.6 to build this version, and you need this version to properly support iOS 14 (for that you need XCode 12)
+
 #### RN < 0.60
 
 For RN < 0.60, you need to link the dependency using `react-native link`:

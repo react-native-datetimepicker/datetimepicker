@@ -31,6 +31,9 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   private DatePickerDialog instance;
 
   @Nullable
+  private RNDate date;
+
+  @Nullable
   private OnDateSetListener mOnDateSetListener;
   @Nullable
   private OnDismissListener mOnDismissListener;
@@ -40,12 +43,24 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     Bundle args = getArguments();
+    date = new RNDate(args);
     instance = createDialog(args, getActivity(), mOnDateSetListener);
     return instance;
   }
 
   public void update(Bundle args) {
-    final RNDate date = new RNDate(args);
+    final RNDate newDate = new RNDate(args);
+
+    // React may rerender components whenever it feels like, even when props haven't changed.
+    // Calling update on the native android picker will always change its currently selected value.
+    // This happens even if the user has changed the selection in the picker.
+    // By only updating the selected value of the picker if it actually differs from last render,
+    // we avoid the user suddenly having their selection change seemingly randomly.
+    if (date != null && date.equals(newDate)) {
+      return;
+    }
+
+    date = newDate;
     instance.updateDate(date.year(), date.month(), date.day());
   }
 

@@ -40,6 +40,10 @@ export default class TimePickerAndroid {
     return NativeModules.RNTimePickerAndroid.open(options);
   }
 
+  static async close(): Promise<null> {
+    return NativeModules.RNDatePickerAndroid.close();
+  }
+
   /**
    * A time has been selected.
    */

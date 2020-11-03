@@ -84,6 +84,26 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void close(Promise promise) {
+    FragmentActivity activity = (FragmentActivity) getCurrentActivity();
+    if (activity == null) {
+      promise.reject(
+              RNConstants.ERROR_NO_ACTIVITY,
+              "Tried to close a TimePicker dialog while not attached to an Activity");
+      return;
+    }
+
+    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+    final RNTimePickerDialogFragment oldFragment = (RNTimePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+
+    if (oldFragment != null) {
+      oldFragment.dismiss();
+    }
+
+    promise.resolve(null);
+  }
+
+  @ReactMethod
   public void open(@Nullable final ReadableMap options, Promise promise) {
 
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();

@@ -42,6 +42,10 @@ export default class DatePickerAndroid {
     return NativeModules.RNDatePickerAndroid.open(options);
   }
 
+  static async close(): Promise<null> {
+    return NativeModules.RNDatePickerAndroid.close();
+  }
+
   /**
    * A date has been selected.
    */

@@ -6,7 +6,7 @@ actions:
   repro-required:
     # Post a comment
     comment: >
-      :wave: @{issue-author}, sorry you're having an issue. As the issue template explains, we require that you provide a runnable example that reproduces your issue (please read the [issue template](https://raw.githubusercontent.com/react-native-community/.github/master/.github/ISSUE_TEMPLATE/bug_report.md)).
+      :wave: @{issue-author}, sorry you're having an issue. As the issue template explains, we require that you provide a runnable example that reproduces your issue (please read the [issue template](https://raw.githubusercontent.com/react-native-datetimepicker/.github/master/.github/ISSUE_TEMPLATE/bug_report.md)).
       This means you need to provide a code snippet that we can copy-paste into an empty project and see the error ourselves, or provide a git repository with the issue.
 
       The reason is that maintainers do not have time to try reproduce bugs themselves. Please try to minimize the superfluous code and focus only on reproducing the bug.

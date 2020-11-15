@@ -199,7 +199,6 @@ export const App = () => {
               />
             </View>
 
-
             <View style={styles.button}>
               <Button
                 testID="showPickerButton"

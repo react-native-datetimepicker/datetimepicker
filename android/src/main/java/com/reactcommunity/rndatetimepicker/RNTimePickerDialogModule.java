@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
+
 /**
  * {@link NativeModule} that allows JS to show a native time picker dialog and get called back when
  * the user selects a time.
@@ -84,23 +86,9 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void close(Promise promise) {
+  public void dismiss(Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
-    if (activity == null) {
-      promise.reject(
-              RNConstants.ERROR_NO_ACTIVITY,
-              "Tried to close a TimePicker dialog while not attached to an Activity");
-      return;
-    }
-
-    FragmentManager fragmentManager = activity.getSupportFragmentManager();
-    final RNTimePickerDialogFragment oldFragment = (RNTimePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
-
-    if (oldFragment != null) {
-      oldFragment.dismiss();
-    }
-
-    promise.resolve(null);
+    dismissDialog(activity, FRAGMENT_TAG, promise);
   }
 
   @ReactMethod

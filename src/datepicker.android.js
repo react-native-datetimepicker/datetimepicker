@@ -42,8 +42,8 @@ export default class DatePickerAndroid {
     return NativeModules.RNDatePickerAndroid.open(options);
   }
 
-  static async close(): Promise<null> {
-    return NativeModules.RNDatePickerAndroid.close();
+  static async dismiss(): Promise<boolean> {
+    return NativeModules.RNDatePickerAndroid.dismiss();
   }
 
   /**

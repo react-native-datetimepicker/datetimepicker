@@ -70,7 +70,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
   useEffect(() => {
     // This effect runs on unmount, and will ensure the picker is closed.
     // This allows for controlling the opening state of the picker through declarative logic in jsx.
-    return () => (pickers[mode] ?? pickers[MODE_DATE]).close();
+    return () => (pickers[mode] ?? pickers[MODE_DATE]).dismiss();
   }, [mode]);
 
   picker.then(

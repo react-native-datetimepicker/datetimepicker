@@ -3,6 +3,8 @@ const {
   getDateText,
   elementById,
   elementByText,
+  getDateTimePickerIOS,
+  getDatePickerAndroid,
 } = require('./utils/matchers');
 const {
   userChangesMinuteValue,
@@ -10,7 +12,7 @@ const {
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
 } = require('./utils/actions');
-const {isAndroid, isIOS} = require('./utils/utils');
+const {isAndroid, isIOS, wait} = require('./utils/utils');
 
 describe('Example', () => {
   beforeEach(async () => {
@@ -35,11 +37,9 @@ describe('Example', () => {
     await userOpensPicker({mode: 'date', display: 'default'});
 
     if (isIOS()) {
-      await expect(
-        element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
-      ).toBeVisible();
+      await expect(getDateTimePickerIOS()).toBeVisible();
     } else {
-      await expect(element(by.type('android.widget.DatePicker'))).toBeVisible();
+      await expect(getDatePickerAndroid()).toBeVisible();
     }
   });
 
@@ -47,9 +47,7 @@ describe('Example', () => {
     await userOpensPicker({mode: 'date', display: 'default'});
 
     if (isIOS()) {
-      await expect(
-        element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
-      ).toBeVisible();
+      await expect(getDateTimePickerIOS()).toBeVisible();
     } else {
       const testElement = element(
         by
@@ -70,9 +68,7 @@ describe('Example', () => {
     const dateText = getDateText();
 
     if (isIOS()) {
-      const testElement = element(
-        by.type('UIPickerView').withAncestor(by.id('dateTimePicker')),
-      );
+      const testElement = element(getDateTimePickerIOS());
       await testElement.setColumnToValue(0, 'November');
       await testElement.setColumnToValue(1, '3');
       await testElement.setColumnToValue(2, '1800');
@@ -96,9 +92,7 @@ describe('Example', () => {
     await userOpensPicker({mode: 'time', display: 'default'});
 
     if (isIOS()) {
-      await expect(
-        element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
-      ).toBeVisible();
+      await expect(getDateTimePickerIOS()).toBeVisible();
     } else {
       await expect(element(by.type('android.widget.TimePicker'))).toBeVisible();
     }
@@ -108,9 +102,7 @@ describe('Example', () => {
     await userOpensPicker({mode: 'time', display: 'default'});
 
     if (isIOS()) {
-      await expect(
-        element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker'))),
-      ).toBeVisible();
+      await expect(getDateTimePickerIOS()).toBeVisible();
     } else {
       await userChangesMinuteValue();
       await userTapsCancelButtonAndroid();
@@ -124,9 +116,7 @@ describe('Example', () => {
     const timeText = getTimeText();
 
     if (isIOS()) {
-      const testElement = element(
-        by.type('UIPickerView').withAncestor(by.id('dateTimePicker')),
-      );
+      const testElement = getDateTimePickerIOS();
       await testElement.setColumnToValue(0, '2');
       await testElement.setColumnToValue(1, '44');
       await testElement.setColumnToValue(2, 'PM');
@@ -147,6 +137,14 @@ describe('Example', () => {
 
     const dateText = getDateText();
     await expect(dateText).toHaveText('01/01/1970');
+  });
+
+  it(':android: when component unmounts, dialog is dismissed', async () => {
+    await elementById('showAndDismissPickerButton').tap();
+    await expect(getDatePickerAndroid()).toBeVisible();
+    await wait(3500);
+
+    await expect(getDatePickerAndroid()).toNotExist();
   });
 
   describe('given 5-minute interval', () => {
@@ -195,9 +193,7 @@ describe('Example', () => {
     it(':ios: picker should offer only options divisible by 5 (0, 5, 10,...)', async () => {
       await userOpensPicker({mode: 'time', display: 'spinner', interval: 5});
 
-      const testElement = element(
-        by.type('UIPickerView').withAncestor(by.id('dateTimePicker')),
-      );
+      const testElement = getDateTimePickerIOS();
       await testElement.setColumnToValue(0, '2');
       await testElement.setColumnToValue(2, 'PM');
       const timeText = getTimeText();

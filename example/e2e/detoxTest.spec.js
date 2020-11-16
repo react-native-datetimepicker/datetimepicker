@@ -68,7 +68,7 @@ describe('Example', () => {
     const dateText = getDateText();
 
     if (isIOS()) {
-      const testElement = element(getDateTimePickerIOS());
+      const testElement = getDateTimePickerIOS();
       await testElement.setColumnToValue(0, 'November');
       await testElement.setColumnToValue(1, '3');
       await testElement.setColumnToValue(2, '1800');

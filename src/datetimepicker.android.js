@@ -15,6 +15,7 @@ import {
 } from './constants';
 import pickers from './picker';
 import invariant from 'invariant';
+import {useEffect} from 'react';
 
 import type {AndroidEvent, AndroidNativeProps} from './types';
 
@@ -65,6 +66,12 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
       });
       break;
   }
+
+  useEffect(() => {
+    // This effect runs on unmount, and will ensure the picker is closed.
+    // This allows for controlling the opening state of the picker through declarative logic in jsx.
+    return () => (pickers[mode] ?? pickers[MODE_DATE]).dismiss();
+  }, [mode]);
 
   picker.then(
     function resolve({action, day, month, year, minute, hour}) {

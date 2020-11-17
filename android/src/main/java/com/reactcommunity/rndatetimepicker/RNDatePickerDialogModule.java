@@ -22,6 +22,8 @@ import com.facebook.react.bridge.*;
 import com.facebook.react.common.annotations.VisibleForTesting;
 import com.facebook.react.module.annotations.ReactModule;
 
+import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
+
 /**
  * {@link NativeModule} that allows JS to show a native date picker dialog and get called back when
  * the user selects a date.
@@ -84,6 +86,11 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     }
   }
 
+  @ReactMethod
+  public void dismiss(Promise promise) {
+    FragmentActivity activity = (FragmentActivity) getCurrentActivity();
+    dismissDialog(activity, FRAGMENT_TAG, promise);
+  }
   /**
    * Show a date picker dialog.
    *

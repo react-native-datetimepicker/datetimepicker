@@ -180,6 +180,25 @@ export const App = () => {
                 testID="neutralButtonLabelTextInput"
               />
             </View>
+
+            <View style={styles.header}>
+              <ThemedText style={{margin: 10, flex: 1}}>
+                [android] show and dismiss picker after 3 secs
+              </ThemedText>
+            </View>
+            <View style={styles.button}>
+              <Button
+                testID="showAndDismissPickerButton"
+                onPress={() => {
+                  setShow(true);
+                  setTimeout(() => {
+                    setShow(false);
+                  }, 3000);
+                }}
+                title="Show and dismiss picker!"
+              />
+            </View>
+
             <View style={styles.button}>
               <Button
                 testID="showPickerButton"

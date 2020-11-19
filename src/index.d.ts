@@ -151,38 +151,39 @@ export type NativeRef = {
 
 export type WindowsDatePickerChangeEvent = {
   nativeEvent: {
-    newDate: number,
-  }
-}
+    newDate: number;
+  };
+};
 
 export type WindowsNativeProps = Readonly<
   BaseProps &
     DateOptions &
     TimeOptions & {
-
       /**
        * The display options.
        */
       display?: Display;
 
       onChange?: (event: WindowsDatePickerChangeEvent, date?: Date) => void;
-      placeholderText?:string,
+      placeholderText?: string;
       dateFormat?:
-    | 'day month year'
-    | 'dayofweek day month'
-    | 'longdate'
-    | 'shortdate',
-  dayOfWeekFormat?:
-    | '{dayofweek.abbreviated(2)}'
-    | '{dayofweek.abbreviated(3)}'
-    | '{dayofweek.full}',
-    firstDayOfWeek?: DAY_OF_WEEK,
-    timeZoneOffsetInSeconds?: number,
-    is24Hour?: boolean,
-    minuteInterval?: number,
+        | 'day month year'
+        | 'dayofweek day month'
+        | 'longdate'
+        | 'shortdate';
+      dayOfWeekFormat?:
+        | '{dayofweek.abbreviated(2)}'
+        | '{dayofweek.abbreviated(3)}'
+        | '{dayofweek.full}';
+      firstDayOfWeek?: DAY_OF_WEEK;
+      timeZoneOffsetInSeconds?: number;
+      is24Hour?: boolean;
+      minuteInterval?: number;
     }
 >;
 
-declare const RNDateTimePicker: FC<IOSNativeProps | AndroidNativeProps | WindowsNativeProps>;
+declare const RNDateTimePicker: FC<
+  IOSNativeProps | AndroidNativeProps | WindowsNativeProps
+>;
 
 export default RNDateTimePicker;

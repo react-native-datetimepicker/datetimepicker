@@ -121,8 +121,8 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {
       promise.reject(
-              RNConstants.ERROR_NO_ACTIVITY,
-              "Tried to open a DatePicker dialog while not attached to an Activity");
+        RNConstants.ERROR_NO_ACTIVITY,
+        "Tried to open a DatePicker dialog while not attached to an Activity");
       return;
     }
 

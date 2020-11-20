@@ -117,16 +117,16 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
    *                dismiss, year, month and date are undefined.
    */
   @ReactMethod
-  public void open(@Nullable final ReadableMap options, Promise promise) {
+  public void open(@Nullable final ReadableMap options, final Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {
       promise.reject(
-          RNConstants.ERROR_NO_ACTIVITY,
-          "Tried to open a DatePicker dialog while not attached to an Activity");
+              RNConstants.ERROR_NO_ACTIVITY,
+              "Tried to open a DatePicker dialog while not attached to an Activity");
       return;
     }
 
-    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+    final FragmentManager fragmentManager = activity.getSupportFragmentManager();
     final RNDatePickerDialogFragment oldFragment = (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
 
     if (oldFragment != null && options != null) {
@@ -140,17 +140,22 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
       return;
     }
 
-    RNDatePickerDialogFragment fragment = new RNDatePickerDialogFragment();
+    UiThreadUtil.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        RNDatePickerDialogFragment fragment = new RNDatePickerDialogFragment();
 
-    if (options != null) {
-      fragment.setArguments(createFragmentArguments(options));
-    }
+        if (options != null) {
+          fragment.setArguments(createFragmentArguments(options));
+        }
 
-    final DatePickerDialogListener listener = new DatePickerDialogListener(promise);
-    fragment.setOnDismissListener(listener);
-    fragment.setOnDateSetListener(listener);
-    fragment.setOnNeutralButtonActionListener(listener);
-    fragment.show(fragmentManager, FRAGMENT_TAG);
+        final DatePickerDialogListener listener = new DatePickerDialogListener(promise);
+        fragment.setOnDismissListener(listener);
+        fragment.setOnDateSetListener(listener);
+        fragment.setOnNeutralButtonActionListener(listener);
+        fragment.show(fragmentManager, FRAGMENT_TAG);
+      }
+    });
   }
 
   private Bundle createFragmentArguments(ReadableMap options) {

@@ -34,7 +34,9 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 - (void)willMoveToSuperview:(UIView *)newSuperview
 {
   [super willMoveToSuperview:newSuperview];
-  [self resetDate];
+  if ([self datePickerMode] == UIDatePickerModeCountDownTimer) {
+    [self resetDate];
+  }
 }
 
 - (void)didChange

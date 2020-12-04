@@ -193,7 +193,7 @@ export const App = () => {
                   setShow(true);
                   setTimeout(() => {
                     setShow(false);
-                  }, 3000);
+                  }, 5000);
                 }}
                 title="Show and dismiss picker!"
               />

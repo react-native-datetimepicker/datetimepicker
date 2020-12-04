@@ -127,22 +127,18 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     }
 
     final FragmentManager fragmentManager = activity.getSupportFragmentManager();
-    final RNDatePickerDialogFragment oldFragment = (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
-
-    if (oldFragment != null && options != null) {
-      UiThreadUtil.runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          oldFragment.update(createFragmentArguments(options));
-        }
-      });
-
-      return;
-    }
 
     UiThreadUtil.runOnUiThread(new Runnable() {
       @Override
       public void run() {
+        RNDatePickerDialogFragment oldFragment =
+                (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+
+        if (oldFragment != null && options != null) {
+          oldFragment.update(createFragmentArguments(options));
+          return;
+        }
+
         RNDatePickerDialogFragment fragment = new RNDatePickerDialogFragment();
 
         if (options != null) {

@@ -104,22 +104,18 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
     // We want to support both android.app.Activity and the pre-Honeycomb FragmentActivity
     // (for apps that use it for legacy reasons). This unfortunately leads to some code duplication.
     final FragmentManager fragmentManager = activity.getSupportFragmentManager();
-    final RNTimePickerDialogFragment oldFragment = (RNTimePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
-
-    if (oldFragment != null && options != null) {
-      UiThreadUtil.runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          oldFragment.update(createFragmentArguments(options));
-        }
-      });
-
-      return;
-    }
 
     UiThreadUtil.runOnUiThread(new Runnable() {
       @Override
       public void run() {
+        RNTimePickerDialogFragment oldFragment =
+                (RNTimePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+
+        if (oldFragment != null && options != null) {
+          oldFragment.update(createFragmentArguments(options));
+          return;
+        }
+
         RNTimePickerDialogFragment fragment = new RNTimePickerDialogFragment();
 
         if (options != null) {

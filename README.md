@@ -342,6 +342,8 @@ Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 
 (On Windows, this can be any number between 0-59.)
 
+on iOS, this in only supported when `display="spinner"`
+
 ```js
 <RNDateTimePicker minuteInterval={10} />
 ```

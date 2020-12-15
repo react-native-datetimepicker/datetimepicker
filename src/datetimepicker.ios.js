@@ -57,7 +57,7 @@ export default function Picker({
   ...otherProps
 }: IOSNativeProps) {
   const [heightStyle, setHeightStyle] = useState(undefined);
-  const _picker: NativeRef = forwardRef || React.useRef();
+  const _picker: NativeRef = React.useRef();
   const display = getDisplaySafe(otherProps.display);
 
   useEffect(
@@ -110,7 +110,7 @@ export default function Picker({
   return (
     <RNDateTimePicker
       testID={testID}
-      ref={_picker}
+      ref={forwardRef || _picker}
       style={StyleSheet.compose(heightStyle, style)}
       date={dates.value}
       locale={locale !== null && locale !== '' ? locale : undefined}

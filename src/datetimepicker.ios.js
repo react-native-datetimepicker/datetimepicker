@@ -53,10 +53,11 @@ export default function Picker({
   timeZoneOffsetInMinutes,
   textColor,
   onChange,
+  forwardRef,
   ...otherProps
 }: IOSNativeProps) {
   const [heightStyle, setHeightStyle] = useState(undefined);
-  const _picker: NativeRef = React.useRef();
+  const _picker: NativeRef = forwardRef || React.useRef();
   const display = getDisplaySafe(otherProps.display);
 
   useEffect(

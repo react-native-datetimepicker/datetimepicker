@@ -29,85 +29,112 @@ function validateProps(props: AndroidNativeProps) {
   );
 }
 
-export default function RNDateTimePicker(props: AndroidNativeProps) {
-  validateProps(props);
-  const {
-    mode,
-    value,
-    display,
-    onChange,
-    is24Hour,
-    minimumDate,
-    maximumDate,
-    neutralButtonLabel,
-    minuteInterval,
-  } = props;
-  let picker;
-
+function getPicker({
+  mode,
+  value,
+  display,
+  is24Hour,
+  minimumDate,
+  maximumDate,
+  neutralButtonLabel,
+  minuteInterval,
+}) {
   switch (mode) {
     case MODE_TIME:
-      picker = pickers[MODE_TIME].open({
+      return pickers[MODE_TIME].open({
         value,
         display,
         minuteInterval,
         is24Hour,
         neutralButtonLabel,
       });
-      break;
-
     case MODE_DATE:
     default:
-      picker = pickers[MODE_DATE].open({
+      return pickers[MODE_DATE].open({
         value,
         display,
         minimumDate,
         maximumDate,
         neutralButtonLabel,
       });
-      break;
   }
+}
+
+export default function RNDateTimePicker(props: AndroidNativeProps) {
+  validateProps(props);
+  const {
+    mode,
+    value,
+    onChange,
+    display,
+    is24Hour,
+    minimumDate,
+    maximumDate,
+    neutralButtonLabel,
+    minuteInterval,
+  } = props;
+  const valueTimestamp = value.getTime();
 
   useEffect(() => {
-    // This effect runs on unmount, and will ensure the picker is closed.
+    // This effect runs on unmount / with mode change, and will ensure the picker is closed.
     // This allows for controlling the opening state of the picker through declarative logic in jsx.
     return () => (pickers[mode] ?? pickers[MODE_DATE]).dismiss();
   }, [mode]);
 
-  picker.then(
-    function resolve({action, day, month, year, minute, hour}) {
-      const date = new Date(value);
-      const event: AndroidEvent = {
-        type: 'set',
-        nativeEvent: {},
-      };
+  useEffect(
+    function showOrUpdatePicker() {
+      const picker = getPicker({
+        mode,
+        value: valueTimestamp,
+        display,
+        is24Hour,
+        minimumDate,
+        maximumDate,
+        neutralButtonLabel,
+        minuteInterval,
+      });
 
-      switch (action) {
-        case DATE_SET_ACTION:
-          event.nativeEvent.timestamp = date.setFullYear(year, month, day);
-          onChange(event, date);
-          break;
+      picker.then(
+        function resolve({action, day, month, year, minute, hour}) {
+          const date = new Date(valueTimestamp);
+          const event: AndroidEvent = {
+            type: 'set',
+            nativeEvent: {},
+          };
 
-        case TIME_SET_ACTION:
-          event.nativeEvent.timestamp = date.setHours(hour, minute);
-          onChange(event, date);
-          break;
+          switch (action) {
+            case DATE_SET_ACTION:
+              event.nativeEvent.timestamp = date.setFullYear(year, month, day);
+              onChange(event, date);
+              break;
 
-        case NEUTRAL_BUTTON_ACTION:
-          event.type = 'neutralButtonPressed';
-          onChange(event);
-          break;
+            case TIME_SET_ACTION:
+              event.nativeEvent.timestamp = date.setHours(hour, minute);
+              onChange(event, date);
+              break;
 
-        case DISMISS_ACTION:
-        default:
-          event.type = 'dismissed';
-          onChange(event);
-          break;
-      }
+            case NEUTRAL_BUTTON_ACTION:
+              event.type = 'neutralButtonPressed';
+              onChange(event);
+              break;
+
+            case DISMISS_ACTION:
+            default:
+              event.type = 'dismissed';
+              onChange(event);
+              break;
+          }
+        },
+        function reject(error) {
+          // ignore or throw `activity == null` error
+          throw error;
+        },
+      );
     },
-    function reject(error) {
-      // ignore or throw `activity == null` error
-      throw error;
-    },
+    // the android dialog, when presented, will actually ignore updates to all props other than `value`
+    // we need to change the behavior as described in https://github.com/react-native-datetimepicker/datetimepicker/pull/327#issuecomment-723160992
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [onChange, valueTimestamp, mode],
   );
 
   return null;

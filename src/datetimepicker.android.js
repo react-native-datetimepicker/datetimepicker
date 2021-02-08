@@ -115,7 +115,9 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
             case TIME_SET_ACTION:
               date.setHours(hour, minute);
               if (timeZoneOffsetInMinutes !== undefined) {
-                const offset = (date.getTimezoneOffset()*60000 + timeZoneOffsetInMinutes*60000);
+                const offset =
+                  date.getTimezoneOffset() * 60000 +
+                  timeZoneOffsetInMinutes * 60000;
                 date = new Date(date.getTime() - offset);
               }
               event.nativeEvent.timestamp = date;

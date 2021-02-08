@@ -11,7 +11,7 @@ public class RNDate {
     now = Calendar.getInstance();
     if (args != null && args.containsKey("timeZoneOffsetInMinutes")) {
       now.setTimeZone(TimeZone.getTimeZone("GMT"));
-      Integer timeZoneOffsetInMinutes = args.getInt(RNConstants.ARG_VALUE);
+      Integer timeZoneOffsetInMinutes = args.getInt("timeZoneOffsetInMinutes");
       now.add(Calendar.MILLISECOND, timeZoneOffsetInMinutes * 60000);
     }
 

@@ -38,6 +38,7 @@ function getPicker({
   maximumDate,
   neutralButtonLabel,
   minuteInterval,
+  timeZoneOffsetInMinutes,
 }) {
   switch (mode) {
     case MODE_TIME:
@@ -47,6 +48,7 @@ function getPicker({
         minuteInterval,
         is24Hour,
         neutralButtonLabel,
+        timeZoneOffsetInMinutes,
       });
     case MODE_DATE:
     default:
@@ -72,6 +74,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
     maximumDate,
     neutralButtonLabel,
     minuteInterval,
+    timeZoneOffsetInMinutes,
   } = props;
   const valueTimestamp = value.getTime();
 
@@ -92,11 +95,12 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
         maximumDate,
         neutralButtonLabel,
         minuteInterval,
+        timeZoneOffsetInMinutes,
       });
 
       picker.then(
         function resolve({action, day, month, year, minute, hour}) {
-          const date = new Date(valueTimestamp);
+          let date = new Date(valueTimestamp);
           const event: AndroidEvent = {
             type: 'set',
             nativeEvent: {},
@@ -109,7 +113,12 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
               break;
 
             case TIME_SET_ACTION:
-              event.nativeEvent.timestamp = date.setHours(hour, minute);
+              date.setHours(hour, minute);
+              if (timeZoneOffsetInMinutes !== undefined) {
+                const offset = (date.getTimezoneOffset()*60000 + timeZoneOffsetInMinutes*60000);
+                date = new Date(date.getTime() - offset);
+              }
+              event.nativeEvent.timestamp = date;
               onChange(event, date);
               break;
 

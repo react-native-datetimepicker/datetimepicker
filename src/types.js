@@ -136,6 +136,7 @@ export type AndroidNativeProps = $ReadOnly<{|
    */
   display: Display,
 
+  timeZoneOffsetInMinutes?: ?number,
   /**
    * The interval at which minutes can be selected.
    */

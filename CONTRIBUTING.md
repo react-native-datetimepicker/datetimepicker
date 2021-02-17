@@ -7,7 +7,7 @@ Development can be done using the example app. Follow readme instructions on run
 ```sh
 git clone https://github.com/react-native-community/datetimepicker.git
 cd datetimepicker
-npm install
+yarn
 ```
 
 ### Tests
@@ -15,8 +15,8 @@ npm install
 #### Jest
 
 ```sh
-npm install
-npm run test
+yarn
+yarn test
 ```
 
 #### Detox
@@ -33,16 +33,16 @@ For cleaning all the detox builds just run `npm run detox:clean`.
 
   ```sh
   # Debug requires to run Metro Bundler
-  npm run start
-  npm run detox:ios:build:debug
-  npm run detox:ios:test:debug
+  yarn start
+  yarn detox:ios:build:debug
+  yarn detox:ios:test:debug
   ```
 
 - release:
 
   ```sh
-  npm run detox:ios:build:release
-  npm run detox:ios:test:release
+  yarn detox:ios:build:release
+  yarn detox:ios:test:release
   ```
 
 ##### Android
@@ -53,14 +53,14 @@ An existing Android emulator is required to match the name defined in `detox.con
 
   ```sh
   # Debug requires to run Metro Bundler
-  npm run start
-  npm run detox:android:build:debug
-  npm run detox:android:test:debug
+  yarn start
+  yarn detox:android:build:debug
+  yarn detox:android:test:debug
   ```
 
 - release:
 
   ```sh
-  npm run detox:android:build:release
-  npm run detox:android:test:release
+  yarn detox:android:build:release
+  yarn detox:android:test:release
   ```

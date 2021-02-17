@@ -697,9 +697,12 @@ Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` 
 
 ## Running the example app
 
-1. Install required pods in `example/ios` by running `npx pod-install`
-1. Run `npm start` to start Metro Bundler
-1. Run `npm run start:ios` or `npm run start:android` or `npm run start:windows` (or `yarn run start:windows`)
+1. run `yarn` in repo root
+2. run `cd example`
+3. Install required pods by running `npx pod-install`
+4. Run `yarn start` to start Metro Bundler
+5. Run `yarn run start:ios` or `yarn run start:android` or `yarn run start:windows`
+6. to do any development on the library, open the example project (in the example folder!) in xCode or Android Studio
 
 [circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-datetimepicker/datetimepicker.svg?style=svg

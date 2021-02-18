@@ -12,6 +12,7 @@ import {
   NEUTRAL_BUTTON_ACTION,
   ANDROID_DISPLAY,
   ANDROID_MODE,
+  MIN_MS,
 } from './constants';
 import pickers from './picker';
 import invariant from 'invariant';
@@ -116,8 +117,8 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
               date.setHours(hour, minute);
               if (timeZoneOffsetInMinutes !== undefined) {
                 const offset =
-                  date.getTimezoneOffset() * 60000 +
-                  timeZoneOffsetInMinutes * 60000;
+                  date.getTimezoneOffset() * MIN_MS +
+                  timeZoneOffsetInMinutes * MIN_MS;
                 date = new Date(date.getTime() - offset);
               }
               event.nativeEvent.timestamp = date;

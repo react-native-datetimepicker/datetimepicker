@@ -148,8 +148,8 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
     if (options.hasKey(RNConstants.ARG_INTERVAL) && !options.isNull(RNConstants.ARG_INTERVAL)) {
       args.putInt(RNConstants.ARG_INTERVAL, options.getInt(RNConstants.ARG_INTERVAL));
     }
-    if (options.hasKey("timeZoneOffsetInMinutes") && !options.isNull("timeZoneOffsetInMinutes")) {
-      args.putInt("timeZoneOffsetInMinutes", options.getInt("timeZoneOffsetInMinutes"));
+    if (options.hasKey(RNConstants.ARG_TZOFFSET_MIN) && !options.isNull(RNConstants.ARG_TZOFFSET_MIN)) {
+      args.putInt(RNConstants.ARG_TZOFFSET_MIN, options.getInt(RNConstants.ARG_TZOFFSET_MIN));
     }
     return args;
   }

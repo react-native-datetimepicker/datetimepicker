@@ -10,6 +10,7 @@ export const DISPLAY_DEFAULT = 'default';
 export const DISPLAY_SPINNER = 'spinner';
 export const DISPLAY_CLOCK = 'clock';
 export const DISPLAY_CALENDAR = 'calendar';
+export const MIN_MS = 60000;
 
 // TODO vonovak potentially replace the above string consts with this object
 export const ANDROID_DISPLAY = Object.freeze({

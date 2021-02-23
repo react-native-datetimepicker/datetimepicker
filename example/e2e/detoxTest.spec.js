@@ -141,9 +141,9 @@ describe('Example', () => {
 
   it(':android: when component unmounts, dialog is dismissed', async () => {
     await elementById('showAndDismissPickerButton').tap();
-    await wait(2000);
-    await expect(getDatePickerAndroid()).toBeVisible();
-    await wait(5000);
+    await wait(3000);
+    await expect(getDatePickerAndroid()).toExist();
+    await wait(6000);
 
     await expect(getDatePickerAndroid()).toNotExist();
   });

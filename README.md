@@ -640,8 +640,8 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 1. Add the following lines to `android/settings.gradle`:
 
    ```gradle
-   include ':@react-native-community_datetimepicker'
-   project(':@react-native-community_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-datetimepicker/datetimepicker/android')
+   include ':@react-native-datetimepicker_datetimepicker'
+   project(':@react-native-datetimepicker_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-datetimepicker/datetimepicker/android')
    ```
 
 2. Add the compile line to the dependencies in `android/app/build.gradle`:
@@ -649,7 +649,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
    ```gradle
    dependencies {
        ...
-       implementation project(':@react-native-community_datetimepicker')
+       implementation project(':@react-native-datetimepicker_datetimepicker')
    }
    ```
 
@@ -677,7 +677,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 1. Open the solution in Visual Studio 2019
 2. Right-click solution icon in Solution Explorer > Add > Existing Project
-   Select 'D:\pathToYourApp\node_modules\@react-native-community\datetimepicker\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj'
+   Select 'D:\pathToYourApp\node_modules\@react-native-datetimepicker\datetimepicker\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj'
 
 ##### **windows/myapp.sln**
 
@@ -703,7 +703,7 @@ Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` 
 5. Run `yarn run start:ios` or `yarn run start:android` or `yarn run start:windows`
 6. To do any development on the library, open the example project (in the example folder!) in xCode or Android Studio. The example project depends on the library code, which you can edit and observe any changes in the example project.
 
-[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
+[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-datetimepicker/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-datetimepicker/datetimepicker.svg?style=svg
 [support-badge]: https://img.shields.io/badge/platforms-android%20%7C%20ios%20%7C%20windows-lightgrey.svg?style=flat-square
 [license-badge]: https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square

@@ -2,8 +2,7 @@
 
 See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313)
 
-This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
-The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace soon, with a major version bump.
+Note: the module was recently moved out of the `@react-native-community` npm scope. Please install from `@react-native-datetimepicker/datetimepicker`.
 
 # React Native DateTimePicker
 
@@ -80,18 +79,18 @@ React Native date & time picker component for iOS, Android and Windows.
 
 ## Expo users notice
 
-This module is part of Expo - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo SDK may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available in Expo. Use the command `expo install @react-native-community/datetimepicker` (not `yarn` or `npm`) to install this module - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
+This module is part of Expo - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo SDK may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available in Expo. Follow installation instructions in Expo docs - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
 
 ## Getting started
 
 ```bash
-npm install @react-native-community/datetimepicker --save
+npm install @react-native-datetimepicker/datetimepicker --save
 ```
 
 or
 
 ```bash
-yarn add @react-native-community/datetimepicker
+yarn add @react-native-datetimepicker/datetimepicker
 ```
 
 Autolinking is not yet implemented on Windows, so [Manual installation](#windows) is needed.
@@ -105,7 +104,7 @@ If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your proje
 For RN < 0.60, you need to link the dependency using `react-native link`:
 
 ```bash
-react-native link @react-native-community/datetimepicker
+react-native link @react-native-datetimepicker/datetimepicker
 ```
 
 Then run `npx pod-install` and rebuild your project.
@@ -115,13 +114,13 @@ If this does not work, see [Manual installation](#manual-installation).
 ## General Usage
 
 ```js
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-datetimepicker/datetimepicker';
 ```
 
 or
 
 ```js
-const DateTimePicker = require('@react-native-community/datetimepicker');
+const DateTimePicker = require('@react-native-datetimepicker/datetimepicker');
 ```
 
 ### Basic usage with state
@@ -129,7 +128,7 @@ const DateTimePicker = require('@react-native-community/datetimepicker');
 ```js
 import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-datetimepicker/datetimepicker';
 
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
@@ -609,7 +608,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
      platform :ios, '8.0'
 
      # Point to the installed version
-     pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
+     pod 'RNDateTimePicker', :path => '../node_modules/@react-native-datetimepicker/datetimepicker/RNDateTimePicker.podspec'
 
      # React/React-Native specific pods
      pod 'React', :path => '../node_modules/react-native', :subspecs => [
@@ -642,7 +641,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
    ```gradle
    include ':@react-native-community_datetimepicker'
-   project(':@react-native-community_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
+   project(':@react-native-community_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-datetimepicker/datetimepicker/android')
    ```
 
 2. Add the compile line to the dependencies in `android/app/build.gradle`:

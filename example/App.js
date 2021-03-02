@@ -10,7 +10,7 @@ import {
   TextInput,
   useColorScheme,
 } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-datetimepicker/datetimepicker';
 import SegmentedControl from '@react-native-community/segmented-control';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useState} from 'react';

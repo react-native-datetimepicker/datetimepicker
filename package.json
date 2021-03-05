@@ -1,5 +1,5 @@
 {
-  "name": "@react-native-community/datetimepicker",
+  "name": "@react-native-datetimepicker/datetimepicker",
   "version": "3.0.9",
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
@@ -56,9 +56,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/react-native-community/datetimepicker/issues"
+    "url": "https://github.com/react-native-datetimepicker/datetimepicker/issues"
   },
-  "homepage": "https://github.com/react-native-community/datetimepicker#readme",
+  "homepage": "https://github.com/react-native-datetimepicker/datetimepicker#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",

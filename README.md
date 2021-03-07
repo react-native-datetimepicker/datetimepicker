@@ -2,7 +2,8 @@
 
 See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313)
 
-Note: the module was recently moved out of the `@react-native-community` npm scope. Please install from `@react-native-datetimepicker/datetimepicker`.
+This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
+The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace soon, with a major version bump.
 
 # React Native DateTimePicker
 
@@ -79,18 +80,18 @@ React Native date & time picker component for iOS, Android and Windows.
 
 ## Expo users notice
 
-This module is part of Expo - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo SDK may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available in Expo. Follow installation instructions in Expo docs - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
+This module is part of Expo - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo SDK may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available in Expo. Use the command `expo install @react-native-community/datetimepicker` (not `yarn` or `npm`) to install this module - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
 
 ## Getting started
 
 ```bash
-npm install @react-native-datetimepicker/datetimepicker --save
+npm install @react-native-community/datetimepicker --save
 ```
 
 or
 
 ```bash
-yarn add @react-native-datetimepicker/datetimepicker
+yarn add @react-native-community/datetimepicker
 ```
 
 Autolinking is not yet implemented on Windows, so [Manual installation](#windows) is needed.
@@ -104,7 +105,7 @@ If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your proje
 For RN < 0.60, you need to link the dependency using `react-native link`:
 
 ```bash
-react-native link @react-native-datetimepicker/datetimepicker
+react-native link @react-native-community/datetimepicker
 ```
 
 Then run `npx pod-install` and rebuild your project.
@@ -114,13 +115,13 @@ If this does not work, see [Manual installation](#manual-installation).
 ## General Usage
 
 ```js
-import DateTimePicker from '@react-native-datetimepicker/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 ```
 
 or
 
 ```js
-const DateTimePicker = require('@react-native-datetimepicker/datetimepicker');
+const DateTimePicker = require('@react-native-community/datetimepicker');
 ```
 
 ### Basic usage with state
@@ -128,7 +129,7 @@ const DateTimePicker = require('@react-native-datetimepicker/datetimepicker');
 ```js
 import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
-import DateTimePicker from '@react-native-datetimepicker/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
@@ -608,7 +609,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
      platform :ios, '8.0'
 
      # Point to the installed version
-     pod 'RNDateTimePicker', :path => '../node_modules/@react-native-datetimepicker/datetimepicker/RNDateTimePicker.podspec'
+     pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
 
      # React/React-Native specific pods
      pod 'React', :path => '../node_modules/react-native', :subspecs => [
@@ -640,8 +641,8 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 1. Add the following lines to `android/settings.gradle`:
 
    ```gradle
-   include ':@react-native-datetimepicker_datetimepicker'
-   project(':@react-native-datetimepicker_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-datetimepicker/datetimepicker/android')
+   include ':@react-native-community_datetimepicker'
+   project(':@react-native-community_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
    ```
 
 2. Add the compile line to the dependencies in `android/app/build.gradle`:
@@ -649,7 +650,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
    ```gradle
    dependencies {
        ...
-       implementation project(':@react-native-datetimepicker_datetimepicker')
+       implementation project(':@react-native-community_datetimepicker')
    }
    ```
 
@@ -677,7 +678,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 1. Open the solution in Visual Studio 2019
 2. Right-click solution icon in Solution Explorer > Add > Existing Project
-   Select 'D:\pathToYourApp\node_modules\@react-native-datetimepicker\datetimepicker\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj'
+   Select 'D:\pathToYourApp\node_modules\@react-native-community\datetimepicker\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj'
 
 ##### **windows/myapp.sln**
 
@@ -703,7 +704,7 @@ Add `PackageProviders().Append(winrt::DateTimePicker::ReactPackageProvider());` 
 5. Run `yarn run start:ios` or `yarn run start:android` or `yarn run start:windows`
 6. To do any development on the library, open the example project (in the example folder!) in xCode or Android Studio. The example project depends on the library code, which you can edit and observe any changes in the example project.
 
-[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-datetimepicker/datetimepicker/master.svg?style=flat-square
+[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-datetimepicker/datetimepicker.svg?style=svg
 [support-badge]: https://img.shields.io/badge/platforms-android%20%7C%20ios%20%7C%20windows-lightgrey.svg?style=flat-square
 [license-badge]: https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square

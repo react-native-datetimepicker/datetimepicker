@@ -52,7 +52,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
     - [`minimumDate` (`optional`)](#minimumdate-optional)
-    - [`timeZoneOffsetInMinutes` (`optional`, `iOS only`)](#timezoneoffsetinminutes-optional-ios-only)
+    - [`timeZoneOffsetInMinutes` (`optional`, `iOS or Android only`)](#timezoneoffsetinminutes-optional-ios-only)
     - [`timeZoneOffsetInSeconds` (`optional`, `Windows only`)](#timezoneoffsetinsecond-optional-windows-only)
     - [`dayOfWeekFormat` (`optional`, `Windows only`)](#dayOfWeekFormat-optional-windows-only)
     - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)
@@ -257,7 +257,7 @@ Defines the minimum date that can be selected. Note that on Android, this only w
 <RNDateTimePicker minimumDate={new Date(1950, 0, 1)} />
 ```
 
-#### `timeZoneOffsetInMinutes` (`optional`, `iOS only`)
+#### `timeZoneOffsetInMinutes` (`optional`, `iOS and Android only`)
 
 Allows changing of the timeZone of the date picker. By default it uses the device's time zone.
 

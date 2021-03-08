@@ -60,6 +60,7 @@ const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
 
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
+  const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(0);
   const [mode, setMode] = useState(MODE_VALUES[0]);
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
@@ -223,10 +224,20 @@ export const App = () => {
                 title="hide picker"
               />
             </View>
+            <View style={styles.button}>
+              <Button
+                testID="setTz"
+                onPress={() => {
+                  setTzOffsetInMinutes(60);
+                  setShow(true);
+                }}
+                title="setTz"
+              />
+            </View>
             {show && (
               <DateTimePicker
                 testID="dateTimePicker"
-                timeZoneOffsetInMinutes={0}
+                timeZoneOffsetInMinutes={tzOffsetInMinutes}
                 minuteInterval={interval}
                 value={date}
                 mode={mode}

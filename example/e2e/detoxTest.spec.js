@@ -130,6 +130,34 @@ describe('Example', () => {
     }
   });
 
+  async function userOpensPickerTz({mode, display, interval}) {
+    await element(by.text(mode)).tap();
+    await element(by.text(display)).tap();
+    if (interval) {
+      await element(by.text(String(interval))).tap();
+    }
+    await element(by.id('setTz')).tap();
+  }
+
+  it('setTz should change time text when time changes 60 minutes', async () => {
+    await userOpensPickerTz({mode: 'time', display: 'default'});
+    const timeText = getTimeText();
+
+    if (isIOS()) {
+      const testElement = getDateTimePickerIOS();
+      await testElement.setColumnToValue(0, '2');
+      await testElement.setColumnToValue(1, '44');
+      await testElement.setColumnToValue(2, 'PM');
+
+      await expect(timeText).toHaveText('13:44');
+    } else {
+      await userChangesMinuteValue();
+      await userTapsOkButtonAndroid();
+
+      await expect(timeText).toHaveText('22:30');
+    }
+  });
+
   it(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to the beginning of the unix time epoch', async () => {
     await elementById('neutralButtonLabelTextInput').typeText('clear');
     await userOpensPicker({mode: 'time', display: 'default'});

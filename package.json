@@ -1,6 +1,6 @@
 {
   "name": "@react-native-community/datetimepicker",
-  "version": "3.0.9",
+  "version": "3.2.0",
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
   "types": "src/index.d.ts",
@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-native start",
     "start:android": "react-native run-android --no-jetifier",
-    "start:ios": "react-native run-ios",
+    "start:ios": "react-native run-ios --project-path example/ios",
     "start:windows": "react-native start --use-react-native-windows",
     "test": "jest ./test",
     "posttest": "npm run lint",

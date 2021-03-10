@@ -294,8 +294,8 @@ PODS:
     - React-cxxreact (= 0.62.2)
     - React-jsi (= 0.62.2)
     - ReactCommon/callinvoker (= 0.62.2)
-  - RNDateTimePicker (3.0.0):
-    - React
+  - RNDateTimePicker (3.0.9):
+    - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -459,10 +459,10 @@ SPEC CHECKSUMS:
   React-RCTText: fae545b10cfdb3d247c36c56f61a94cfd6dba41d
   React-RCTVibration: 4356114dbcba4ce66991096e51a66e61eda51256
   ReactCommon: ed4e11d27609d571e7eee8b65548efc191116eb3
-  RNDateTimePicker: f47a6309133c6d013ad6942fc83b753b3f6e41d6
+  RNDateTimePicker: 8a51a2216c307769e69ef827293d59549ab1ca23
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 76457826527484be7d45f7d1139a00e91de6c831
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

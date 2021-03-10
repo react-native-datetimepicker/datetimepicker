@@ -226,12 +226,12 @@ export const App = () => {
             </View>
             <View style={styles.button}>
               <Button
-                testID="setTzLarge"
+                testID="setTzZero"
                 onPress={() => {
-                  setTzOffsetInMinutes(480);
+                  setTzOffsetInMinutes(0);
                   setShow(true);
                 }}
-                title="setTzLarge"
+                title="setTzZero"
               />
             </View>
             <View style={styles.button}>

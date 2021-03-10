@@ -101,7 +101,7 @@ describe('Example', () => {
     await userOpensPickerTz({
       mode: 'date',
       display: 'default',
-      type: 'setTzLarge',
+      type: 'setTzZero',
     });
     const dateText = getDateText();
 
@@ -114,7 +114,7 @@ describe('Example', () => {
       await expect(dateText).toHaveText('11/03/1800');
     } else {
       await userTapsOkButtonAndroid();
-      await expect(dateText).toHaveText('08/20/2020');
+      await expect(dateText).toHaveText('08/21/2020');
     }
   });
 

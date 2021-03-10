@@ -65,12 +65,13 @@ function getPicker({
 }
 
 function timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes) {
+  let localDate = date;
   if (timeZoneOffsetInMinutes !== undefined) {
     const offset =
-      date.getTimezoneOffset() * MIN_MS + timeZoneOffsetInMinutes * MIN_MS;
-    date = new Date(date.getTime() - offset);
+      localDate.getTimezoneOffset() * MIN_MS + timeZoneOffsetInMinutes * MIN_MS;
+    localDate = new Date(date.getTime() - offset);
   }
-  return date;
+  return localDate;
 }
 
 export default function RNDateTimePicker(props: AndroidNativeProps) {

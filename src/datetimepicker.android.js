@@ -71,7 +71,7 @@ function timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes) {
     date = new Date(date.getTime() - offset);
   }
   return date;
-};
+}
 
 export default function RNDateTimePicker(props: AndroidNativeProps) {
   validateProps(props);

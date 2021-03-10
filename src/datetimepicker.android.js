@@ -59,6 +59,7 @@ function getPicker({
         minimumDate,
         maximumDate,
         neutralButtonLabel,
+        timeZoneOffsetInMinutes,
       });
   }
 }
@@ -109,7 +110,15 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
 
           switch (action) {
             case DATE_SET_ACTION:
-              event.nativeEvent.timestamp = date.setFullYear(year, month, day);
+              date.setFullYear(year, month, day);
+              date.setHours(0, 0, 0);
+              if (timeZoneOffsetInMinutes !== undefined) {
+                const offset =
+                  date.getTimezoneOffset() * MIN_MS +
+                  timeZoneOffsetInMinutes * MIN_MS;
+                date = new Date(date.getTime() - offset);
+              }
+              event.nativeEvent.timestamp = date;
               onChange(event, date);
               break;
 

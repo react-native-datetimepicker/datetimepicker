@@ -72,7 +72,6 @@ function timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes) {
   ) {
     const offset =
       localDate.getTimezoneOffset() * MIN_MS + timeZoneOffsetInMinutes * MIN_MS;
-    console.log(offset);
     localDate = new Date(date.getTime() - offset);
   }
   return localDate;

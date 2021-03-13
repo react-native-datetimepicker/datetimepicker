@@ -88,36 +88,6 @@ describe('Example', () => {
     }
   });
 
-  async function userOpensPickerTz({mode, display, interval, type}) {
-    await element(by.text(mode)).tap();
-    await element(by.text(display)).tap();
-    if (interval) {
-      await element(by.text(String(interval))).tap();
-    }
-    await element(by.id(type)).tap();
-  }
-
-  it('should update dateTimeText when date changes and TzLarge', async () => {
-    await userOpensPickerTz({
-      mode: 'date',
-      display: 'default',
-      type: 'setTzZero',
-    });
-    const dateText = getDateText();
-
-    if (isIOS()) {
-      const testElement = getDateTimePickerIOS();
-      await testElement.setColumnToValue(0, 'November');
-      await testElement.setColumnToValue(1, '3');
-      await testElement.setColumnToValue(2, '1800');
-
-      await expect(dateText).toHaveText('11/03/1800');
-    } else {
-      await userTapsOkButtonAndroid();
-      await expect(dateText).toHaveText('08/21/2020');
-    }
-  });
-
   it('should show time picker after tapping timePicker button', async () => {
     await userOpensPicker({mode: 'time', display: 'default'});
 
@@ -160,8 +130,42 @@ describe('Example', () => {
     }
   });
 
-  it('setTz should change time text when time changes 60 minutes', async () => {
-    await userOpensPickerTz({mode: 'time', display: 'default', type: 'setTz'});
+  async function userOpensPickerSetTimeZoneOffset({mode, display, interval, type}) {
+    await element(by.text(mode)).tap();
+    await element(by.text(display)).tap();
+    if (interval) {
+      await element(by.text(String(interval))).tap();
+    }
+    await element(by.id(type)).tap();
+  }
+
+  it('should update dateTimeText when date changes and set setTzOffsetInMinutes to 0', async () => {
+    await userOpensPickerSetTimeZoneOffset({
+      mode: 'date',
+      display: 'default',
+      type: 'setTzZero',
+    });
+    const dateText = getDateText();
+
+    if (isIOS()) {
+      const testElement = getDateTimePickerIOS();
+      await testElement.setColumnToValue(0, 'November');
+      await testElement.setColumnToValue(1, '3');
+      await testElement.setColumnToValue(2, '1800');
+
+      await expect(dateText).toHaveText('11/03/1800');
+    } else {
+      await userTapsOkButtonAndroid();
+      await expect(dateText).toHaveText('08/21/2020');
+    }
+  });
+
+  it('setTz should change time text when setTzOffsetInMinutes is 60 minutes', async () => {
+    await userOpensPickerSetTimeZoneOffset({
+      mode: 'time',
+      display: 'default',
+      type: 'setTz',
+    });
     const timeText = getTimeText();
 
     if (isIOS()) {

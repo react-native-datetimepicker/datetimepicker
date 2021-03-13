@@ -70,7 +70,6 @@ function timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes) {
     typeof timeZoneOffsetInMinutes !== 'undefined' &&
     timeZoneOffsetInMinutes >= 0
   ) {
-    console.log('offset setting');
     const offset =
       localDate.getTimezoneOffset() * MIN_MS + timeZoneOffsetInMinutes * MIN_MS;
     console.log(offset);

@@ -130,7 +130,12 @@ describe('Example', () => {
     }
   });
 
-  async function userOpensPickerSetTimeZoneOffset({mode, display, interval, type}) {
+  async function userOpensPickerSetTimeZoneOffset({
+    mode,
+    display,
+    interval,
+    type,
+  }) {
     await element(by.text(mode)).tap();
     await element(by.text(display)).tap();
     if (interval) {

@@ -67,7 +67,7 @@
     "@semantic-release/git": "^9.0.0",
     "@testing-library/react-native": "^7.0.1",
     "babel-jest": "^26.0.1",
-    "detox": "^16.5.1",
+    "detox": "16.9.2",
     "eslint": "^7.6.0",
     "eslint-plugin-prettier": "^3.1.2",
     "flow-bin": "^0.113.0",

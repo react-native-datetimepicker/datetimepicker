@@ -13,7 +13,7 @@ The module is still published on `npm` under the old namespace (as documented) b
 [![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
 React Native date & time picker component for iOS, Android and Windows.
-
+ 
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>
   <tr>

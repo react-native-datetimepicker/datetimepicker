@@ -231,7 +231,7 @@ export const App = () => {
                   setTzOffsetInMinutes(0);
                   setShow(true);
                 }}
-                title="setTzZero"
+                title="setTzOffsetInMinutes to 0"
               />
             </View>
             <View style={styles.button}>
@@ -241,7 +241,7 @@ export const App = () => {
                   setTzOffsetInMinutes(60);
                   setShow(true);
                 }}
-                title="setTz"
+                title="setTzOffsetInMinutes to 60"
               />
             </View>
             {show && (

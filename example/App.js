@@ -226,12 +226,22 @@ export const App = () => {
             </View>
             <View style={styles.button}>
               <Button
+                testID="setTzZero"
+                onPress={() => {
+                  setTzOffsetInMinutes(0);
+                  setShow(true);
+                }}
+                title="setTzOffsetInMinutes to 0"
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
                 testID="setTz"
                 onPress={() => {
                   setTzOffsetInMinutes(60);
                   setShow(true);
                 }}
-                title="setTz"
+                title="setTzOffsetInMinutes to 60"
               />
             </View>
             {show && (

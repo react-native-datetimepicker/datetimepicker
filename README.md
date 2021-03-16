@@ -13,7 +13,7 @@ The module is still published on `npm` under the old namespace (as documented) b
 [![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
 React Native date & time picker component for iOS, Android and Windows.
-
+ 
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>
   <tr>
@@ -52,7 +52,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
     - [`minimumDate` (`optional`)](#minimumdate-optional)
-    - [`timeZoneOffsetInMinutes` (`optional`, `iOS or Android only`)](#timezoneoffsetinminutes-optional-ios-only)
+    - [`timeZoneOffsetInMinutes` (`optional`, `iOS or Android only`)](#timezoneoffsetinminutes-optional-ios-and-android-only)
     - [`timeZoneOffsetInSeconds` (`optional`, `Windows only`)](#timezoneoffsetinsecond-optional-windows-only)
     - [`dayOfWeekFormat` (`optional`, `Windows only`)](#dayOfWeekFormat-optional-windows-only)
     - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)

@@ -9,9 +9,9 @@ public class RNDate {
 
   public RNDate(Bundle args) {
     now = Calendar.getInstance();
-    if (args != null && args.containsKey(RNConstants.ARG_TZOFFSET_MIN)) {
+    if (args != null && args.containsKey(RNConstants.ARG_TZOFFSET_MINS)) {
       now.setTimeZone(TimeZone.getTimeZone("GMT"));
-      Integer timeZoneOffsetInMinutes = args.getInt(RNConstants.ARG_TZOFFSET_MIN);
+      Integer timeZoneOffsetInMinutes = args.getInt(RNConstants.ARG_TZOFFSET_MINS);
       now.add(Calendar.MILLISECOND, timeZoneOffsetInMinutes * 60000);
     }
 

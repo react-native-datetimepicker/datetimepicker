@@ -119,6 +119,11 @@ export type IOSNativeProps = $ReadOnly<{|
    * Sets the preferredDatePickerStyle for picker
    */
   display?: IOSDisplay,
+
+  /**
+   * Is this control disabled?
+   */
+  disabled?: boolean,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|

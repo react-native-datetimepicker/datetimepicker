@@ -9,6 +9,7 @@ import {
   Platform,
   TextInput,
   useColorScheme,
+  Switch,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SegmentedControl from '@react-native-community/segmented-control';
@@ -67,6 +68,7 @@ export const App = () => {
   const [display, setDisplay] = useState(DISPLAY_VALUES[0]);
   const [interval, setMinInterval] = useState(1);
   const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
+  const [disabled, setDisabled] = useState(false);
 
   // Windows-specific
   const [time, setTime] = useState(undefined);
@@ -171,6 +173,12 @@ export const App = () => {
             </View>
             <View style={styles.header}>
               <ThemedText style={{margin: 10, flex: 1}}>
+                disabled (iOS only)
+              </ThemedText>
+              <Switch value={disabled} onValueChange={setDisabled} />
+            </View>
+            <View style={styles.header}>
+              <ThemedText style={{margin: 10, flex: 1}}>
                 neutralButtonLabel (android only)
               </ThemedText>
               <ThemedTextInput
@@ -257,6 +265,7 @@ export const App = () => {
                 style={styles.iOsPicker}
                 textColor={color || undefined}
                 neutralButtonLabel={neutralButtonLabel}
+                disabled={disabled}
               />
             )}
           </View>

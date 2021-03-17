@@ -63,6 +63,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
     - [`minuteInterval` (`optional`)](#minuteinterval-optional)
     - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
+    - [`disabled` (`optional`, `iOS only`)](#disabled-optional-ios-only)
   - [Migration from the older components](#migration-from-the-older-components)
     - [DatePickerIOS](#datepickerios)
     - [DatePickerAndroid](#datepickerandroid)
@@ -359,6 +360,10 @@ This means that eg. if the device has dark mode turned on, and your screen backg
 ```js
 <RNDateTimePicker style={{flex: 1}} />
 ```
+
+#### `disabled` (`optional`, `iOS only`)
+
+If true the user won't be able to toggle the switch.
 
 ## Migration from the older components
 

@@ -121,7 +121,7 @@ export type IOSNativeProps = $ReadOnly<{|
   display?: IOSDisplay,
 
   /**
-   * Is this control disabled?
+   * Is this picker disabled?
    */
   disabled?: boolean,
 |}>;

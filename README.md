@@ -363,7 +363,7 @@ This means that eg. if the device has dark mode turned on, and your screen backg
 
 #### `disabled` (`optional`, `iOS only`)
 
-If true the user won't be able to toggle the switch.
+If true, the user won't be able to interact with the view.
 
 ## Migration from the older components
 

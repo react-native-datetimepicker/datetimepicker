@@ -53,7 +53,7 @@ export default function Picker({
   timeZoneOffsetInMinutes,
   textColor,
   onChange,
-  disabled,
+  disabled = false,
   ...otherProps
 }: IOSNativeProps) {
   const [heightStyle, setHeightStyle] = useState(undefined);
@@ -124,7 +124,7 @@ export default function Picker({
       onStartShouldSetResponder={() => true}
       onResponderTerminationRequest={() => false}
       displayIOS={display}
-      disabled={disabled !== true}
+      disabled={disabled === true}
     />
   );
 }

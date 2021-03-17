@@ -100,6 +100,11 @@ export type IOSNativeProps = Readonly<
      * Sets the preferredDatePickerStyle for picker
      */
     display?: IOSDisplay;
+
+    /**
+     * Is this picker disabled?
+     */
+    disabled?: boolean;
   }
 >;
 

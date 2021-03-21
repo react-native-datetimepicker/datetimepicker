@@ -118,4 +118,13 @@ RCT_CUSTOM_VIEW_PROPERTY(displayIOS, UIDatePickerStyle, RNDateTimePicker)
     }
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(disabled, BOOL, RNDateTimePicker)
+{
+  if (json) {
+    view.enabled = !([RCTConvert BOOL:json]);
+  } else {
+    view.enabled = defaultView.enabled;
+  }
+}
+
 @end

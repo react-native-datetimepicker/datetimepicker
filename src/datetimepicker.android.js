@@ -124,7 +124,6 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
           switch (action) {
             case DATE_SET_ACTION:
               date.setFullYear(year, month, day);
-              date.setHours(0, 0);
               date = timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes);
               event.nativeEvent.timestamp = date;
               onChange(event, date);

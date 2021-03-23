@@ -71,7 +71,7 @@ public class RNDismissableTimePickerDialog extends MinuteIntervalSnappableTimePi
   }
 
   private void fixSpinner(Context context, int hourOfDay, int minute, boolean is24HourView, RNTimePickerDisplay display) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && display == RNTimePickerDisplay.SPINNER) {
+    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N && display == RNTimePickerDisplay.SPINNER) {
       try {
         Class<?> styleableClass = Class.forName("com.android.internal.R$styleable");
         Field timePickerStyleableField = styleableClass.getField("TimePicker");

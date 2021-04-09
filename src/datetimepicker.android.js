@@ -66,10 +66,7 @@ function getPicker({
 
 function timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes) {
   let localDate = date;
-  if (
-    typeof timeZoneOffsetInMinutes !== 'undefined' &&
-    timeZoneOffsetInMinutes >= 0
-  ) {
+  if (typeof timeZoneOffsetInMinutes === 'number') {
     const offset =
       localDate.getTimezoneOffset() * MIN_MS + timeZoneOffsetInMinutes * MIN_MS;
     localDate = new Date(date.getTime() - offset);

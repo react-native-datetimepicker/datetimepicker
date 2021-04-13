@@ -7,7 +7,9 @@ import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.TimePicker;
 import android.view.View;
 import android.widget.EditText;
@@ -141,22 +143,30 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
      */
     private void correctEnteredMinutes(final TimePicker view, final int hourOfDay, final int correctedMinutes) {
         assertNotSpinner("spinner never needs to be corrected because wrong values are not offered to user (both in scrolling and textInput mode)!");
-        final EditText textInput = (EditText) view.findFocus();
-
         // 'correction' callback
         runnable = new Runnable() {
             @Override
             public void run() {
-                if (pickerIsInTextInputMode()) {
-                    // set valid minutes && move caret to the end of input
-                    view.setCurrentHour(hourOfDay);
-                    view.setCurrentMinute(correctedMinutes);
-                    textInput.setSelection(textInput.getText().length());
+                // set valid hour &  minutes
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.setHour(hourOfDay);
+                    view.setMinute(correctedMinutes);
                 } else {
                     view.setCurrentHour(hourOfDay);
                     // we need to set minutes to 0 for this to work on older android devices
                     view.setCurrentMinute(0);
                     view.setCurrentMinute(correctedMinutes);
+                }
+                if (pickerIsInTextInputMode()) {
+                    // move caret to the end of input
+                    try {
+                        final EditText textInput = (EditText) view.findFocus();
+                        textInput.setSelection(textInput.getText().length());
+                    } catch (ClassCastException exception) {
+                        if (exception.getMessage() != null) {
+                            Log.e("react-native-datetimepicker", exception.getMessage());
+                        }
+                    }
                 }
             }
         };

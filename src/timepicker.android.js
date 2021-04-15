@@ -41,7 +41,7 @@ export default class TimePickerAndroid {
   }
 
   static async dismiss(): Promise<boolean> {
-    return NativeModules.RNDatePickerAndroid.dismiss();
+    return NativeModules.RNTimePickerAndroid.dismiss();
   }
 
   /**

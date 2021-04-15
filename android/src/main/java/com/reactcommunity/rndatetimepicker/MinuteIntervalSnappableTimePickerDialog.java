@@ -147,7 +147,7 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
         runnable = new Runnable() {
             @Override
             public void run() {
-                // set valid hour &  minutes
+                // set valid hour & minutes
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     view.setHour(hourOfDay);
                     view.setMinute(correctedMinutes);
@@ -159,13 +159,12 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
                 }
                 if (pickerIsInTextInputMode()) {
                     // move caret to the end of input
-                    try {
-                        final EditText textInput = (EditText) view.findFocus();
+                    View maybeTextInput = view.findFocus();
+                    if (maybeTextInput instanceof EditText) {
+                        final EditText textInput = (EditText) maybeTextInput;
                         textInput.setSelection(textInput.getText().length());
-                    } catch (ClassCastException exception) {
-                        if (exception.getMessage() != null) {
-                            Log.e("react-native-datetimepicker", exception.getMessage());
-                        }
+                    } else {
+                        Log.e("RN-datetimepicker", "could not set selection on time picker, this is a known issue on some Huawei devices");
                     }
                 }
             }

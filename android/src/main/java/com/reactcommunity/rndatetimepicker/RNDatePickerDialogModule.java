@@ -88,8 +88,12 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void dismiss(Promise promise) {
-    FragmentActivity activity = (FragmentActivity) getCurrentActivity();
-    dismissDialog(activity, FRAGMENT_TAG, promise);
+    try {
+      FragmentActivity activity = (FragmentActivity) getCurrentActivity();
+      dismissDialog(activity, FRAGMENT_TAG, promise);
+    } catch (Exception e) {
+      promise.reject(e);
+    }
   }
   /**
    * Show a date picker dialog.

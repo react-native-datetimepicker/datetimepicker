@@ -314,7 +314,9 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 
 #### `themeVariant` (`optional`, `iOS only`)
 
-Allows overriding system theme variant (dark or light mode) used by the date picker. Has effect only on iOS 14 and later.
+Allows overriding system theme variant (dark or light mode) used by the date picker.
+
+:warning: Has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
 
 List of possible values:
 

@@ -97,6 +97,11 @@ export type IOSNativeProps = Readonly<
     textColor?: string;
 
     /**
+     * Override theme variant used by iOS native picker
+     */
+    themeVariant?: 'dark' | 'light';
+
+    /**
      * Sets the preferredDatePickerStyle for picker
      */
     display?: IOSDisplay;

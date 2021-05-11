@@ -52,6 +52,7 @@ export default function Picker({
   minuteInterval,
   timeZoneOffsetInMinutes,
   textColor,
+  themeVariant,
   onChange,
   disabled = false,
   ...otherProps
@@ -121,6 +122,7 @@ export default function Picker({
       timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
       onChange={_onChange}
       textColor={textColor}
+      themeVariant={themeVariant}
       onStartShouldSetResponder={() => true}
       onResponderTerminationRequest={() => false}
       displayIOS={display}

@@ -58,6 +58,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)
     - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
     - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
+    - [`themeVariant` (`optional`, `iOS only`)](#themeVariant-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
@@ -309,6 +310,21 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 
 ```js
 <RNDateTimePicker textColor="red" />
+```
+
+#### `themeVariant` (`optional`, `iOS only`)
+
+Allows overriding system theme variant (dark or light mode) used by the date picker.
+
+:warning: Has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
+
+List of possible values:
+
+- `"light"`
+- `"dark"`
+
+```js
+<RNDateTimePicker themeVariant="light" />
 ```
 
 #### `locale` (`optional`, `iOS only`)

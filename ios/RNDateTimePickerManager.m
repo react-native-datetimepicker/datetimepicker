@@ -29,6 +29,11 @@ RCT_ENUM_CONVERTER(UIDatePickerStyle, (@{
 #endif
 }), UIDatePickerStyleAutomatic, integerValue)
 
+RCT_ENUM_CONVERTER(UIUserInterfaceStyle, (@{
+    @"dark": @(UIUserInterfaceStyleDark),
+    @"light": @(UIUserInterfaceStyleLight),
+}), UIUserInterfaceStyleUnspecified, integerValue)
+
 @end
 
 @implementation RNDateTimePickerManager
@@ -83,6 +88,17 @@ RCT_EXPORT_VIEW_PROPERTY(minuteInterval, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 RCT_REMAP_VIEW_PROPERTY(mode, datePickerMode, UIDatePickerMode)
 RCT_REMAP_VIEW_PROPERTY(timeZoneOffsetInMinutes, timeZone, NSTimeZone)
+
+RCT_CUSTOM_VIEW_PROPERTY(themeVariant, UIUserInterfaceStyle, RNDateTimePicker) {
+    if (@available(iOS 13.0, *)) {
+        if (json) {
+            UIUserInterfaceStyle propValue = [RCTConvert UIUserInterfaceStyle:json];
+            view.overrideUserInterfaceStyle = propValue;
+        } else {
+            view.overrideUserInterfaceStyle = UIUserInterfaceStyleUnspecified;
+        }
+    }
+}
 
 RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNDateTimePicker)
 {

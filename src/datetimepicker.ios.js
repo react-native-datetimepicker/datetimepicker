@@ -65,7 +65,7 @@ export default function Picker({
       const {current} = _picker;
 
       if (value && onChange && current) {
-        const timestamp = value.getTime();
+        const timestamp = new Date(value).getTime();
         current.setNativeProps({
           date: timestamp,
         });

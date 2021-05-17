@@ -118,7 +118,7 @@ export type IOSNativeProps = $ReadOnly<{|
   /**
    * Override theme variant used by iOS native picker
    */
-  themeVariant?: 'dark' | 'light';
+  themeVariant?: 'dark' | 'light',
 
   /**
    * Sets the preferredDatePickerStyle for picker

@@ -87,12 +87,8 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void dismiss(Promise promise) {
-    try {
-      FragmentActivity activity = (FragmentActivity) getCurrentActivity();
-      dismissDialog(activity, FRAGMENT_TAG, promise);
-    } catch (Exception e) {
-      promise.reject(e);
-    }
+    FragmentActivity activity = (FragmentActivity) getCurrentActivity();
+    dismissDialog(activity, FRAGMENT_TAG, promise);
   }
 
   @ReactMethod

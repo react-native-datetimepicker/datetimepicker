@@ -112,7 +112,7 @@ export const App = () => {
     return (
       <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
         <StatusBar barStyle="dark-content" />
-        <ScrollView>
+        <ScrollView testID="DateTimePickerScrollView">
           {global.HermesInternal != null && (
             <View style={styles.engine}>
               <Text testID="hermesIndicator" style={styles.footer}>

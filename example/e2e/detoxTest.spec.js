@@ -166,6 +166,7 @@ describe('Example', () => {
   });
 
   it('setTz should change time text when setTzOffsetInMinutes is 60 minutes', async () => {
+    await element(by.id('DateTimePickerScrollView')).scrollTo('bottom');
     await userOpensPickerSetTimeZoneOffset({
       mode: 'time',
       display: 'default',

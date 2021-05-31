@@ -49,7 +49,7 @@ jobs:
           device: 'iPhone 11'
       # - rn/yarn_install
       - run:
-          command: yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile --ignore-engines
           name: yarn install
       - rn/pod_install:
           pod_install_directory: 'example/ios'
@@ -74,7 +74,7 @@ jobs:
           node_version: '12.10.0'
       # - rn/yarn_install
       - run:
-          command: yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile --ignore-engines
           name: yarn install
       - rn/android_emulator_start:
           logcat_grep: 'com.reactcommunity.rndatetimepicker'
@@ -94,7 +94,7 @@ jobs:
       # - rn/yarn_install
       # fails with Error untarring cache: Error extracting tarball /var/folders/bq/mjrgbpkx5h1g_b22fpv0tlzc0000gn/T/cache376822577 : tmp/yarn/: Cannot extract through symlink tmp/yarn tmp/yarn/v6/: Cannot extract through symlink tmp/yarn/v6 tmp/yarn/v6/.tmp/: Cannot extract through symlink tmp/yarn/v6/.tmp tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/code-frame/: Cannot extract: exit status 1
       - run:
-          command: yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile --ignore-engines
           name: yarn install
       - run:
           command: npx semantic-release

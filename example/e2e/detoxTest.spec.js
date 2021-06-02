@@ -176,17 +176,14 @@ describe('Example', () => {
 
     if (isIOS()) {
       const testElement = getDateTimePickerIOS();
-      await testElement.setColumnToValue(0, '2');
-      await testElement.setColumnToValue(1, '44');
-      await testElement.setColumnToValue(2, 'PM');
-
-      await expect(timeText).toHaveText('13:44');
+      await testElement.setColumnToValue(0, '12');
+      await testElement.setColumnToValue(1, '30');
+      await testElement.setColumnToValue(2, 'AM');
     } else {
       await userChangesMinuteValue();
       await userTapsOkButtonAndroid();
-
-      await expect(timeText).toHaveText('23:30');
     }
+    await expect(timeText).toHaveText('23:30');
   });
 
   it(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to the beginning of the unix time epoch', async () => {

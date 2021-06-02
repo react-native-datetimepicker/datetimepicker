@@ -185,7 +185,7 @@ describe('Example', () => {
       await userChangesMinuteValue();
       await userTapsOkButtonAndroid();
 
-      await expect(timeText).toHaveText('22:30');
+      await expect(timeText).toHaveText('23:30');
     }
   });
 

@@ -1,11 +1,20 @@
-### 🚧🚧 Looking for collaborators 🚧🚧
+### 🚧🚧 Looking for collaborators and backers 🚧🚧
 
 See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313)
 
-This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
-The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace soon, with a major version bump.
+### Backers
+
+Support us with a monthly donation and help us continue our activities. [Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker)
+
+<a href="https://opencollective.com/react-native-datetimepicker/donate" target="_blank">
+  <img src="https://opencollective.com/react-native-datetimepicker/backers.svg?width=890" width=890 />
+</a>
+
 
 # React Native DateTimePicker
+
+This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
+The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace at some point, with a major version bump.
 
 ![CircleCI Status][circle-ci-status]
 ![Supports Android and iOS][support-badge]

@@ -154,6 +154,18 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     });
   }
 
+  private String[] toStringArray(ReadableArray readableArray) {
+    int arraySize = readableArray.size();
+    if (arraySize > 0) {
+      String[] stringArray = new String[readableArray.size()];
+      for (int i = 0; i < arraySize; i++) {
+        stringArray[i] = readableArray.getString(i);
+      }
+      return stringArray;
+    }
+    return null;
+  }
+
   private Bundle createFragmentArguments(ReadableMap options) {
     final Bundle args = new Bundle();
     if (options.hasKey(RNConstants.ARG_VALUE) && !options.isNull(RNConstants.ARG_VALUE)) {
@@ -173,6 +185,13 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
     }
     if (options.hasKey(RNConstants.ARG_TZOFFSET_MINS) && !options.isNull(RNConstants.ARG_TZOFFSET_MINS)) {
       args.putLong(RNConstants.ARG_TZOFFSET_MINS, (long) options.getDouble(RNConstants.ARG_TZOFFSET_MINS));
+    }
+    if (options.hasKey(RNConstants.ARG_SPINNER_HIDE) && !options.isNull(RNConstants.ARG_SPINNER_HIDE)) {
+      ReadableArray readableSpinnerHide = options.getArray(RNConstants.ARG_SPINNER_HIDE);
+      if (readableSpinnerHide.size() > 0) {
+        String[] spinnerHideList = toStringArray(readableSpinnerHide);
+        args.putStringArray(RNConstants.ARG_SPINNER_HIDE, spinnerHideList);
+      }
     }
     return args;
   }

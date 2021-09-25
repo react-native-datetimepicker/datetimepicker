@@ -14,12 +14,14 @@ import {
   DAY_OF_WEEK,
   IOS_DISPLAY,
   IOS_MODE,
+  SPINNER_HIDE,
 } from './constants';
 
 export type IOSDisplay = $Keys<typeof IOS_DISPLAY>;
 export type IOSMode = $Keys<typeof IOS_MODE>;
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
 type Display = $Keys<typeof ANDROID_DISPLAY>;
+type SpinnerHide = $Keys<typeof SPINNER_HIDE>;
 type MinuteInterval = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
 
 export type Event = SyntheticEvent<
@@ -66,6 +68,12 @@ type DateOptions = {|
    * Restricts the range of possible date/time values.
    */
   minimumDate?: ?Date,
+
+  /**
+   * Spinner hide.
+   * Hide some fields in spinner date.
+   */
+  spinnerHide?: ?(SpinnerHide[]),
 |};
 
 type TimeOptions = $ReadOnly<{|

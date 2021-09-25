@@ -13,6 +13,7 @@ import {
   ANDROID_DISPLAY,
   ANDROID_MODE,
   MIN_MS,
+  SPINNER_HIDE_DEFAULT,
 } from './constants';
 import pickers from './picker';
 import invariant from 'invariant';
@@ -40,6 +41,7 @@ function getPicker({
   neutralButtonLabel,
   minuteInterval,
   timeZoneOffsetInMinutes,
+  spinnerHide,
 }) {
   switch (mode) {
     case MODE_TIME:
@@ -60,6 +62,7 @@ function getPicker({
         maximumDate,
         neutralButtonLabel,
         timeZoneOffsetInMinutes,
+        spinnerHide,
       });
   }
 }
@@ -87,6 +90,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
     neutralButtonLabel,
     minuteInterval,
     timeZoneOffsetInMinutes,
+    spinnerHide,
   } = props;
   const valueTimestamp = value.getTime();
 
@@ -108,6 +112,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
         neutralButtonLabel,
         minuteInterval,
         timeZoneOffsetInMinutes,
+        spinnerHide,
       });
 
       picker.then(
@@ -163,4 +168,5 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
 RNDateTimePicker.defaultProps = {
   display: DISPLAY_DEFAULT,
   mode: MODE_DATE,
+  spinnerHide: SPINNER_HIDE_DEFAULT,
 };

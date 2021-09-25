@@ -4,6 +4,7 @@ import {NativeMethods, ViewProps} from 'react-native';
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
 type Display = 'spinner' | 'default' | 'clock' | 'calendar';
+type SpinnerHide = 'day' | 'month';
 type IOSDisplay = 'default' | 'compact' | 'inline' | 'spinner';
 type MinuteInterval = 1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30;
 type DAY_OF_WEEK = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -134,6 +135,7 @@ export type AndroidNativeProps = Readonly<
 
       onChange?: (event: AndroidEvent, date?: Date) => void;
       neutralButtonLabel?: string;
+      spinnerHide?: SpinnerHide[];
     }
 >;
 

@@ -23,6 +23,7 @@ import {
   IOS_MODE,
   ANDROID_DISPLAY,
   IOS_DISPLAY,
+  SPINNER_HIDE,
 } from '../src/constants';
 
 const ThemedText = (props) => {
@@ -57,6 +58,11 @@ const DISPLAY_VALUES = Platform.select({
   android: Object.values(ANDROID_DISPLAY),
   windows: [],
 });
+const SPINNER_HIDE_VALUES = Platform.select({
+  ios: [],
+  android: Object.values(SPINNER_HIDE),
+  windows: [],
+});
 const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
 
 export const App = () => {
@@ -66,6 +72,7 @@ export const App = () => {
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
   const [display, setDisplay] = useState(DISPLAY_VALUES[0]);
+  const [spinnerHide, setSpinnerHide] = useState([]);
   const [interval, setMinInterval] = useState(1);
   const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
   const [disabled, setDisabled] = useState(false);
@@ -148,6 +155,34 @@ export const App = () => {
                 );
               }}
             />
+            {display === 'spinner' && (
+              <>
+                <ThemedText>spinner hide:</ThemedText>
+                {SPINNER_HIDE_VALUES.map((value) => (
+                  <View style={styles.header}>
+                    <ThemedText style={{margin: 10, flex: 1}}>
+                      {value}
+                    </ThemedText>
+                    <Switch
+                      key={value}
+                      value={spinnerHide.some((item) => item === value)}
+                      onValueChange={(isSelected) => {
+                        const newList = [...spinnerHide];
+                        if (isSelected) {
+                          newList.push(value);
+                        } else {
+                          const findValue = newList.find(
+                            (item) => item === value,
+                          );
+                          newList.splice(newList.indexOf(findValue), 1);
+                        }
+                        setSpinnerHide(newList);
+                      }}
+                    />
+                  </View>
+                ))}
+              </>
+            )}
             <ThemedText>minute interval prop:</ThemedText>
             <SegmentedControl
               values={MINUTE_INTERVALS.map(String)}
@@ -261,6 +296,7 @@ export const App = () => {
                 mode={mode}
                 is24Hour
                 display={display}
+                spinnerHide={spinnerHide}
                 onChange={onChange}
                 style={styles.iOsPicker}
                 textColor={color || undefined}

@@ -15,16 +15,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import android.view.View;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
 import java.util.Locale;
+
+import static com.reactcommunity.rndatetimepicker.RNConstants.ARG_SPINNER_HIDE;
 
 @SuppressLint("ValidFragment")
 public class RNDatePickerDialogFragment extends DialogFragment {
@@ -73,7 +78,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
           String resourceName = display == RNDatePickerDisplay.CALENDAR
                   ? "CalendarDatePickerDialog"
                   : "SpinnerDatePickerDialog";
-          return new RNDismissableDatePickerDialog(
+          DatePickerDialog datePickerDialog = new RNDismissableDatePickerDialog(
                   activityContext,
                   activityContext.getResources().getIdentifier(
                           resourceName,
@@ -85,6 +90,21 @@ public class RNDatePickerDialogFragment extends DialogFragment {
                   day,
                   display
           );
+          if (display.equals(RNDatePickerDisplay.SPINNER) && args.containsKey(ARG_SPINNER_HIDE)) {
+            String[] spinnerHide = args.getStringArray(ARG_SPINNER_HIDE);
+            if (spinnerHide.length > 0) {
+              try {
+                for (String itemToHide : spinnerHide) {
+                  datePickerDialog
+                          .getDatePicker()
+                          .findViewById(Resources.getSystem().getIdentifier(itemToHide, "id", "android"))
+                          .setVisibility(View.GONE);
+                }
+              } catch (Exception ignored) {
+              }
+            }
+          }
+          return datePickerDialog;
         default:
           return new RNDismissableDatePickerDialog(
                   activityContext,

@@ -12,6 +12,8 @@ export const DISPLAY_CLOCK = 'clock';
 export const DISPLAY_CALENDAR = 'calendar';
 export const MIN_MS = 60000;
 
+export const SPINNER_HIDE_DEFAULT = [];
+
 // TODO vonovak potentially replace the above string consts with this object
 export const ANDROID_DISPLAY = Object.freeze({
   default: 'default',
@@ -47,6 +49,11 @@ export const DAY_OF_WEEK = Object.freeze({
   Thursday: 4,
   Friday: 5,
   Saturday: 6,
+});
+
+export const SPINNER_HIDE = Object.freeze({
+  month: 'month',
+  day: 'day',
 });
 
 export const DATE_SET_ACTION = 'dateSetAction';

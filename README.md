@@ -57,6 +57,7 @@ React Native date & time picker component for iOS, Android and Windows.
   - [Props](#props)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
+    - [`spinnerHide` (`optional`, `Android only`)](#spinnerhide-optional-android-only)
     - [`onChange` (`optional`)](#onchange-optional)
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
@@ -231,6 +232,21 @@ List of possible values for iOS (maps to [preferredDatePickerStyle](https://deve
 ```js
 <RNDateTimePicker display="spinner" />
 ```
+
+#### `spinnerHide` (`optional`, `Android only`)
+
+When using `spinner` display you can hide some fields.
+
+List of possible values:
+- `"month"` - Hide month
+- `"day"` - Hide day
+
+```js
+<RNDateTimePicker spinnerHide={['day', 'month']} />
+```
+
+<img src="./docs/images/android_spinner_hide_1.png" width="230" height="350"/>
+<img src="./docs/images/android_spinner_hide_2.png" width="230" height="350"/>
 
 #### `onChange` (`optional`)
 

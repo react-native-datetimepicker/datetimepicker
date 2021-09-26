@@ -13,4 +13,8 @@ describe('constants', () => {
     expect(constants).toHaveProperty('DISPLAY_CLOCK', 'clock');
     expect(constants).toHaveProperty('DISPLAY_CALENDAR', 'calendar');
   });
+
+  it('exports spinner hide values', () => {
+    expect(constants).toHaveProperty('SPINNER_HIDE_DEFAULT', []);
+  });
 });

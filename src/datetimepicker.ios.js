@@ -44,6 +44,7 @@ const getDisplaySafe = (display: IOSDisplay) => {
 export default function Picker({
   value,
   locale,
+  calendarLocale,
   maximumDate,
   minimumDate,
   style,
@@ -115,6 +116,7 @@ export default function Picker({
       style={StyleSheet.compose(heightStyle, style)}
       date={dates.value}
       locale={locale !== null && locale !== '' ? locale : undefined}
+      calendarLocale={calendarLocale !== null && calendarLocale !== '' ? calendarLocale : undefined}
       maximumDate={dates.maximumDate}
       minimumDate={dates.minimumDate}
       mode={mode}
@@ -127,6 +129,7 @@ export default function Picker({
       onResponderTerminationRequest={() => false}
       displayIOS={display}
       disabled={disabled === true}
+      
     />
   );
 }

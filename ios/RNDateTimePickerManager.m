@@ -143,4 +143,12 @@ RCT_CUSTOM_VIEW_PROPERTY(disabled, BOOL, RNDateTimePicker)
   }
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(calendarLocale, NSString, RNDateTimePicker)
+{
+  NSString *local = [RCTConvert NSString:json];
+  NSString *formattedLocale = [NSString stringWithFormat:@"%@", local];
+  NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:formattedLocale];
+  view.calendar = [locale objectForKey:NSLocaleCalendar];
+}
+
 @end

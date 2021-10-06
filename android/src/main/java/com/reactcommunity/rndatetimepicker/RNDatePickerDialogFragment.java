@@ -128,6 +128,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
 
     Integer timeZoneOffsetInMilliseconds = null;
     if (args != null && args.containsKey(RNConstants.ARG_TZOFFSET_MINS)) {
+      c.setTimeZone(TimeZone.getTimeZone("GMT"));
       long timeZoneOffsetInMinutesFallback = args.getLong(RNConstants.ARG_TZOFFSET_MINS);
       int timeZoneOffsetInMinutes = args.getInt(RNConstants.ARG_TZOFFSET_MINS, (int) timeZoneOffsetInMinutesFallback);
       timeZoneOffsetInMilliseconds = timeZoneOffsetInMinutes * 60000;

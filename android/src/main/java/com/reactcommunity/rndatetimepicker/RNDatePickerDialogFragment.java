@@ -158,10 +158,10 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     if (args != null && args.containsKey(RNConstants.ARG_MAXDATE)) {
       // Set maxDate to the end of the day, same reason as for minDate.
       c.setTimeInMillis(args.getLong(RNConstants.ARG_MAXDATE));
-      c.set(Calendar.HOUR_OF_DAY, 0);
-      c.set(Calendar.MINUTE, 0);
-      c.set(Calendar.SECOND, 0);
-      c.set(Calendar.MILLISECOND, 0);
+      c.set(Calendar.HOUR_OF_DAY, 23);
+      c.set(Calendar.MINUTE, 59);
+      c.set(Calendar.SECOND, 59);
+      c.set(Calendar.MILLISECOND, 999);
 
       if (timeZoneOffsetInMilliseconds != null) {
         int offset = TimeZone.getDefault().getOffset(c.getTimeInMillis()) - timeZoneOffsetInMilliseconds;

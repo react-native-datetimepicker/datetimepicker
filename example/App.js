@@ -69,6 +69,8 @@ export const App = () => {
   const [interval, setMinInterval] = useState(1);
   const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
   const [disabled, setDisabled] = useState(false);
+  const [minimumDate, setMinimumDate] = useState();
+  const [maximumDate, setMaximumDate] = useState();
 
   // Windows-specific
   const [time, setTime] = useState(undefined);
@@ -106,6 +108,13 @@ export const App = () => {
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
+  };
+
+  const toggleMinMaxDate = () => {
+    const today = new Date();
+    setMaximumDate(maximumDate ? undefined : today);
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    setMinimumDate(minimumDate ? undefined : yesterday);
   };
 
   if (Platform.OS !== 'windows') {
@@ -252,11 +261,23 @@ export const App = () => {
                 title="setTzOffsetInMinutes to 60"
               />
             </View>
+            <View style={styles.button}>
+              <Button
+                testID="setMinMax"
+                onPress={() => {
+                  toggleMinMaxDate();
+                  setShow(true);
+                }}
+                title="toggleMinMaxDate"
+              />
+            </View>
             {show && (
               <DateTimePicker
                 testID="dateTimePicker"
                 timeZoneOffsetInMinutes={tzOffsetInMinutes}
                 minuteInterval={interval}
+                maximumDate={maximumDate}
+                minimumDate={minimumDate}
                 value={date}
                 mode={mode}
                 is24Hour

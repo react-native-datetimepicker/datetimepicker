@@ -111,10 +111,9 @@ export const App = () => {
   };
 
   const toggleMinMaxDate = () => {
-    const today = new Date();
-    setMaximumDate(maximumDate ? undefined : today);
-    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-    setMinimumDate(minimumDate ? undefined : yesterday);
+    const today = moment.utc().startOf('day');
+    setMaximumDate(maximumDate ? undefined : today.toDate());
+    setMinimumDate(minimumDate ? undefined : today.subtract(1, 'day').toDate());
   };
 
   if (Platform.OS !== 'windows') {

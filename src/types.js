@@ -4,7 +4,7 @@
  */
 
 import type {SyntheticEvent} from 'CoreEventTypes';
-import type {NativeComponent} from 'ReactNative';
+import type {HostComponent} from 'ReactNative';
 import type {ViewProps} from 'ViewPropTypes';
 import type {ElementRef} from 'react';
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
@@ -183,7 +183,7 @@ export type DateTimePickerResult = $ReadOnly<{|
   minute: number,
 |}>;
 
-export type RCTDateTimePickerNative = Class<NativeComponent<IOSNativeProps>>;
+export type RCTDateTimePickerNative = Class<HostComponent<IOSNativeProps>>;
 export type NativeRef = {
   current: ElementRef<RCTDateTimePickerNative> | null,
 };

@@ -1,13 +1,13 @@
-platform :ios, "9.0"
+platform :ios, "10.0"
 $node_modules_path = "../../node_modules"
 
 require_relative "#{$node_modules_path}/@react-native-community/cli-platform-ios/native_modules"
 
 def add_flipper_pods!(versions = {})
-  versions["Flipper"] ||= "~> 0.33.1"
-  versions["DoubleConversion"] ||= "1.1.7"
-  versions["Flipper-Folly"] ||= "~> 2.1"
-  versions["Flipper-Glog"] ||= "0.3.6"
+  versions["Flipper"] ||= "~> 0.111.0"
+  versions["DoubleConversion"] ||= "3.1.7"
+  versions["Flipper-Folly"] ||= "~> 2.6.9"
+  versions["Flipper-Glog"] ||= "0.3.9"
   versions["Flipper-PeerTalk"] ||= "~> 0.0.4"
   versions["Flipper-RSocket"] ||= "~> 1.0"
   pod "FlipperKit", versions["Flipper"], :configuration => "Debug"
@@ -51,7 +51,7 @@ target "example" do
   pod "RCTRequired", :path => "#{$node_modules_path}/react-native/Libraries/RCTRequired"
   pod "RCTTypeSafety", :path => "#{$node_modules_path}/react-native/Libraries/TypeSafety"
   pod "React", :path => "#{$node_modules_path}/react-native/"
-  pod "React-Core", :path => "#{$node_modules_path}/react-native/"
+  pod "React-Core", :path => "#{$node_modules_path}/react-native/", :modular_headers => true
   pod "React-CoreModules", :path => "#{$node_modules_path}/react-native/React/CoreModules"
   pod "React-Core/DevSupport", :path => "#{$node_modules_path}/react-native/"
   pod "React-RCTActionSheet", :path => "#{$node_modules_path}/react-native/Libraries/ActionSheetIOS"

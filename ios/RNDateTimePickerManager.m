@@ -12,6 +12,8 @@
 #import "RNDateTimePicker.h"
 #import <React/UIView+React.h>
 
+#import "RNDateTimePicker-Swift.h"
+
 @implementation RCTConvert(UIDatePicker)
 
 RCT_ENUM_CONVERTER(UIDatePickerMode, (@{
@@ -81,13 +83,20 @@ RCT_EXPORT_METHOD(getDefaultDisplayValue:(NSDictionary *)options resolver:(RCTPr
 }
 
 RCT_EXPORT_VIEW_PROPERTY(date, NSDate)
-RCT_EXPORT_VIEW_PROPERTY(locale, NSLocale)
 RCT_EXPORT_VIEW_PROPERTY(minimumDate, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(maximumDate, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(minuteInterval, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
 RCT_REMAP_VIEW_PROPERTY(mode, datePickerMode, UIDatePickerMode)
 RCT_REMAP_VIEW_PROPERTY(timeZoneOffsetInMinutes, timeZone, NSTimeZone)
+
+RCT_CUSTOM_VIEW_PROPERTY(locale, NSLocale, RNDateTimePicker) {
+    if (@available(iOS 14.0, *)) {
+        [[[SwiftFunctions alloc]init] configureLocale:[RCTConvert NSLocale:json] datePicker:view];
+    } else {
+        view.locale = [RCTConvert NSLocale:json];
+    }
+}
 
 RCT_CUSTOM_VIEW_PROPERTY(themeVariant, UIUserInterfaceStyle, RNDateTimePicker) {
     if (@available(iOS 13.0, *)) {

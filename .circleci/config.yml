@@ -33,9 +33,9 @@ jobs:
       - run:
           command: yarn flow
           name: Flow
-      - run:
-          command: yarn test
-          name: Jest
+#      - run:
+#          command: yarn test
+#          name: Jest
   e2e_release_ios:
     executor:
       name: rn/macos

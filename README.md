@@ -22,7 +22,7 @@ The module is still published on `npm` under the old namespace (as documented) b
 [![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
 React Native date & time picker component for iOS, Android and Windows.
- 
+
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>
   <tr>
@@ -270,7 +270,8 @@ Defines the minimum date that can be selected. Note that on Android, this only w
 
 #### `timeZoneOffsetInMinutes` (`optional`, `iOS and Android only`)
 
-Allows changing of the timeZone of the date picker. By default it uses the device's time zone.
+Allows changing of the timeZone of the date picker. By default, it uses the device's time zone.
+We strongly recommend avoiding this prop on android because of known issues in the implementation.
 
 ```js
 // GMT+1

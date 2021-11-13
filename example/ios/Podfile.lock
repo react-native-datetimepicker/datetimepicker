@@ -182,7 +182,7 @@ PODS:
     - React-cxxreact (= 0.62.3)
     - React-jsi (= 0.62.3)
   - React-jsinspector (0.62.3)
-  - react-native-segmented-control (2.2.2):
+  - react-native-segmented-control (2.4.0):
     - React-Core
   - React-RCTActionSheet (0.62.3):
     - React-Core/RCTActionSheetHeaders (= 0.62.3)
@@ -245,6 +245,8 @@ PODS:
     - ReactCommon/callinvoker (= 0.62.3)
   - RNDateTimePicker (3.5.2):
     - React-Core
+  - RNLocalize (2.1.5):
+    - React-Core
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -264,7 +266,7 @@ DEPENDENCIES:
   - React-jsi (from `../../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../../node_modules/react-native/ReactCommon/jsinspector`)
-  - "react-native-segmented-control (from `../../node_modules/@react-native-community/segmented-control`)"
+  - "react-native-segmented-control (from `../../node_modules/@react-native-segmented-control/segmented-control`)"
   - React-RCTActionSheet (from `../../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../../node_modules/react-native/Libraries/Blob`)
@@ -277,6 +279,7 @@ DEPENDENCIES:
   - ReactCommon/callinvoker (from `../../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../../node_modules/react-native/ReactCommon`)
   - RNDateTimePicker (from `../..`)
+  - RNLocalize (from `../../node_modules/react-native-localize`)
   - Yoga (from `../../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -313,7 +316,7 @@ EXTERNAL SOURCES:
   React-jsinspector:
     :path: "../../node_modules/react-native/ReactCommon/jsinspector"
   react-native-segmented-control:
-    :path: "../../node_modules/@react-native-community/segmented-control"
+    :path: "../../node_modules/@react-native-segmented-control/segmented-control"
   React-RCTActionSheet:
     :path: "../../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -336,6 +339,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/react-native/ReactCommon"
   RNDateTimePicker:
     :path: "../.."
+  RNLocalize:
+    :path: "../../node_modules/react-native-localize"
   Yoga:
     :path: "../../node_modules/react-native/ReactCommon/yoga"
 
@@ -355,7 +360,7 @@ SPEC CHECKSUMS:
   React-jsi: ef7ed91688be7e01bc78080062b428ce1bcd79d0
   React-jsiexecutor: d664a436303eb2cf9919df250f40ce5cf5e99fbe
   React-jsinspector: 74f6ea8f9d38ff44cc8f9867b2ecc9130d6cc2e5
-  react-native-segmented-control: 65df6cd0619b780b3843d574a72d4c7cec396097
+  react-native-segmented-control: 06607462630512ff8eef652ec560e6235a30cc3e
   React-RCTActionSheet: abb6e20cdc3710d3442d735cdb2c641a5597f35d
   React-RCTAnimation: cacf34437277ae266c95896f40eb4e7604017132
   React-RCTBlob: ab3a193130b61816f8f3807941087873bfd5e8a4
@@ -367,6 +372,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 36a70f1015574284fa6770993c1e83a1f85dbabc
   ReactCommon: 3ea86417fa6e432b500579df40b057df54cfb4d4
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
+  RNLocalize: 74b82db20cc3895ccc25af992c644879bcec2815
   Yoga: b5db822228963b87948afa7a5a531088607151dc
 
 PODFILE CHECKSUM: 13bca7634bb48da93ac722ac50849e93aa8d98bb

@@ -45,6 +45,12 @@ jobs:
           at: .
       - rn/setup_macos_executor:
           node_version: '14.10.0'
+          homebrew_cache: false
+      - save_cache:
+          key: |
+            brew-cache-{{ arch }}-{{ .Environment.CACHE_VERSION }}
+          paths:
+            - ~/Library/Caches/Homebrew
       - rn/ios_simulator_start:
           device: 'iPhone 11'
       # - rn/yarn_install

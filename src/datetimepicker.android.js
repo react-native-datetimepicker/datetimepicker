@@ -65,13 +65,14 @@ function getPicker({
 }
 
 function timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes) {
-  let localDate = date;
   if (typeof timeZoneOffsetInMinutes === 'number') {
-    const offset =
-      localDate.getTimezoneOffset() * MIN_MS + timeZoneOffsetInMinutes * MIN_MS;
-    localDate = new Date(date.getTime() - offset);
+    // FIXME this causes a bug. repro: set tz offset to zero, and then keep opening and closing the calendar picker
+    // https://github.com/react-native-datetimepicker/datetimepicker/issues/528
+    const offset = date.getTimezoneOffset() + timeZoneOffsetInMinutes;
+    const shiftedDate = new Date(date.getTime() - offset * MIN_MS);
+    return shiftedDate;
   }
-  return localDate;
+  return date;
 }
 
 export default function RNDateTimePicker(props: AndroidNativeProps) {

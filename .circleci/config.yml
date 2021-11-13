@@ -78,6 +78,12 @@ jobs:
           at: .
       - rn/setup_macos_executor:
           node_version: '12.10.0'
+          homebrew_cache: false
+      - save_cache:
+          key: |
+            brew-cache-{{ arch }}-{{ .Environment.CACHE_VERSION }}
+          paths:
+            - ~/Library/Caches/Homebrew
       # - rn/yarn_install
       - run:
           command: yarn install --frozen-lockfile --ignore-engines

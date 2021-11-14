@@ -44,7 +44,7 @@ jobs:
       - attach_workspace:
           at: .
       - rn/setup_macos_executor:
-          node_version: '14.17.0'
+          node_version: '14.10.0'
           homebrew_cache: false
       - save_cache:
           key: |

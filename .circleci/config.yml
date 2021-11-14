@@ -90,6 +90,7 @@ jobs:
           name: yarn install
       - rn/android_emulator_start:
           logcat_grep: 'com.reactcommunity.rndatetimepicker'
+          build_tools_version: '30.0.2'
       - run:
           command: yarn detox:android:build:release
           name: build for detox

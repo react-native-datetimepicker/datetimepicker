@@ -48,10 +48,6 @@ describe('DatePicker', () => {
     });
   });
 
-  it('has default mode `date`', () => {
-    expect(DatePicker.defaultProps.mode).toEqual('date');
-  });
-
   it.each([['time'], ['datetime'], ['countdown']])(
     'renders with mode %s',
     async (mode) => {

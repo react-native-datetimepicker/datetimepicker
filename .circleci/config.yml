@@ -72,7 +72,7 @@ jobs:
     # see https://support.circleci.com/hc/en-us/articles/360000028928-Testing-with-Android-emulator-on-CircleCI-2-0
     executor:
       name: rn/macos
-      xcode_version: '13.0.0'
+      xcode_version: '12.4.0'
     steps:
       - attach_workspace:
           at: .
@@ -90,7 +90,6 @@ jobs:
           name: yarn install
       - rn/android_emulator_start:
           logcat_grep: 'com.reactcommunity.rndatetimepicker'
-#          build_tools_version: '30.0.2' # gives ERROR   | x86_64 emulation currently requires hardware acceleration!
       - run:
           command: yarn detox:android:build:release
           name: build for detox

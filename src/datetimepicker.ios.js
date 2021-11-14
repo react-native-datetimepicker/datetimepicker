@@ -13,7 +13,7 @@ import RNDateTimePicker from './picker';
 import {toMilliseconds} from './utils';
 import {IOS_DISPLAY, MODE_DATE} from './constants';
 import invariant from 'invariant';
-import React, {useEffect, useState} from 'react';
+import * as React from 'react';
 import {getPickerHeightStyle} from './layoutUtilsIOS';
 import {Platform, StyleSheet} from 'react-native';
 
@@ -25,7 +25,7 @@ import type {
   IOSDisplay,
 } from './types';
 
-const getDisplaySafe = (display: ?IOSDisplay): IOSDisplay => {
+const getDisplaySafe = (display: IOSDisplay): IOSDisplay => {
   const majorVersionIOS = parseInt(Platform.Version, 10);
   if (display === IOS_DISPLAY.inline && majorVersionIOS < 14) {
     // inline is available since 14.0
@@ -48,20 +48,20 @@ export default function Picker({
   minimumDate,
   style,
   testID,
-  mode,
   minuteInterval,
   timeZoneOffsetInMinutes,
   textColor,
   themeVariant,
   onChange,
+  mode = MODE_DATE,
+  display: providedDisplay = IOS_DISPLAY.default,
   disabled = false,
-  ...otherProps
-}: IOSNativeProps) {
-  const [heightStyle, setHeightStyle] = useState(undefined);
+}: IOSNativeProps): React.Node {
+  const [heightStyle, setHeightStyle] = React.useState(undefined);
   const _picker: NativeRef = React.useRef(null);
-  const display = getDisplaySafe(otherProps.display);
+  const display = getDisplaySafe(providedDisplay);
 
-  useEffect(
+  React.useEffect(
     function ensureNativeIsInSyncWithJS() {
       const {current} = _picker;
 
@@ -76,7 +76,7 @@ export default function Picker({
     [onChange, value],
   );
 
-  useEffect(
+  React.useEffect(
     function ensureCorrectHeight() {
       const height = getPickerHeightStyle(display, mode);
       if (height instanceof Promise) {
@@ -110,6 +110,7 @@ export default function Picker({
   toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
 
   return (
+    // $FlowFixMe - dozen of flow errors
     <RNDateTimePicker
       testID={testID}
       ref={_picker}
@@ -131,8 +132,3 @@ export default function Picker({
     />
   );
 }
-
-Picker.defaultProps = {
-  mode: MODE_DATE,
-  display: IOS_DISPLAY.default,
-};

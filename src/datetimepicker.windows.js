@@ -22,7 +22,9 @@ const RNDateTimePickerWindows = requireNativeComponent(
 );
 const RNTimePickerWindows = requireNativeComponent('RNTimePickerWindows');
 
-export default function RNDateTimePickerQWE(props: WindowsNativeProps) {
+export default function RNDateTimePickerQWE(
+  props: WindowsNativeProps,
+): React.Node {
   const localProps = {
     dayOfWeekFormat: props.dayOfWeekFormat,
     dateFormat: props.dateFormat,
@@ -36,8 +38,8 @@ export default function RNDateTimePickerQWE(props: WindowsNativeProps) {
   };
 
   const _onChange = (event: WindowsDatePickerChangeEvent) => {
-    props.onChange &&
-      props.onChange(event, new Date(event.nativeEvent.newDate));
+    const {onChange} = props;
+    onChange && onChange(event, new Date(event.nativeEvent.newDate));
   };
 
   // The Date object returns timezone in minutes. Convert that to seconds
@@ -47,9 +49,10 @@ export default function RNDateTimePickerQWE(props: WindowsNativeProps) {
   if (timezoneOffsetInSeconds == null && props.value != null) {
     timezoneOffsetInSeconds = -60 * props.value.getTimezoneOffset();
   }
+  const {mode} = props;
 
   // 'date' is the default mode
-  if (props.mode === 'date' || props.mode == null) {
+  if (mode === 'date' || mode == null) {
     return (
       <RNDateTimePickerWindows
         {...localProps}
@@ -57,7 +60,7 @@ export default function RNDateTimePickerQWE(props: WindowsNativeProps) {
         timeZoneOffsetInSeconds={timezoneOffsetInSeconds}
       />
     );
-  } else if (props.mode === 'time') {
+  } else if (mode === 'time') {
     return (
       <RNTimePickerWindows
         style={props.style}
@@ -67,5 +70,8 @@ export default function RNDateTimePickerQWE(props: WindowsNativeProps) {
         onChange={_onChange}
       />
     );
+  } else {
+    console.error(`RNDateTimePicker: unknown mode ${mode}`);
+    return null;
   }
 }

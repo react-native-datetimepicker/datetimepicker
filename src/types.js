@@ -196,6 +196,7 @@ export type WindowsDatePickerChangeEvent = {|
 
 export type WindowsNativeProps = $ReadOnly<{|
   ...BaseProps,
+  mode: 'date' | 'time',
   onChange?: (event: WindowsDatePickerChangeEvent, date: Date) => void,
 
   placeholderText?: string,

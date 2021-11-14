@@ -161,6 +161,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
   return null;
 }
 
+// TODO remove
 RNDateTimePicker.defaultProps = {
   display: DISPLAY_DEFAULT,
   mode: MODE_DATE,

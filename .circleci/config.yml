@@ -30,9 +30,9 @@ jobs:
       - run:
           command: yarn lint
           name: Run ESLint
-      - run:
-          command: yarn flow
-          name: Flow
+#      - run:
+#          command: yarn flow
+#          name: Flow
       - run:
           command: yarn test
           name: Jest

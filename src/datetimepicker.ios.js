@@ -25,7 +25,7 @@ import type {
   IOSDisplay,
 } from './types';
 
-const getDisplaySafe = (display: IOSDisplay) => {
+const getDisplaySafe = (display: ?IOSDisplay): IOSDisplay => {
   const majorVersionIOS = parseInt(Platform.Version, 10);
   if (display === IOS_DISPLAY.inline && majorVersionIOS < 14) {
     // inline is available since 14.0
@@ -58,7 +58,7 @@ export default function Picker({
   ...otherProps
 }: IOSNativeProps) {
   const [heightStyle, setHeightStyle] = useState(undefined);
-  const _picker: NativeRef = React.useRef();
+  const _picker: NativeRef = React.useRef(null);
   const display = getDisplaySafe(otherProps.display);
 
   useEffect(
@@ -67,6 +67,7 @@ export default function Picker({
 
       if (value && onChange && current) {
         const timestamp = value.getTime();
+        // $FlowFixMe Cannot call `current.setNativeProps` because property `setNativeProps` is missing in `AbstractComponent` [1].
         current.setNativeProps({
           date: timestamp,
         });

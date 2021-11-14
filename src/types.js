@@ -3,11 +3,11 @@
  * @flow strict-local
  */
 
-import type {SyntheticEvent} from 'CoreEventTypes';
-import type {NativeComponent} from 'ReactNative';
-import type {ViewProps} from 'ViewPropTypes';
+import type {SyntheticEvent} from 'react-native/Libraries/Types/CoreEventTypes';
+import type {HostComponent} from 'react-native';
+import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {ElementRef} from 'react';
-import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import {
   ANDROID_MODE,
   ANDROID_DISPLAY,
@@ -183,7 +183,7 @@ export type DateTimePickerResult = $ReadOnly<{|
   minute: number,
 |}>;
 
-export type RCTDateTimePickerNative = Class<NativeComponent<IOSNativeProps>>;
+export type RCTDateTimePickerNative = Class<HostComponent<IOSNativeProps>>;
 export type NativeRef = {
   current: ElementRef<RCTDateTimePickerNative> | null,
 };
@@ -208,7 +208,7 @@ export type WindowsNativeProps = $ReadOnly<{|
     | '{dayofweek.abbreviated(2)}'
     | '{dayofweek.abbreviated(3)}'
     | '{dayofweek.full}',
-  firstDayOfWeek?: DAY_OF_WEEK,
+  firstDayOfWeek?: typeof DAY_OF_WEEK,
   timeZoneOffsetInSeconds?: number,
   is24Hour?: boolean,
   minuteInterval?: number,

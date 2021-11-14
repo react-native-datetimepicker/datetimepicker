@@ -14,7 +14,7 @@ const {
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
 } = require('./utils/actions');
-const {isAndroid, isIOS, wait, Platform} = require('./utils/utils');
+const {isIOS, wait, Platform} = require('./utils/utils');
 
 describe('Example', () => {
   const getPickerDisplay = () => {
@@ -31,14 +31,6 @@ describe('Example', () => {
       .toBeVisible()
       .withTimeout(5000);
   });
-
-  it('should have title and hermes indicator on android', async () => {
-    await expect(elementByText('Example DateTime Picker')).toBeVisible();
-    if (isAndroid()) {
-      await expect(elementById('hermesIndicator')).toExist();
-    }
-  });
-
   it('should show date picker after tapping datePicker button', async () => {
     await userOpensPicker({mode: 'date', display: getPickerDisplay()});
 

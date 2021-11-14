@@ -11,7 +11,7 @@ jobs:
   checkout_code:
     executor:
       name: rn/linux_js
-      node_version: '14.10.0'
+      node_version: '14.17.0'
     steps:
       - checkout
       - persist_to_workspace:
@@ -33,9 +33,9 @@ jobs:
       - run:
           command: yarn flow
           name: Flow
-#      - run:
-#          command: yarn test
-#          name: Jest
+      - run:
+          command: yarn test
+          name: Jest
   e2e_release_ios:
     executor:
       name: rn/macos
@@ -44,7 +44,7 @@ jobs:
       - attach_workspace:
           at: .
       - rn/setup_macos_executor:
-          node_version: '14.10.0'
+          node_version: '14.17.0'
           homebrew_cache: false
       - save_cache:
           key: |
@@ -77,7 +77,7 @@ jobs:
       - attach_workspace:
           at: .
       - rn/setup_macos_executor:
-          node_version: '12.10.0'
+          node_version: '14.17.0'
           homebrew_cache: false
       - save_cache:
           key: |

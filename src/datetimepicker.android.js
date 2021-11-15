@@ -3,9 +3,6 @@
  * @flow strict-local
  */
 import {
-  MODE_DATE,
-  MODE_TIME,
-  DISPLAY_DEFAULT,
   DATE_SET_ACTION,
   TIME_SET_ACTION,
   DISMISS_ACTION,
@@ -42,8 +39,8 @@ function getPicker({
   timeZoneOffsetInMinutes,
 }) {
   switch (mode) {
-    case MODE_TIME:
-      return pickers[MODE_TIME].open({
+    case ANDROID_MODE.time:
+      return pickers[mode].open({
         value,
         display,
         minuteInterval,
@@ -51,9 +48,8 @@ function getPicker({
         neutralButtonLabel,
         timeZoneOffsetInMinutes,
       });
-    case MODE_DATE:
     default:
-      return pickers[MODE_DATE].open({
+      return pickers[ANDROID_MODE.date].open({
         value,
         display,
         minimumDate,
@@ -78,10 +74,10 @@ function timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes) {
 export default function RNDateTimePicker(props: AndroidNativeProps) {
   validateProps(props);
   const {
-    mode,
+    mode = ANDROID_MODE.date,
+    display = ANDROID_DISPLAY.default,
     value,
     onChange,
-    display,
     is24Hour,
     minimumDate,
     maximumDate,
@@ -94,7 +90,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
   useEffect(() => {
     // This effect runs on unmount / with mode change, and will ensure the picker is closed.
     // This allows for controlling the opening state of the picker through declarative logic in jsx.
-    return () => (pickers[mode] ?? pickers[MODE_DATE]).dismiss();
+    return () => (pickers[mode] ?? pickers[ANDROID_MODE.date]).dismiss();
   }, [mode]);
 
   useEffect(
@@ -160,9 +156,3 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
 
   return null;
 }
-
-// TODO remove
-RNDateTimePicker.defaultProps = {
-  display: DISPLAY_DEFAULT,
-  mode: MODE_DATE,
-};

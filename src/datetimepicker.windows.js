@@ -9,6 +9,7 @@
 import {requireNativeComponent, StyleSheet} from 'react-native';
 import type {WindowsNativeProps, WindowsDatePickerChangeEvent} from './types';
 import * as React from 'react';
+import {WINDOWS_MODE} from './constants';
 
 const styles = StyleSheet.create({
   rnDatePicker: {
@@ -52,7 +53,7 @@ export default function RNDateTimePickerQWE(
   const {mode} = props;
 
   // 'date' is the default mode
-  if (mode === 'date' || mode == null) {
+  if (mode === WINDOWS_MODE.date || mode == null) {
     return (
       <RNDateTimePickerWindows
         {...localProps}
@@ -60,7 +61,7 @@ export default function RNDateTimePickerQWE(
         timeZoneOffsetInSeconds={timezoneOffsetInSeconds}
       />
     );
-  } else if (mode === 'time') {
+  } else if (mode === WINDOWS_MODE.time) {
     return (
       <RNTimePickerWindows
         style={props.style}

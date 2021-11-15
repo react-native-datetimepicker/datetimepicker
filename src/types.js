@@ -14,11 +14,13 @@ import {
   DAY_OF_WEEK,
   IOS_DISPLAY,
   IOS_MODE,
+  WINDOWS_MODE,
 } from './constants';
 
 export type IOSDisplay = $Keys<typeof IOS_DISPLAY>;
 export type IOSMode = $Keys<typeof IOS_MODE>;
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
+type WindowsMode = $Keys<typeof WINDOWS_MODE>;
 type Display = $Keys<typeof ANDROID_DISPLAY>;
 type MinuteInterval = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
 
@@ -196,7 +198,7 @@ export type WindowsDatePickerChangeEvent = {|
 
 export type WindowsNativeProps = $ReadOnly<{|
   ...BaseProps,
-  mode: 'date' | 'time',
+  mode: WindowsMode,
   onChange?: (event: WindowsDatePickerChangeEvent, date: Date) => void,
 
   placeholderText?: string,

@@ -14,7 +14,7 @@ const renderPicker = async (props) => {
 
 describe('DatePicker', () => {
   it('renders a native Component', async () => {
-    const {toJSON} = await renderPicker({});
+    const {toJSON} = await renderPicker();
 
     expect(toJSON()).toMatchSnapshot();
   });

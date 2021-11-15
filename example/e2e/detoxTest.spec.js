@@ -67,19 +67,15 @@ describe('Example', () => {
       await userTapsCancelButtonAndroid();
     }
 
-    const dateText = getDateText();
-    await expect(dateText).toHaveText('11/13/2021');
+    await expect(getDateText()).toHaveText('11/13/2021');
   });
 
   it('should update dateTimeText when date changes', async () => {
     await userOpensPicker({mode: 'date', display: getPickerDisplay()});
-    const dateText = getDateText();
 
     if (isIOS()) {
       const testElement = getDateTimePickerControlIOS();
-      await testElement.setDatePickerDate('2019-11-04', 'yyyy-MM-dd');
-
-      await expect(dateText).toHaveText('11/04/2019');
+      await testElement.setDatePickerDate('2021-12-12', 'yyyy-MM-dd');
     } else {
       const calendarHorizontalScrollView = element(
         by
@@ -89,9 +85,8 @@ describe('Example', () => {
       await calendarHorizontalScrollView.swipe('left', 'fast', 1);
       await calendarHorizontalScrollView.tap({x: 50, y: 200}); // select some date
       await userTapsOkButtonAndroid();
-
-      await expect(dateText).toHaveText('12/12/2021');
     }
+    await expect(getDateText()).toHaveText('12/12/2021');
   });
 
   it('should show time picker after tapping timePicker button', async () => {
@@ -117,13 +112,11 @@ describe('Example', () => {
       await userChangesTimeValue({minutes: '22'});
       await userTapsCancelButtonAndroid();
     }
-    const timeText = getTimeText();
-    await expect(timeText).toHaveText('11:00');
+    await expect(getTimeText()).toHaveText('11:00');
   });
 
   it('should change time text when time changes', async () => {
     await userOpensPicker({mode: 'time', display: getPickerDisplay()});
-    const timeText = getTimeText();
 
     if (isIOS()) {
       const testElement = getDateTimePickerControlIOS();
@@ -133,7 +126,7 @@ describe('Example', () => {
       await userChangesTimeValue({hours: 15, minutes: 44});
       await userTapsOkButtonAndroid();
     }
-    await expect(timeText).toHaveText('15:44');
+    await expect(getTimeText()).toHaveText('15:44');
   });
 
   describe('time zone offset', () => {
@@ -211,8 +204,7 @@ describe('Example', () => {
 
         await userTapsOkButtonAndroid();
 
-        const timeText = getTimeText();
-        await expect(timeText).toHaveText('23:20');
+        await expect(getTimeText()).toHaveText('23:20');
       } catch (err) {
         console.error(err);
       }

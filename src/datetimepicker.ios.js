@@ -11,7 +11,7 @@
  */
 import RNDateTimePicker from './picker';
 import {toMilliseconds} from './utils';
-import {IOS_DISPLAY, MODE_DATE} from './constants';
+import {IOS_DISPLAY, ANDROID_MODE} from './constants';
 import invariant from 'invariant';
 import * as React from 'react';
 import {getPickerHeightStyle} from './layoutUtilsIOS';
@@ -53,7 +53,7 @@ export default function Picker({
   textColor,
   themeVariant,
   onChange,
-  mode = MODE_DATE,
+  mode = ANDROID_MODE.date,
   display: providedDisplay = IOS_DISPLAY.default,
   disabled = false,
 }: IOSNativeProps): React.Node {

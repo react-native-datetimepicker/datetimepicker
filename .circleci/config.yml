@@ -44,7 +44,7 @@ jobs:
       - attach_workspace:
           at: .
       - rn/setup_macos_executor:
-          node_version: '14.10.0'
+          node_version: '14.17.0'
           homebrew_cache: false
       - save_cache:
           key: |
@@ -60,6 +60,9 @@ jobs:
       - rn/pod_install:
           pod_install_directory: 'example/ios'
       - run:
+          command: curl https://raw.githubusercontent.com/facebook/react-native/6334ac35ac3cbc2c84b2d46d46ec118bf9bf714d/scripts/find-node.sh > node_modules/react-native/scripts/find-node.sh
+          name: fix issue with nvm # will be fixed in RN 67 (https://github.com/react-native-community/upgrade-support/issues/138)
+      - run:
           command: yarn detox:ios:build:release
           name: build for detox
       - run:
@@ -72,6 +75,8 @@ jobs:
     # see https://support.circleci.com/hc/en-us/articles/360000028928-Testing-with-Android-emulator-on-CircleCI-2-0
     executor:
       name: rn/macos
+      # xcode version influences macos version (https://circleci.com/docs/2.0/testing-ios/) and we need to keep this at 12.4 as otherwise the simulator does not start up
+      # TODO investigate using circleCI's android image
       xcode_version: '12.4.0'
     steps:
       - attach_workspace:

@@ -42,9 +42,9 @@ describe('Example', () => {
   });
 
   it('nothing should happen if date does not change', async () => {
-    await userOpensPicker({mode: 'date', display: 'default'});
-
     if (isIOS()) {
+      await userOpensPicker({mode: 'date', display: 'compact'});
+
       // label maps to description
       await element(by.label('Date Picker')).tap();
       const testElement = element(by.label('Next Month'));
@@ -54,6 +54,7 @@ describe('Example', () => {
       // dismiss the picker
       await element(by.type('_UIContextMenuContainerView')).tap({x: 50, y: 50});
     } else {
+      await userOpensPicker({mode: 'date', display: 'default'});
       const testElement = element(
         by
           .type('android.widget.ScrollView')

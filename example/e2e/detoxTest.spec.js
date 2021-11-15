@@ -13,6 +13,7 @@ const {
   userOpensPicker,
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
+  userDismissesCompactDatePicker,
 } = require('./utils/actions');
 const {isIOS, wait, Platform} = require('./utils/utils');
 
@@ -45,23 +46,24 @@ describe('Example', () => {
     if (isIOS()) {
       await userOpensPicker({mode: 'date', display: 'compact'});
 
-      // label maps to description
-      await element(by.label('Date Picker')).tap();
-      const testElement = element(by.label('Next Month'));
+      await element(
+        by.traits(['staticText']).withAncestor(by.label('Date Picker')),
+      ).tap();
+      // 'label' maps to 'description' in view hierarchy debugger
+      const nextMonthArrow = element(by.label('Next Month'));
 
-      await testElement.tap();
-      await testElement.tap();
-      // dismiss the picker
-      await element(by.type('_UIContextMenuContainerView')).tap({x: 50, y: 50});
+      await nextMonthArrow.tap();
+      await nextMonthArrow.tap();
+      await userDismissesCompactDatePicker();
     } else {
       await userOpensPicker({mode: 'date', display: 'default'});
-      const testElement = element(
+      const calendarHorizontalScrollView = element(
         by
           .type('android.widget.ScrollView')
           .withAncestor(by.type('android.widget.DatePicker')),
       );
-      await testElement.swipe('left', 'fast', 1);
-      await testElement.tap({x: 50, y: 200});
+      await calendarHorizontalScrollView.swipe('left', 'fast', 1);
+      await calendarHorizontalScrollView.tap({x: 50, y: 200});
       await userTapsCancelButtonAndroid();
     }
 
@@ -79,13 +81,13 @@ describe('Example', () => {
 
       await expect(dateText).toHaveText('11/04/2019');
     } else {
-      const testElement = element(
+      const calendarHorizontalScrollView = element(
         by
           .type('android.widget.ScrollView')
           .withAncestor(by.type('android.widget.DatePicker')),
       );
-      await testElement.swipe('left', 'fast', 1);
-      await testElement.tap({x: 50, y: 200}); // select some date
+      await calendarHorizontalScrollView.swipe('left', 'fast', 1);
+      await calendarHorizontalScrollView.tap({x: 50, y: 200}); // select some date
       await userTapsOkButtonAndroid();
 
       await expect(dateText).toHaveText('12/12/2021');

@@ -56,9 +56,17 @@ async function userTapsOkButtonAndroid() {
   await okButton.tap();
 }
 
+async function userDismissesCompactDatePicker() {
+  await element(by.type('_UIDatePickerContainerView')).tap({
+    x: 50,
+    y: 50,
+  });
+}
+
 module.exports = {
   userOpensPicker,
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
   userChangesTimeValue,
+  userDismissesCompactDatePicker,
 };

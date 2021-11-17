@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   rn: react-native-community/react-native@5.6.0
+  android: circleci/android@1.0.3
 
 # - rn/yarn_install
 # fails with Error untarring cache: Error extracting tarball /var/folders/bq/mjrgbpkx5h1g_b22fpv0tlzc0000gn/T/cache376822577 : tmp/yarn/: Cannot extract through symlink tmp/yarn tmp/yarn/v6/: Cannot extract through symlink tmp/yarn/v6 tmp/yarn/v6/.tmp/: Cannot extract through symlink tmp/yarn/v6/.tmp tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/code-frame/: Cannot extract: exit status 1
@@ -71,30 +72,37 @@ jobs:
       - store_artifacts:
           path: ./artifacts
   e2e_release_android:
-    # we need to use mac to run emulator with acceleration
-    # see https://support.circleci.com/hc/en-us/articles/360000028928-Testing-with-Android-emulator-on-CircleCI-2-0
     executor:
-      name: rn/macos
-      # xcode version influences macos version (https://circleci.com/docs/2.0/testing-ios/) and we need to keep this at 12.4 as otherwise the simulator does not start up
-      # TODO investigate using circleCI's android image
-      xcode_version: '12.4.0'
+      name: android/android-machine
+      resource-class: large
+
     steps:
-      - attach_workspace:
-          at: .
-      - rn/setup_macos_executor:
-          node_version: '14.17.0'
-          homebrew_cache: false
-      - save_cache:
-          key: |
-            brew-cache-{{ arch }}-{{ .Environment.CACHE_VERSION }}
-          paths:
-            - ~/Library/Caches/Homebrew
-      # - rn/yarn_install
+      - checkout
+      - android/create-avd:
+          avd-name: TestingAVD
+          system-image: system-images;android-29;default;x86
+          install: true
+      - android/start-emulator:
+          avd-name: TestingAVD
+          no-window: true
+          restore-gradle-cache-prefix: v1a
+      - android/disable-animations
+      #      - attach_workspace:
+      #          at: .
+      #      - rn/setup_macos_executor:
+      #          node_version: '14.17.0'
+      #          homebrew_cache: false
+      #      - save_cache:
+      #          key: |
+      #            brew-cache-{{ arch }}-{{ .Environment.CACHE_VERSION }}
+      #          paths:
+      #            - ~/Library/Caches/Homebrew
+      #      # - rn/yarn_install
       - run:
           command: yarn install --frozen-lockfile --ignore-engines
           name: yarn install
-      - rn/android_emulator_start:
-          logcat_grep: 'com.reactcommunity.rndatetimepicker'
+      #      - rn/android_emulator_start:
+      #          logcat_grep: 'com.reactcommunity.rndatetimepicker'
       - run:
           command: yarn detox:android:build:release
           name: build for detox

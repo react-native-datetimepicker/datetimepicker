@@ -100,6 +100,9 @@ jobs:
       #            - ~/Library/Caches/Homebrew
       #      # - rn/yarn_install
       - run:
+          command: npm install --global yarn
+          name: install yarn
+      - run:
           command: yarn install --frozen-lockfile --ignore-engines
           name: yarn install
       #      - rn/android_emulator_start:

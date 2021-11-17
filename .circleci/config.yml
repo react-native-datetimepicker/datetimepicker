@@ -40,18 +40,13 @@ jobs:
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '13.0.0'
+      xcode_version: '13.1.0'
     steps:
       - attach_workspace:
           at: .
-      - rn/setup_macos_executor:
-          node_version: '14.17.0'
-          homebrew_cache: false
-      - save_cache:
-          key: |
-            brew-cache-{{ arch }}-{{ .Environment.CACHE_VERSION }}
-          paths:
-            - ~/Library/Caches/Homebrew
+      - run: |
+          HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
+          HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
       - rn/ios_simulator_start:
           device: 'iPhone 11'
       # - rn/yarn_install
@@ -88,25 +83,12 @@ jobs:
           restore-gradle-cache-prefix: v1a
           post-emulator-launch-assemble-command: "pwd"
       - android/disable-animations
-      #      - attach_workspace:
-      #          at: .
-      #      - rn/setup_macos_executor:
-      #          node_version: '14.17.0'
-      #          homebrew_cache: false
-      #      - save_cache:
-      #          key: |
-      #            brew-cache-{{ arch }}-{{ .Environment.CACHE_VERSION }}
-      #          paths:
-      #            - ~/Library/Caches/Homebrew
-      #      # - rn/yarn_install
       - run:
           command: npm install --global yarn
           name: install yarn
       - run:
           command: yarn install --frozen-lockfile --ignore-engines
           name: yarn install
-      #      - rn/android_emulator_start:
-      #          logcat_grep: 'com.reactcommunity.rndatetimepicker'
       - run:
           command: yarn detox:android:build:release
           name: build for detox

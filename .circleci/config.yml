@@ -20,7 +20,9 @@ jobs:
           root: .
 
   analyse_js:
-    executor: rn/linux_js
+    executor:
+      name: rn/linux_js
+      node_version: '14.17.0'
     steps:
       - attach_workspace:
           at: .
@@ -102,7 +104,9 @@ jobs:
           path: ./artifacts
 
   publish:
-    executor: rn/linux_js
+    executor:
+      name: rn/linux_js
+      node_version: '14.17.0'
     steps:
       - attach_workspace:
           at: .

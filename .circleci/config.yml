@@ -18,6 +18,7 @@ jobs:
       - persist_to_workspace:
           paths: .
           root: .
+
   analyse_js:
     executor: rn/linux_js
     steps:
@@ -26,7 +27,7 @@ jobs:
       # - rn/yarn_install
       # fails with Error untarring cache: Error extracting tarball /var/folders/bq/mjrgbpkx5h1g_b22fpv0tlzc0000gn/T/cache376822577 : tmp/yarn/: Cannot extract through symlink tmp/yarn tmp/yarn/v6/: Cannot extract through symlink tmp/yarn/v6 tmp/yarn/v6/.tmp/: Cannot extract through symlink tmp/yarn/v6/.tmp tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/code-frame/: Cannot extract: exit status 1
       - run:
-          command: yarn install --frozen-lockfile --ignore-engines
+          command: yarn install --frozen-lockfile
           name: yarn install
       - run:
           command: yarn lint
@@ -37,6 +38,7 @@ jobs:
       - run:
           command: yarn test
           name: Jest
+
   e2e_release_ios:
     executor:
       name: rn/macos
@@ -47,11 +49,12 @@ jobs:
       - run: |
           HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
           HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
+          name: install applesimutils
       - rn/ios_simulator_start:
           device: 'iPhone 11'
       # - rn/yarn_install
       - run:
-          command: yarn install --frozen-lockfile --ignore-engines
+          command: yarn install --frozen-lockfile
           name: yarn install
       - rn/pod_install:
           pod_install_directory: 'example/ios'
@@ -60,17 +63,17 @@ jobs:
           name: fix issue with nvm # will be fixed in RN 67 (https://github.com/react-native-community/upgrade-support/issues/138)
       - run:
           command: yarn detox:ios:build:release
-          name: build for detox
+          name: build app for e2e tests
       - run:
           command: yarn detox:ios:test:release
-          name: test detox
+          name: run e2e tests
       - store_artifacts:
           path: ./artifacts
+
   e2e_release_android:
     executor:
       name: android/android-machine
       resource-class: large
-
     steps:
       - checkout
       - android/create-avd:
@@ -87,16 +90,17 @@ jobs:
           command: npm install --global yarn
           name: install yarn
       - run:
-          command: yarn install --frozen-lockfile --ignore-engines
+          command: yarn install --frozen-lockfile
           name: yarn install
       - run:
           command: yarn detox:android:build:release
-          name: build for detox
+          name: build app for e2e tests
       - run:
           command: yarn detox:android:test:release
-          name: test detox
+          name: run e2e tests
       - store_artifacts:
           path: ./artifacts
+
   publish:
     executor: rn/linux_js
     steps:
@@ -105,7 +109,7 @@ jobs:
       # - rn/yarn_install
       # fails with Error untarring cache: Error extracting tarball /var/folders/bq/mjrgbpkx5h1g_b22fpv0tlzc0000gn/T/cache376822577 : tmp/yarn/: Cannot extract through symlink tmp/yarn tmp/yarn/v6/: Cannot extract through symlink tmp/yarn/v6 tmp/yarn/v6/.tmp/: Cannot extract through symlink tmp/yarn/v6/.tmp tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/code-frame/: Cannot extract: exit status 1
       - run:
-          command: yarn install --frozen-lockfile --ignore-engines
+          command: yarn install --frozen-lockfile
           name: yarn install
       - run:
           command: npx semantic-release

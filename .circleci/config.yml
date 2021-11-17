@@ -48,10 +48,11 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: |
-          HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
-          HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
+      - run:
           name: install applesimutils
+          command: |
+            HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
+            HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
       - rn/ios_simulator_start:
           device: 'iPhone 11'
       # - rn/yarn_install
@@ -78,6 +79,20 @@ jobs:
       resource-class: large
     steps:
       - checkout
+      - run:
+          name: change default node version
+          command: |
+            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+            nvm install v15.11.0
+            nvm alias default v15.11.0
+            node -v
+            echo $PATH
+            [[ $- == *i* ]] && echo 'Interactive' || echo 'Not interactive'
+      - run:
+          command: |
+            node -v
+            echo $PATH
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-29;default;x86
@@ -132,7 +147,8 @@ workflows:
             - analyse_js
       - e2e_release_android:
           requires:
-            - analyse_js
+            - checkout_code
+#            - analyse_js
       - publish:
           requires:
             - e2e_release_android

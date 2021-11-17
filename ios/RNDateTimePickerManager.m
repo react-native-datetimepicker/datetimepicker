@@ -32,9 +32,7 @@ RCT_ENUM_CONVERTER(RNCUIDatePickerStyle, (@{
     @"default": @(UIDatePickerStyleAutomatic),
     @"compact": @(UIDatePickerStyleCompact),
     @"spinner": @(UIDatePickerStyleWheels),
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
     @"inline": @(UIDatePickerStyleInline),
-#endif
 }), UIDatePickerStyleAutomatic, integerValue)
 
 
@@ -65,7 +63,7 @@ RCT_EXPORT_MODULE()
             return @"compact";
         case UIDatePickerStyleWheels:
             return @"spinner";
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 140000
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_14_0
         case UIDatePickerStyleInline:
             return @"inline";
 #endif
@@ -93,6 +91,7 @@ RCT_EXPORT_METHOD(getDefaultDisplayValue:(NSDictionary *)options resolver:(RCTPr
                 });
       } else {
         // never happens; the condition is just to avoid compiler warnings
+        reject(@"UNEXPECTED_CALL", @"unexpected getDefaultDisplayValue() call", nil);
       }
     });
 }
@@ -102,7 +101,9 @@ RCT_EXPORT_VIEW_PROPERTY(locale, NSLocale)
 RCT_EXPORT_VIEW_PROPERTY(minimumDate, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(maximumDate, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(minuteInterval, NSInteger)
+RCT_EXPORT_VIEW_PROPERTY(enabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock)
+
 RCT_REMAP_VIEW_PROPERTY(mode, datePickerMode, UIDatePickerMode)
 RCT_REMAP_VIEW_PROPERTY(timeZoneOffsetInMinutes, timeZone, NSTimeZone)
 
@@ -143,7 +144,8 @@ RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNDateTimePicker)
 // TODO vonovak setting preferredDatePickerStyle invalidates minuteinterval
 RCT_CUSTOM_VIEW_PROPERTY(displayIOS, RNCUIDatePickerStyle, RNDateTimePicker)
 {
-    if (@available(iOS 13.4, *)) {
+    // officially since 13.4 (https://developer.apple.com/documentation/uikit/uidatepickerstyle?language=objc) but practically since 14
+    if (@available(iOS 14.0, *)) {
         if (json) {
             UIDatePickerStyle propValue = [RCTConvert RNCUIDatePickerStyle:json];
             view.preferredDatePickerStyle = propValue;
@@ -151,15 +153,6 @@ RCT_CUSTOM_VIEW_PROPERTY(displayIOS, RNCUIDatePickerStyle, RNDateTimePicker)
             view.preferredDatePickerStyle = UIDatePickerStyleAutomatic;
         }
     }
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(disabled, BOOL, RNDateTimePicker)
-{
-  if (json) {
-    view.enabled = !([RCTConvert BOOL:json]);
-  } else {
-    view.enabled = defaultView.enabled;
-  }
 }
 
 @end

@@ -128,7 +128,7 @@ export default function Picker({
       onStartShouldSetResponder={() => true}
       onResponderTerminationRequest={() => false}
       displayIOS={display}
-      disabled={disabled === true}
+      enabled={disabled !== true}
     />
   );
 }

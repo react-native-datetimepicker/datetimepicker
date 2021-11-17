@@ -128,9 +128,9 @@ export type IOSNativeProps = $ReadOnly<{|
   display?: IOSDisplay,
 
   /**
-   * Is this picker disabled?
+   * Is this picker enabled?
    */
-  disabled?: boolean,
+  enabled: boolean,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|

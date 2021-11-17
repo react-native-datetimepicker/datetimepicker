@@ -18,15 +18,17 @@ export const IOS_DISPLAY = Object.freeze({
   inline: 'inline',
 });
 
-export const ANDROID_MODE = Object.freeze({
+const COMMON_MODES = Object.freeze({
   date: 'date',
   time: 'time',
 });
 
-export const WINDOWS_MODE = ANDROID_MODE;
+export const ANDROID_MODE = COMMON_MODES;
+
+export const WINDOWS_MODE = COMMON_MODES;
 
 export const IOS_MODE = Object.freeze({
-  ...ANDROID_MODE,
+  ...COMMON_MODES,
   datetime: 'datetime',
   countdown: 'countdown',
 });

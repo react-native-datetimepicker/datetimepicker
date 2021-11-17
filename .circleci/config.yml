@@ -86,6 +86,7 @@ jobs:
           avd-name: TestingAVD
           no-window: true
           restore-gradle-cache-prefix: v1a
+          post-emulator-launch-assemble-command: "pwd"
       - android/disable-animations
       #      - attach_workspace:
       #          at: .

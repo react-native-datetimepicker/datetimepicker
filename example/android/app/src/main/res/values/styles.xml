@@ -4,13 +4,6 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
 
-<!--        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>-->
-
     </style>
-
-<!--    https://github.com/wix/react-native-navigation/issues/5379#issuecomment-530038653-->
-<!--    <style name="Widget.AppCompat.TextView" parent="android:Widget">-->
-<!--        @null-->
-<!--    </style>-->
 
 </resources>

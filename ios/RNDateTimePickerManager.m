@@ -121,7 +121,7 @@ RCT_CUSTOM_VIEW_PROPERTY(themeVariant, UIUserInterfaceStyle, RNDateTimePicker) {
 RCT_CUSTOM_VIEW_PROPERTY(textColor, UIColor, RNDateTimePicker)
 {
   if (@available(iOS 14.0, *)) {
-      if (view.datePickerStyle != UIDatePickerStyleWheels) {
+    if (view.datePickerStyle != UIDatePickerStyleWheels) {
       // prevents #247
       return;
     }

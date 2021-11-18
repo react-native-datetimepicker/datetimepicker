@@ -27,7 +27,7 @@
     "detox:ios:build:debug": "detox build -c ios.sim.debug",
     "detox:ios:test:debug": "SIMCTL_CHILD_TZ=Europe/Prague detox test -c ios.sim.debug -l verbose",
     "detox:ios:build:release": "detox build -c ios.sim.release",
-    "detox:ios:test:release": "SIMCTL_CHILD_TZ=Europe/Prague detox test -c ios.sim.release -l verbose",
+    "detox:ios:test:release": "SIMCTL_CHILD_TZ=Europe/Prague detox test -c ios.sim.release --record-videos all --record-logs all -l verbose",
     "detox:android:build:debug": "detox build -c android.emu.debug",
     "detox:android:test:debug": "adb shell service call alarm 3 s16 Europe/Prague && detox test -c android.emu.debug -l verbose",
     "detox:android:build:release": "detox build -c android.emu.release",

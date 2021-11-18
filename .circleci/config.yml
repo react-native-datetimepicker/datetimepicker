@@ -87,8 +87,7 @@ jobs:
             nvm install v15.11.0
             nvm alias default v15.11.0
             node -v
-            echo $PATH
-            [[ $- == *i* ]] && echo 'Interactive' || echo 'Not interactive'
+            echo 'export PATH=/opt/circleci/.nvm/versions/node/v15.11.0/bin:$PATH' >> $BASH_ENV
       - run:
           command: |
             node -v

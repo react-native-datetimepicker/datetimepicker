@@ -35,7 +35,7 @@ describe('Example', () => {
 
   it('timeInfo heading has expected content', async () => {
     await expect(elementById('timeInfo')).toHaveText(
-      'TZ: America/Los_Angeles, TZOffset: 8 original: 11/13/2021 02:00',
+      'TZ: Europe/Prague, TZOffset: -1 original: 11/13/2021 11:00',
     );
   });
 

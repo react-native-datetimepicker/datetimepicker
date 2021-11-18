@@ -82,16 +82,9 @@ jobs:
       - run:
           name: change default node version
           command: |
-            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
             nvm install v15.11.0
             nvm alias default v15.11.0
-            node -v
             echo 'export PATH=/opt/circleci/.nvm/versions/node/v15.11.0/bin:$PATH' >> $BASH_ENV
-      - run:
-          command: |
-            node -v
-            echo $PATH
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-29;default;x86

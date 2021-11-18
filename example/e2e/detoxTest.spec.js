@@ -32,6 +32,13 @@ describe('Example', () => {
       .toBeVisible()
       .withTimeout(5000);
   });
+
+  it('timeInfo heading has expected content', async () => {
+    await expect(elementById('timeInfo')).toHaveText(
+      'TZ: America/Los_Angeles, TZOffset: 8 original: 11/13/2021 02:00',
+    );
+  });
+
   it('should show date picker after tapping datePicker button', async () => {
     await userOpensPicker({mode: 'date', display: getPickerDisplay()});
 

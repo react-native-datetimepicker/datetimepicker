@@ -133,7 +133,7 @@ export const App = () => {
                 Example DateTime Picker
               </ThemedText>
             </View>
-            <ThemedText>
+            <ThemedText selectable testID="timeInfo">
               TZ: {RNLocalize.getTimeZone()}, TZOffset:{' '}
               {new Date().getTimezoneOffset() / 60} original:{' '}
               {moment(sourceDate).format('MM/DD/YYYY HH:mm')}

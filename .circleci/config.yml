@@ -144,7 +144,7 @@ workflows:
             - checkout_code
       - e2e_release_ios:
           requires:
-            - analyse_js
+            - checkout_code
       - e2e_release_android:
           requires:
             - checkout_code

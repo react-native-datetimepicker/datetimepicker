@@ -81,7 +81,7 @@ project.ext.react = [
         cliPath: "node_modules/react-native/cli.js",
         root: "../../../",
         entryFile: "example/index.js",
-        enableHermes: false,  // clean and rebuild if changing
+        enableHermes: true,  // clean and rebuild if changing
 ]
 
 apply from: "../../../node_modules/react-native/react.gradle"

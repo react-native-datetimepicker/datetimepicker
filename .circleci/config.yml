@@ -140,7 +140,6 @@ workflows:
       - e2e_release_android:
           requires:
             - checkout_code
-#            - analyse_js
       - publish:
           requires:
             - e2e_release_android

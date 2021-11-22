@@ -105,7 +105,7 @@ or
 yarn add @react-native-community/datetimepicker
 ```
 
-Autolinking is not yet implemented on Windows, so [Manual installation](#windows) is needed.
+Autolinking is not yet implemented on Windows, so [manual installation ](/docs/manual-installation.md) is needed.
 
 #### RN >= 0.60
 
@@ -259,7 +259,7 @@ Defines the minimum date that can be selected. Note that on Android, this only w
 #### `timeZoneOffsetInMinutes` (`optional`, `iOS and Android only`)
 
 Allows changing of the timeZone of the date picker. By default, it uses the device's time zone.
-We strongly recommend avoiding this prop on android because of known issues in the implementation.
+We strongly recommend avoiding this prop on android because of known issues in the implementation (eg. [#528](https://github.com/react-native-datetimepicker/datetimepicker/issues/528)).
 
 ```js
 // GMT+1

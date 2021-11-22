@@ -2,17 +2,8 @@
  * @format
  * @flow strict-local
  */
-export const MODE_DATE = 'date';
-export const MODE_TIME = 'time';
-export const MODE_DATETIME = 'datetime';
-
-export const DISPLAY_DEFAULT = 'default';
-export const DISPLAY_SPINNER = 'spinner';
-export const DISPLAY_CLOCK = 'clock';
-export const DISPLAY_CALENDAR = 'calendar';
 export const MIN_MS = 60000;
 
-// TODO vonovak potentially replace the above string consts with this object
 export const ANDROID_DISPLAY = Object.freeze({
   default: 'default',
   spinner: 'spinner',
@@ -20,23 +11,26 @@ export const ANDROID_DISPLAY = Object.freeze({
   calendar: 'calendar',
 });
 
-export const ANDROID_MODE = Object.freeze({
-  date: 'date',
-  time: 'time',
-});
-
-export const IOS_MODE = Object.freeze({
-  date: 'date',
-  time: 'time',
-  datetime: 'datetime',
-  countdown: 'countdown',
-});
-
 export const IOS_DISPLAY = Object.freeze({
   default: 'default',
   spinner: 'spinner',
   compact: 'compact',
   inline: 'inline',
+});
+
+const COMMON_MODES = Object.freeze({
+  date: 'date',
+  time: 'time',
+});
+
+export const ANDROID_MODE = COMMON_MODES;
+
+export const WINDOWS_MODE = COMMON_MODES;
+
+export const IOS_MODE = Object.freeze({
+  ...COMMON_MODES,
+  datetime: 'datetime',
+  countdown: 'countdown',
 });
 
 export const DAY_OF_WEEK = Object.freeze({

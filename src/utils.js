@@ -14,7 +14,8 @@ export function toMilliseconds(
   keys.forEach(function each(key) {
     const value = options[key];
 
-    // Is it a Date object?
+    // Is it a valid Date object?
+    // $FlowFixMe: Cannot get `Object.prototype.toString` because property `toString` [1] cannot be unbound from the context [2] where it was defined.
     if (Object.prototype.toString.call(value) === '[object Date]') {
       options[key] = value.getTime();
     }

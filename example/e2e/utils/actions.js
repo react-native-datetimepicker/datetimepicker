@@ -1,22 +1,36 @@
-async function userChangesMinuteValue() {
+async function userChangesTimeValue(
+  {hours, minutes} = {hours: undefined, minutes: undefined},
+) {
   const keyboardIconButton = element(
     by.type('androidx.appcompat.widget.AppCompatImageButton'),
   );
 
   await keyboardIconButton.tap();
 
-  const minuteTextinput = element(
-    by.type('androidx.appcompat.widget.AppCompatEditText'),
-  ).atIndex(1);
+  if (minutes !== undefined) {
+    const minuteTextinput = element(
+      by.type('androidx.appcompat.widget.AppCompatEditText'),
+    ).atIndex(1);
 
-  await minuteTextinput.replaceText('30');
+    await minuteTextinput.replaceText(String(minutes));
+  }
+  if (hours !== undefined) {
+    const hourTextinput = element(
+      by.type('androidx.appcompat.widget.AppCompatEditText'),
+    ).atIndex(0);
+
+    await hourTextinput.replaceText(String(hours));
+  }
 }
 
-async function userOpensPicker({mode, display, interval}) {
+async function userOpensPicker({mode, display, interval, tzOffsetPreset}) {
   await element(by.text(mode)).tap();
   await element(by.text(display)).tap();
   if (interval) {
     await element(by.text(String(interval))).tap();
+  }
+  if (tzOffsetPreset) {
+    await element(by.id(tzOffsetPreset)).tap();
   }
   await element(by.id('showPickerButton')).tap();
 }
@@ -42,9 +56,17 @@ async function userTapsOkButtonAndroid() {
   await okButton.tap();
 }
 
+async function userDismissesCompactDatePicker() {
+  await element(by.type('_UIDatePickerContainerView')).tap({
+    x: 50,
+    y: 50,
+  });
+}
+
 module.exports = {
-  userChangesMinuteValue,
   userOpensPicker,
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
+  userChangesTimeValue,
+  userDismissesCompactDatePicker,
 };

@@ -16,6 +16,7 @@ const {
   userDismissesCompactDatePicker,
 } = require('./utils/actions');
 const {isIOS, wait, Platform} = require('./utils/utils');
+const {device} = require('detox');
 
 describe('Example', () => {
   const getPickerDisplay = () => {
@@ -82,18 +83,21 @@ describe('Example', () => {
 
     if (isIOS()) {
       const testElement = getDateTimePickerControlIOS();
-      await testElement.setDatePickerDate('2021-12-12', 'yyyy-MM-dd');
+      await testElement.setDatePickerDate('2021-11-02', 'yyyy-MM-dd');
     } else {
-      const calendarHorizontalScrollView = element(
-        by
-          .type('android.widget.ScrollView')
-          .withAncestor(by.type('android.widget.DatePicker')),
-      );
-      await calendarHorizontalScrollView.swipe('left', 'fast', 1);
-      await calendarHorizontalScrollView.tap({x: 50, y: 200}); // select some date
+      const uiDevice = device.getUiDevice();
+      const focusSecondOfNovemberInCalendar = async () => {
+        await uiDevice.pressDPadDown();
+        await uiDevice.pressDPadDown();
+        await uiDevice.pressDPadDown();
+      };
+      await focusSecondOfNovemberInCalendar();
+
+      await uiDevice.pressEnter();
+
       await userTapsOkButtonAndroid();
     }
-    await expect(getDateText()).toHaveText('12/12/2021');
+    await expect(getDateText()).toHaveText('11/02/2021');
   });
 
   it('should show time picker after tapping timePicker button', async () => {

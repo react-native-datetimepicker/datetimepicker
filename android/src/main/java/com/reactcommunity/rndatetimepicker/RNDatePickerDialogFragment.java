@@ -69,15 +69,12 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     switch (display) {
       case CALENDAR:
       case SPINNER:
-        String resourceName = display == RNDatePickerDisplay.CALENDAR
-                ? "CalendarDatePickerDialog"
-                : "SpinnerDatePickerDialog";
+        int theme = display == RNDatePickerDisplay.CALENDAR
+                ? R.style.CalendarDatePickerDialog
+                : R.style.SpinnerDatePickerDialog;
         return new RNDismissableDatePickerDialog(
                 activityContext,
-                activityContext.getResources().getIdentifier(
-                        resourceName,
-                        "style",
-                        activityContext.getPackageName()),
+                theme,
                 onDateSetListener,
                 year,
                 month,

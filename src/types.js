@@ -89,11 +89,6 @@ export type IOSNativeProps = $ReadOnly<{|
   date?: ?Date,
 
   /**
-   * The date picker locale.
-   */
-  locale?: ?string,
-
-  /**
    * The interval at which minutes can be selected.
    */
   minuteInterval?: MinuteInterval,

@@ -97,7 +97,6 @@ RCT_EXPORT_METHOD(getDefaultDisplayValue:(NSDictionary *)options resolver:(RCTPr
 }
 
 RCT_EXPORT_VIEW_PROPERTY(date, NSDate)
-RCT_EXPORT_VIEW_PROPERTY(locale, NSLocale)
 RCT_EXPORT_VIEW_PROPERTY(minimumDate, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(maximumDate, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(minuteInterval, NSInteger)

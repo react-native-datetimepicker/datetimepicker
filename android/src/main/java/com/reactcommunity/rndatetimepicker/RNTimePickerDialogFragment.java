@@ -72,16 +72,12 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     }
 
     if (display == RNTimePickerDisplay.CLOCK || display == RNTimePickerDisplay.SPINNER) {
-        String resourceName = display == RNTimePickerDisplay.CLOCK
-                ? "ClockTimePickerDialog"
-                : "SpinnerTimePickerDialog";
+        int theme = display == RNTimePickerDisplay.CLOCK
+              ? R.style.ClockTimePickerDialog
+              : R.style.SpinnerTimePickerDialog;
         return new RNDismissableTimePickerDialog(
                 activityContext,
-                activityContext.getResources().getIdentifier(
-                        resourceName,
-                        "style",
-                        activityContext.getPackageName()
-                ),
+                theme,
                 onTimeSetListener,
                 hour,
                 minute,

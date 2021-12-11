@@ -93,7 +93,7 @@ describe('Example', () => {
       };
       await focusSecondOfNovemberInCalendar();
 
-      await device.pressEnter();
+      await uiDevice.pressEnter();
 
       await userTapsOkButtonAndroid();
     }

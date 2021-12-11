@@ -18,7 +18,7 @@ repro-required:
 -repro-required:
   # Unlock the thread
   unlock: true
-  open: true
+  reopen: true
 
 question:
   # Post a comment
@@ -33,4 +33,4 @@ question:
 -question:
   # Unlock the thread
   unlock: true
-  open: true
+  reopen: true

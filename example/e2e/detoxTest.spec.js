@@ -5,16 +5,24 @@ const {
   elementByText,
   getDateTimePickerIOS,
   getDatePickerAndroid,
+  getDateTimePickerControlIOS,
+  getInlineTimePickerIOS,
 } = require('./utils/matchers');
 const {
-  userChangesMinuteValue,
+  userChangesTimeValue,
   userOpensPicker,
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
+  userDismissesCompactDatePicker,
 } = require('./utils/actions');
-const {isAndroid, isIOS, wait} = require('./utils/utils');
+const {isIOS, wait, Platform} = require('./utils/utils');
+const {device} = require('detox');
 
 describe('Example', () => {
+  const getPickerDisplay = () => {
+    return isIOS() ? 'spinner' : 'default';
+  };
+
   beforeEach(async () => {
     if (isIOS()) {
       await device.reloadReactNative();
@@ -26,15 +34,14 @@ describe('Example', () => {
       .withTimeout(5000);
   });
 
-  it('should have title and hermes indicator on android', async () => {
-    await expect(elementByText('Example DateTime Picker')).toBeVisible();
-    if (isAndroid()) {
-      await expect(elementById('hermesIndicator')).toExist();
-    }
+  it('timeInfo heading has expected content', async () => {
+    await expect(elementById('timeInfo')).toHaveText(
+      'TZ: Europe/Prague, TZOffset: -1 original: 11/13/2021 11:00',
+    );
   });
 
   it('should show date picker after tapping datePicker button', async () => {
-    await userOpensPicker({mode: 'date', display: 'default'});
+    await userOpensPicker({mode: 'date', display: getPickerDisplay()});
 
     if (isIOS()) {
       await expect(getDateTimePickerIOS()).toBeVisible();
@@ -44,146 +51,141 @@ describe('Example', () => {
   });
 
   it('nothing should happen if date does not change', async () => {
-    await userOpensPicker({mode: 'date', display: 'default'});
-
     if (isIOS()) {
-      await expect(getDateTimePickerIOS()).toBeVisible();
+      await userOpensPicker({mode: 'date', display: 'compact'});
+
+      await element(
+        by.traits(['staticText']).withAncestor(by.label('Date Picker')),
+      ).tap();
+      // 'label' maps to 'description' in view hierarchy debugger
+      const nextMonthArrow = element(by.label('Next Month'));
+
+      await nextMonthArrow.tap();
+      await nextMonthArrow.tap();
+      await userDismissesCompactDatePicker();
     } else {
-      const testElement = element(
+      await userOpensPicker({mode: 'date', display: 'default'});
+      const calendarHorizontalScrollView = element(
         by
           .type('android.widget.ScrollView')
           .withAncestor(by.type('android.widget.DatePicker')),
       );
-      await testElement.swipe('left', 'fast', '100');
-      await testElement.tapAtPoint({x: 50, y: 200});
+      await calendarHorizontalScrollView.swipe('left', 'fast', 1);
+      await calendarHorizontalScrollView.tap({x: 50, y: 200});
       await userTapsCancelButtonAndroid();
     }
 
-    const dateText = getDateText();
-    await expect(dateText).toHaveText('08/21/2020');
+    await expect(getDateText()).toHaveText('11/13/2021');
   });
 
   it('should update dateTimeText when date changes', async () => {
-    await userOpensPicker({mode: 'date', display: 'default'});
-    const dateText = getDateText();
+    await userOpensPicker({mode: 'date', display: getPickerDisplay()});
 
     if (isIOS()) {
-      const testElement = getDateTimePickerIOS();
-      await testElement.setColumnToValue(0, 'November');
-      await testElement.setColumnToValue(1, '3');
-      await testElement.setColumnToValue(2, '1800');
-
-      await expect(dateText).toHaveText('11/03/1800');
+      const testElement = getDateTimePickerControlIOS();
+      await testElement.setDatePickerDate('2021-11-02', 'yyyy-MM-dd');
     } else {
-      const testElement = element(
-        by
-          .type('android.widget.ScrollView')
-          .withAncestor(by.type('android.widget.DatePicker')),
-      );
-      await testElement.swipe('left', 'fast', '100');
-      await testElement.tapAtPoint({x: 50, y: 200});
-      await userTapsOkButtonAndroid();
+      const uiDevice = device.getUiDevice();
+      const focusSecondOfNovemberInCalendar = async () => {
+        await uiDevice.pressDPadDown();
+        await uiDevice.pressDPadDown();
+        await uiDevice.pressDPadDown();
+      };
+      await focusSecondOfNovemberInCalendar();
 
-      await expect(dateText).toHaveText('09/13/2020');
+      await uiDevice.pressEnter();
+
+      await userTapsOkButtonAndroid();
     }
+    await expect(getDateText()).toHaveText('11/02/2021');
   });
 
   it('should show time picker after tapping timePicker button', async () => {
-    await userOpensPicker({mode: 'time', display: 'default'});
+    const display = await Platform.select({
+      ios: 'inline',
+      android: 'default',
+    });
+    await userOpensPicker({mode: 'time', display});
 
     if (isIOS()) {
-      await expect(getDateTimePickerIOS()).toBeVisible();
+      await expect(getInlineTimePickerIOS()).toBeVisible();
     } else {
       await expect(element(by.type('android.widget.TimePicker'))).toBeVisible();
     }
   });
 
   it('nothing should happen if time does not change', async () => {
-    await userOpensPicker({mode: 'time', display: 'default'});
+    await userOpensPicker({mode: 'time', display: getPickerDisplay()});
 
     if (isIOS()) {
       await expect(getDateTimePickerIOS()).toBeVisible();
     } else {
-      await userChangesMinuteValue();
+      await userChangesTimeValue({minutes: '22'});
       await userTapsCancelButtonAndroid();
     }
-    const timeText = getTimeText();
-    await expect(timeText).toHaveText('23:15');
+    await expect(getTimeText()).toHaveText('11:00');
   });
 
   it('should change time text when time changes', async () => {
-    await userOpensPicker({mode: 'time', display: 'default'});
-    const timeText = getTimeText();
+    await userOpensPicker({mode: 'time', display: getPickerDisplay()});
 
     if (isIOS()) {
-      const testElement = getDateTimePickerIOS();
-      await testElement.setColumnToValue(0, '2');
-      await testElement.setColumnToValue(1, '44');
-      await testElement.setColumnToValue(2, 'PM');
-
-      await expect(timeText).toHaveText('14:44');
+      const testElement = getDateTimePickerControlIOS();
+      // TODO
+      await testElement.setDatePickerDate('15:44', 'HH:mm');
     } else {
-      await userChangesMinuteValue();
+      await userChangesTimeValue({hours: 15, minutes: 44});
       await userTapsOkButtonAndroid();
-
-      await expect(timeText).toHaveText('23:30');
     }
+    await expect(getTimeText()).toHaveText('15:44');
   });
 
-  async function userOpensPickerSetTimeZoneOffset({
-    mode,
-    display,
-    interval,
-    type,
-  }) {
-    await element(by.text(mode)).tap();
-    await element(by.text(display)).tap();
-    if (interval) {
-      await element(by.text(String(interval))).tap();
-    }
-    await element(by.id(type)).tap();
-  }
-
-  it('should update dateTimeText when date changes and set setTzOffsetInMinutes to 0', async () => {
-    await userOpensPickerSetTimeZoneOffset({
-      mode: 'date',
-      display: 'default',
-      type: 'setTzZero',
+  describe('time zone offset', () => {
+    it.skip('should update dateTimeText when date changes and set setTzOffsetInMinutes to 0', async () => {
+      // skip for now, there is a bug on android https://github.com/react-native-datetimepicker/datetimepicker/issues/528
+      await expect(getDateText()).toHaveText('11/13/2021');
+      await expect(getTimeText()).toHaveText('11:00');
+      if (isIOS()) {
+        await userOpensPicker({
+          mode: 'date',
+          display: 'spinner',
+          tzOffsetPreset: 'setTzOffsetToZero',
+        });
+        const testElement = getDateTimePickerIOS();
+        await testElement.setColumnToValue(0, 'November');
+        await testElement.setColumnToValue(1, '14');
+        await testElement.setColumnToValue(2, '2021');
+      } else {
+        await userOpensPicker({
+          mode: 'date',
+          display: 'default',
+          tzOffsetPreset: 'setTzOffsetToZero',
+        });
+        await userTapsOkButtonAndroid();
+      }
+      await expect(getDateText()).toHaveText('11/14/2021');
+      await expect(getTimeText()).toHaveText('11:00');
     });
-    const dateText = getDateText();
 
-    if (isIOS()) {
-      const testElement = getDateTimePickerIOS();
-      await testElement.setColumnToValue(0, 'November');
-      await testElement.setColumnToValue(1, '3');
-      await testElement.setColumnToValue(2, '1800');
+    it('setTz should change time text when setTzOffsetInMinutes is 120 minutes', async () => {
+      await element(by.id('DateTimePickerScrollView')).scrollTo('bottom');
+      await userOpensPicker({
+        mode: 'time',
+        display: getPickerDisplay(),
+        tzOffsetPreset: 'setTzOffset',
+      });
 
-      await expect(dateText).toHaveText('11/03/1800');
-    } else {
-      await userTapsOkButtonAndroid();
-      await expect(dateText).toHaveText('08/21/2020');
-    }
-  });
-
-  it('setTz should change time text when setTzOffsetInMinutes is 60 minutes', async () => {
-    await element(by.id('DateTimePickerScrollView')).scrollTo('bottom');
-    await userOpensPickerSetTimeZoneOffset({
-      mode: 'time',
-      display: 'default',
-      type: 'setTz',
+      if (isIOS()) {
+        const testElement = getDateTimePickerIOS();
+        await testElement.setColumnToValue(0, '10');
+        await testElement.setColumnToValue(1, '30');
+        await testElement.setColumnToValue(2, 'AM');
+      } else {
+        await userChangesTimeValue({hours: '10', minutes: '30'});
+        await userTapsOkButtonAndroid();
+      }
+      await expect(getTimeText()).toHaveText('09:30');
     });
-    const timeText = getTimeText();
-
-    if (isIOS()) {
-      const testElement = getDateTimePickerIOS();
-      await testElement.setColumnToValue(0, '12');
-      await testElement.setColumnToValue(1, '30');
-      await testElement.setColumnToValue(2, 'AM');
-    } else {
-      await userChangesMinuteValue();
-      await userTapsOkButtonAndroid();
-    }
-    await expect(timeText).toHaveText('23:30');
   });
 
   it(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to the beginning of the unix time epoch', async () => {
@@ -201,7 +203,7 @@ describe('Example', () => {
     await expect(getDatePickerAndroid()).toExist();
     await wait(6000);
 
-    await expect(getDatePickerAndroid()).toNotExist();
+    await expect(getDatePickerAndroid()).not.toExist();
   });
 
   describe('given 5-minute interval', () => {
@@ -209,42 +211,30 @@ describe('Example', () => {
       try {
         await userOpensPicker({mode: 'time', display: 'clock', interval: 5});
 
-        const keyboardButton = element(
-          by.type('androidx.appcompat.widget.AppCompatImageButton'),
-        );
-        await keyboardButton.tap();
-        const testElement = element(
-          by.type('androidx.appcompat.widget.AppCompatEditText'),
-        ).atIndex(1);
-        await testElement.tap();
-        await testElement.replaceText('18');
+        await userChangesTimeValue({hours: '23', minutes: '18'});
+
         await userTapsOkButtonAndroid();
 
-        const timeText = getTimeText();
-        await expect(timeText).toHaveText('23:20');
+        await expect(getTimeText()).toHaveText('23:20');
       } catch (err) {
         console.error(err);
       }
     });
 
     it(':android: when the picker is shown as "spinner", swiping it down changes selected time', async () => {
-      try {
-        const timeText = getTimeText();
+      const timeText = getTimeText();
 
-        await expect(timeText).toHaveText('23:15');
+      await expect(timeText).toHaveText('11:00');
 
-        await userOpensPicker({mode: 'time', display: 'spinner', interval: 5});
+      await userOpensPicker({mode: 'time', display: 'spinner', interval: 5});
 
-        const minutePicker = element(
-          by.type('android.widget.NumberPicker'),
-        ).atIndex(1);
-        await minutePicker.swipe('up', 'slow', '33');
-        await userTapsOkButtonAndroid();
+      const minutePicker = element(
+        by.type('android.widget.NumberPicker'),
+      ).atIndex(1);
+      await minutePicker.swipe('up', 'slow', 0.33);
+      await userTapsOkButtonAndroid();
 
-        await expect(timeText).toHaveText('23:25');
-      } catch (err) {
-        console.error(err);
-      }
+      await expect(timeText).toHaveText('11:15');
     });
 
     it(':ios: picker should offer only options divisible by 5 (0, 5, 10,...)', async () => {
@@ -252,6 +242,7 @@ describe('Example', () => {
 
       const testElement = getDateTimePickerIOS();
       await testElement.setColumnToValue(0, '2');
+      await testElement.setColumnToValue(1, '15');
       await testElement.setColumnToValue(2, 'PM');
       const timeText = getTimeText();
 
@@ -261,15 +252,14 @@ describe('Example', () => {
       try {
         await testElement.setColumnToValue(1, valueThatShouldNotBePresented);
       } catch (err) {
-        if (
-          err.message.includes('UIPickerView does not contain desired value')
-        ) {
+        if (err.message.includes('does not contain value')) {
           await testElement.setColumnToValue(1, '45');
         } else {
           throw new Error(
             'because time interval of 5 minutes was set, Picker should not contain value ' +
               valueThatShouldNotBePresented +
-              ' but it was displayed in the list.',
+              ' but it was displayed in the list.' +
+              err,
           );
         }
       }

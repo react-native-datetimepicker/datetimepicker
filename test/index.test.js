@@ -14,7 +14,7 @@ const renderPicker = async (props) => {
 
 describe('DatePicker', () => {
   it('renders a native Component', async () => {
-    const {toJSON} = await renderPicker({});
+    const {toJSON} = await renderPicker();
 
     expect(toJSON()).toMatchSnapshot();
   });
@@ -46,10 +46,6 @@ describe('DatePicker', () => {
         timestamp: date.getTime(),
       },
     });
-  });
-
-  it('has default mode `date`', () => {
-    expect(DatePicker.defaultProps.mode).toEqual('date');
   });
 
   it.each([['time'], ['datetime'], ['countdown']])(

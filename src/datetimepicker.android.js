@@ -3,9 +3,6 @@
  * @flow strict-local
  */
 import {
-  MODE_DATE,
-  MODE_TIME,
-  DISPLAY_DEFAULT,
   DATE_SET_ACTION,
   TIME_SET_ACTION,
   DISMISS_ACTION,
@@ -42,8 +39,8 @@ function getPicker({
   timeZoneOffsetInMinutes,
 }) {
   switch (mode) {
-    case MODE_TIME:
-      return pickers[MODE_TIME].open({
+    case ANDROID_MODE.time:
+      return pickers[mode].open({
         value,
         display,
         minuteInterval,
@@ -51,9 +48,8 @@ function getPicker({
         neutralButtonLabel,
         timeZoneOffsetInMinutes,
       });
-    case MODE_DATE:
     default:
-      return pickers[MODE_DATE].open({
+      return pickers[ANDROID_MODE.date].open({
         value,
         display,
         minimumDate,
@@ -65,22 +61,23 @@ function getPicker({
 }
 
 function timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes) {
-  let localDate = date;
   if (typeof timeZoneOffsetInMinutes === 'number') {
-    const offset =
-      localDate.getTimezoneOffset() * MIN_MS + timeZoneOffsetInMinutes * MIN_MS;
-    localDate = new Date(date.getTime() - offset);
+    // FIXME this causes a bug. repro: set tz offset to zero, and then keep opening and closing the calendar picker
+    // https://github.com/react-native-datetimepicker/datetimepicker/issues/528
+    const offset = date.getTimezoneOffset() + timeZoneOffsetInMinutes;
+    const shiftedDate = new Date(date.getTime() - offset * MIN_MS);
+    return shiftedDate;
   }
-  return localDate;
+  return date;
 }
 
 export default function RNDateTimePicker(props: AndroidNativeProps) {
   validateProps(props);
   const {
-    mode,
+    mode = ANDROID_MODE.date,
+    display = ANDROID_DISPLAY.default,
     value,
     onChange,
-    display,
     is24Hour,
     minimumDate,
     maximumDate,
@@ -93,7 +90,7 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
   useEffect(() => {
     // This effect runs on unmount / with mode change, and will ensure the picker is closed.
     // This allows for controlling the opening state of the picker through declarative logic in jsx.
-    return () => (pickers[mode] ?? pickers[MODE_DATE]).dismiss();
+    return () => (pickers[mode] ?? pickers[ANDROID_MODE.date]).dismiss();
   }, [mode]);
 
   useEffect(
@@ -159,8 +156,3 @@ export default function RNDateTimePicker(props: AndroidNativeProps) {
 
   return null;
 }
-
-RNDateTimePicker.defaultProps = {
-  display: DISPLAY_DEFAULT,
-  mode: MODE_DATE,
-};

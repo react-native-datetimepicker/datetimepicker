@@ -1,3 +1,8 @@
+/**
+ * @format
+ * @flow strict-local
+ */
+
 import {NativeModules, StyleSheet} from 'react-native';
 import {IOS_DISPLAY, IOS_MODE} from './constants';
 import type {IOSDisplay, IOSMode} from './types';

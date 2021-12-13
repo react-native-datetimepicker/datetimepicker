@@ -3,22 +3,24 @@
  * @flow strict-local
  */
 
-import type {SyntheticEvent} from 'CoreEventTypes';
-import type {NativeComponent} from 'ReactNative';
-import type {ViewProps} from 'ViewPropTypes';
+import type {SyntheticEvent} from 'react-native/Libraries/Types/CoreEventTypes';
+import type {HostComponent} from 'react-native';
+import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {ElementRef} from 'react';
-import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
+import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import {
   ANDROID_MODE,
   ANDROID_DISPLAY,
   DAY_OF_WEEK,
   IOS_DISPLAY,
   IOS_MODE,
+  WINDOWS_MODE,
 } from './constants';
 
 export type IOSDisplay = $Keys<typeof IOS_DISPLAY>;
 export type IOSMode = $Keys<typeof IOS_MODE>;
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
+type WindowsMode = $Keys<typeof WINDOWS_MODE>;
 type Display = $Keys<typeof ANDROID_DISPLAY>;
 type MinuteInterval = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
 
@@ -87,11 +89,6 @@ export type IOSNativeProps = $ReadOnly<{|
   date?: ?Date,
 
   /**
-   * The date picker locale.
-   */
-  locale?: ?string,
-
-  /**
    * The interval at which minutes can be selected.
    */
   minuteInterval?: MinuteInterval,
@@ -126,9 +123,9 @@ export type IOSNativeProps = $ReadOnly<{|
   display?: IOSDisplay,
 
   /**
-   * Is this picker disabled?
+   * Is this picker enabled?
    */
-  disabled?: boolean,
+  enabled: boolean,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|
@@ -183,7 +180,7 @@ export type DateTimePickerResult = $ReadOnly<{|
   minute: number,
 |}>;
 
-export type RCTDateTimePickerNative = Class<NativeComponent<IOSNativeProps>>;
+export type RCTDateTimePickerNative = Class<HostComponent<IOSNativeProps>>;
 export type NativeRef = {
   current: ElementRef<RCTDateTimePickerNative> | null,
 };
@@ -196,6 +193,7 @@ export type WindowsDatePickerChangeEvent = {|
 
 export type WindowsNativeProps = $ReadOnly<{|
   ...BaseProps,
+  mode: WindowsMode,
   onChange?: (event: WindowsDatePickerChangeEvent, date: Date) => void,
 
   placeholderText?: string,
@@ -208,7 +206,7 @@ export type WindowsNativeProps = $ReadOnly<{|
     | '{dayofweek.abbreviated(2)}'
     | '{dayofweek.abbreviated(3)}'
     | '{dayofweek.full}',
-  firstDayOfWeek?: DAY_OF_WEEK,
+  firstDayOfWeek?: typeof DAY_OF_WEEK,
   timeZoneOffsetInSeconds?: number,
   is24Hour?: boolean,
   minuteInterval?: number,

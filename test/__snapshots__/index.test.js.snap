@@ -3,8 +3,8 @@
 exports[`DatePicker applies styling to DatePicker 1`] = `
 <RNDateTimePicker
   date={1376949600000}
-  disabled={false}
   displayIOS="default"
+  enabled={true}
   mode="date"
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
@@ -25,8 +25,8 @@ exports[`DatePicker applies styling to DatePicker 1`] = `
 exports[`DatePicker renders a native Component 1`] = `
 <RNDateTimePicker
   date={1376949600000}
-  disabled={false}
   displayIOS="default"
+  enabled={true}
   mode="date"
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
@@ -42,8 +42,8 @@ exports[`DatePicker renders a native Component 1`] = `
 exports[`DatePicker renders with mode countdown 1`] = `
 <RNDateTimePicker
   date={1376949600000}
-  disabled={false}
   displayIOS="default"
+  enabled={true}
   mode="countdown"
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
@@ -59,8 +59,8 @@ exports[`DatePicker renders with mode countdown 1`] = `
 exports[`DatePicker renders with mode datetime 1`] = `
 <RNDateTimePicker
   date={1376949600000}
-  disabled={false}
   displayIOS="default"
+  enabled={true}
   mode="datetime"
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
@@ -76,8 +76,8 @@ exports[`DatePicker renders with mode datetime 1`] = `
 exports[`DatePicker renders with mode time 1`] = `
 <RNDateTimePicker
   date={1376949600000}
-  disabled={false}
   displayIOS="default"
+  enabled={true}
   mode="time"
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}

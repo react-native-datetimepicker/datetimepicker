@@ -12,7 +12,7 @@ import {
   Switch,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import SegmentedControl from '@react-native-community/segmented-control';
+import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useState} from 'react';
 import {Picker} from 'react-native-windows';
@@ -24,6 +24,7 @@ import {
   ANDROID_DISPLAY,
   IOS_DISPLAY,
 } from '../src/constants';
+import * as RNLocalize from 'react-native-localize';
 
 const ThemedText = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -60,8 +61,10 @@ const DISPLAY_VALUES = Platform.select({
 const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
 
 export const App = () => {
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(0);
+  // Sat, 13 Nov 2021 10:00:00 GMT (local: Saturday, November 13, 2021 11:00:00 AM GMT+01:00)
+  const sourceDate = moment.unix(1636797600).local().toDate();
+  const [date, setDate] = useState(sourceDate);
+  const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(undefined);
   const [mode, setMode] = useState(MODE_VALUES[0]);
   const [show, setShow] = useState(false);
   const [color, setColor] = useState();
@@ -138,6 +141,11 @@ export const App = () => {
                 Example DateTime Picker
               </ThemedText>
             </View>
+            <ThemedText selectable testID="timeInfo">
+              TZ: {RNLocalize.getTimeZone()}, TZOffset:{' '}
+              {new Date().getTimezoneOffset() / 60} original:{' '}
+              {moment(sourceDate).format('MM/DD/YYYY HH:mm')}
+            </ThemedText>
             <ThemedText>mode prop:</ThemedText>
             <SegmentedControl
               values={MODE_VALUES}
@@ -197,7 +205,6 @@ export const App = () => {
                 testID="neutralButtonLabelTextInput"
               />
             </View>
-
             <View style={styles.header}>
               <ThemedText style={{margin: 10, flex: 1}}>
                 [android] show and dismiss picker after 3 secs
@@ -215,8 +222,11 @@ export const App = () => {
                 title="Show and dismiss picker!"
               />
             </View>
-
-            <View style={styles.button}>
+            <View
+              style={[
+                styles.button,
+                {flexDirection: 'row', justifyContent: 'space-around'},
+              ]}>
               <Button
                 testID="showPickerButton"
                 onPress={() => {
@@ -224,40 +234,45 @@ export const App = () => {
                 }}
                 title="Show picker!"
               />
-            </View>
-
-            <View style={styles.header}>
-              <ThemedText testID="dateText" style={styles.dateTimeText}>
-                {moment.utc(date).format('MM/DD/YYYY')}
-              </ThemedText>
-              <Text> </Text>
-              <ThemedText testID="timeText" style={styles.dateTimeText}>
-                {moment.utc(date).format('HH:mm')}
-              </ThemedText>
               <Button
                 testID="hidePicker"
                 onPress={() => setShow(false)}
-                title="hide picker"
+                title="Hide picker!"
               />
+            </View>
+            <View
+              style={[
+                styles.header,
+                {flexDirection: 'row', justifyContent: 'space-around'},
+              ]}>
+              <ThemedText testID="dateText" style={styles.dateTimeText}>
+                {moment(date).format('MM/DD/YYYY')}
+              </ThemedText>
+              <Text> </Text>
+              <ThemedText testID="timeText" style={styles.dateTimeText}>
+                {moment(date).format('HH:mm')}
+              </ThemedText>
+              <Text> </Text>
+              <ThemedText style={styles.dateTimeText}>
+                tzOffset: {tzOffsetInMinutes ?? 'auto'}
+              </ThemedText>
             </View>
             <View style={styles.button}>
               <Button
-                testID="setTzZero"
+                testID="setTzOffsetToZero"
                 onPress={() => {
                   setTzOffsetInMinutes(0);
-                  setShow(true);
                 }}
                 title="setTzOffsetInMinutes to 0"
               />
             </View>
             <View style={styles.button}>
               <Button
-                testID="setTz"
+                testID="setTzOffset"
                 onPress={() => {
-                  setTzOffsetInMinutes(60);
-                  setShow(true);
+                  setTzOffsetInMinutes(120);
                 }}
-                title="setTzOffsetInMinutes to 60"
+                title="setTzOffsetInMinutes to 120"
               />
             </View>
             <View style={styles.button}>

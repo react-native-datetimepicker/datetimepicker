@@ -109,12 +109,9 @@ public class RNDatePickerDialogFragment extends DialogFragment {
 
     final DatePicker datePicker = dialog.getDatePicker();
 
-    Integer timeZoneOffsetInMilliseconds = null;
-    if (args != null && args.containsKey(RNConstants.ARG_TZOFFSET_MINS)) {
+    Integer timeZoneOffsetInMilliseconds = getTimeZoneOffset(args);
+    if (timeZoneOffsetInMilliseconds != null) {
       c.setTimeZone(TimeZone.getTimeZone("GMT"));
-      long timeZoneOffsetInMinutesFallback = args.getLong(RNConstants.ARG_TZOFFSET_MINS);
-      int timeZoneOffsetInMinutes = args.getInt(RNConstants.ARG_TZOFFSET_MINS, (int) timeZoneOffsetInMinutesFallback);
-      timeZoneOffsetInMilliseconds = timeZoneOffsetInMinutes * 60000;
     }
 
     if (args != null && args.containsKey(RNConstants.ARG_MINDATE)) {
@@ -126,13 +123,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       c.set(Calendar.MINUTE, 0);
       c.set(Calendar.SECOND, 0);
       c.set(Calendar.MILLISECOND, 0);
-
-      if (timeZoneOffsetInMilliseconds != null) {
-        int offset = TimeZone.getDefault().getOffset(c.getTimeInMillis()) - timeZoneOffsetInMilliseconds;
-        datePicker.setMinDate(c.getTimeInMillis() - offset);
-      } else {
-        datePicker.setMinDate(c.getTimeInMillis());
-      }
+      datePicker.setMinDate(c.getTimeInMillis() - getOffset(c, timeZoneOffsetInMilliseconds));
     } else {
       // This is to work around a bug in DatePickerDialog where it doesn't display a title showing
       // the date under certain conditions.
@@ -145,16 +136,28 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       c.set(Calendar.MINUTE, 59);
       c.set(Calendar.SECOND, 59);
       c.set(Calendar.MILLISECOND, 999);
-
-      if (timeZoneOffsetInMilliseconds != null) {
-        int offset = TimeZone.getDefault().getOffset(c.getTimeInMillis()) - timeZoneOffsetInMilliseconds;
-        datePicker.setMaxDate(c.getTimeInMillis() - offset);
-      } else {
-        datePicker.setMaxDate(c.getTimeInMillis());
-      }
+      datePicker.setMaxDate(c.getTimeInMillis() - getOffset(c, timeZoneOffsetInMilliseconds));
     }
 
     return dialog;
+  }
+
+  private static Integer getTimeZoneOffset(Bundle args)
+  {
+    if (args != null && args.containsKey(RNConstants.ARG_TZOFFSET_MINS)) {
+      long timeZoneOffsetInMinutesFallback = args.getLong(RNConstants.ARG_TZOFFSET_MINS);
+      int timeZoneOffsetInMinutes = args.getInt(RNConstants.ARG_TZOFFSET_MINS, (int) timeZoneOffsetInMinutesFallback);
+      return timeZoneOffsetInMinutes * 60000;
+    }
+
+    return null;
+  }
+
+  private static int getOffset(Calendar c, Integer timeZoneOffsetInMilliseconds) {
+    if (timeZoneOffsetInMilliseconds != null) {
+      return TimeZone.getDefault().getOffset(c.getTimeInMillis()) - timeZoneOffsetInMilliseconds;
+    }
+    return 0;
   }
 
   @Override

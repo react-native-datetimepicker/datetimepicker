@@ -62,7 +62,8 @@ const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
 
 export const App = () => {
   // Sat, 13 Nov 2021 10:00:00 GMT (local: Saturday, November 13, 2021 11:00:00 AM GMT+01:00)
-  const sourceDate = moment.unix(1636797600).local().toDate();
+  const sourceMoment = moment.unix(1636797600);
+  const sourceDate = sourceMoment.local().toDate();
   const [date, setDate] = useState(sourceDate);
   const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(undefined);
   const [mode, setMode] = useState(MODE_VALUES[0]);
@@ -114,9 +115,14 @@ export const App = () => {
   };
 
   const toggleMinMaxDate = () => {
-    const today = moment.utc().startOf('day');
-    setMaximumDate(maximumDate ? undefined : today.toDate());
-    setMinimumDate(minimumDate ? undefined : today.subtract(1, 'day').toDate());
+    setMinimumDate(
+      maximumDate ? undefined : sourceMoment.utc().startOf('day').toDate(),
+    );
+    setMaximumDate(
+      minimumDate
+        ? undefined
+        : sourceMoment.utc().endOf('day').add(1, 'day').toDate(),
+    );
   };
 
   if (Platform.OS !== 'windows') {

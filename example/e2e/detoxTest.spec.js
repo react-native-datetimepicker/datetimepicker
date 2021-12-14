@@ -186,6 +186,57 @@ describe('Example', () => {
       }
       await expect(getTimeText()).toHaveText('09:30');
     });
+
+    it('should let you pick tomorrow but not yesterday when setting min/max', async () => {
+      await element(by.id('setTzOffsetToZero')).tap();
+      await elementById('setMinMax').tap();
+
+      if (isIOS()) {
+        const testElement = getDateTimePickerControlIOS();
+
+        // Ensure you can't select yesterday (iOS)
+        await testElement.setDatePickerDate('2021-11-12', 'yyyy-MM-dd');
+        await expect(getDateText()).toHaveText('11/13/2021');
+
+        // Ensure you can select tomorrow (iOS)
+        await userOpensPicker({mode: 'date', display: getPickerDisplay()});
+        await testElement.setDatePickerDate('2021-11-14', 'yyyy-MM-dd');
+      } else {
+        const uiDevice = device.getUiDevice();
+
+        // Ensure you can't select yesterday (Android)
+        const focusTwelethOfNovemberInCalendar = async () => {
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadLeft();
+          await uiDevice.pressDPadLeft();
+          await uiDevice.pressDPadLeft();
+        };
+        await focusTwelethOfNovemberInCalendar();
+        await uiDevice.pressEnter();
+        await userTapsOkButtonAndroid();
+        await expect(getDateText()).toHaveText('11/13/2021');
+
+        // Ensure you can select tomorrow (Android)
+        await userOpensPicker({mode: 'date', display: getPickerDisplay()});
+        const focusFourteenthOfNovemberInCalendar = async () => {
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadDown();
+          await uiDevice.pressDPadLeft();
+          await uiDevice.pressDPadLeft();
+        };
+        await focusFourteenthOfNovemberInCalendar();
+        await uiDevice.pressEnter();
+        await userTapsOkButtonAndroid();
+      }
+
+      await expect(getDateText()).toHaveText('11/14/2021');
+    });
   });
 
   it(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to the beginning of the unix time epoch', async () => {

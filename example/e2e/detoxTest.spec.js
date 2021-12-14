@@ -188,6 +188,7 @@ describe('Example', () => {
     });
 
     it('should let you pick tomorrow but not yesterday when setting min/max', async () => {
+      await element(by.id('DateTimePickerScrollView')).scrollTo('bottom');
       await element(by.id('setTzOffsetToZero')).tap();
       await elementById('setMinMax').tap();
 

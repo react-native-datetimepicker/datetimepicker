@@ -62,7 +62,8 @@ const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
 
 export const App = () => {
   // Sat, 13 Nov 2021 10:00:00 GMT (local: Saturday, November 13, 2021 11:00:00 AM GMT+01:00)
-  const sourceDate = moment.unix(1636797600).local().toDate();
+  const sourceMoment = moment.unix(1636797600);
+  const sourceDate = sourceMoment.local().toDate();
   const [date, setDate] = useState(sourceDate);
   const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(undefined);
   const [mode, setMode] = useState(MODE_VALUES[0]);
@@ -72,6 +73,8 @@ export const App = () => {
   const [interval, setMinInterval] = useState(1);
   const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
   const [disabled, setDisabled] = useState(false);
+  const [minimumDate, setMinimumDate] = useState();
+  const [maximumDate, setMaximumDate] = useState();
 
   // Windows-specific
   const [time, setTime] = useState(undefined);
@@ -109,6 +112,17 @@ export const App = () => {
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
+  };
+
+  const toggleMinMaxDate = () => {
+    const startOfTodayUTC = sourceMoment.utc().startOf('day').toDate();
+    setMinimumDate(maximumDate ? undefined : startOfTodayUTC);
+    const endOfTomorrowUTC = sourceMoment
+      .utc()
+      .endOf('day')
+      .add(1, 'day')
+      .toDate();
+    setMaximumDate(minimumDate ? undefined : endOfTomorrowUTC);
   };
 
   if (Platform.OS !== 'windows') {
@@ -267,11 +281,23 @@ export const App = () => {
                 title="setTzOffsetInMinutes to 120"
               />
             </View>
+            <View style={styles.button}>
+              <Button
+                testID="setMinMax"
+                onPress={() => {
+                  toggleMinMaxDate();
+                  setShow(true);
+                }}
+                title="toggleMinMaxDate"
+              />
+            </View>
             {show && (
               <DateTimePicker
                 testID="dateTimePicker"
                 timeZoneOffsetInMinutes={tzOffsetInMinutes}
                 minuteInterval={interval}
+                maximumDate={maximumDate}
+                minimumDate={minimumDate}
                 value={date}
                 mode={mode}
                 is24Hour

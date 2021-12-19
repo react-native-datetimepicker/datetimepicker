@@ -168,7 +168,7 @@ describe('Example', () => {
     });
 
     it('setTz should change time text when setTzOffsetInMinutes is 120 minutes', async () => {
-      await element(by.id('DateTimePickerScrollView')).scrollTo('bottom');
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
       await userOpensPicker({
         mode: 'time',
         display: getPickerDisplay(),
@@ -185,6 +185,56 @@ describe('Example', () => {
         await userTapsOkButtonAndroid();
       }
       await expect(getTimeText()).toHaveText('09:30');
+    });
+
+    it('should let you pick tomorrow but not yesterday when setting min/max', async () => {
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
+      await elementById('setTzOffsetToZero').tap();
+      await elementById('setMinMax').tap();
+
+      if (isIOS()) {
+        const testElement = getDateTimePickerControlIOS();
+
+        // Ensure you can't select yesterday (iOS)
+        await testElement.setDatePickerDate('2021-11-12', 'yyyy-MM-dd');
+        await expect(getDateText()).toHaveText('11/13/2021');
+
+        // Ensure you can select tomorrow (iOS)
+        await userOpensPicker({mode: 'date', display: getPickerDisplay()});
+        await testElement.setDatePickerDate('2021-11-14', 'yyyy-MM-dd');
+      } else {
+        const uiDevice = device.getUiDevice();
+
+        // Ensure you can't select yesterday (Android)
+        const focusTwelethOfNovemberInCalendar = async () => {
+          for (var i = 0; i < 4; i++) {
+            await uiDevice.pressDPadDown();
+          }
+          for (var i = 0; i < 3; i++) {
+            await uiDevice.pressDPadLeft();
+          }
+        };
+        await focusTwelethOfNovemberInCalendar();
+        await uiDevice.pressEnter();
+        await userTapsOkButtonAndroid();
+        await expect(getDateText()).toHaveText('11/13/2021');
+
+        // Ensure you can select tomorrow (Android)
+        await userOpensPicker({mode: 'date', display: getPickerDisplay()});
+        const focusFourteenthOfNovemberInCalendar = async () => {
+          for (var i = 0; i < 5; i++) {
+            await uiDevice.pressDPadDown();
+          }
+          for (var i = 0; i < 2; i++) {
+            await uiDevice.pressDPadLeft();
+          }
+        };
+        await focusFourteenthOfNovemberInCalendar();
+        await uiDevice.pressEnter();
+        await userTapsOkButtonAndroid();
+      }
+
+      await expect(getDateText()).toHaveText('11/14/2021');
     });
   });
 

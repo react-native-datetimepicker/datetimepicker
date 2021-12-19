@@ -142,8 +142,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     return dialog;
   }
 
-  private static Integer getTimeZoneOffset(Bundle args)
-  {
+  private static Integer getTimeZoneOffset(Bundle args) {
     if (args != null && args.containsKey(RNConstants.ARG_TZOFFSET_MINS)) {
       long timeZoneOffsetInMinutesFallback = args.getLong(RNConstants.ARG_TZOFFSET_MINS);
       int timeZoneOffsetInMinutes = args.getInt(RNConstants.ARG_TZOFFSET_MINS, (int) timeZoneOffsetInMinutesFallback);

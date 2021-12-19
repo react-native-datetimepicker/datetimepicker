@@ -116,15 +116,13 @@ export const App = () => {
 
   const toggleMinMaxDate = () => {
     const startOfTodayUTC = sourceMoment.utc().startOf('day').toDate();
-    setMinimumDate(
-      maximumDate ? undefined : startOfTodayUTC,
-    );
-    const endOfTomorrowUTC = sourceMoment.utc().endOf('day').add(1, 'day').toDate();
-    setMaximumDate(
-      minimumDate
-        ? undefined
-        : endOfTomorrowUTC,
-    );
+    setMinimumDate(maximumDate ? undefined : startOfTodayUTC);
+    const endOfTomorrowUTC = sourceMoment
+      .utc()
+      .endOf('day')
+      .add(1, 'day')
+      .toDate();
+    setMaximumDate(minimumDate ? undefined : endOfTomorrowUTC);
   };
 
   if (Platform.OS !== 'windows') {

@@ -67,6 +67,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
     - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
     - [`themeVariant` (`optional`, `iOS only`)](#themeVariant-optional-ios-only)
+    - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
     - [`minuteInterval` (`optional`)](#minuteinterval-optional)
@@ -175,14 +176,6 @@ export const App = () => {
   );
 };
 ```
-
-## Locale note
-
-On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
-
-On iOS, the locale can be controlled from xCode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions).
-
-For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-stores/#localizing-your-ios-app).
 
 ## Props
 
@@ -315,6 +308,14 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 
 ```js
 <RNDateTimePicker textColor="red" />
+```
+
+#### `locale` (`optional`, `iOS only`)
+
+Allows changing of the locale of the component. By default it uses the device's locale.
+
+```js
+<RNDateTimePicker locale="es-ES" />
 ```
 
 #### `is24Hour` (`optional`, `Windows and Android only`)

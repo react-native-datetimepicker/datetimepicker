@@ -177,6 +177,16 @@ export const App = () => {
 };
 ```
 
+## Localization note
+
+On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
+
+On iOS, the locale can be controlled from xCode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions).
+
+There is also the iOS-only locale prop that can be used to force locale in some cases but its usage is discouraged due to not working robustly in all picker modes.
+
+For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-stores/#localizing-your-ios-app).
+
 ## Props
 
 > Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android, and [`CalendarDatePicker`](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/calendar-date-picker) +[TimePicker](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.timepicker?view=winrt-19041) on Windows.
@@ -312,7 +322,8 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 
 #### `locale` (`optional`, `iOS only`)
 
-Allows changing of the locale of the component. By default it uses the device's locale.
+Allows changing the locale of the component. By default, the device's locale is used. Please note using this prop is discouraged due to not working reliably in all picker modes.
+Prefer localization as documented in [Localization note](#localization-note)
 
 ```js
 <RNDateTimePicker locale="es-ES" />

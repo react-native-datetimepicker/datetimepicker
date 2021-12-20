@@ -114,7 +114,9 @@ export const App = () => {
     backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
   };
 
-  const toggleMinMaxDate = () => {
+  const toggleMinMaxDateInUTC = () => {
+    setTzOffsetInMinutes(0);
+
     const startOfTodayUTC = sourceMoment.utc().startOf('day').toDate();
     setMinimumDate(maximumDate ? undefined : startOfTodayUTC);
     const endOfTomorrowUTC = sourceMoment
@@ -285,7 +287,7 @@ export const App = () => {
               <Button
                 testID="setMinMax"
                 onPress={() => {
-                  toggleMinMaxDate();
+                  toggleMinMaxDateInUTC();
                   setShow(true);
                 }}
                 title="toggleMinMaxDate"

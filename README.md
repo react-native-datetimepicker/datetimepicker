@@ -25,7 +25,7 @@ React Native date & time picker component for iOS, Android and Windows.
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>
   <tr>
-    <td><p align="center"><img src="./docs/images/ios_date.png" width="260" height="420"/></p></td>
+    <td><p align="center"><img src="./docs/images/ios_date_new.png" width="260" height="420"/></p></td>
     <td><p align="center"><img src="./docs/images/ios_time.png" width="260" height="420"/></p></td>
   </tr>
   <tr><td colspan=2><strong>Android</strong></td></tr>
@@ -323,7 +323,7 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 #### `locale` (`optional`, `iOS only`)
 
 Allows changing the locale of the component. By default, the device's locale is used. Please note using this prop is discouraged due to not working reliably in all picker modes.
-Prefer localization as documented in [Localization note](#localization-note)
+Prefer localization as documented in [Localization note](#localization-note).
 
 ```js
 <RNDateTimePicker locale="es-ES" />

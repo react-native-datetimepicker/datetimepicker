@@ -25,7 +25,7 @@ React Native date & time picker component for iOS, Android and Windows.
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>
   <tr>
-    <td><p align="center"><img src="./docs/images/ios_date_new.png" width="260" height="420"/></p></td>
+    <td><p align="center"><img src="./docs/images/ios_date_new.png" height="420"/></p></td>
     <td><p align="center"><img src="./docs/images/ios_time.png" width="260" height="420"/></p></td>
   </tr>
   <tr><td colspan=2><strong>Android</strong></td></tr>
@@ -183,7 +183,7 @@ On Android, the picker will be controlled by the system locale. If you wish to c
 
 On iOS, the locale can be controlled from xCode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions).
 
-There is also the iOS-only locale prop that can be used to force locale in some cases but its usage is discouraged due to not working robustly in all picker modes.
+There is also the iOS-only locale prop that can be used to force locale in some cases but its usage is discouraged due to [not working robustly in all picker modes](./docs/images/ios_date_new.png) (note the mixed month and day names).
 
 For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-stores/#localizing-your-ios-app).
 

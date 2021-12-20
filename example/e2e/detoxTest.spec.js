@@ -189,7 +189,6 @@ describe('Example', () => {
 
     it('should let you pick tomorrow but not yesterday when setting min/max', async () => {
       await elementById('DateTimePickerScrollView').scrollTo('bottom');
-      await elementById('setTzOffsetToZero').tap();
       await elementById('setMinMax').tap();
 
       if (isIOS()) {
@@ -207,10 +206,10 @@ describe('Example', () => {
 
         // Ensure you can't select yesterday (Android)
         const focusTwelethOfNovemberInCalendar = async () => {
-          for (var i = 0; i < 4; i++) {
+          for (let i = 0; i < 4; i++) {
             await uiDevice.pressDPadDown();
           }
-          for (var i = 0; i < 3; i++) {
+          for (let i = 0; i < 3; i++) {
             await uiDevice.pressDPadLeft();
           }
         };
@@ -222,10 +221,10 @@ describe('Example', () => {
         // Ensure you can select tomorrow (Android)
         await userOpensPicker({mode: 'date', display: getPickerDisplay()});
         const focusFourteenthOfNovemberInCalendar = async () => {
-          for (var i = 0; i < 5; i++) {
+          for (let i = 0; i < 5; i++) {
             await uiDevice.pressDPadDown();
           }
-          for (var i = 0; i < 2; i++) {
+          for (let i = 0; i < 2; i++) {
             await uiDevice.pressDPadLeft();
           }
         };

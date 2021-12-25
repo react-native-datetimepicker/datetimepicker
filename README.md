@@ -117,12 +117,6 @@ If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your proje
 import DateTimePicker from '@react-native-community/datetimepicker';
 ```
 
-or
-
-```js
-const DateTimePicker = require('@react-native-community/datetimepicker');
-```
-
 ### Basic usage with state
 
 ```js

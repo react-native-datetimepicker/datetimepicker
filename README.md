@@ -175,7 +175,8 @@ export const App = () => {
 
 On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
 
-On iOS, the locale can be controlled from xCode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions).
+On iOS, the locale can be controlled from Xcode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions). 
+> To localize the calendar days (avoid mixed language for month and day names): If you use a library like [i18next](https://github.com/i18next/react-i18next) or [react-localize-redux](https://github.com/ryandrewjohnson/react-localize-redux) to manage your translations, it is sufficient to add your target languages in the `project.pbxproj` as described in the Apple Documentation - but you are not required to add any localization keys (like the days of the week). iOS will automatically display the correct localized strings as long as the target language is contained in `project.pbxproj`.
 
 There is also the iOS-only locale prop that can be used to force locale in some cases but its usage is discouraged due to [not working robustly in all picker modes](./docs/images/ios_date_new.png) (note the mixed month and day names).
 
@@ -316,7 +317,7 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 
 #### `locale` (`optional`, `iOS only`)
 
-Allows changing the locale of the component. By default, the device's locale is used. Please note using this prop is discouraged due to not working reliably in all picker modes.
+Allows changing the locale of the component. This affects the displayed text and the date / time formatting. By default, the device's locale is used. Please note using this prop is discouraged due to not working reliably in all picker modes.
 Prefer localization as documented in [Localization note](#localization-note).
 
 ```js

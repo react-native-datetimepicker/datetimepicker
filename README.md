@@ -175,7 +175,7 @@ export const App = () => {
 
 On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
 
-On iOS, the locale can be controlled from Xcode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions). 
+On iOS, the locale can be controlled from Xcode, as [documented here](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/TestingYourInternationalApp/TestingYourInternationalApp.html#//apple_ref/doc/uid/10000171i-CH7-SW2). 
 
 For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-stores/#localizing-your-ios-app).
 

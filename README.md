@@ -58,6 +58,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [RN < 0.60](#rn--060-1)
   - [General Usage](#general-usage)
     - [Basic usage with state](#basic-usage-with-state)
+  - [Localization note](#localization-note)
   - [Props](#props)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
@@ -71,7 +72,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)
     - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
     - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
-    - [`themeVariant` (`optional`, `iOS only`)](#themeVariant-optional-ios-only)
+    - [`themeVariant` (`optional`, `iOS only`)](#themevariant-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
@@ -181,7 +182,6 @@ export const App = () => {
 On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
 
 On iOS, use XCode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions) to inform the OS about the locales your application supports. iOS will automatically display the correctly localized DateTimePicker as long as the target language is contained in `project.pbxproj`.
-
 
 > If you use a library like [i18next](https://github.com/i18next/react-i18next) or [react-localize-redux](https://github.com/ryandrewjohnson/react-localize-redux) to manage your translations, it is sufficient to add your target languages as described in the Apple Documentation - but you are not required to add any localization keys (like, for example, the days of the week). iOS will automatically display the correct localized strings as long as the target language is contained in `project.pbxproj`.
 
@@ -324,6 +324,21 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 <RNDateTimePicker textColor="red" />
 ```
 
+#### `themeVariant` (`optional`, `iOS only`)
+
+Allows overriding system theme variant (dark or light mode) used by the date picker.
+
+:warning: Has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
+
+List of possible values:
+
+- `"light"`
+- `"dark"`
+
+```js
+<RNDateTimePicker themeVariant="light" />
+```
+
 #### `locale` (`optional`, `iOS only`)
 
 Allows changing the locale of the component. This affects the displayed text and the date / time formatting. By default, the device's locale is used. Please note using this prop is discouraged due to not working reliably in all picker modes.
@@ -374,21 +389,6 @@ Alternatively, use the `themeVariant` prop or [opt-out from dark mode (discourag
 
 ```js
 <RNDateTimePicker style={{flex: 1}} />
-```
-
-#### `themeVariant` (`optional`, `iOS only`)
-
-Allows overriding system theme variant (dark or light mode) used by the date picker.
-
-:warning: Has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
-
-List of possible values:
-
-- `"light"`
-- `"dark"`
-
-```js
-<RNDateTimePicker themeVariant="light" />
 ```
 
 #### `disabled` (`optional`, `iOS only`)

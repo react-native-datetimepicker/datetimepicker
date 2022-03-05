@@ -414,7 +414,7 @@ Please see [manual-installation.md](/docs/manual-installation.md)
 3. Install required pods by running `npx pod-install`
 4. Run `yarn start` to start Metro Bundler
 5. Run `yarn run start:ios` or `yarn run start:android` or `yarn run start:windows`
-6. To do any development on the library, open the example project (in the example folder!) in xCode or Android Studio. The example project depends on the library code, which you can edit and observe any changes in the example project.
+6. To do any development on the library, open the example project (in the `example` folder) in xCode or Android Studio. The example project depends on the library code, which you can edit and observe any changes in the example project.
 
 [circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-datetimepicker/datetimepicker.svg?style=svg

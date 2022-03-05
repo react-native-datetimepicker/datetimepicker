@@ -22,6 +22,9 @@ The module is still published on `npm` under the old namespace (as documented) b
 
 React Native date & time picker component for iOS, Android and Windows.
 
+<details>
+  <summary>Expand for screenshots</summary>
+  
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>
   <tr>
@@ -43,6 +46,8 @@ React Native date & time picker component for iOS, Android and Windows.
   </tr>
 </table>
 
+</details>
+
 ## Table of Contents
 
 - [React Native DateTimePicker](#react-native-datetimepicker)
@@ -53,6 +58,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [RN < 0.60](#rn--060-1)
   - [General Usage](#general-usage)
     - [Basic usage with state](#basic-usage-with-state)
+  - [Localization note](#localization-note)
   - [Props](#props)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
@@ -66,7 +72,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)
     - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
     - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
-    - [`themeVariant` (`optional`, `iOS only`)](#themeVariant-optional-ios-only)
+    - [`themeVariant` (`optional`, `iOS only`)](#themevariant-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
@@ -175,10 +181,13 @@ export const App = () => {
 
 On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
 
-On iOS, the locale can be controlled from Xcode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions). 
-> To localize the calendar days (avoid mixed language for month and day names): If you use a library like [i18next](https://github.com/i18next/react-i18next) or [react-localize-redux](https://github.com/ryandrewjohnson/react-localize-redux) to manage your translations, it is sufficient to add your target languages in the `project.pbxproj` as described in the Apple Documentation - but you are not required to add any localization keys (like the days of the week). iOS will automatically display the correct localized strings as long as the target language is contained in `project.pbxproj`.
+On iOS, use XCode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions) to inform the OS about the locales your application supports. iOS will automatically display the correctly localized DateTimePicker as long as the target language is contained in `project.pbxproj`.
 
-There is also the iOS-only locale prop that can be used to force locale in some cases but its usage is discouraged due to [not working robustly in all picker modes](./docs/images/ios_date_new.png) (note the mixed month and day names).
+> If you use a library like [i18next](https://github.com/i18next/react-i18next) or [react-localize-redux](https://github.com/ryandrewjohnson/react-localize-redux) to manage your translations, it is sufficient to add your target languages as described in the Apple Documentation - but you are not required to add any localization keys (like, for example, the days of the week). iOS will automatically display the correct localized strings as long as the target language is contained in `project.pbxproj`.
+
+For testing your localization setup, refer [here](https://developer.apple.com/documentation/xcode/testing-localizations-when-running-your-app).
+
+There is also the iOS-only locale prop that can be used to force locale in some cases but its usage is discouraged due to [not working robustly in all picker modes](./docs/images/ios_date_new.png) (note the mixed month and day names). To the best of our knowledge, it works reliably in the `spinner` mode.
 
 For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-stores/#localizing-your-ios-app).
 
@@ -315,6 +324,21 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 <RNDateTimePicker textColor="red" />
 ```
 
+#### `themeVariant` (`optional`, `iOS only`)
+
+Allows overriding system theme variant (dark or light mode) used by the date picker.
+
+:warning: Has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
+
+List of possible values:
+
+- `"light"`
+- `"dark"`
+
+```js
+<RNDateTimePicker themeVariant="light" />
+```
+
 #### `locale` (`optional`, `iOS only`)
 
 Allows changing the locale of the component. This affects the displayed text and the date / time formatting. By default, the device's locale is used. Please note using this prop is discouraged due to not working reliably in all picker modes.
@@ -326,7 +350,7 @@ Prefer localization as documented in [Localization note](#localization-note).
 
 #### `is24Hour` (`optional`, `Windows and Android only`)
 
-Allows changing of the time picker to a 24 hour format. By default, this value is decided automatcially based on the user's chosen locale and other preferences.
+Allows changing of the time picker to a 24 hour format. By default, this value is decided automatcially based on the locale and other preferences.
 
 ```js
 <RNDateTimePicker is24Hour={true} />
@@ -346,7 +370,7 @@ Pressing button can be observed in onChange handler as `event.type === 'neutralB
 The interval at which minutes can be selected.
 Possible values are: `1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30`
 
-(On Windows, this can be any number between 0-59.)
+On Windows, this can be any number between 0-59.
 
 on iOS, this in only supported when `display="spinner"`
 
@@ -356,29 +380,15 @@ on iOS, this in only supported when `display="spinner"`
 
 #### `style` (`optional`, `iOS only`)
 
-Sets style directly on picker component. By default, the picker height is fixed to 216px.
+Sets style directly on picker component. By default, the picker height is determined based on the `display` prop.
 
 Please note that by default, picker's text color is controlled by the application theme (light / dark mode). In dark mode, text is white and in light mode, text is black.
 
-This means that eg. if the device has dark mode turned on, and your screen background color is white, you will not see the picker. Please use the `Appearance` api to adjust the picker's background color so that it is visible, as we do in the [example App](/example/App.js), use `themeVariant` prop or [opt-out from dark mode](https://stackoverflow.com/a/56546554/2070942).
+This means that eg. if the device has dark mode turned on, and your screen background color is white, you will not see the picker. Please use the `Appearance` api to adjust the picker's background color so that it is visible, as we do in the [example App](/example/App.js).
+Alternatively, use the `themeVariant` prop or [opt-out from dark mode (discouraged)](https://stackoverflow.com/a/56546554/2070942).
 
 ```js
 <RNDateTimePicker style={{flex: 1}} />
-```
-
-#### `themeVariant` (`optional`, `iOS only`)
-
-Allows overriding system theme variant (dark or light mode) used by the date picker.
-
-:warning: Has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
-
-List of possible values:
-
-- `"light"`
-- `"dark"`
-
-```js
-<RNDateTimePicker themeVariant="light" />
 ```
 
 #### `disabled` (`optional`, `iOS only`)
@@ -404,7 +414,7 @@ Please see [manual-installation.md](/docs/manual-installation.md)
 3. Install required pods by running `npx pod-install`
 4. Run `yarn start` to start Metro Bundler
 5. Run `yarn run start:ios` or `yarn run start:android` or `yarn run start:windows`
-6. To do any development on the library, open the example project (in the example folder!) in xCode or Android Studio. The example project depends on the library code, which you can edit and observe any changes in the example project.
+6. To do any development on the library, open the example project (in the `example` folder) in xCode or Android Studio. The example project depends on the library code, which you can edit and observe any changes in the example project.
 
 [circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-datetimepicker/datetimepicker.svg?style=svg

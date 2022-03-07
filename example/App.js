@@ -358,7 +358,7 @@ export const App = () => {
                 title="toggleMinMaxDate"
               />
             </View>
-            {show && isAndroid && androidVariant === 'component' && (
+            {(show || (isAndroid && androidVariant === 'component')) && (
               <DateTimePicker
                 testID="dateTimePicker"
                 {...pickerProps}

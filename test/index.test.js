@@ -59,7 +59,8 @@ describe('DatePicker', () => {
   );
 
   it.each([
-    [{}, 'A date or time should be specified as `value`.'],
+    [{value: 'bogus'}, '`value` prop must be an instance of Date object'],
+    [{}, 'A date or time must be specified as `value` prop'],
     [
       {display: 'calendar', mode: 'time', value: new Date()},
       'display: calendar and mode: time cannot be used together.',

@@ -36,6 +36,7 @@ export function getOpenPicker({
   switch (mode) {
     case ANDROID_MODE.time:
       return () =>
+        // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[mode].open({
           value,
           display,
@@ -46,6 +47,7 @@ export function getOpenPicker({
         });
     default:
       return () =>
+        // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
           value,
           display,

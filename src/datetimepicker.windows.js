@@ -10,6 +10,7 @@ import {requireNativeComponent, StyleSheet} from 'react-native';
 import type {WindowsNativeProps, WindowsDatePickerChangeEvent} from './types';
 import * as React from 'react';
 import {WINDOWS_MODE} from './constants';
+import {sharedPropsValidation} from './utils';
 
 const styles = StyleSheet.create({
   rnDatePicker: {
@@ -26,6 +27,8 @@ const RNTimePickerWindows = requireNativeComponent('RNTimePickerWindows');
 export default function RNDateTimePickerQWE(
   props: WindowsNativeProps,
 ): React.Node {
+  sharedPropsValidation({value: props?.value});
+
   const localProps = {
     dayOfWeekFormat: props.dayOfWeekFormat,
     dateFormat: props.dateFormat,
@@ -43,13 +46,15 @@ export default function RNDateTimePickerQWE(
     onChange && onChange(event, new Date(event.nativeEvent.newDate));
   };
 
-  // The Date object returns timezone in minutes. Convert that to seconds
-  // and multiply by -1 so that the offset can be added to UTC+0 time to get
-  // the correct value on the native side.
-  let timezoneOffsetInSeconds = props.timeZoneOffsetInSeconds;
-  if (timezoneOffsetInSeconds == null && props.value != null) {
-    timezoneOffsetInSeconds = -60 * props.value.getTimezoneOffset();
-  }
+  const timezoneOffsetInSeconds = (() => {
+    // The Date object returns timezone in minutes. Convert that to seconds
+    // and multiply by -1 so that the offset can be added to UTC+0 time to get
+    // the correct value on the native side.
+    if (timezoneOffsetInSeconds == null && props.value != null) {
+      return -60 * props.value.getTimezoneOffset();
+    }
+    return props.timeZoneOffsetInSeconds;
+  })();
   const {mode} = props;
 
   // 'date' is the default mode

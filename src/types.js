@@ -15,6 +15,7 @@ import {
   IOS_DISPLAY,
   IOS_MODE,
   WINDOWS_MODE,
+  ANDROID_EVT_TYPE,
 } from './constants';
 
 export type IOSDisplay = $Keys<typeof IOS_DISPLAY>;
@@ -22,6 +23,7 @@ export type IOSMode = $Keys<typeof IOS_MODE>;
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
 type WindowsMode = $Keys<typeof WINDOWS_MODE>;
 type Display = $Keys<typeof ANDROID_DISPLAY>;
+type AndroidEvtTypes = $Keys<typeof ANDROID_EVT_TYPE>;
 type MinuteInterval = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
 
 export type Event = SyntheticEvent<
@@ -31,7 +33,7 @@ export type Event = SyntheticEvent<
 >;
 
 export type AndroidEvent = {|
-  type: string,
+  type: AndroidEvtTypes,
   nativeEvent: {|
     timestamp?: number,
   |},
@@ -163,6 +165,7 @@ export type AndroidNativeProps = $ReadOnly<{|
 
   onChange: (event: AndroidEvent, date?: Date) => void,
   neutralButtonLabel?: string,
+  onError?: (Error) => void,
 |}>;
 
 export type DatePickerOptions = {|

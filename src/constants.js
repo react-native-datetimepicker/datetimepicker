@@ -11,6 +11,12 @@ export const ANDROID_DISPLAY = Object.freeze({
   calendar: 'calendar',
 });
 
+export const ANDROID_EVT_TYPE = Object.freeze({
+  set: 'set',
+  neutralButtonPressed: 'neutralButtonPressed',
+  dismissed: 'dismissed',
+});
+
 export const IOS_DISPLAY = Object.freeze({
   default: 'default',
   spinner: 'spinner',

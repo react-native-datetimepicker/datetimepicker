@@ -17,8 +17,9 @@ const {
 } = require('./utils/actions');
 const {isIOS, wait, Platform} = require('./utils/utils');
 const {device} = require('detox');
+const {describe} = require('jest-circus');
 
-describe('Example', () => {
+describe('e2e tests', () => {
   const getPickerDisplay = () => {
     return isIOS() ? 'spinner' : 'default';
   };
@@ -38,6 +39,7 @@ describe('Example', () => {
     await expect(elementById('timeInfo')).toHaveText(
       'TZ: Europe/Prague, TZOffset: -1 original: 11/13/2021 11:00',
     );
+    console.log('test done');
   });
 
   it('should show date picker after tapping datePicker button', async () => {

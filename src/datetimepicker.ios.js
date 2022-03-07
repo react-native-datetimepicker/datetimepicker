@@ -10,7 +10,7 @@
  * @flow strict-local
  */
 import RNDateTimePicker from './picker';
-import {toMilliseconds} from './utils';
+import {sharedPropsValidation, toMilliseconds} from './utils';
 import {IOS_DISPLAY, ANDROID_MODE} from './constants';
 import invariant from 'invariant';
 import * as React from 'react';
@@ -57,6 +57,8 @@ export default function Picker({
   display: providedDisplay = IOS_DISPLAY.default,
   disabled = false,
 }: IOSNativeProps): React.Node {
+  sharedPropsValidation({value});
+
   const [heightStyle, setHeightStyle] = React.useState(undefined);
   const _picker: NativeRef = React.useRef(null);
   const display = getDisplaySafe(providedDisplay);
@@ -90,11 +92,8 @@ export default function Picker({
 
   const _onChange = (event: Event) => {
     const timestamp = event.nativeEvent.timestamp;
-    let date;
 
-    if (timestamp) {
-      date = new Date(timestamp);
-    }
+    const date = timestamp !== undefined ? new Date(timestamp) : undefined;
 
     onChange && onChange(event, date);
   };

@@ -22,6 +22,7 @@
     "start:windows": "react-native start --use-react-native-windows",
     "test": "jest ./test",
     "posttest": "npm run lint",
+    "postinstall": "patch-package",
     "lint": "eslint {example,src,test}/**/*.js src/index.d.ts",
     "flow": "flow check",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",
@@ -67,19 +68,21 @@
     "@semantic-release/git": "^10.0.1",
     "@testing-library/react-native": "^8.0.0",
     "babel-jest": "^27.4.4",
-    "detox": "19.3.0",
+    "detox": "19.5.3",
     "eslint": "^7",
     "eslint-plugin-prettier": "^4.0.0",
     "flow-bin": "^0.158.0",
     "flow-typed": "^3.4.0",
-    "jest": "^27.4.4",
-    "jest-circus": "^27.4.4",
+    "jest": "^27.5.1",
+    "jest-circus": "^27.5.1",
     "metro-react-native-babel-preset": "^0.66.2",
     "moment": "^2.24.0",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.5.1",
     "react": "17.0.2",
     "react-native": "^0.66.4",
-    "react-native-localize": "^2.1.6",
+    "react-native-localize": "^2.2.0",
     "react-native-windows": "^0.66.3",
     "react-test-renderer": "17.0.2",
     "semantic-release": "^18.0.1"
@@ -112,7 +115,7 @@
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
         "type": "android.emulator",
         "device": {
-          "avdName": "TestingAVD"
+          "avdName": "Pixel_4_Android_12_api_31"
         }
       },
       "android.device.debug": {

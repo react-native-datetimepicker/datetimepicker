@@ -3,6 +3,7 @@
  * @flow strict-local
  */
 import type {DatePickerOptions, TimePickerOptions} from './types';
+import invariant from 'invariant';
 
 /**
  * Convert a Date to a timestamp.
@@ -20,4 +21,12 @@ export function toMilliseconds(
       options[key] = value.getTime();
     }
   });
+}
+
+export function sharedPropsValidation({value}: {value: ?Date}) {
+  invariant(value, 'A date or time must be specified as `value` prop.');
+  invariant(
+    value instanceof Date,
+    '`value` prop must be an instance of Date object',
+  );
 }

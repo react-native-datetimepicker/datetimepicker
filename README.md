@@ -24,7 +24,7 @@ React Native date & time picker component for iOS, Android and Windows.
 
 <details>
   <summary>Expand for screenshots</summary>
-  
+
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>
   <tr>
@@ -55,7 +55,6 @@ React Native date & time picker component for iOS, Android and Windows.
   - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
     - [RN >= 0.60](#rn--060)
-    - [RN < 0.60](#rn--060-1)
   - [General Usage](#general-usage)
     - [Basic usage with state](#basic-usage-with-state)
   - [Localization note](#localization-note)
@@ -79,15 +78,10 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`minuteInterval` (`optional`)](#minuteinterval-optional)
     - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
     - [`disabled` (`optional`, `iOS only`)](#disabled-optional-ios-only)
+    - [`onError` (`optional`, `Android only`)](#onError-optional-android-only)
   - [Migration from the older components](#migration-from-the-older-components)
-    - [DatePickerIOS](#datepickerios)
-    - [DatePickerAndroid](#datepickerandroid)
-    - [TimePickerAndroid](#timepickerandroid)
   - [Contributing to the component](#contributing-to-the-component)
   - [Manual installation](#manual-installation)
-    - [iOS](#ios)
-    - [Android](#android)
-    - [Windows](#windows)
   - [Running the example app](#running-the-example-app)
 
 ## Requirements
@@ -137,7 +131,7 @@ export const App = () => {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    setShow(false);
     setDate(currentDate);
   };
 
@@ -168,7 +162,6 @@ export const App = () => {
           value={date}
           mode={mode}
           is24Hour={true}
-          display="default"
           onChange={onChange}
         />
       )}
@@ -394,6 +387,10 @@ Alternatively, use the `themeVariant` prop or [opt-out from dark mode (discourag
 #### `disabled` (`optional`, `iOS only`)
 
 If true, the user won't be able to interact with the view.
+
+#### `onError` (`optional`, `Android only`)
+
+Callback that is called when an error occurs inside the date picker native code (such as null activity).
 
 ## Migration from the older components
 

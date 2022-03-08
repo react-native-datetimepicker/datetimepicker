@@ -14,8 +14,10 @@ export type Event = SyntheticEvent<
   }>
 >;
 
-export type AndroidEvent = {
-  type: string;
+export type EvtTypes = 'set' | 'neutralButtonPressed' | 'dismissed';
+
+export type DateTimePickerEvent = {
+  type: EvtTypes;
   nativeEvent: {
     timestamp?: number;
   };
@@ -33,7 +35,7 @@ type BaseOptions = {
    * This is called when the user changes the date or time in the UI.
    * The first argument is an Event, the second a selected Date.
    */
-  onChange?: (event: Event, date?: Date) => void;
+  onChange?: (event: DateTimePickerEvent, date?: Date) => void;
 };
 
 type DateOptions = BaseOptions & {
@@ -132,7 +134,6 @@ export type AndroidNativeProps = Readonly<
        */
       minuteInterval?: MinuteInterval;
 
-      onChange?: (event: AndroidEvent, date?: Date) => void;
       neutralButtonLabel?: string;
     }
 >;
@@ -145,24 +146,9 @@ export type TimePickerOptions = TimeOptions & {
   display?: Display;
 };
 
-export type DateTimePickerResult = Readonly<{
-  action: ('timeSetAction' | 'dateSetAction' | 'dismissedAction') | null;
-  year: number;
-  month: number;
-  day: number;
-  hour: number;
-  minute: number;
-}>;
-
 export type RCTDateTimePickerNative = NativeMethods;
 export type NativeRef = {
   current: Ref<RCTDateTimePickerNative> | null;
-};
-
-export type WindowsDatePickerChangeEvent = {
-  nativeEvent: {
-    newDate: number;
-  };
 };
 
 export type WindowsNativeProps = Readonly<
@@ -174,7 +160,6 @@ export type WindowsNativeProps = Readonly<
        */
       display?: Display;
 
-      onChange?: (event: WindowsDatePickerChangeEvent, date?: Date) => void;
       placeholderText?: string;
       dateFormat?:
         | 'day month year'

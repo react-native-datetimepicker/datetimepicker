@@ -7,9 +7,13 @@
 'use strict';
 
 import {requireNativeComponent, StyleSheet} from 'react-native';
-import type {WindowsNativeProps, WindowsDatePickerChangeEvent} from './types';
+import type {
+  WindowsNativeProps,
+  WindowsDatePickerChangeEvent,
+  DateTimePickerEvent,
+} from './types';
 import * as React from 'react';
-import {WINDOWS_MODE} from './constants';
+import {EVENT_TYPE_SET, WINDOWS_MODE} from './constants';
 import {sharedPropsValidation} from './utils';
 
 const styles = StyleSheet.create({
@@ -43,7 +47,13 @@ export default function RNDateTimePickerQWE(
 
   const _onChange = (event: WindowsDatePickerChangeEvent) => {
     const {onChange} = props;
-    onChange && onChange(event, new Date(event.nativeEvent.newDate));
+    const unifiedEvent: DateTimePickerEvent = {
+      ...event,
+      nativeEvent: {...event.nativeEvent, timestamp: event.nativeEvent.newDate},
+      type: EVENT_TYPE_SET,
+    };
+
+    onChange && onChange(unifiedEvent, new Date(event.nativeEvent.newDate));
   };
 
   const timezoneOffsetInSeconds = (() => {

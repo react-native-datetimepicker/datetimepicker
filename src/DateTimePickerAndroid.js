@@ -10,10 +10,11 @@ import {
   ANDROID_DISPLAY,
   ANDROID_MODE,
   ANDROID_EVT_TYPE,
+  EVENT_TYPE_SET,
 } from './constants';
 import invariant from 'invariant';
 
-import type {AndroidEvent, AndroidNativeProps} from './types';
+import type {DateTimePickerEvent, AndroidNativeProps} from './types';
 import {
   getOpenPicker,
   timeZoneOffsetDateSetter,
@@ -55,8 +56,8 @@ function open(props: AndroidNativeProps) {
     try {
       const {action, day, month, year, minute, hour} = await openPicker();
       let date = new Date(valueTimestamp);
-      let event: AndroidEvent = {
-        type: ANDROID_EVT_TYPE.set,
+      let event: DateTimePickerEvent = {
+        type: EVENT_TYPE_SET,
         nativeEvent: {},
       };
 
@@ -65,25 +66,25 @@ function open(props: AndroidNativeProps) {
           date.setFullYear(year, month, day);
           date = timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes);
           event.nativeEvent.timestamp = date.getTime();
-          onChange(event, date);
+          onChange?.(event, date);
           break;
 
         case TIME_SET_ACTION:
           date.setHours(hour, minute);
           date = timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes);
           event.nativeEvent.timestamp = date.getTime();
-          onChange(event, date);
+          onChange?.(event, date);
           break;
 
         case NEUTRAL_BUTTON_ACTION:
           event.type = ANDROID_EVT_TYPE.neutralButtonPressed;
-          onChange(event, originalValue);
+          onChange?.(event, originalValue);
           break;
 
         case DISMISS_ACTION:
         default:
           event.type = ANDROID_EVT_TYPE.dismissed;
-          onChange(event, originalValue);
+          onChange?.(event, originalValue);
           break;
       }
     } catch (error) {

@@ -135,6 +135,11 @@ export type AndroidNativeProps = Readonly<
       minuteInterval?: MinuteInterval;
 
       neutralButtonLabel?: string;
+
+      /**
+       * callback when an error occurs inside the date picker native code (such as null activity)
+       */
+      onError?: (arg: Error) => void;
     }
 >;
 

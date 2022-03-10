@@ -117,20 +117,67 @@ If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your proje
 import DateTimePicker from '@react-native-community/datetimepicker';
 ```
 
-### Basic usage with state
+<details>
+  <summary>Expand for examples</summary>
+
+We give two equivalent examples on how to use the package on all supported platforms.
+
+### Recommended imperative api usage on Android
+
+While the component-approach as given in the second paragraph works on Android, the recommended approach is to use the imperative api given in the first paragraph.
+
+Read more about the motivation in #TODO.
 
 ```js
-import React, {useState} from 'react';
-import {View, Button, Platform} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+export const App = () => {
+  const [date, setDate] = useState(new Date(1598051730000));
 
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true
+    })
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+  return (
+    <View>
+      <View>
+        <Button onPress={showDatepicker} title="Show date picker!" />
+      </View>
+      <View>
+        <Button onPress={showTimepicker} title="Show time picker!" />
+      </View>
+      <Text>selected: {date.toLocaleString()}</Text>
+    </View>
+  );
+}
+```
+
+### Component usage on iOS / Android / Windows
+
+```js
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
   };
@@ -156,6 +203,7 @@ export const App = () => {
       <View>
         <Button onPress={showTimepicker} title="Show time picker!" />
       </View>
+      <Text>selected: {date.toLocaleString()}</Text>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -167,8 +215,11 @@ export const App = () => {
       )}
     </View>
   );
-};
+}
 ```
+
+</details>
+
 
 ## Localization note
 
@@ -184,7 +235,25 @@ There is also the iOS-only locale prop that can be used to force locale in some 
 
 For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-stores/#localizing-your-ios-app).
 
-## Props
+
+### Android imperative api
+
+On Android, you have a choice between using the component API (regular React component) or an imperative api (think something like `ReactNative.alert()`).
+
+While the component API has the benefit writing the same code on all platforms, we recommend to use the imperative API on Android.
+
+Note that the `params` is an object with the same properties as the component props documented in the next paragraph. (This is also because the component api internally uses the imperative one.)
+
+```js
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+
+DateTimePickerAndroid.open(params: AndroidNativeProps)
+DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
+```
+
+Reason we recommend the imperative API is: on Android, the date/time picker opens in a dialog, similar to `ReactNative.alert()` from core react native. The imperative api models this better than the declarative component api. While the component approach is functional, based on the issue tracker history, it appears to be prone to introducing bugs.
+
+## Component props / params of the Android imperative api
 
 > Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android, and [`CalendarDatePicker`](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/calendar-date-picker) +[TimePicker](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.timepicker?view=winrt-19041) on Windows.
 >

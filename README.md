@@ -4,7 +4,7 @@ See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/i
 
 ### Backers
 
-Support us with a monthly donation and help us continue our activities. [Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker)
+Support us with a monthly donation and help us continue our activities. [Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker).
 
 <a href="https://opencollective.com/react-native-datetimepicker/donate" target="_blank">
   <img src="https://opencollective.com/react-native-datetimepicker/backers.svg?width=890" width=890 />
@@ -22,7 +22,7 @@ The module is still published on `npm` under the old namespace (as documented) b
 
 React Native date & time picker component for iOS, Android and Windows.
 
-### Screenshots
+## Screenshots
 
 <details>
   <summary>Expand for screenshots</summary>
@@ -57,9 +57,9 @@ React Native date & time picker component for iOS, Android and Windows.
   - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
     - [RN >= 0.60](#rn--060)
-  - [General Usage](#general-usage)
-    - [Basic usage with state](#basic-usage-with-state)
+  - [Usage](#usage)
   - [Localization note](#localization-note)
+  - [Android imperative API](#android-imperative-api)
   - [Props](#props)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
@@ -113,7 +113,7 @@ Autolinking is not yet implemented on Windows, so [manual installation ](/docs/m
 
 If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
 
-## General Usage
+## Usage
 
 ```js
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -128,7 +128,7 @@ We give two equivalent examples on how to use the package on all supported platf
 
 While the component-approach as given in the second paragraph works on Android, the recommended approach is to use the imperative api given in the first paragraph.
 
-Read more about the motivation in #TODO.
+Read more about the motivation in [Android imperative API](#android-imperative-api).
 
 ```js
 export const App = () => {

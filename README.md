@@ -1,6 +1,6 @@
 ### 🚧🚧 Looking for collaborators and backers 🚧🚧
 
-See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313)
+See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313).
 
 ### Backers
 
@@ -50,16 +50,16 @@ React Native date & time picker component for iOS, Android and Windows.
 
 </details>
 
-## Table of Contents
+## Table of contents
 
 - [React Native DateTimePicker](#react-native-datetimepicker)
-  - [Table of Contents](#table-of-contents)
+  - [Table of contents](#table-of-contents)
   - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
   - [Usage](#usage)
   - [Localization note](#localization-note)
   - [Android imperative API](#android-imperative-api)
-  - [Props](#component-props--params-of-the-android-imperative-api)
+  - [Props / params](#component-props--params-of-the-android-imperative-api)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
     - [`onChange` (`optional`)](#onchange-optional)

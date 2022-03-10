@@ -22,6 +22,8 @@ The module is still published on `npm` under the old namespace (as documented) b
 
 React Native date & time picker component for iOS, Android and Windows.
 
+### Screenshots
+
 <details>
   <summary>Expand for screenshots</summary>
 

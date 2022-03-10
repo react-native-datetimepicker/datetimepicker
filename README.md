@@ -56,11 +56,10 @@ React Native date & time picker component for iOS, Android and Windows.
   - [Table of Contents](#table-of-contents)
   - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
-    - [RN >= 0.60](#rn--060)
   - [Usage](#usage)
   - [Localization note](#localization-note)
   - [Android imperative API](#android-imperative-api)
-  - [Props](#props)
+  - [Props](#component-props--params-of-the-android-imperative-api)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
     - [`onChange` (`optional`)](#onchange-optional)
@@ -242,9 +241,9 @@ For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-
 
 On Android, you have a choice between using the component API (regular React component) or an imperative api (think something like `ReactNative.alert()`).
 
-While the component API has the benefit writing the same code on all platforms, we recommend to use the imperative API on Android.
+While the component API has the benefit of writing the same code on all platforms, for start we recommend to use the imperative API on Android.
 
-Note that the `params` is an object with the same properties as the component props documented in the next paragraph. (This is also because the component api internally uses the imperative one.)
+The `params` is an object with the same properties as the component props documented in the next paragraph. (This is also because the component api internally uses the imperative one.)
 
 ```js
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
@@ -253,7 +252,7 @@ DateTimePickerAndroid.open(params: AndroidNativeProps)
 DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
 ```
 
-Reason we recommend the imperative API is: on Android, the date/time picker opens in a dialog, similar to `ReactNative.alert()` from core react native. The imperative api models this better than the declarative component api. While the component approach is functional, based on the issue tracker history, it appears to be prone to introducing bugs.
+Reason we recommend the imperative API is: on Android, the date/time picker opens in a dialog, similar to `ReactNative.alert()` from core react native. The imperative api models this behavior better than the declarative component api. While the component approach is perfectly functional, based on the issue tracker history, it appears to be more prone to introducing bugs.
 
 ## Component props / params of the Android imperative api
 

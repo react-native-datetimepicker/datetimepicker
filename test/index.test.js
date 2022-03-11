@@ -3,6 +3,7 @@ import DatePicker from '../src/index.js';
 import RNDateTimePickerIOS from '../src/picker.ios';
 import AndroidDateTimePicker from '../src/datetimepicker.android';
 import {render, fireEvent, waitFor} from '@testing-library/react-native';
+import {EVENT_TYPE_SET} from '../src/constants';
 
 const DATE = 1376949600000;
 
@@ -33,7 +34,7 @@ describe('DatePicker', () => {
     const date = new Date(156e10);
 
     function onChange(event, dateArg) {
-      expect(event).toHaveProperty('type', 'event');
+      expect(event).toHaveProperty('type', EVENT_TYPE_SET);
       expect(event).toHaveProperty('nativeEvent');
       expect(event.nativeEvent).toHaveProperty('timestamp', date.getTime());
       expect(dateArg).toEqual(date);
@@ -41,7 +42,6 @@ describe('DatePicker', () => {
     const {UNSAFE_getByType} = await renderPicker({onChange});
 
     fireEvent(UNSAFE_getByType(RNDateTimePickerIOS), 'onChange', {
-      type: 'event',
       nativeEvent: {
         timestamp: date.getTime(),
       },
@@ -59,7 +59,8 @@ describe('DatePicker', () => {
   );
 
   it.each([
-    [{}, 'A date or time should be specified as `value`.'],
+    [{value: 'bogus'}, '`value` prop must be an instance of Date object'],
+    [{}, 'A date or time must be specified as `value` prop'],
     [
       {display: 'calendar', mode: 'time', value: new Date()},
       'display: calendar and mode: time cannot be used together.',

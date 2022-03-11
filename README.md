@@ -1,10 +1,10 @@
 ### 🚧🚧 Looking for collaborators and backers 🚧🚧
 
-See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313)
+See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313).
 
 ### Backers
 
-Support us with a monthly donation and help us continue our activities. [Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker)
+Support us with a monthly donation and help us continue our activities. [Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker).
 
 <a href="https://opencollective.com/react-native-datetimepicker/donate" target="_blank">
   <img src="https://opencollective.com/react-native-datetimepicker/backers.svg?width=890" width=890 />
@@ -22,9 +22,11 @@ The module is still published on `npm` under the old namespace (as documented) b
 
 React Native date & time picker component for iOS, Android and Windows.
 
+## Screenshots
+
 <details>
   <summary>Expand for screenshots</summary>
-  
+
 <table>
   <tr><td colspan=2><strong>iOS</strong></td></tr>
   <tr>
@@ -48,18 +50,16 @@ React Native date & time picker component for iOS, Android and Windows.
 
 </details>
 
-## Table of Contents
+## Table of contents
 
 - [React Native DateTimePicker](#react-native-datetimepicker)
-  - [Table of Contents](#table-of-contents)
+  - [Table of contents](#table-of-contents)
   - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
-    - [RN >= 0.60](#rn--060)
-    - [RN < 0.60](#rn--060-1)
-  - [General Usage](#general-usage)
-    - [Basic usage with state](#basic-usage-with-state)
+  - [Usage](#usage)
   - [Localization note](#localization-note)
-  - [Props](#props)
+  - [Android imperative API](#android-imperative-api)
+  - [Props / params](#component-props--params-of-the-android-imperative-api)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
     - [`onChange` (`optional`)](#onchange-optional)
@@ -79,15 +79,10 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`minuteInterval` (`optional`)](#minuteinterval-optional)
     - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
     - [`disabled` (`optional`, `iOS only`)](#disabled-optional-ios-only)
+    - [`onError` (`optional`, `Android only`)](#onError-optional-android-only)
   - [Migration from the older components](#migration-from-the-older-components)
-    - [DatePickerIOS](#datepickerios)
-    - [DatePickerAndroid](#datepickerandroid)
-    - [TimePickerAndroid](#timepickerandroid)
   - [Contributing to the component](#contributing-to-the-component)
   - [Manual installation](#manual-installation)
-    - [iOS](#ios)
-    - [Android](#android)
-    - [Windows](#windows)
   - [Running the example app](#running-the-example-app)
 
 ## Requirements
@@ -117,27 +112,74 @@ Autolinking is not yet implemented on Windows, so [manual installation ](/docs/m
 
 If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
 
-## General Usage
+## Usage
 
 ```js
 import DateTimePicker from '@react-native-community/datetimepicker';
 ```
 
-### Basic usage with state
+<details>
+  <summary>Expand for examples</summary>
+
+We give two equivalent examples on how to use the package on all supported platforms.
+
+### Recommended imperative api usage on Android
+
+While the component-approach as given in the second paragraph works on Android, the recommended approach is to use the imperative api given in the first paragraph.
+
+Read more about the motivation in [Android imperative API](#android-imperative-api).
 
 ```js
-import React, {useState} from 'react';
-import {View, Button, Platform} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+export const App = () => {
+  const [date, setDate] = useState(new Date(1598051730000));
 
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true
+    })
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+  return (
+    <View>
+      <View>
+        <Button onPress={showDatepicker} title="Show date picker!" />
+      </View>
+      <View>
+        <Button onPress={showTimepicker} title="Show time picker!" />
+      </View>
+      <Text>selected: {date.toLocaleString()}</Text>
+    </View>
+  );
+}
+```
+
+### Component usage on iOS / Android / Windows
+
+```js
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
+    const currentDate = selectedDate;
+    setShow(false);
     setDate(currentDate);
   };
 
@@ -162,20 +204,23 @@ export const App = () => {
       <View>
         <Button onPress={showTimepicker} title="Show time picker!" />
       </View>
+      <Text>selected: {date.toLocaleString()}</Text>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
           mode={mode}
           is24Hour={true}
-          display="default"
           onChange={onChange}
         />
       )}
     </View>
   );
-};
+}
 ```
+
+</details>
+
 
 ## Localization note
 
@@ -191,11 +236,29 @@ There is also the iOS-only locale prop that can be used to force locale in some 
 
 For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-stores/#localizing-your-ios-app).
 
-## Props
+
+### Android imperative api
+
+On Android, you have a choice between using the component API (regular React component) or an imperative api (think something like `ReactNative.alert()`).
+
+While the component API has the benefit of writing the same code on all platforms, for start we recommend to use the imperative API on Android.
+
+The `params` is an object with the same properties as the component props documented in the next paragraph. (This is also because the component api internally uses the imperative one.)
+
+```js
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+
+DateTimePickerAndroid.open(params: AndroidNativeProps)
+DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
+```
+
+Reason we recommend the imperative API is: on Android, the date/time picker opens in a dialog, similar to `ReactNative.alert()` from core react native. The imperative api models this behavior better than the declarative component api. While the component approach is perfectly functional, based on the issue tracker history, it appears to be more prone to introducing bugs.
+
+## Component props / params of the Android imperative api
 
 > Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android, and [`CalendarDatePicker`](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/calendar-date-picker) +[TimePicker](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.timepicker?view=winrt-19041) on Windows.
 >
-> These native classes offer only limited configuration, while there are dozens of possible options you as a developer may need. It follows that if your requirement is not supported by the backing native views, this library will _not_ be able to implement your requirement. When you open an issue with a feature request, please document if (or how) the feature can be implemented using the aforementioned native views. If those views do not support what you need, such feature requests will be closed as not actionable.
+> These native classes offer only limited configuration, while there are dozens of possible options you as a developer may need. It follows that if your requirement is not supported by the backing native views, this library will _not_ be able to implement your requirement. When you open an issue with a feature request, please document if (or how) the feature can be implemented using the aforementioned native views. If the native views do not support what you need, such feature requests will be closed as not actionable.
 
 #### `mode` (`optional`)
 
@@ -394,6 +457,10 @@ Alternatively, use the `themeVariant` prop or [opt-out from dark mode (discourag
 #### `disabled` (`optional`, `iOS only`)
 
 If true, the user won't be able to interact with the view.
+
+#### `onError` (`optional`, `Android only`)
+
+Callback that is called when an error occurs inside the date picker native code (such as null activity).
 
 ## Migration from the older components
 

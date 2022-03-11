@@ -15,6 +15,7 @@ import {
   IOS_DISPLAY,
   IOS_MODE,
   WINDOWS_MODE,
+  ANDROID_EVT_TYPE,
 } from './constants';
 
 export type IOSDisplay = $Keys<typeof IOS_DISPLAY>;
@@ -22,20 +23,21 @@ export type IOSMode = $Keys<typeof IOS_MODE>;
 type AndroidMode = $Keys<typeof ANDROID_MODE>;
 type WindowsMode = $Keys<typeof WINDOWS_MODE>;
 type Display = $Keys<typeof ANDROID_DISPLAY>;
+type AndroidEvtTypes = $Keys<typeof ANDROID_EVT_TYPE>;
 type MinuteInterval = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
 
-export type Event = SyntheticEvent<
-  $ReadOnly<{|
-    timestamp: number,
-  |}>,
->;
+export type NativeEventIOS = SyntheticEvent<{|
+  timestamp: number,
+|}>;
 
-export type AndroidEvent = {|
-  type: string,
-  nativeEvent: {|
+export type DateTimePickerEvent = {
+  type: AndroidEvtTypes,
+  nativeEvent: {
     timestamp?: number,
-  |},
-|};
+    ...
+  },
+  ...
+};
 
 type BaseOptions = {|
   /**
@@ -49,7 +51,7 @@ type BaseOptions = {|
    * This is called when the user changes the date or time in the UI.
    * The first argument is an Event, the second a selected Date.
    */
-  onChange?: ?(event: Event, date?: Date) => void,
+  onChange?: ?(event: DateTimePickerEvent, date?: Date) => void,
 |};
 
 type DateOptions = {|
@@ -161,8 +163,8 @@ export type AndroidNativeProps = $ReadOnly<{|
    */
   minuteInterval?: MinuteInterval,
 
-  onChange: (event: AndroidEvent, date?: Date) => void,
   neutralButtonLabel?: string,
+  onError?: (Error) => void,
 |}>;
 
 export type DatePickerOptions = {|
@@ -199,7 +201,6 @@ export type WindowsDatePickerChangeEvent = {|
 export type WindowsNativeProps = $ReadOnly<{|
   ...BaseProps,
   mode: WindowsMode,
-  onChange?: (event: WindowsDatePickerChangeEvent, date: Date) => void,
 
   placeholderText?: string,
   dateFormat?:

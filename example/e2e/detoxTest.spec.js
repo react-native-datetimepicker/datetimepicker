@@ -17,8 +17,9 @@ const {
 } = require('./utils/actions');
 const {isIOS, wait, Platform} = require('./utils/utils');
 const {device} = require('detox');
+const {describe} = require('jest-circus');
 
-describe('Example', () => {
+describe('e2e tests', () => {
   const getPickerDisplay = () => {
     return isIOS() ? 'spinner' : 'default';
   };

@@ -10,20 +10,21 @@
  * @flow strict-local
  */
 import RNDateTimePicker from './picker';
-import {toMilliseconds} from './utils';
-import {IOS_DISPLAY, ANDROID_MODE} from './constants';
+import {sharedPropsValidation, toMilliseconds} from './utils';
+import {IOS_DISPLAY, ANDROID_MODE, EVENT_TYPE_SET} from './constants';
 import invariant from 'invariant';
 import * as React from 'react';
 import {getPickerHeightStyle} from './layoutUtilsIOS';
 import {Platform, StyleSheet} from 'react-native';
 
 import type {
-  Event,
+  NativeEventIOS,
   NativeRef,
   IOSNativeProps,
   DatePickerOptions,
   IOSDisplay,
 } from './types';
+import type {DateTimePickerEvent} from './types';
 
 const getDisplaySafe = (display: IOSDisplay): IOSDisplay => {
   const majorVersionIOS = parseInt(Platform.Version, 10);
@@ -57,6 +58,8 @@ export default function Picker({
   display: providedDisplay = IOS_DISPLAY.default,
   disabled = false,
 }: IOSNativeProps): React.Node {
+  sharedPropsValidation({value});
+
   const [heightStyle, setHeightStyle] = React.useState(undefined);
   const _picker: NativeRef = React.useRef(null);
   const display = getDisplaySafe(providedDisplay);
@@ -88,15 +91,14 @@ export default function Picker({
     [display, mode],
   );
 
-  const _onChange = (event: Event) => {
+  const _onChange = (event: NativeEventIOS) => {
     const timestamp = event.nativeEvent.timestamp;
-    let date;
+    // $FlowFixMe Cannot assign object literal to `unifiedEvent` because number [1] is incompatible with undefined [2] in property `nativeEvent.timestamp`.
+    const unifiedEvent: DateTimePickerEvent = {...event, type: EVENT_TYPE_SET};
 
-    if (timestamp) {
-      date = new Date(timestamp);
-    }
+    const date = timestamp !== undefined ? new Date(timestamp) : undefined;
 
-    onChange && onChange(event, date);
+    onChange && onChange(unifiedEvent, date);
   };
 
   invariant(value, 'A date or time should be specified as `value`.');

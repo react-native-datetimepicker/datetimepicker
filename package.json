@@ -22,7 +22,6 @@
     "start:windows": "react-native start --use-react-native-windows",
     "test": "jest ./test",
     "posttest": "npm run lint",
-    "postinstall": "patch-package",
     "lint": "eslint {example,src,test}/**/*.js src/index.d.ts",
     "flow": "flow check",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",

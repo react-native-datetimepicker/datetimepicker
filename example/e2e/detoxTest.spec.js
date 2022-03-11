@@ -39,7 +39,6 @@ describe('e2e tests', () => {
     await expect(elementById('timeInfo')).toHaveText(
       'TZ: Europe/Prague, TZOffset: -1 original: 11/13/2021 11:00',
     );
-    console.log('test done');
   });
 
   it('should show date picker after tapping datePicker button', async () => {

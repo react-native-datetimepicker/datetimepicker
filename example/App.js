@@ -11,12 +11,10 @@ import {
   useColorScheme,
   Switch,
 } from 'react-native';
-import DateTimePicker, {
-  DateTimePickerAndroid,
-} from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment';
 import {
@@ -27,9 +25,6 @@ import {
   IOS_DISPLAY,
 } from '../src/constants';
 import * as RNLocalize from 'react-native-localize';
-
-const isIos = Platform.OS === 'ios';
-const isAndroid = Platform.OS === 'android';
 
 const ThemedText = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -80,7 +75,6 @@ export const App = () => {
   const [disabled, setDisabled] = useState(false);
   const [minimumDate, setMinimumDate] = useState();
   const [maximumDate, setMaximumDate] = useState();
-  const [androidVariant, setAndroidVariant] = useState('imperative');
 
   // Windows-specific
   const [time, setTime] = useState(undefined);
@@ -98,11 +92,13 @@ export const App = () => {
   };
 
   const onChange = (event, selectedDate) => {
-    setShow(isIos);
+    const currentDate = selectedDate || date;
+
+    setShow(Platform.OS === 'ios');
     if (event.type === 'neutralButtonPressed') {
       setDate(new Date(0));
     } else {
-      setDate(selectedDate);
+      setDate(currentDate);
     }
   };
 
@@ -117,38 +113,6 @@ export const App = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
   };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const pickerProps = {
-    mode,
-    value: date,
-    display,
-    onChange,
-    timeZoneOffsetInMinutes: tzOffsetInMinutes,
-    minuteInterval: interval,
-    minimumDate: minimumDate,
-    maximumDate: maximumDate,
-    is24Hour: true,
-    neutralButtonLabel,
-    onError: console.error,
-  };
-
-  const openPicker = () => {
-    setShow(true);
-  };
-
-  useEffect(() => {
-    if (Platform.OS === 'android' && androidVariant === 'imperative' && show) {
-      // in your app, you probably would open the picker with a button
-      // and not in an effect. We do this here because the components needs to re-render
-      // with updated props, and once that happens, then we want to show the android picker
-      // if we don't wait for re-render before showing the picker,
-      // it will not be shown with the latest props
-      DateTimePickerAndroid.open({
-        ...pickerProps,
-      });
-    }
-  }, [show, neutralButtonLabel, pickerProps, androidVariant]);
 
   const toggleMinMaxDateInUTC = () => {
     setTzOffsetInMinutes(0);
@@ -249,18 +213,21 @@ export const App = () => {
                 testID="neutralButtonLabelTextInput"
               />
             </View>
-
+            <View style={styles.header}>
+              <ThemedText style={{margin: 10, flex: 1}}>
+                [android] show and dismiss picker after 3 secs
+              </ThemedText>
+            </View>
             <View style={styles.button}>
               <Button
                 testID="showAndDismissPickerButton"
                 onPress={() => {
-                  const openedMode = mode;
-                  openPicker();
+                  setShow(true);
                   setTimeout(() => {
-                    DateTimePickerAndroid.dismiss(openedMode);
-                  }, 5000);
+                    setShow(false);
+                  }, 6000);
                 }}
-                title="Show and dismiss picker after 5 secs (android)!"
+                title="Show and dismiss picker!"
               />
             </View>
             <View
@@ -270,7 +237,9 @@ export const App = () => {
               ]}>
               <Button
                 testID="showPickerButton"
-                onPress={openPicker}
+                onPress={() => {
+                  setShow(true);
+                }}
                 title="Show picker!"
               />
               <Button
@@ -296,75 +265,49 @@ export const App = () => {
                 tzOffset: {tzOffsetInMinutes ?? 'auto'}
               </ThemedText>
             </View>
-            <View
-              style={[
-                styles.button,
-                {flexDirection: 'row', justifyContent: 'space-around'},
-              ]}>
+            <View style={styles.button}>
               <Button
                 testID="setTzOffsetToZero"
                 onPress={() => {
                   setTzOffsetInMinutes(0);
                 }}
-                title="setTzOffset to 0"
+                title="setTzOffsetInMinutes to 0"
               />
+            </View>
+            <View style={styles.button}>
               <Button
                 testID="setTzOffset"
                 onPress={() => {
                   setTzOffsetInMinutes(120);
                 }}
-                title="setTzOffsetIn to 120min"
+                title="setTzOffsetInMinutes to 120"
               />
             </View>
-            {isAndroid && (
-              <>
-                <ThemedText>
-                  currently testing (only has effect on android):{' '}
-                  {androidVariant} api
-                </ThemedText>
-                <View
-                  style={[
-                    styles.button,
-                    {flexDirection: 'row', justifyContent: 'space-around'},
-                  ]}>
-                  <Button
-                    testID={'androidVariantComponent'}
-                    title={'component api'}
-                    onPress={() => {
-                      console.log('setting android variant to component');
-                      setAndroidVariant('component');
-                    }}
-                  />
-
-                  <Button
-                    testID={'androidVariantImperative'}
-                    title={'imperative api'}
-                    onPress={() => {
-                      console.log('setting android variant to imperative');
-                      setAndroidVariant('imperative');
-                    }}
-                  />
-                </View>
-              </>
-            )}
-
             <View style={styles.button}>
               <Button
                 testID="setMinMax"
                 onPress={() => {
                   toggleMinMaxDateInUTC();
-                  openPicker();
+                  setShow(true);
                 }}
                 title="toggleMinMaxDate"
               />
             </View>
-            {((show && isIos) ||
-              (show && isAndroid && androidVariant === 'component')) && (
+            {show && (
               <DateTimePicker
                 testID="dateTimePicker"
-                {...pickerProps}
+                timeZoneOffsetInMinutes={tzOffsetInMinutes}
+                minuteInterval={interval}
+                maximumDate={maximumDate}
+                minimumDate={minimumDate}
+                value={date}
+                mode={mode}
+                is24Hour
+                display={display}
+                onChange={onChange}
                 style={styles.iOsPicker}
                 textColor={color || undefined}
+                neutralButtonLabel={neutralButtonLabel}
                 disabled={disabled}
               />
             )}

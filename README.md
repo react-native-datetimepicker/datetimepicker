@@ -224,6 +224,8 @@ export const App = () => {
 
 ## Localization note
 
+By localization, we refer to the language (names of months and days), as well as order in which date can be presented in a picker (month/day vs. day/month) and 12 / 24 hour-format.
+
 On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
 
 On iOS, use XCode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions) to inform the OS about the locales your application supports. iOS will automatically display the correctly localized DateTimePicker as long as the target language is contained in `project.pbxproj`.

@@ -68,7 +68,8 @@ export const App = () => {
   const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(undefined);
   const [mode, setMode] = useState(MODE_VALUES[0]);
   const [show, setShow] = useState(false);
-  const [color, setColor] = useState();
+  const [textColor, setTextColor] = useState();
+  const [accentColor, setAccentColor] = useState();
   const [display, setDisplay] = useState(DISPLAY_VALUES[0]);
   const [interval, setMinInterval] = useState(1);
   const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
@@ -187,12 +188,25 @@ export const App = () => {
                 text color (iOS only)
               </ThemedText>
               <ThemedTextInput
-                value={color}
+                value={textColor}
                 style={{height: 60, flex: 1}}
                 onChangeText={(text) => {
-                  setColor(text.toLowerCase());
+                  setTextColor(text.toLowerCase());
                 }}
-                placeholder="color"
+                placeholder="textColor"
+              />
+            </View>
+            <View style={styles.header}>
+              <ThemedText style={{margin: 10, flex: 1}}>
+                accent color (iOS only)
+              </ThemedText>
+              <ThemedTextInput
+                value={accentColor}
+                style={{height: 60, flex: 1}}
+                onChangeText={(text) => {
+                  setAccentColor(text.toLowerCase());
+                }}
+                placeholder="accentColor"
               />
             </View>
             <View style={styles.header}>
@@ -294,22 +308,25 @@ export const App = () => {
               />
             </View>
             {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                timeZoneOffsetInMinutes={tzOffsetInMinutes}
-                minuteInterval={interval}
-                maximumDate={maximumDate}
-                minimumDate={minimumDate}
-                value={date}
-                mode={mode}
-                is24Hour
-                display={display}
-                onChange={onChange}
-                style={styles.iOsPicker}
-                textColor={color || undefined}
-                neutralButtonLabel={neutralButtonLabel}
-                disabled={disabled}
-              />
+              <View>
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  timeZoneOffsetInMinutes={tzOffsetInMinutes}
+                  minuteInterval={interval}
+                  maximumDate={maximumDate}
+                  minimumDate={minimumDate}
+                  value={date}
+                  mode={mode}
+                  is24Hour
+                  display={display}
+                  onChange={onChange}
+                  style={styles.iOsPicker}
+                  textColor={textColor || undefined}
+                  accentColor={accentColor || undefined}
+                  neutralButtonLabel={neutralButtonLabel}
+                  disabled={disabled}
+                />
+              </View>
             )}
           </View>
         </ScrollView>

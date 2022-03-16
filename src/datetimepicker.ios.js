@@ -52,7 +52,7 @@ export default function Picker({
   minuteInterval,
   timeZoneOffsetInMinutes,
   textColor,
-  tintColor,
+  accentColor,
   themeVariant,
   onChange,
   mode = ANDROID_MODE.date,
@@ -127,7 +127,7 @@ export default function Picker({
       timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
       onChange={_onChange}
       textColor={textColor}
-      tintColor={tintColor}
+      accentColor={accentColor}
       themeVariant={themeVariant}
       onStartShouldSetResponder={() => true}
       onResponderTerminationRequest={() => false}

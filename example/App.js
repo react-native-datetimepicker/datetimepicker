@@ -43,7 +43,7 @@ const ThemedTextInput = (props) => {
 
   const TextElement = React.createElement(TextInput, props);
   return React.cloneElement(TextElement, {
-    style: [props.style, textColorByMode],
+    style: [props.style, styles.textInput, textColorByMode],
     placeholderTextColor: isDarkMode ? Colors.white : Colors.black,
   });
 };
@@ -191,12 +191,11 @@ export const App = () => {
               }}
             />
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
                 text color (iOS only)
               </ThemedText>
               <ThemedTextInput
                 value={textColor}
-                style={{height: 60, flex: 1}}
                 onChangeText={(text) => {
                   setTextColor(text.toLowerCase());
                 }}
@@ -204,12 +203,11 @@ export const App = () => {
               />
             </View>
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
                 accent color (iOS only)
               </ThemedText>
               <ThemedTextInput
                 value={accentColor}
-                style={{height: 60, flex: 1}}
                 onChangeText={(text) => {
                   setAccentColor(text.toLowerCase());
                 }}
@@ -217,25 +215,24 @@ export const App = () => {
               />
             </View>
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
                 disabled (iOS only)
               </ThemedText>
               <Switch value={disabled} onValueChange={setDisabled} />
             </View>
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
                 neutralButtonLabel (android only)
               </ThemedText>
               <ThemedTextInput
                 value={neutralButtonLabel}
-                style={{height: 60, flex: 1}}
                 onChangeText={setNeutralButtonLabel}
                 placeholder="neutralButtonLabel"
                 testID="neutralButtonLabelTextInput"
               />
             </View>
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
                 [android] show and dismiss picker after 3 secs
               </ThemedText>
             </View>
@@ -525,6 +522,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  textLabel: {
+    margin: 10,
+    flex: 1,
+  },
+  textInput: {
+    height: 60,
+    flex: 1,
   },
   button: {
     alignItems: 'center',

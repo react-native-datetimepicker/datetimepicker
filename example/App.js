@@ -14,7 +14,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment';
 import {
@@ -88,6 +88,8 @@ export const App = () => {
     '{dayofweek.abbreviated(2)}',
   );
 
+  const scrollRef = useRef(null);
+
   const handleResetPress = () => {
     setDate(undefined);
   };
@@ -132,7 +134,12 @@ export const App = () => {
     return (
       <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
         <StatusBar barStyle="dark-content" />
-        <ScrollView testID="DateTimePickerScrollView">
+        <ScrollView
+          testID="DateTimePickerScrollView"
+          ref={scrollRef}
+          onContentSizeChange={() =>
+            scrollRef.current?.scrollToEnd({animated: true})
+          }>
           {global.HermesInternal != null && (
             <View style={styles.engine}>
               <Text testID="hermesIndicator" style={styles.footer}>

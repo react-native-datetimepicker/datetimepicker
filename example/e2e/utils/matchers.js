@@ -6,7 +6,7 @@ const elementByText = (text) => element(by.text(text));
 const getDateTimePickerIOS = () =>
   element(by.type('UIPickerView').withAncestor(by.id('dateTimePicker')));
 
-const getInlineTimePickerIOS = () => element(by.label('Time Picker'));
+const getInlineTimePickerIOS = () => element(by.type('RNDateTimePicker'));
 
 const getDateTimePickerControlIOS = () => element(by.type('UIDatePicker'));
 

@@ -114,11 +114,11 @@
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
         "type": "android.emulator",
         "device": {
-          "avdName": "Pixel_4_Android_12_api_31"
+          "avdName": "Pixel_5_Android_12_api_31"
         }
       },
       "android.device.debug": {
-        "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
+        "binaryPath": "build/outputs/apk/androidTest/debug/datetimepicker-debug-androidTest.apk",
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
         "type": "android.attached",
         "device": {

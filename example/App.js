@@ -137,9 +137,11 @@ export const App = () => {
         <ScrollView
           testID="DateTimePickerScrollView"
           ref={scrollRef}
-          onContentSizeChange={() =>
-            scrollRef.current?.scrollToEnd({animated: true})
-          }>
+          onContentSizeChange={() => {
+            if (Platform.OS === 'ios') {
+              scrollRef.current?.scrollToEnd({animated: true});
+            }
+          }}>
           {global.HermesInternal != null && (
             <View style={styles.engine}>
               <Text testID="hermesIndicator" style={styles.footer}>

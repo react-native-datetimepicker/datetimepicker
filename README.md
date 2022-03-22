@@ -388,7 +388,7 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 <RNDateTimePicker textColor="red" />
 ```
 
-#### `accentColor` (`optional`, `iOs only`)
+#### `accentColor` (`optional`, `iOS only`)
 
 Allows changing the accentColor (tintColor) of the date picker.
 Has no effect when `display` is `"spinner"`.

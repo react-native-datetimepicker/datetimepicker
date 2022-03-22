@@ -118,7 +118,7 @@
         }
       },
       "android.device.debug": {
-        "binaryPath": "build/outputs/apk/androidTest/debug/datetimepicker-debug-androidTest.apk",
+        "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",```
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
         "type": "android.attached",
         "device": {

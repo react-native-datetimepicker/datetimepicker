@@ -391,7 +391,7 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 #### `accentColor` (`optional`, `iOs only`)
 
 Allows changing the accentColor (tintColor) of the date picker.
-Has not effect when `display` is `"spinner"`.
+Has no effect when `display` is `"spinner"`.
 
 #### `themeVariant` (`optional`, `iOS only`)
 

@@ -76,6 +76,7 @@ jobs:
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-29;default;x86
+          additional-args: --device "pixel_4_xl"
           install: true
       - android/start-emulator:
           avd-name: TestingAVD

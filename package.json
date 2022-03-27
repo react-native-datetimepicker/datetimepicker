@@ -11,11 +11,11 @@
     "flow-typed",
     "windows",
     "RNDateTimePicker.podspec",
-	"!android/build",
-	"!ios/build",
-	"!**/__tests__",
-	"!**/__fixtures__",
-	"!**/__mocks__"
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
   ],
   "publishConfig": {
     "access": "public"

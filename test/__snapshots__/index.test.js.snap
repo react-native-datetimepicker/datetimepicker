@@ -47,7 +47,7 @@ Object {
     "dismiss": [Function],
     "open": [Function],
   },
-  "createDateSetEvtParams": [Function],
+  "createDateTimeSetEvtParams": [Function],
   "createDismissEvtParams": [Function],
   "createNeutralEvtParams": [Function],
   "default": [Function],

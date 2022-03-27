@@ -84,7 +84,7 @@ export default function Picker({
     function ensureCorrectHeight() {
       const height = getPickerHeightStyle(display, mode);
       if (height instanceof Promise) {
-        height.then((measuredStyle) => setHeightStyle(measuredStyle));
+        height.then(setHeightStyle);
       } else {
         setHeightStyle(height);
       }

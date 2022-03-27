@@ -160,12 +160,8 @@ export const App = () => {
 
   return (
     <View>
-      <View>
-        <Button onPress={showDatepicker} title="Show date picker!" />
-      </View>
-      <View>
-        <Button onPress={showTimepicker} title="Show time picker!" />
-      </View>
+      <Button onPress={showDatepicker} title="Show date picker!" />
+	  <Button onPress={showTimepicker} title="Show time picker!" />
       <Text>selected: {date.toLocaleString()}</Text>
     </View>
   );
@@ -201,12 +197,8 @@ export const App = () => {
 
   return (
     <View>
-      <View>
-        <Button onPress={showDatepicker} title="Show date picker!" />
-      </View>
-      <View>
-        <Button onPress={showTimepicker} title="Show time picker!" />
-      </View>
+	  <Button onPress={showDatepicker} title="Show date picker!" />
+	  <Button onPress={showTimepicker} title="Show time picker!" />
       <Text>selected: {date.toLocaleString()}</Text>
       {show && (
         <DateTimePicker
@@ -294,7 +286,7 @@ List of possible values for Android
 List of possible values for iOS (maps to [preferredDatePickerStyle](https://developer.apple.com/documentation/uikit/uidatepicker/3526124-preferreddatepickerstyle?changes=latest_minor&language=objc))
 
 - `"default"` - Automatically pick the best style available for the current platform & mode.
-- `"spinner"` - the usual appearance with a wheel from which you choose values
+- `"spinner"` - the usual pre-iOS 14 appearance with a wheel from which you choose values
 - `"compact"` - Affects only iOS 14 and later. Will fall back to "spinner" if not supported.
 - `"inline"` - Affects only iOS 14 and later. Will fall back to "spinner" if not supported.
 

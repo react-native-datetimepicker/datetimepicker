@@ -12,6 +12,12 @@
 #import "RNDateTimePicker.h"
 #import <React/UIView+React.h>
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 15000
+@interface UIColor (Xcode12)
++ (instancetype) tintColor;
+@end
+#endif
+
 @implementation RCTConvert(UIDatePicker)
 
 RCT_ENUM_CONVERTER(UIDatePickerMode, (@{

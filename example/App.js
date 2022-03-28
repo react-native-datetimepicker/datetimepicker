@@ -96,8 +96,9 @@ export const App = () => {
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-
-    setShow(Platform.OS === 'ios');
+    if (Platform.OS === 'android') {
+      setShow(false);
+    }
     if (event.type === 'neutralButtonPressed') {
       setDate(new Date(0));
     } else {
@@ -159,11 +160,15 @@ export const App = () => {
                 Example DateTime Picker
               </ThemedText>
             </View>
-            <ThemedText selectable testID="timeInfo">
-              TZ: {RNLocalize.getTimeZone()}, TZOffset:{' '}
-              {new Date().getTimezoneOffset() / 60} original:{' '}
-              {moment(sourceDate).format('MM/DD/YYYY HH:mm')}
-            </ThemedText>
+            <View style={{flexDirection: 'row'}}>
+              <ThemedText selectable testID="timeInfo">
+                TZ: {RNLocalize.getTimeZone()}, original:{' '}
+                {moment(sourceDate).format('MM/DD/YYYY HH:mm')}
+              </ThemedText>
+              <ThemedText>
+                , TZOffset:{new Date().getTimezoneOffset() / 60}
+              </ThemedText>
+            </View>
             <ThemedText>mode prop:</ThemedText>
             <SegmentedControl
               values={MODE_VALUES}

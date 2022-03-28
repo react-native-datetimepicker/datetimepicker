@@ -37,7 +37,7 @@ describe('e2e tests', () => {
 
   it('timeInfo heading has expected content', async () => {
     await expect(elementById('timeInfo')).toHaveText(
-      'TZ: Europe/Prague, TZOffset: -1 original: 11/13/2021 11:00',
+      'TZ: Europe/Prague, original: 11/13/2021 11:00',
     );
   });
 
@@ -178,14 +178,14 @@ describe('e2e tests', () => {
 
       if (isIOS()) {
         const testElement = getDateTimePickerIOS();
-        await testElement.setColumnToValue(0, '10');
+        await testElement.setColumnToValue(0, '7');
         await testElement.setColumnToValue(1, '30');
         await testElement.setColumnToValue(2, 'AM');
       } else {
-        await userChangesTimeValue({hours: '10', minutes: '30'});
+        await userChangesTimeValue({hours: '7', minutes: '30'});
         await userTapsOkButtonAndroid();
       }
-      await expect(getTimeText()).toHaveText('09:30');
+      await expect(getTimeText()).toHaveText('06:30');
     });
 
     it('should let you pick tomorrow but not yesterday when setting min/max', async () => {

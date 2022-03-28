@@ -4,20 +4,18 @@
  */
 import React, {useState} from 'react';
 import {Text, Button} from 'react-native';
-import RNDateTimePicker, {DateTimePickerAndroid} from '../src/index';
+// in your code, import from '@react-native-community/datetimepicker'
+import DateTimePicker, {DateTimePickerAndroid} from '../src/index';
 import {render, fireEvent, waitFor} from '@testing-library/react-native';
 import {createDateTimeSetEvtParams} from '../src/index';
-import {
-  mockAndroidDialogDateChange,
-  mockAndroidDialogDismissal,
-} from '../jest/mockEventTriggers';
+import {mockAndroidDialogDateChange, mockAndroidDialogDismissal} from '../jest';
 
 function TestAppWithComponent() {
   const [date, setDate] = React.useState<?Date>();
 
   return (
     <>
-      <RNDateTimePicker
+      <DateTimePicker
         value={new Date(0)}
         onChange={(evt, selectedDate) => {
           setDate(selectedDate);
@@ -62,24 +60,25 @@ const AppWithImperativePicker = () => {
 const renderPickerComponent = async () => {
   const utils = render(<TestAppWithComponent />);
 
-  await waitFor(() => utils.UNSAFE_getByType(RNDateTimePicker));
+  await waitFor(() => utils.UNSAFE_getByType(DateTimePicker));
   return utils;
 };
+
 describe('userland tests', () => {
-  it('rendering RNDateTimePicker and calling fireEvent, triggers onChange (platform-agnostic)', async () => {
+  it("rendering DateTimePicker and calling fireEvent triggers the picker's onChange callback (platform-agnostic)", async () => {
     const date = new Date(156e10);
 
     const {UNSAFE_getByType, getByText} = await renderPickerComponent();
 
     fireEvent(
-      UNSAFE_getByType(RNDateTimePicker),
+      UNSAFE_getByType(DateTimePicker),
       'onChange',
       ...createDateTimeSetEvtParams(date),
     );
     getByText('1560000000');
   });
 
-  describe("when using android picker's imperative api, we can simulate", () => {
+  describe('when using android imperative api, we can simulate', () => {
     it('the date being changed', async () => {
       const {getByText} = render(<AppWithImperativePicker />);
 

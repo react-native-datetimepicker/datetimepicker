@@ -239,11 +239,11 @@ For Expo, follow the [localization docs](https://docs.expo.dev/distribution/app-
 
 On Android, you have a choice between using the component API (regular React component) or an imperative api (think of something like `ReactNative.alert()`).
 
-While the component API has the benefit of writing the same code on all platforms, to start we recommend using the imperative API on Android.
+While the component API has the benefit of writing the same code on all platforms, for start we recommend using the imperative API on Android.
 
 The `params` is an object with the same properties as the component props documented in the next paragraph. (This is also because the component api internally uses the imperative one.)
 
-```js
+```ts
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 DateTimePickerAndroid.open(params: AndroidNativeProps)
@@ -343,7 +343,7 @@ We strongly recommend avoiding this prop on android because of known issues in t
 
 #### `timeZoneOffsetInSeconds` (`optional`, `Windows only`)
 
-Allows changing of the time zone of the date picker. By default it uses the device's time zone.
+Allows changing of the time zone of the date picker. By default, it uses the device's time zone.
 
 ```js
 // UTC+1
@@ -416,7 +416,7 @@ Prefer localization as documented in [Localization note](#localization-note).
 
 #### `is24Hour` (`optional`, `Windows and Android only`)
 
-Allows changing of the time picker to a 24 hour format. By default, this value is decided automatcially based on the locale and other preferences.
+Allows changing of the time picker to a 24-hour format. By default, this value is decided automatically based on the locale and other preferences.
 
 ```js
 <RNDateTimePicker is24Hour={true} />
@@ -466,7 +466,7 @@ Sets style directly on picker component. By default, the picker height is determ
 
 Please note that by default, picker's text color is controlled by the application theme (light / dark mode). In dark mode, text is white and in light mode, text is black.
 
-This means that eg. if the device has dark mode turned on, and your screen background color is white, you will not see the picker. Please use the `Appearance` api to adjust the picker's background color so that it is visible, as we do in the [example App](/example/App.js).
+This means that e.g. if the device has dark mode turned on, and your screen background color is white, you will not see the picker. Please use the `Appearance` api to adjust the picker's background color so that it is visible, as we do in the [example App](/example/App.js).
 Alternatively, use the `themeVariant` prop or [opt-out from dark mode (discouraged)](https://stackoverflow.com/a/56546554/2070942).
 
 ```js
@@ -480,6 +480,14 @@ If true, the user won't be able to interact with the view.
 #### `onError` (`optional`, `Android only`)
 
 Callback that is called when an error occurs inside the date picker native code (such as null activity).
+
+## Testing with Jest
+
+If you're rendering the picker component (using the react-native-testing-library or similar), you need to mock the native module:
+
+```
+"setupFiles": ["./node_modules/@react-native-community/datetimepicker/jest/setup.js"]
+```
 
 ## Migration from the older components
 

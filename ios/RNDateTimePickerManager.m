@@ -12,6 +12,12 @@
 #import "RNDateTimePicker.h"
 #import <React/UIView+React.h>
 
+#ifndef __IPHONE_15_0
+@interface UIColor (Xcode12)
++ (instancetype) tintColor;
+@end
+#endif
+
 @implementation RCTConvert(UIDatePicker)
 
 RCT_ENUM_CONVERTER(UIDatePickerMode, (@{

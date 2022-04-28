@@ -99,6 +99,14 @@ export type IOSNativeProps = Readonly<
     textColor?: string;
 
     /**
+     * The date picker accent color.
+     *
+     * Sets the color of the selected, date and navigation icons.
+     * Has no effect for display 'spinner'.
+     */
+    accentColor?: string;
+
+    /**
      * Override theme variant used by iOS native picker
      */
     themeVariant?: 'dark' | 'light';

@@ -14,7 +14,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment';
 import {
@@ -43,7 +43,7 @@ const ThemedTextInput = (props) => {
 
   const TextElement = React.createElement(TextInput, props);
   return React.cloneElement(TextElement, {
-    style: [props.style, textColorByMode],
+    style: [props.style, styles.textInput, textColorByMode],
     placeholderTextColor: isDarkMode ? Colors.white : Colors.black,
   });
 };
@@ -68,7 +68,8 @@ export const App = () => {
   const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(undefined);
   const [mode, setMode] = useState(MODE_VALUES[0]);
   const [show, setShow] = useState(false);
-  const [color, setColor] = useState();
+  const [textColor, setTextColor] = useState();
+  const [accentColor, setAccentColor] = useState();
   const [display, setDisplay] = useState(DISPLAY_VALUES[0]);
   const [interval, setMinInterval] = useState(1);
   const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
@@ -87,14 +88,17 @@ export const App = () => {
     '{dayofweek.abbreviated(2)}',
   );
 
+  const scrollRef = useRef(null);
+
   const handleResetPress = () => {
     setDate(undefined);
   };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-
-    setShow(Platform.OS === 'ios');
+    if (Platform.OS === 'android') {
+      setShow(false);
+    }
     if (event.type === 'neutralButtonPressed') {
       setDate(new Date(0));
     } else {
@@ -131,7 +135,14 @@ export const App = () => {
     return (
       <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
         <StatusBar barStyle="dark-content" />
-        <ScrollView testID="DateTimePickerScrollView">
+        <ScrollView
+          testID="DateTimePickerScrollView"
+          ref={scrollRef}
+          onContentSizeChange={() => {
+            if (Platform.OS === 'ios') {
+              scrollRef.current?.scrollToEnd({animated: true});
+            }
+          }}>
           {global.HermesInternal != null && (
             <View style={styles.engine}>
               <Text testID="hermesIndicator" style={styles.footer}>
@@ -149,11 +160,15 @@ export const App = () => {
                 Example DateTime Picker
               </ThemedText>
             </View>
-            <ThemedText selectable testID="timeInfo">
-              TZ: {RNLocalize.getTimeZone()}, TZOffset:{' '}
-              {new Date().getTimezoneOffset() / 60} original:{' '}
-              {moment(sourceDate).format('MM/DD/YYYY HH:mm')}
-            </ThemedText>
+            <View style={{flexDirection: 'row'}}>
+              <ThemedText selectable testID="timeInfo">
+                TZ: {RNLocalize.getTimeZone()}, original:{' '}
+                {moment(sourceDate).format('MM/DD/YYYY HH:mm')}
+              </ThemedText>
+              <ThemedText>
+                , TZOffset:{new Date().getTimezoneOffset() / 60}
+              </ThemedText>
+            </View>
             <ThemedText>mode prop:</ThemedText>
             <SegmentedControl
               values={MODE_VALUES}
@@ -183,38 +198,48 @@ export const App = () => {
               }}
             />
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
                 text color (iOS only)
               </ThemedText>
               <ThemedTextInput
-                value={color}
-                style={{height: 60, flex: 1}}
+                value={textColor}
                 onChangeText={(text) => {
-                  setColor(text.toLowerCase());
+                  setTextColor(text.toLowerCase());
                 }}
-                placeholder="color"
+                placeholder="textColor"
               />
             </View>
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
+                accent color (iOS only)
+              </ThemedText>
+              <ThemedTextInput
+                value={accentColor}
+                onChangeText={(text) => {
+                  setAccentColor(text.toLowerCase());
+                }}
+                placeholder="accentColor"
+              />
+            </View>
+            <View style={styles.header}>
+              <ThemedText style={styles.textLabel}>
                 disabled (iOS only)
               </ThemedText>
               <Switch value={disabled} onValueChange={setDisabled} />
             </View>
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
                 neutralButtonLabel (android only)
               </ThemedText>
               <ThemedTextInput
                 value={neutralButtonLabel}
-                style={{height: 60, flex: 1}}
                 onChangeText={setNeutralButtonLabel}
                 placeholder="neutralButtonLabel"
                 testID="neutralButtonLabelTextInput"
               />
             </View>
             <View style={styles.header}>
-              <ThemedText style={{margin: 10, flex: 1}}>
+              <ThemedText style={styles.textLabel}>
                 [android] show and dismiss picker after 3 secs
               </ThemedText>
             </View>
@@ -306,7 +331,8 @@ export const App = () => {
                 display={display}
                 onChange={onChange}
                 style={styles.iOsPicker}
-                textColor={color || undefined}
+                textColor={textColor || undefined}
+                accentColor={accentColor || undefined}
                 neutralButtonLabel={neutralButtonLabel}
                 disabled={disabled}
               />
@@ -501,6 +527,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  textLabel: {
+    margin: 10,
+    flex: 1,
+  },
+  textInput: {
+    height: 60,
+    flex: 1,
   },
   button: {
     alignItems: 'center',

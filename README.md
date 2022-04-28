@@ -72,6 +72,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)
     - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
     - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
+    - [`accentColor` (`optional`, `iOS only`)](#accentColor-optional-ios-only)
     - [`themeVariant` (`optional`, `iOS only`)](#themevariant-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
@@ -223,6 +224,8 @@ export const App = () => {
 
 
 ## Localization note
+
+By localization, we refer to the language (names of months and days), as well as order in which date can be presented in a picker (month/day vs. day/month) and 12 / 24 hour-format.
 
 On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
 
@@ -386,6 +389,11 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 ```js
 <RNDateTimePicker textColor="red" />
 ```
+
+#### `accentColor` (`optional`, `iOS only`)
+
+Allows changing the accentColor (tintColor) of the date picker.
+Has no effect when `display` is `"spinner"`.
 
 #### `themeVariant` (`optional`, `iOS only`)
 

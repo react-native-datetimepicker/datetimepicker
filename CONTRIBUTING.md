@@ -34,6 +34,7 @@ For cleaning all the detox builds just run `npm run detox:clean`.
   ```sh
   # Debug requires to run Metro Bundler
   yarn start
+  cd "example/ios" && npx pod-install && cd -
   yarn detox:ios:build:debug
   yarn detox:ios:test:debug
   ```

@@ -172,6 +172,8 @@ export type AndroidNativeProps = $ReadOnly<{|
   minuteInterval?: MinuteInterval,
 
   neutralButtonLabel?: string,
+  positiveButtonLabel?: string,
+  negativeButtonLabel?: string,
   onError?: (Error) => void,
 |}>;
 

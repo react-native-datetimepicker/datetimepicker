@@ -23,6 +23,8 @@ export default function RNDateTimePicker(props: AndroidNativeProps): null {
     neutralButtonLabel,
     minuteInterval,
     timeZoneOffsetInMinutes,
+    positiveButtonLabel,
+    negativeButtonLabel,
     onError,
   } = props;
   invariant(value, 'A date or time must be specified as `value` prop.');
@@ -46,6 +48,8 @@ export default function RNDateTimePicker(props: AndroidNativeProps): null {
         neutralButtonLabel,
         minuteInterval,
         timeZoneOffsetInMinutes,
+        positiveButtonLabel,
+        negativeButtonLabel,
         onError,
         onChange,
       };

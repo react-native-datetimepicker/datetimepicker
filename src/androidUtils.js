@@ -21,6 +21,8 @@ type Params = {
   neutralButtonLabel: AndroidNativeProps['neutralButtonLabel'],
   minuteInterval: AndroidNativeProps['minuteInterval'],
   timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
+  positiveButtonLabel: AndroidNativeProps['positiveButtonLabel'],
+  negativeButtonLabel: AndroidNativeProps['negativeButtonLabel'],
 };
 export function getOpenPicker({
   mode,
@@ -32,6 +34,8 @@ export function getOpenPicker({
   neutralButtonLabel,
   minuteInterval,
   timeZoneOffsetInMinutes,
+  positiveButtonLabel,
+  negativeButtonLabel,
 }: Params): PresentPickerCallback {
   switch (mode) {
     case ANDROID_MODE.time:
@@ -44,6 +48,8 @@ export function getOpenPicker({
           is24Hour,
           neutralButtonLabel,
           timeZoneOffsetInMinutes,
+          positiveButtonLabel,
+          negativeButtonLabel,
         });
     default:
       return () =>
@@ -55,6 +61,8 @@ export function getOpenPicker({
           maximumDate,
           neutralButtonLabel,
           timeZoneOffsetInMinutes,
+          positiveButtonLabel,
+          negativeButtonLabel,
         });
   }
 }

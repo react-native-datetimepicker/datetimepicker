@@ -20,7 +20,7 @@ import {
   timeZoneOffsetDateSetter,
   validateAndroidProps,
 } from './androidUtils';
-import pickers from './picker';
+import pickers from './picker.android';
 
 function open(props: AndroidNativeProps) {
   const {

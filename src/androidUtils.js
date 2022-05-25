@@ -3,7 +3,7 @@
  * @flow strict-local
  */
 import {ANDROID_DISPLAY, ANDROID_MODE, MIN_MS} from './constants';
-import pickers from './picker';
+import pickers from './picker.android';
 import type {AndroidNativeProps, DateTimePickerResult} from './types';
 import {sharedPropsValidation} from './utils';
 import invariant from 'invariant';

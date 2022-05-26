@@ -6,7 +6,8 @@ import DatePickerAndroid from './datepicker.android';
 import TimePickerAndroid from './timepicker.android';
 import {ANDROID_MODE} from './constants';
 
-const pickers = {
+// $FlowFixMe Flow: Unclear type. Using `any`, `Object`, or `Function` types is not safe!
+const pickers: any = {
   [ANDROID_MODE.date]: DatePickerAndroid,
   [ANDROID_MODE.time]: TimePickerAndroid,
 };

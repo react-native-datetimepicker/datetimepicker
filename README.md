@@ -76,6 +76,8 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`themeVariant` (`optional`, `iOS only`)](#themevariant-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
+    - [`positiveButtonLabel` (`optional`, `Android only`)](#positiveButtonLabel-optional-android-only)
+    - [`negativeButtonLabel` (`optional`, `Android only`)](#negativeButtonLabel-optional-android-only)
     - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
     - [`minuteInterval` (`optional`)](#minuteinterval-optional)
     - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
@@ -425,6 +427,22 @@ Allows changing of the time picker to a 24 hour format. By default, this value i
 
 ```js
 <RNDateTimePicker is24Hour={true} />
+```
+
+#### `positiveButtonLabel` (`optional`, `Android only`)
+
+Changes the label of the positive button.
+
+```js
+<RNDateTimePicker positiveButtonLabel="OK!" />
+```
+
+#### `negativeButtonLabel` (`optional`, `Android only`)
+
+Changes the label of the negative button.
+
+```js
+<RNDateTimePicker positiveButtonLabel="Negative" />
 ```
 
 #### `neutralButtonLabel` (`optional`, `Android only`)

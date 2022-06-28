@@ -145,8 +145,6 @@ export type AndroidNativeProps = Readonly<
       positiveButtonLabel?: string;
       neutralButtonLabel?: string;
       negativeButtonLabel?: string;
-
-
       /**
        * callback when an error occurs inside the date picker native code (such as null activity)
        */

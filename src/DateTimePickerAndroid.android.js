@@ -30,7 +30,9 @@ function open(props: AndroidNativeProps) {
     is24Hour,
     minimumDate,
     maximumDate,
+    positiveButtonLabel,
     neutralButtonLabel,
+    negativeButtonLabel,
     minuteInterval,
     timeZoneOffsetInMinutes,
     onChange,
@@ -47,9 +49,11 @@ function open(props: AndroidNativeProps) {
     is24Hour,
     minimumDate,
     maximumDate,
-    neutralButtonLabel,
     minuteInterval,
     timeZoneOffsetInMinutes,
+    positiveButtonLabel,
+    neutralButtonLabel,
+    negativeButtonLabel,
   });
 
   const presentPicker = async () => {

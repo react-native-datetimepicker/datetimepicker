@@ -193,7 +193,7 @@ export type WindowsNativeProps = Readonly<
 
 declare namespace DateTimePickerAndroidType {
   const open: (args: AndroidNativeProps) => void;
-  const dismiss: (mode: AndroidNativeProps['mode']) => void;
+  const dismiss: (mode: AndroidNativeProps['mode']) => Promise<boolean>;
 }
 
 declare const RNDateTimePicker: FC<

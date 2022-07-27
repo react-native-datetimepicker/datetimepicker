@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DatePicker applies styling to DatePicker 1`] = `
+exports[`DateTimePicker RNDateTimePickerIOS style props applies styling to DatePicker 1`] = `
 <RNDateTimePicker
   date={1376949600000}
   displayIOS="default"
@@ -22,7 +22,7 @@ exports[`DatePicker applies styling to DatePicker 1`] = `
 />
 `;
 
-exports[`DatePicker renders a native Component 1`] = `
+exports[`DateTimePicker given a component for android / iOS renders a component (iOS) / null (android) 1`] = `
 <RNDateTimePicker
   date={1376949600000}
   displayIOS="default"
@@ -39,53 +39,17 @@ exports[`DatePicker renders a native Component 1`] = `
 />
 `;
 
-exports[`DatePicker renders with mode countdown 1`] = `
-<RNDateTimePicker
-  date={1376949600000}
-  displayIOS="default"
-  enabled={true}
-  mode="countdown"
-  onChange={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "height": 216,
-    }
-  }
-/>
-`;
+exports[`DateTimePicker given a component for android / iOS renders a component (iOS) / null (android) 2`] = `null`;
 
-exports[`DatePicker renders with mode datetime 1`] = `
-<RNDateTimePicker
-  date={1376949600000}
-  displayIOS="default"
-  enabled={true}
-  mode="datetime"
-  onChange={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "height": 216,
-    }
-  }
-/>
-`;
-
-exports[`DatePicker renders with mode time 1`] = `
-<RNDateTimePicker
-  date={1376949600000}
-  displayIOS="default"
-  enabled={true}
-  mode="time"
-  onChange={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Object {
-      "height": 216,
-    }
-  }
-/>
+exports[`DateTimePicker namedExports have the expected shape 1`] = `
+Object {
+  "DateTimePickerAndroid": Object {
+    "dismiss": [Function],
+    "open": [Function],
+  },
+  "createDateTimeSetEvtParams": [Function],
+  "createDismissEvtParams": [Function],
+  "createNeutralEvtParams": [Function],
+  "default": [Function],
+}
 `;

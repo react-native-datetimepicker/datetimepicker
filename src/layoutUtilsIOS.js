@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function getHeightStyleFromKnowValues(display, mode) {
+function getHeightStyleFromKnownValues(display, mode) {
   if (display === IOS_DISPLAY.compact) {
     return styles.compact;
   }
@@ -52,9 +52,20 @@ export function getPickerHeightStyle(
     // TODO vonovak this value could be cached
     return NativeModules.RNDateTimePickerManager.getDefaultDisplayValue({
       mode,
-    }).then(({determinedDisplayValue}) => {
-      return getHeightStyleFromKnowValues(determinedDisplayValue, mode);
-    });
+    })
+      .then(({determinedDisplayValue}) => {
+        return getHeightStyleFromKnownValues(determinedDisplayValue, mode);
+      })
+      .catch((e) => {
+        // if we can't get the height style from the known values, we'll just use the default
+        const nativeModuleNotPresentError = new Error(
+          'RNDateTimePickerManager native module is not present. ' +
+            'If you are getting this error in tests, make sure to follow the testing guide. Otherwise, make sure the native module correctly linked. ' +
+            'Nested Error is: ' +
+            e.message,
+        );
+        throw nativeModuleNotPresentError;
+      });
   }
-  return getHeightStyleFromKnowValues(display, mode);
+  return getHeightStyleFromKnownValues(display, mode);
 }

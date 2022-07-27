@@ -99,6 +99,7 @@ export const App = () => {
     if (Platform.OS === 'android') {
       setShow(false);
     }
+
     if (event.type === 'neutralButtonPressed') {
       setDate(new Date(0));
     } else {

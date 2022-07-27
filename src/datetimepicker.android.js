@@ -10,7 +10,9 @@ import {validateAndroidProps} from './androidUtils';
 import invariant from 'invariant';
 import {DateTimePickerAndroid} from './DateTimePickerAndroid';
 
-export default function RNDateTimePicker(props: AndroidNativeProps): null {
+export default function RNDateTimePickerAndroid(
+  props: AndroidNativeProps,
+): null {
   validateAndroidProps(props);
   const {
     mode = ANDROID_MODE.date,

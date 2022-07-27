@@ -140,7 +140,7 @@ export type IOSNativeProps = $ReadOnly<{|
   /**
    * Is this picker enabled?
    */
-  enabled: boolean,
+  enabled?: boolean,
 |}>;
 
 export type AndroidNativeProps = $ReadOnly<{|
@@ -189,7 +189,7 @@ export type TimePickerOptions = {|
 |};
 
 export type DateTimePickerResult = $ReadOnly<{|
-  action: ?('timeSetAction' | 'dateSetAction' | 'dismissedAction'),
+  action: 'timeSetAction' | 'dateSetAction' | 'dismissedAction',
   year: number,
   month: number,
   day: number,

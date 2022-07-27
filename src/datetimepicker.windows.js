@@ -6,7 +6,11 @@
  */
 'use strict';
 
-import {requireNativeComponent, StyleSheet} from 'react-native';
+import {
+  type HostComponent,
+  requireNativeComponent,
+  StyleSheet,
+} from 'react-native';
 import type {
   WindowsNativeProps,
   WindowsDatePickerChangeEvent,
@@ -23,7 +27,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const RNDateTimePickerWindows = requireNativeComponent(
+// $FlowExpectedError - this export is used in tests only, so don't care
+export const RNDateTimePickerWindows = requireNativeComponent(
   'RNDateTimePickerWindows',
 );
 const RNTimePickerWindows = requireNativeComponent('RNTimePickerWindows');

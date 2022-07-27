@@ -83,6 +83,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
     - [`disabled` (`optional`, `iOS only`)](#disabled-optional-ios-only)
     - [`onError` (`optional`, `Android only`)](#onError-optional-android-only)
+  - [Testing with Jest](#testing-with-jest)
   - [Migration from the older components](#migration-from-the-older-components)
   - [Contributing to the component](#contributing-to-the-component)
   - [Manual installation](#manual-installation)

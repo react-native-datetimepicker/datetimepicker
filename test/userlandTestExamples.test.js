@@ -5,7 +5,10 @@
 import React, {useState} from 'react';
 import {Text, Button} from 'react-native';
 // in your code, import from '@react-native-community/datetimepicker'
-import DateTimePicker, {DateTimePickerAndroid} from '../src/index';
+import DateTimePicker from '../src/index';
+// $FlowExpectedError: complains about import path
+import {DateTimePickerAndroid} from '../src/DateTimePickerAndroid.android';
+
 import {render, fireEvent, waitFor} from '@testing-library/react-native';
 import {createDateTimeSetEvtParams} from '../src/index';
 import {mockAndroidDialogDateChange, mockAndroidDialogDismissal} from '../jest';

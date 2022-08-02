@@ -8,6 +8,7 @@
     "ios",
     "android",
     "src",
+    "jest",
     "flow-typed",
     "windows",
     "RNDateTimePicker.podspec",

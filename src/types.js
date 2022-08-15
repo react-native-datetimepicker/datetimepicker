@@ -5,7 +5,7 @@
 
 import type {SyntheticEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 import type {HostComponent} from 'react-native';
-import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
+import type {ViewProps} from 'deprecated-react-native-prop-types/DeprecatedViewPropTypes';
 import type {ElementRef} from 'react';
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import {

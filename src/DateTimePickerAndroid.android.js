@@ -33,11 +33,13 @@ function open(props: AndroidNativeProps) {
     is24Hour,
     minimumDate,
     maximumDate,
-    neutralButtonLabel,
     minuteInterval,
     timeZoneOffsetInMinutes,
     onChange,
     onError,
+    neutralButtonLabel,
+    positiveButtonLabel,
+    negativeButtonLabel,
   } = props;
   validateAndroidProps(props);
   invariant(originalValue, 'A date or time must be specified as `value` prop.');
@@ -53,9 +55,11 @@ function open(props: AndroidNativeProps) {
         is24Hour,
         minimumDate,
         maximumDate,
-        neutralButtonLabel,
         minuteInterval,
         timeZoneOffsetInMinutes,
+        neutralButtonLabel,
+        positiveButtonLabel,
+        negativeButtonLabel,
       });
 
       switch (action) {

@@ -12,7 +12,7 @@ jobs:
   analyse_js:
     executor:
       name: rn/linux_js
-      node_version: '14.17.0'
+      node_version: '16'
     steps:
       - checkout
       # - rn/yarn_install
@@ -70,9 +70,9 @@ jobs:
       - run:
           name: change default node version
           command: |
-            nvm install v15.11.0
-            nvm alias default v15.11.0
-            echo 'export PATH=/opt/circleci/.nvm/versions/node/v15.11.0/bin:$PATH' >> $BASH_ENV
+            nvm install v16.17.0
+            nvm alias default v16.17.0
+            echo 'export PATH=/opt/circleci/.nvm/versions/node/v16.17.0/bin:$PATH' >> $BASH_ENV
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-29;default;x86
@@ -102,7 +102,7 @@ jobs:
   publish:
     executor:
       name: rn/linux_js
-      node_version: '14.17.0'
+      node_version: '16'
     steps:
       - checkout
       # - rn/yarn_install

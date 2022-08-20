@@ -394,6 +394,7 @@ Has no effect when `display` is `"spinner"`.
 #### `themeVariant` (`optional`, `iOS only`)
 
 Allows overriding system theme variant (dark or light mode) used by the date picker.
+However, we recommend that you instead control the theme of the whole application using [react-native-theme-control](https://github.com/vonovak/react-native-theme-control).
 
 :warning: Has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
 
@@ -466,6 +467,7 @@ on iOS, this in only supported when `display="spinner"`
 Sets style directly on picker component. By default, the picker height is determined based on the `display` prop.
 
 Please note that by default, picker's text color is controlled by the application theme (light / dark mode). In dark mode, text is white and in light mode, text is black.
+If you want to control the application theme, we recommend using [react-native-theme-control](https://github.com/vonovak/react-native-theme-control).
 
 This means that e.g. if the device has dark mode turned on, and your screen background color is white, you will not see the picker. Please use the `Appearance` api to adjust the picker's background color so that it is visible, as we do in the [example App](/example/App.js).
 Alternatively, use the `themeVariant` prop or [opt-out from dark mode (discouraged)](https://stackoverflow.com/a/56546554/2070942).

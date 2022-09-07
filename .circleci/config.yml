@@ -47,6 +47,9 @@ jobs:
       - run:
           command: yarn install --frozen-lockfile
           name: yarn install
+      - run:
+          command: yarn bundle:ios
+          name: bundle js
       - rn/pod_install:
           pod_install_directory: 'example/ios'
       - run:
@@ -90,6 +93,9 @@ jobs:
       - run:
           command: yarn install --frozen-lockfile
           name: yarn install
+      - run:
+          command: yarn bundle:android
+          name: bundle js
       - run:
           command: yarn detox:android:build:release
           name: build app for e2e tests

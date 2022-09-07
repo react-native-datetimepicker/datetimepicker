@@ -1,45 +1,65 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
-    ext {
-        kotlinVersion = "1.4.21"
-        buildToolsVersion = "30.0.2"
-        minSdkVersion = 21
-        compileSdkVersion = 30
-        targetSdkVersion = 30
+    def androidTestAppDir = "../../node_modules/react-native-test-app/android"
+    apply(from: "${androidTestAppDir}/dependencies.gradle")
+    apply(from: "${androidTestAppDir}/test-app-util.gradle")
 
-        ndkVersion = "21.4.7075529"
-    }
     repositories {
+        mavenCentral()
         google()
-		mavenCentral()
     }
+
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.2")
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath("com.android.tools.build:gradle:${androidPluginVersion}")
+
+        if (isNewArchitectureEnabled(project)) {
+            classpath("com.facebook.react:react-native-gradle-plugin")
+            classpath("de.undercouch:gradle-download-task:5.1.2")
+        }
     }
 }
 
 allprojects {
     repositories {
-        mavenCentral()
-        mavenLocal()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url("$rootDir/../../node_modules/react-native/android")
+            url("${rootDir}/../../node_modules/react-native/android")
         }
-        maven {
-            // Android JSC is installed from npm
-            url("$rootDir/../../node_modules/jsc-android/dist")
-        }
+        mavenCentral()
+        google()
         maven {
             // All of Detox' artifacts are provided via the npm module
             url "$rootDir/../../node_modules/detox/Detox-android"
         }
+    }
+    afterEvaluate { project ->
+        def androidExtension = project.extensions.findByName('android')
+        if (androidExtension != null && project.name == 'app') {
+            androidExtension.defaultConfig {
+                ndk {
+                    abiFilters 'arm64-v8a', 'x86', 'x86_64'
+                }
+            }
 
-        google()
-		maven { url 'https://www.jitpack.io' }
+            androidExtension.signingConfigs {
+                test {
+                    keyAlias "androiddebugkey"
+                    keyPassword "android"
+                    storeFile file("debug.keystore")
+                    storePassword "android"
+                }
+            }
+
+            androidExtension.buildTypes.debug.signingConfig = androidExtension.signingConfigs.test
+            androidExtension.buildTypes.release.signingConfig = androidExtension.signingConfigs.test
+            androidExtension.testBuildType = System.getProperty('testBuildType', 'debug')
+
+            androidExtension.sourceSets.androidTest.java.srcDirs += "$rootDir/app/src/androidTest/java"
+
+            project.dependencies {
+                androidTestImplementation('com.wix:detox:+')
+                // pinning soloader to 0.10.4 fixes problem with detox "couldn't find DSO to load: libhermes.so" https://github.com/wix/Detox/issues/3487
+                implementation 'com.facebook.soloader:soloader:0.10.4+'
+            }
+        }
     }
 }

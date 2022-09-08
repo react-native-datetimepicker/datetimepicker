@@ -10,11 +10,11 @@ exports[`DateTimePicker RNDateTimePickerIOS style props applies styling to DateP
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Array [
-      Object {
+    [
+      {
         "height": 216,
       },
-      Object {
+      {
         "backgroundColor": "red",
       },
     ]
@@ -32,7 +32,7 @@ exports[`DateTimePicker given a component for android / iOS renders a component 
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
   style={
-    Object {
+    {
       "height": 216,
     }
   }
@@ -42,8 +42,8 @@ exports[`DateTimePicker given a component for android / iOS renders a component 
 exports[`DateTimePicker given a component for android / iOS renders a component (iOS) / null (android) 2`] = `null`;
 
 exports[`DateTimePicker namedExports have the expected shape 1`] = `
-Object {
-  "DateTimePickerAndroid": Object {
+{
+  "DateTimePickerAndroid": {
     "dismiss": [Function],
     "open": [Function],
   },

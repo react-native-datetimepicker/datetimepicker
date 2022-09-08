@@ -42,6 +42,8 @@ For cleaning all the detox builds just run `npm run detox:clean`.
 - release:
 
   ```sh
+  yarn bundle:ios # we need to bundle js first
+  cd "example/ios" && npx pod-install && cd - # run pod install to include bundle
   yarn detox:ios:build:release
   yarn detox:ios:test:release
   ```
@@ -62,6 +64,7 @@ An existing Android emulator is required to match the name defined in `detox.con
 - release:
 
   ```sh
+  yarn bundle:android # we need to bundle js first
   yarn detox:android:build:release
   yarn detox:android:test:release
   ```

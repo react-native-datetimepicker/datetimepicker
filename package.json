@@ -68,7 +68,6 @@
   "homepage": "https://github.com/react-native-community/datetimepicker#readme",
   "devDependencies": {
     "@babel/core": "^7.19.0",
-    "@babel/preset-env": "^7.19.0",
     "@babel/runtime": "^7.19.0",
     "@react-native-community/eslint-config": "^3.1.0",
     "@react-native-segmented-control/segmented-control": "^2.4.0",
@@ -90,11 +89,11 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.6.0",
     "react": "18.1.0",
-    "react-native": "^0.69.5",
+    "react-native": "^0.70.0",
     "react-native-localize": "^2.2.0",
     "react-native-test-app": "^1.6.13",
-    "react-native-windows": "^0.69.5",
-    "react-test-renderer": "18.0.0",
+    "react-native-windows": "^0.70.0-preview.2",
+    "react-test-renderer": "18.1.0",
     "semantic-release": "^19.0.3"
   },
   "dependencies": {

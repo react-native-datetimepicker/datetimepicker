@@ -144,5 +144,10 @@
         }
       }
     }
+  },
+  "codegenConfig": {
+    "name": "RNDateTimePicker",
+    "type": "components",
+    "jsSrcsDir": "src/specs"
   }
 }

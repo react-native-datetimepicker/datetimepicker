@@ -68,3 +68,30 @@ An existing Android emulator is required to match the name defined in `detox.con
   yarn detox:android:build:release
   yarn detox:android:test:release
   ```
+
+### Fabric
+
+Fabric is the new React Native rendering system ([read more about it here](https://reactnative.dev/architecture/fabric-renderer)).
+
+#### iOS
+
+```
+yarn start
+cd "example/ios" && RCT_NEW_ARCH_ENABLED=1 npx pod-install && cd -
+yarn start:ios
+```
+
+If you want to go back to the old renderer (Paper), 
+remove `ios/build`, run `pod-install` without the `RCT_NEW_ARCH_ENABLED=1` and build again
+
+```
+rm -r "example/ios/build"
+cd "example/ios" && npx pod-install && cd -
+yarn start:ios
+```
+
+
+#### Android
+
+The date time picker does not have a native UI component for Android but a native module.
+([read more about native modules here](https://reactnative.dev/docs/native-modules-intro)).

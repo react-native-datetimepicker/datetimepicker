@@ -23,6 +23,13 @@ export function toMilliseconds(
   });
 }
 
+export function dateToMilliseconds(date: ?Date): ?number {
+  if (!date) {
+    return;
+  }
+  return date.getTime();
+}
+
 export function sharedPropsValidation({value}: {value: ?Date}) {
   invariant(value, 'A date or time must be specified as `value` prop');
   invariant(
@@ -30,3 +37,5 @@ export function sharedPropsValidation({value}: {value: ?Date}) {
     '`value` prop must be an instance of Date object',
   );
 }
+
+export const isFabricEnabled = global.nativeFabricUIManager !== null;

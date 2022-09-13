@@ -26,9 +26,11 @@ type Display = $Keys<typeof ANDROID_DISPLAY>;
 type AndroidEvtTypes = $Keys<typeof ANDROID_EVT_TYPE>;
 type MinuteInterval = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
 
-export type NativeEventIOS = SyntheticEvent<{|
-  timestamp: number,
-|}>;
+export type NativeEventIOS = SyntheticEvent<
+  $ReadOnly<{|
+    timestamp: number,
+  |}>,
+>;
 
 export type DateTimePickerEvent = {
   type: AndroidEvtTypes,
@@ -135,7 +137,7 @@ export type IOSNativeProps = $ReadOnly<{|
   /**
    * Sets the preferredDatePickerStyle for picker
    */
-  display?: IOSDisplay,
+  displayIOS?: IOSDisplay,
 
   /**
    * Is this picker enabled?

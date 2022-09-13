@@ -7,10 +7,6 @@
  * @format
  * @flow strict-local
  */
-import {requireNativeComponent} from 'react-native';
-import type {RCTDateTimePickerNative} from './types';
+import RNDateTimePicker from './specs/DateTimePickerNativeComponent';
 
-export default ((requireNativeComponent(
-  'RNDateTimePicker',
-  // $FlowFixMe Flow: Unclear type. Using `any`, `Object`, or `Function` types is not safe!
-): any): RCTDateTimePickerNative);
+export default RNDateTimePicker;

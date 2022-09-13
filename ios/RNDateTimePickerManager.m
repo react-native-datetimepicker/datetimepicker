@@ -6,6 +6,7 @@
  */
 
 #import "RNDateTimePickerManager.h"
+#import "RNDateTimePickerShadowView.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTEventDispatcher.h>
@@ -53,13 +54,33 @@ RCT_ENUM_CONVERTER(UIUserInterfaceStyle, (@{
 
 @end
 
-@implementation RNDateTimePickerManager
+@implementation RNDateTimePickerManager {
+  RNDateTimePicker* _picker;
+}
 
 RCT_EXPORT_MODULE()
+
+- (instancetype)init {
+  if (self = [super init]) {
+    _picker = [RNDateTimePicker new];
+  }
+  return self;
+}
+
++ (BOOL)requiresMainQueueSetup {
+  return true;
+}
 
 - (UIView *)view
 {
   return [RNDateTimePicker new];
+}
+
+- (RCTShadowView *)shadowView
+{
+  RNDateTimePickerShadowView* shadowView =  [RNDateTimePickerShadowView new];
+  shadowView.picker = _picker;
+  return shadowView;
 }
 
 + (NSString*) datepickerStyleToString: (UIDatePickerStyle) style  API_AVAILABLE(ios(13.4)){
@@ -101,6 +122,11 @@ RCT_EXPORT_METHOD(getDefaultDisplayValue:(NSDictionary *)options resolver:(RCTPr
       }
     });
 }
+
+RCT_EXPORT_SHADOW_PROPERTY(date, NSDate)
+RCT_EXPORT_SHADOW_PROPERTY(mode, UIDatePickerMode)
+RCT_EXPORT_SHADOW_PROPERTY(locale, NSLocale)
+RCT_EXPORT_SHADOW_PROPERTY(datePickerStyle, UIDatePickerStyle)
 
 RCT_EXPORT_VIEW_PROPERTY(date, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(locale, NSLocale)

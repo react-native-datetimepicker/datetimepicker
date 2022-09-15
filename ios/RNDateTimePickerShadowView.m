@@ -25,6 +25,12 @@
   YGNodeMarkDirty(self.yogaNode);
 }
 
+
+- (void)setDisplayIOS:(UIDatePickerStyle)displayIOS {
+  _displayIOS = displayIOS;
+  YGNodeMarkDirty(self.yogaNode);
+}
+
 static YGSize RNDateTimePickerShadowViewMeasure(YGNodeRef node, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode)
 {
   RNDateTimePickerShadowView *shadowPickerView = (__bridge RNDateTimePickerShadowView *)YGNodeGetContext(node);
@@ -35,7 +41,7 @@ static YGSize RNDateTimePickerShadowViewMeasure(YGNodeRef node, float width, YGM
     [shadowPickerView.picker setDatePickerMode:shadowPickerView.mode];
     [shadowPickerView.picker setLocale:shadowPickerView.locale];
     if (@available(iOS 14.0, *)) {
-      [shadowPickerView.picker setPreferredDatePickerStyle:shadowPickerView.datePickerStyle];
+      [shadowPickerView.picker setPreferredDatePickerStyle:shadowPickerView.displayIOS];
     }
     size = [shadowPickerView.picker sizeThatFits:UILayoutFittingCompressedSize];
   });

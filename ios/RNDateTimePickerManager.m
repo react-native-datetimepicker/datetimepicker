@@ -126,7 +126,7 @@ RCT_EXPORT_METHOD(getDefaultDisplayValue:(NSDictionary *)options resolver:(RCTPr
 RCT_EXPORT_SHADOW_PROPERTY(date, NSDate)
 RCT_EXPORT_SHADOW_PROPERTY(mode, UIDatePickerMode)
 RCT_EXPORT_SHADOW_PROPERTY(locale, NSLocale)
-RCT_EXPORT_SHADOW_PROPERTY(datePickerStyle, UIDatePickerStyle)
+RCT_EXPORT_SHADOW_PROPERTY(displayIOS, RNCUIDatePickerStyle)
 
 RCT_EXPORT_VIEW_PROPERTY(date, NSDate)
 RCT_EXPORT_VIEW_PROPERTY(locale, NSLocale)

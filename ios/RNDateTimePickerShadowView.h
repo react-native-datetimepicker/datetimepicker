@@ -7,6 +7,6 @@
 @property (nonatomic) UIDatePickerMode mode;
 @property (nullable, nonatomic, strong) NSDate *date;
 @property (nullable, nonatomic, strong) NSLocale *locale;
-@property (nonatomic, readonly, assign) UIDatePickerStyle datePickerStyle API_AVAILABLE(ios(13.4));
+@property (nonatomic, assign) UIDatePickerStyle displayIOS API_AVAILABLE(ios(13.4));
 
 @end

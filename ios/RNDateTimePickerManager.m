@@ -100,29 +100,6 @@ RCT_EXPORT_MODULE()
     }
 }
 
-RCT_EXPORT_METHOD(getDefaultDisplayValue:(NSDictionary *)options resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-      if (@available(iOS 13.4, *)) {
-        UIDatePicker* view = [RNDateTimePicker new];
-        
-        view.preferredDatePickerStyle = UIDatePickerStyleAutomatic;
-        UIDatePickerMode renderedMode = [RCTConvert UIDatePickerMode:options[@"mode"]];
-        view.datePickerMode = renderedMode;
-        // NOTE afaict we do not need to measure the actual dimensions here, but if we do, just look at the original PR
-        
-        UIDatePickerStyle determinedDisplayValue = view.datePickerStyle;
-
-        resolve(@{
-                 @"determinedDisplayValue": [RNDateTimePickerManager datepickerStyleToString:determinedDisplayValue],
-                });
-      } else {
-        // never happens; the condition is just to avoid compiler warnings
-        reject(@"UNEXPECTED_CALL", @"unexpected getDefaultDisplayValue() call", nil);
-      }
-    });
-}
-
 RCT_EXPORT_SHADOW_PROPERTY(date, NSDate)
 RCT_EXPORT_SHADOW_PROPERTY(mode, UIDatePickerMode)
 RCT_EXPORT_SHADOW_PROPERTY(locale, NSLocale)

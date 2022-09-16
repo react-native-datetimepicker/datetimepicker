@@ -14,8 +14,7 @@ import {sharedPropsValidation, toMilliseconds} from './utils';
 import {IOS_DISPLAY, ANDROID_MODE, EVENT_TYPE_SET} from './constants';
 import invariant from 'invariant';
 import * as React from 'react';
-import {getPickerHeightStyle} from './layoutUtilsIOS';
-import {Platform, StyleSheet} from 'react-native';
+import {Platform} from 'react-native';
 
 import type {
   NativeEventIOS,
@@ -61,7 +60,6 @@ export default function Picker({
 }: IOSNativeProps): React.Node {
   sharedPropsValidation({value});
 
-  const [heightStyle, setHeightStyle] = React.useState(undefined);
   const _picker: NativeRef = React.useRef(null);
   const display = getDisplaySafe(providedDisplay);
 
@@ -80,18 +78,6 @@ export default function Picker({
     [onChange, value],
   );
 
-  React.useEffect(
-    function ensureCorrectHeight() {
-      const height = getPickerHeightStyle(display, mode);
-      if (height instanceof Promise) {
-        height.then(setHeightStyle);
-      } else {
-        setHeightStyle(height);
-      }
-    },
-    [display, mode],
-  );
-
   const _onChange = (event: NativeEventIOS) => {
     const timestamp = event.nativeEvent.timestamp;
     // $FlowFixMe Cannot assign object literal to `unifiedEvent` because number [1] is incompatible with undefined [2] in property `nativeEvent.timestamp`.
@@ -104,11 +90,6 @@ export default function Picker({
 
   invariant(value, 'A date or time should be specified as `value`.');
 
-  if (!heightStyle) {
-    // wait for height to be available in state
-    return null;
-  }
-
   const dates: DatePickerOptions = {value, maximumDate, minimumDate};
   toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
 
@@ -117,7 +98,7 @@ export default function Picker({
     <RNDateTimePicker
       testID={testID}
       ref={_picker}
-      style={StyleSheet.compose(heightStyle, style)}
+      style={style}
       date={dates.value}
       locale={locale !== null && locale !== '' ? locale : undefined}
       maximumDate={dates.maximumDate}

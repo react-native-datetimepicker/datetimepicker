@@ -1,27 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DateTimePicker RNDateTimePickerIOS style props applies styling to DatePicker 1`] = `
-<RNDateTimePicker
-  date={1376949600000}
-  displayIOS="default"
-  enabled={true}
-  mode="date"
-  onChange={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    [
-      {
-        "height": 216,
-      },
-      {
-        "backgroundColor": "red",
-      },
-    ]
-  }
-/>
-`;
-
 exports[`DateTimePicker given a component for android / iOS renders a component (iOS) / null (android) 1`] = `
 <RNDateTimePicker
   date={1376949600000}
@@ -31,11 +9,6 @@ exports[`DateTimePicker given a component for android / iOS renders a component 
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    {
-      "height": 216,
-    }
-  }
 />
 `;
 

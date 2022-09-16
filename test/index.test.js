@@ -65,19 +65,6 @@ describe('DateTimePicker', () => {
 
       expect(toJSON()).toHaveProperty('props.date', date.getTime());
     });
-
-    it('style props applies styling to DatePicker', async () => {
-      const style = {backgroundColor: 'red'};
-      const {toJSON} = await renderPicker(RNDateTimePickerIOS, {
-        style,
-      });
-      const snapshot = toJSON();
-      expect(snapshot).toHaveProperty('props.style', [
-        {height: 216},
-        {backgroundColor: 'red'},
-      ]);
-      expect(snapshot).toMatchSnapshot();
-    });
   });
 
   test.each([

@@ -137,7 +137,7 @@ export type IOSNativeProps = $ReadOnly<{|
   /**
    * Sets the preferredDatePickerStyle for picker
    */
-  displayIOS?: IOSDisplay,
+  display?: IOSDisplay,
 
   /**
    * Is this picker enabled?

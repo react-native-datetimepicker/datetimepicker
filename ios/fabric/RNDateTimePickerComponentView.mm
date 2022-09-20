@@ -1,8 +1,7 @@
 #import "RNDateTimePickerComponentView.h"
-
 #import <React/RCTConversions.h>
 
-#import <react/renderer/components/RNDateTimePicker/ComponentDescriptors.h>
+#import <rndatetimepicker/ComponentDescriptors.h>
 #import <react/renderer/components/RNDateTimePicker/EventEmitters.h>
 #import <react/renderer/components/RNDateTimePicker/Props.h>
 #import <react/renderer/components/RNDateTimePicker/RCTComponentViewHelpers.h>
@@ -12,11 +11,20 @@
 
 using namespace facebook::react;
 
+// JS Standard for time is milliseconds
+NSDate* convertJSTimeToDate (double jsTime) {
+    double time = jsTime/1000.0;
+    return [NSDate dateWithTimeIntervalSince1970: time];
+}
+
 @interface RNDateTimePickerComponentView () <RCTRNDateTimePickerViewProtocol>
 @end
 
 @implementation RNDateTimePickerComponentView {
-    UIDatePicker *_datePickerView;
+    UIDatePicker *_picker;
+    // Dummy picker to apply prop changes and calculate/update the size before the actual picker gets updated
+    UIDatePicker *_dummyPicker;
+    RNDateTimePickerShadowNode::ConcreteState::Shared _state;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -25,14 +33,16 @@ using namespace facebook::react;
         static const auto defaultProps = std::make_shared<const RNDateTimePickerProps>();
         _props = defaultProps;
         
-        _datePickerView = [[RNDateTimePicker alloc] initWithFrame:self.bounds];
+        _picker = [RNDateTimePicker new];
+        _dummyPicker = [RNDateTimePicker new];
         
-        [_datePickerView addTarget:self action:@selector(onChange:) forControlEvents:UIControlEventValueChanged];
+        [_picker addTarget:self action:@selector(onChange:) forControlEvents:UIControlEventValueChanged];
         
         // Default Picker mode
-        _datePickerView.datePickerMode = UIDatePickerModeDate;
+        _picker.datePickerMode = UIDatePickerModeDate;
+        _dummyPicker.datePickerMode = UIDatePickerModeDate;
         
-        self.contentView = _datePickerView;
+        self.contentView = _picker;
     }
     
     return self;
@@ -54,6 +64,16 @@ using namespace facebook::react;
     ->onChange(event);
 }
 
+- (void) updateMeasurements {
+    if (_state == nullptr) {
+        return;
+    }
+    
+    CGSize size = [_dummyPicker sizeThatFits:UILayoutFittingCompressedSize];
+    auto newState = RNDateTimePickerState{RCTSizeFromCGSize(size)};
+    _state->updateState(std::move(newState));
+}
+
 #pragma mark - RCTComponentViewProtocol
 
 + (ComponentDescriptorProvider)componentDescriptorProvider
@@ -61,16 +81,16 @@ using namespace facebook::react;
     return concreteComponentDescriptorProvider<RNDateTimePickerComponentDescriptor>();
 }
 
-// JS Standard for time is milliseconds
-NSDate* convertJSTimeToDate (double jsTime) {
-    double time = jsTime/1000.0;
-    return [NSDate dateWithTimeIntervalSince1970: time];
+- (void)prepareForRecycle
+{
+    [super prepareForRecycle];
+    _state.reset();
 }
 
--(void)updateTextColor:(UIColor *)color
+-(void)updateTextColorForPicker:(UIDatePicker *)picker color:(UIColor *)color
 {
     if (@available(iOS 14.0, *)) {
-        if (_datePickerView.datePickerStyle != UIDatePickerStyleWheels) {
+        if (picker.datePickerStyle != UIDatePickerStyleWheels) {
             // prevents #247
             return;
         }
@@ -85,114 +105,141 @@ NSDate* convertJSTimeToDate (double jsTime) {
         }
     }
     
-    [_datePickerView setValue:color forKey:@"textColor"];
-    [_datePickerView setValue:@(NO) forKey:@"highlightsToday"];
+    [picker setValue:color forKey:@"textColor"];
+    [picker setValue:@(NO) forKey:@"highlightsToday"];
 }
 
-- (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
-{
+- (void)updateState:(const State::Shared &)state oldState:(const State::Shared &)oldState {
+    _state = std::static_pointer_cast<const RNDateTimePickerShadowNode::ConcreteState>(state);
+    
+    if (oldState == nullptr) {
+        // Calculate the initial picker measurements
+        [self updateMeasurements];
+    }
+}
+
+- (Boolean)updatePropsForPicker:(UIDatePicker *)picker props:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps {
+    
     const auto &oldPickerProps = *std::static_pointer_cast<const RNDateTimePickerProps>(_props);
     const auto &newPickerProps = *std::static_pointer_cast<const RNDateTimePickerProps>(props);
+    Boolean needsToUpdateMeasurements = false;
     
     if (oldPickerProps.date != newPickerProps.date) {
-        _datePickerView.date = convertJSTimeToDate(newPickerProps.date);
+        picker.date = convertJSTimeToDate(newPickerProps.date);
+        needsToUpdateMeasurements = true;
     }
     
     if (oldPickerProps.minimumDate != newPickerProps.minimumDate) {
-        _datePickerView.minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
+        picker.minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
     }
     
     if (oldPickerProps.maximumDate != newPickerProps.maximumDate) {
-        _datePickerView.maximumDate = convertJSTimeToDate(newPickerProps.maximumDate);
+        picker.maximumDate = convertJSTimeToDate(newPickerProps.maximumDate);
     }
     
     if (oldPickerProps.locale != newPickerProps.locale) {
         NSString *convertedLocale = RCTNSStringFromString(newPickerProps.locale);
         NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:convertedLocale];
-        
-        _datePickerView.locale = locale;
+
+        picker.locale = locale;
+        needsToUpdateMeasurements = true;
     }
     
     if (oldPickerProps.mode != newPickerProps.mode) {
         switch(newPickerProps.mode) {
             case RNDateTimePickerMode::Time:
-                _datePickerView.datePickerMode = UIDatePickerModeTime;
+                picker.datePickerMode = UIDatePickerModeTime;
                 break;
             case RNDateTimePickerMode::Datetime:
-                _datePickerView.datePickerMode = UIDatePickerModeDateAndTime;
+                picker.datePickerMode = UIDatePickerModeDateAndTime;
                 break;
             case RNDateTimePickerMode::Countdown:
-                _datePickerView.datePickerMode = UIDatePickerModeCountDownTimer;
+                picker.datePickerMode = UIDatePickerModeCountDownTimer;
                 break;
             default:
-                _datePickerView.datePickerMode = UIDatePickerModeDate;
+                picker.datePickerMode = UIDatePickerModeDate;
         }
+        needsToUpdateMeasurements = true;
     }
     
     if (@available(iOS 14.0, *)) {
         if (oldPickerProps.displayIOS != newPickerProps.displayIOS) {
             switch(newPickerProps.displayIOS) {
                 case RNDateTimePickerDisplayIOS::Compact:
-                    _datePickerView.preferredDatePickerStyle = UIDatePickerStyleCompact;
+                    picker.preferredDatePickerStyle = UIDatePickerStyleCompact;
                     break;
                 case RNDateTimePickerDisplayIOS::Inline:
-                    _datePickerView.preferredDatePickerStyle = UIDatePickerStyleInline;
+                    picker.preferredDatePickerStyle = UIDatePickerStyleInline;
                     break;
                 case RNDateTimePickerDisplayIOS::Spinner:
-                    _datePickerView.preferredDatePickerStyle = UIDatePickerStyleWheels;
+                    picker.preferredDatePickerStyle = UIDatePickerStyleWheels;
                     break;
                 default:
-                    _datePickerView.preferredDatePickerStyle = UIDatePickerStyleAutomatic;
+                    picker.preferredDatePickerStyle = UIDatePickerStyleAutomatic;
             }
+            needsToUpdateMeasurements = true;
         }
     }
     
     if (oldPickerProps.minuteInterval != newPickerProps.minuteInterval) {
-        _datePickerView.minuteInterval = newPickerProps.minuteInterval;
+        picker.minuteInterval = newPickerProps.minuteInterval;
     }
     
     if (oldPickerProps.timeZoneOffsetInMinutes != newPickerProps.timeZoneOffsetInMinutes) {
         // JS standard for time zones is minutes.
-        _datePickerView.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:newPickerProps.timeZoneOffsetInMinutes * 60.0];
+        picker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:newPickerProps.timeZoneOffsetInMinutes * 60.0];
     }
     
     if (oldPickerProps.accentColor != newPickerProps.accentColor) {
         UIColor *color = RCTUIColorFromSharedColor(newPickerProps.accentColor);
         
         if (color != nil) {
-            [_datePickerView setTintColor:color];
+            [picker setTintColor:color];
         } else {
             if (@available(iOS 15.0, *)) {
-                [_datePickerView setTintColor:[UIColor tintColor]];
+                [picker setTintColor:[UIColor tintColor]];
             } else {
-                [_datePickerView setTintColor:[UIColor systemBlueColor]];
+                [picker setTintColor:[UIColor systemBlueColor]];
             }
         }
     }
     
     if (oldPickerProps.textColor != newPickerProps.textColor) {
-        [self updateTextColor:RCTUIColorFromSharedColor(newPickerProps.textColor)];
+        [self updateTextColorForPicker:picker color:RCTUIColorFromSharedColor(newPickerProps.textColor)];
     }
     
     if (@available(iOS 13.0, *)) {
         if (oldPickerProps.themeVariant != newPickerProps.themeVariant) {
             switch (newPickerProps.themeVariant) {
                 case RNDateTimePickerThemeVariant::Light:
-                    _datePickerView.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+                    picker.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
                     break;
                 case RNDateTimePickerThemeVariant::Dark:
-                    _datePickerView.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
+                    picker.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
                     break;
                 default:
-                    _datePickerView.overrideUserInterfaceStyle = UIUserInterfaceStyleUnspecified;
+                    picker.overrideUserInterfaceStyle = UIUserInterfaceStyleUnspecified;
             }
         }
     }
     
     if (oldPickerProps.enabled != newPickerProps.enabled) {
-        _datePickerView.enabled = newPickerProps.enabled;
+        picker.enabled = newPickerProps.enabled;
     }
     
+    return needsToUpdateMeasurements;
+}
+
+- (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
+{
+    // Updating the dummy first to calculate measurements
+    Boolean needsToUpdateMeasurements = [self updatePropsForPicker:_dummyPicker props:props oldProps:oldProps];
+    
+    if (needsToUpdateMeasurements) {
+        [self updateMeasurements];
+    }
+    
+    [self updatePropsForPicker:_picker props:props oldProps:oldProps];
     
     [super updateProps:props oldProps:oldProps];
 }

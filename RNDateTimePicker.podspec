@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.homepage     = package['homepage']
   s.platform     = :ios, "11.0"
   s.source       = { :git => "https://github.com/react-native-community/datetimepicker", :tag => "v#{s.version}" }
-  s.source_files = "ios/**/*.{h,m,mm}"
+  s.source_files = "ios/**/*.{h,m,mm,cpp}"
   s.requires_arc = true
 
   if fabric_enabled
@@ -33,6 +33,13 @@ Pod::Spec.new do |s|
     s.dependency "RCTRequired"
     s.dependency "RCTTypeSafety"
     s.dependency "ReactCommon/turbomodule/core"
+
+    s.subspec "cpp" do |ss|
+      ss.source_files         = "cpp/**/*.{cpp,h}"
+      ss.header_dir           = "rndatetimepicker"
+      ss.pod_target_xcconfig  = { "HEADER_SEARCH_PATHS" => "\"$(PODS_TARGET_SRCROOT)/cpp\"" }
+    end
+
   else
     s.exclude_files = "ios/fabric"
 

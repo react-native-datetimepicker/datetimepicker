@@ -1,6 +1,7 @@
 require_relative '../../node_modules/react-native-test-app/test_app'
 
-use_flipper!
+# Disabling flipper to prevent this issue https://github.com/facebook/react-native/issues/33764
+use_flipper!(false)
 
 workspace 'date-time-picker-example.xcworkspace'
 

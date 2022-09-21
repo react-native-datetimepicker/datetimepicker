@@ -9366,10 +9366,10 @@ react-native-localize@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-2.2.1.tgz#6fe646833691c6ee8a474df3c8b069402cb1dba8"
   integrity sha512-BuPaQWvxLZG1NrCDGqgAnecDrNQu3LED9/Pyl4H2LwTMHcEngXpE5PfVntW2GiLumdr6nUOkWmMnh8PynZqrsw==
 
-react-native-test-app@^1.6.13:
-  version "1.6.13"
-  resolved "https://registry.yarnpkg.com/react-native-test-app/-/react-native-test-app-1.6.13.tgz#8e8359af9975f8c60e79e9b2f7a4575929380ba1"
-  integrity sha512-x4rkaOUMuP3zzl++uhmEfOyTnJytOf67XRvwQ/N6ZikfnIs2DSSBdmmIhFw4tvfMDm/ptnQ0D+XyfULSebH/VQ==
+react-native-test-app@^1.6.16:
+  version "1.6.16"
+  resolved "https://registry.yarnpkg.com/react-native-test-app/-/react-native-test-app-1.6.16.tgz#258bf3485b40666cee5a16ad1105bd08263684bb"
+  integrity sha512-Yl3uCIUrbyxnegamsTe9Am5qeftVG63z0sHsk420RqMog6wj+ttvSgrQ/15XXrxWeagNGtme0ub2YZRxTbFY7g==
   dependencies:
     ajv "^8.0.0"
     chalk "^4.1.0"

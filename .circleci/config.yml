@@ -53,9 +53,6 @@ jobs:
       - rn/pod_install:
           pod_install_directory: 'example/ios'
       - run:
-          command: curl https://raw.githubusercontent.com/facebook/react-native/6334ac35ac3cbc2c84b2d46d46ec118bf9bf714d/scripts/find-node.sh > node_modules/react-native/scripts/find-node.sh
-          name: fix issue with nvm # will be fixed in RN 67 (https://github.com/react-native-community/upgrade-support/issues/138)
-      - run:
           command: yarn detox:ios:build:release
           name: build app for e2e tests
       - run:
@@ -88,9 +85,6 @@ jobs:
           name: bundle js
       - rn/pod_install:
           pod_install_directory: 'example/ios'
-      - run:
-          command: curl https://raw.githubusercontent.com/facebook/react-native/6334ac35ac3cbc2c84b2d46d46ec118bf9bf714d/scripts/find-node.sh > node_modules/react-native/scripts/find-node.sh
-          name: fix issue with nvm # will be fixed in RN 67 (https://github.com/react-native-community/upgrade-support/issues/138)
       - run:
           command: yarn detox:ios:build:release
           name: build app for e2e tests

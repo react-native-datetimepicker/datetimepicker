@@ -91,7 +91,7 @@
     "react": "18.1.0",
     "react-native": "^0.70.0",
     "react-native-localize": "^2.2.0",
-    "react-native-test-app": "^1.6.13",
+    "react-native-test-app": "^1.6.16",
     "react-native-windows": "^0.70.0-preview.2",
     "react-test-renderer": "18.1.0",
     "semantic-release": "^19.0.3"

@@ -1,3 +1,8 @@
+/**
+ * Custom state to store frameSize that the component descriptor will use to modify the
+ * shadow node layout.
+ */
+
 #pragma once
 
 #include <react/renderer/graphics/Geometry.h>

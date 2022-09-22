@@ -1,3 +1,7 @@
+/**
+ * RNDateTimePickerComponentView is only be available when fabric is enabled.
+ */
+
 #import "RNDateTimePickerComponentView.h"
 #import <React/RCTConversions.h>
 
@@ -64,6 +68,10 @@ NSDate* convertJSTimeToDate (double jsTime) {
     ->onChange(event);
 }
 
+/**
+ * Updates the shadow node state with the dummyPicker size. This will update the shadow node size.
+ * (see adopt method in ComponentDescriptors.h)
+ */
 - (void) updateMeasurements {
     if (_state == nullptr) {
         return;
@@ -109,6 +117,9 @@ NSDate* convertJSTimeToDate (double jsTime) {
     [picker setValue:@(NO) forKey:@"highlightsToday"];
 }
 
+/**
+ * override update state to update shadow node size once the state is available
+ */
 - (void)updateState:(const State::Shared &)state oldState:(const State::Shared &)oldState {
     _state = std::static_pointer_cast<const RNDateTimePickerShadowNode::ConcreteState>(state);
     
@@ -118,6 +129,12 @@ NSDate* convertJSTimeToDate (double jsTime) {
     }
 }
 
+/**
+ * Updates picker properties based on prop changes and returns a boolean that indicates if the shadow node size needs
+ * to be updated. This boolean helpful when we update the dummy picker to know if we need to update the shadow node
+ * size before updating the actual picker.
+ * Props that will to update measurements: date, locale, mode, displayIOS.
+ */
 - (Boolean)updatePropsForPicker:(UIDatePicker *)picker props:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps {
     
     const auto &oldPickerProps = *std::static_pointer_cast<const RNDateTimePickerProps>(_props);
@@ -232,7 +249,7 @@ NSDate* convertJSTimeToDate (double jsTime) {
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    // Updating the dummy first to calculate measurements
+    // Updating the dummy first to check if we need to update measurements
     Boolean needsToUpdateMeasurements = [self updatePropsForPicker:_dummyPicker props:props oldProps:oldProps];
     
     if (needsToUpdateMeasurements) {

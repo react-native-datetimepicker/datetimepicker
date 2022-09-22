@@ -33,40 +33,7 @@ jobs:
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '13.1.0'
-    steps:
-      - checkout
-      - run:
-          name: install applesimutils
-          command: |
-            HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
-            HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
-      - rn/ios_simulator_start:
-          device: 'iPhone 11'
-      # - rn/yarn_install
-      - run:
-          command: yarn install --frozen-lockfile
-          name: yarn install
-      - run:
-          command: yarn bundle:ios
-          name: bundle js
-      - rn/pod_install:
-          pod_install_directory: 'example/ios'
-      - run:
-          command: yarn detox:ios:build:release
-          name: build app for e2e tests
-      - run:
-          command: yarn detox:ios:test:release
-          name: run e2e tests
-      - store_artifacts:
-          path: ./artifacts
-
-  e2e_release_ios_fabric:
-    executor:
-      name: rn/macos
-      xcode_version: '13.1.0'
-    environment:
-      RCT_NEW_ARCH_ENABLED: 1
+      xcode_version: '14.0.0'
     steps:
       - checkout
       - run:
@@ -155,13 +122,11 @@ workflows:
     jobs:
       - analyse_js
       - e2e_release_ios
-      - e2e_release_ios_fabric
       - e2e_release_android
       - publish:
           requires:
             - e2e_release_android
             - e2e_release_ios
-            - e2e_release_ios_fabric
           filters:
             branches:
               only: master

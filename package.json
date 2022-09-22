@@ -105,10 +105,10 @@
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "example/ios/build/Build/Products/Debug-iphonesimulator/ReactTestApp.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11' -scheme date-time-picker-example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13' -scheme date-time-picker-example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
         "type": "ios.simulator",
         "device": {
-          "type": "iPhone 11"
+          "type": "iPhone 13"
         }
       },
       "ios.sim.release": {
@@ -116,7 +116,7 @@
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -sdk iphonesimulator -scheme date-time-picker-example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
         "type": "ios.simulator",
         "device": {
-          "type": "iPhone 11"
+          "type": "iPhone 13"
         }
       },
       "android.emu.debug": {

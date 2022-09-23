@@ -263,6 +263,7 @@ PODS:
     - React-logger (= 0.70.0)
     - React-perflogger (= 0.70.0)
     - React-runtimeexecutor (= 0.70.0)
+    - RCT-Folly/Fabric (= 2021.07.22.00)
   - React-jsi (0.70.0):
     - boost (= 1.76.0)
     - DoubleConversion

@@ -10,11 +10,7 @@
  * @flow strict-local
  */
 import RNDateTimePicker from './picker';
-import {
-  dateToMilliseconds,
-  isFabricEnabled,
-  sharedPropsValidation,
-} from './utils';
+import {dateToMilliseconds, sharedPropsValidation} from './utils';
 import {IOS_DISPLAY, ANDROID_MODE, EVENT_TYPE_SET} from './constants';
 import invariant from 'invariant';
 import * as React from 'react';
@@ -62,7 +58,6 @@ export default function Picker({
 }: IOSNativeProps): React.Node {
   sharedPropsValidation({value});
 
-  const _picker = React.useRef(null);
   const display = getDisplaySafe(providedDisplay);
 
   const _onChange = (event: NativeEventIOS) => {
@@ -81,7 +76,6 @@ export default function Picker({
     // $FlowFixMe - dozen of flow errors
     <RNDateTimePicker
       testID={testID}
-      ref={_picker}
       style={style}
       date={dateToMilliseconds(value)}
       locale={locale !== null && locale !== '' ? locale : undefined}

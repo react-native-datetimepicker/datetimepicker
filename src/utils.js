@@ -37,5 +37,3 @@ export function sharedPropsValidation({value}: {value: ?Date}) {
     '`value` prop must be an instance of Date object',
   );
 }
-
-export const isFabricEnabled = global.nativeFabricUIManager !== null;

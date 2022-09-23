@@ -103,18 +103,20 @@ NSDate* convertJSTimeToDate (double jsTime) {
             return;
         }
     }
-    
-    if (color == nil) {
+        
+    if (color) {
+        [picker setValue:color forKey:@"textColor"];
+        [picker setValue:@(NO) forKey:@"highlightsToday"];
+    } else {
         // Default Text color
         if (@available(iOS 13.0, *)) {
             color = [UIColor labelColor];
         } else {
             color = [UIColor blackColor];
         }
+        [picker setValue:color forKey:@"textColor"];
+        [picker setValue:@(YES) forKey:@"highlightsToday"];
     }
-    
-    [picker setValue:color forKey:@"textColor"];
-    [picker setValue:@(NO) forKey:@"highlightsToday"];
 }
 
 /**

@@ -6,6 +6,7 @@ import {
   Text,
   StatusBar,
   Button,
+  Alert,
   Platform,
   TextInput,
   useColorScheme,
@@ -103,6 +104,12 @@ export const App = () => {
     if (event.type === 'neutralButtonPressed') {
       setDate(new Date(0));
     } else {
+      Alert.alert(
+        'event: ',
+        `${event.type} ${selectedDate.toLocaleString()}`,
+        [],
+        {cancelable: true},
+      );
       setDate(currentDate);
     }
   };

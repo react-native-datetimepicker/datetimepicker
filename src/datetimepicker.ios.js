@@ -10,20 +10,18 @@
  * @flow strict-local
  */
 import RNDateTimePicker from './picker';
-import {sharedPropsValidation, toMilliseconds} from './utils';
+import {dateToMilliseconds, sharedPropsValidation} from './utils';
 import {IOS_DISPLAY, ANDROID_MODE, EVENT_TYPE_SET} from './constants';
 import invariant from 'invariant';
 import * as React from 'react';
 import {Platform} from 'react-native';
 
 import type {
+  DateTimePickerEvent,
   NativeEventIOS,
-  NativeRef,
   IOSNativeProps,
-  DatePickerOptions,
   IOSDisplay,
 } from './types';
-import type {DateTimePickerEvent} from './types';
 
 const getDisplaySafe = (display: IOSDisplay): IOSDisplay => {
   const majorVersionIOS = parseInt(Platform.Version, 10);
@@ -60,23 +58,7 @@ export default function Picker({
 }: IOSNativeProps): React.Node {
   sharedPropsValidation({value});
 
-  const _picker: NativeRef = React.useRef(null);
   const display = getDisplaySafe(providedDisplay);
-
-  React.useEffect(
-    function ensureNativeIsInSyncWithJS() {
-      const {current} = _picker;
-
-      if (value && onChange && current) {
-        const timestamp = value.getTime();
-        // $FlowFixMe Cannot call `current.setNativeProps` because property `setNativeProps` is missing in `AbstractComponent` [1].
-        current.setNativeProps({
-          date: timestamp,
-        });
-      }
-    },
-    [onChange, value],
-  );
 
   const _onChange = (event: NativeEventIOS) => {
     const timestamp = event.nativeEvent.timestamp;
@@ -90,19 +72,15 @@ export default function Picker({
 
   invariant(value, 'A date or time should be specified as `value`.');
 
-  const dates: DatePickerOptions = {value, maximumDate, minimumDate};
-  toMilliseconds(dates, 'value', 'minimumDate', 'maximumDate');
-
   return (
     // $FlowFixMe - dozen of flow errors
     <RNDateTimePicker
       testID={testID}
-      ref={_picker}
       style={style}
-      date={dates.value}
+      date={dateToMilliseconds(value)}
       locale={locale !== null && locale !== '' ? locale : undefined}
-      maximumDate={dates.maximumDate}
-      minimumDate={dates.minimumDate}
+      maximumDate={dateToMilliseconds(maximumDate)}
+      minimumDate={dateToMilliseconds(minimumDate)}
       mode={mode}
       minuteInterval={minuteInterval}
       timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}

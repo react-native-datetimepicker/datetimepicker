@@ -23,6 +23,13 @@ export function toMilliseconds(
   });
 }
 
+export function dateToMilliseconds(date: ?Date): ?number {
+  if (!date) {
+    return;
+  }
+  return date.getTime();
+}
+
 export function sharedPropsValidation({value}: {value: ?Date}) {
   invariant(value, 'A date or time must be specified as `value` prop');
   invariant(

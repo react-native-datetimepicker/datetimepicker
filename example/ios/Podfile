@@ -1,6 +1,8 @@
 require_relative '../../node_modules/react-native-test-app/test_app'
 
-use_flipper!
+# Flipper causes the build to fail on release when fabric is enabled 
+# https://github.com/facebook/react-native/issues/33764
+use_flipper!()
 
 workspace 'date-time-picker-example.xcworkspace'
 

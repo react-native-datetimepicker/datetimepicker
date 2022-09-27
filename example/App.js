@@ -12,7 +12,7 @@ import {
   Switch,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
+import SegmentedControl from './SegmentedControl';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useRef, useState} from 'react';
 import {Picker} from 'react-native-windows';

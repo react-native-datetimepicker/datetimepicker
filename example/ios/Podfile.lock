@@ -263,6 +263,7 @@ PODS:
     - React-logger (= 0.70.0)
     - React-perflogger (= 0.70.0)
     - React-runtimeexecutor (= 0.70.0)
+    - RCT-Folly/Fabric (= 2021.07.22.00)
   - React-jsi (0.70.0):
     - boost (= 1.76.0)
     - DoubleConversion
@@ -570,7 +571,7 @@ SPEC CHECKSUMS:
   ReactCommon: de55f940495d7bf87b5d7bf55b5b15cdd50d7d7b
   ReactTestApp-DevSupport: 8a8cff38c37cd8145a12ac7d7d0503dd08f97d65
   ReactTestApp-Resources: ff5f151e465e890010b417ce65ca6c5de6aeccbb
-  RNDateTimePicker: 4f1fc917f5af9d9ae4c5fc0c63a4474d61338693
+  RNDateTimePicker: 9d66f002d6095cc89fcb66d0dc54bc6191c9ab0d
   RNLocalize: cbcb55d0e19c78086ea4eea20e03fe8000bbbced
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 82c9e8f652789f67d98bed5aef9d6653f71b04a9

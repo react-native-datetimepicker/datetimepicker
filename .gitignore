@@ -28,6 +28,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+IDEWorkspaceChecks.plist
 
 #Detox
 #

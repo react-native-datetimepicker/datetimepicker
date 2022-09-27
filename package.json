@@ -91,7 +91,7 @@
     "react": "18.1.0",
     "react-native": "^0.70.0",
     "react-native-localize": "^2.2.0",
-    "react-native-test-app": "^1.6.13",
+    "react-native-test-app": "^1.6.16",
     "react-native-windows": "^0.70.0-preview.2",
     "react-test-renderer": "18.1.0",
     "semantic-release": "^19.0.3"
@@ -105,10 +105,10 @@
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "example/ios/build/Build/Products/Debug-iphonesimulator/ReactTestApp.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11' -scheme date-time-picker-example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13' -scheme date-time-picker-example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
         "type": "ios.simulator",
         "device": {
-          "type": "iPhone 11"
+          "type": "iPhone 13"
         }
       },
       "ios.sim.release": {
@@ -116,7 +116,7 @@
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -sdk iphonesimulator -scheme date-time-picker-example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
         "type": "ios.simulator",
         "device": {
-          "type": "iPhone 11"
+          "type": "iPhone 13"
         }
       },
       "android.emu.debug": {
@@ -144,5 +144,10 @@
         }
       }
     }
+  },
+  "codegenConfig": {
+    "name": "RNDateTimePicker",
+    "type": "components",
+    "jsSrcsDir": "src/specs"
   }
 }

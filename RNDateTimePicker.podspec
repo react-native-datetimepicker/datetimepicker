@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
       'HEADER_SEARCH_PATHS' => '"$(PODS_ROOT)/boost" "$(PODS_ROOT)/boost-for-react-native" "$(PODS_ROOT)/RCT-Folly"',
       "CLANG_CXX_LANGUAGE_STANDARD" => "c++17"
     }
-    
+
     s.dependency "React"
     s.dependency "React-RCTFabric"
     s.dependency "React-Codegen"
@@ -33,12 +33,6 @@ Pod::Spec.new do |s|
     s.dependency "RCTRequired"
     s.dependency "RCTTypeSafety"
     s.dependency "ReactCommon/turbomodule/core"
-
-    s.subspec "cpp" do |ss|
-      ss.source_files         = "cpp/**/*.{cpp,h}"
-      ss.header_dir           = "rndatetimepicker"
-      ss.pod_target_xcconfig  = { "HEADER_SEARCH_PATHS" => "\"$(PODS_TARGET_SRCROOT)/cpp\"" }
-    end
 
   else
     s.exclude_files = "ios/fabric"

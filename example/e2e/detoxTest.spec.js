@@ -123,6 +123,7 @@ describe('e2e tests', () => {
     } else {
       await userChangesTimeValue({minutes: '22'});
       await userTapsCancelButtonAndroid();
+      await elementByText('great').tap();
     }
     await expect(getTimeText()).toHaveText('11:00');
   });

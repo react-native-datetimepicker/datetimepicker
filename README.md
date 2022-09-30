@@ -301,6 +301,8 @@ List of possible values for iOS (maps to [preferredDatePickerStyle](https://deve
 Date change handler.
 
 This is called when the user changes the date or time in the UI. It receives the event and the date as parameters.
+It is also called when user dismisses the picker, which you can detect by checking the `event.type` property.
+The values can be: `'set' | 'dismissed' | 'neutralButtonPressed'`. (`neutralButtonPressed` is only available on Android).
 
 ```js
 setDate = (event, date) => {};

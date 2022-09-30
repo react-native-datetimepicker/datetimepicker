@@ -10,6 +10,7 @@ import {
   TextInput,
   useColorScheme,
   Switch,
+  Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SegmentedControl from './SegmentedControl';
@@ -98,6 +99,14 @@ export const App = () => {
     const currentDate = selectedDate || date;
     if (Platform.OS === 'android') {
       setShow(false);
+    }
+    if (event.type === 'dismissed') {
+      Alert.alert('picker was dismissed', undefined, [
+        {
+          text: 'great',
+        },
+      ]);
+      return;
     }
 
     if (event.type === 'neutralButtonPressed') {

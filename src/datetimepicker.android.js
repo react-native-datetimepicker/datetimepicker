@@ -7,7 +7,6 @@ import {useEffect} from 'react';
 
 import type {AndroidNativeProps} from './types';
 import {validateAndroidProps} from './androidUtils';
-import invariant from 'invariant';
 import {DateTimePickerAndroid} from './DateTimePickerAndroid';
 
 export default function RNDateTimePickerAndroid(
@@ -29,7 +28,6 @@ export default function RNDateTimePickerAndroid(
     negativeButtonLabel,
     onError,
   } = props;
-  invariant(value, 'A date or time must be specified as `value` prop.');
   const valueTimestamp = value.getTime();
 
   useEffect(() => {

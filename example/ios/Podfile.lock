@@ -685,7 +685,7 @@ PODS:
     - React-Core
     - React-jsi
   - ReactTestApp-Resources (1.0.0-dev)
-  - RNDateTimePicker (6.4.0):
+  - RNDateTimePicker (6.4.2):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -923,12 +923,12 @@ SPEC CHECKSUMS:
   ReactCommon: de55f940495d7bf87b5d7bf55b5b15cdd50d7d7b
   ReactTestApp-DevSupport: 8a8cff38c37cd8145a12ac7d7d0503dd08f97d65
   ReactTestApp-Resources: ff5f151e465e890010b417ce65ca6c5de6aeccbb
-  RNDateTimePicker: 597591d8a3ae159acd7d7b19706024932da816af
+  RNDateTimePicker: 0913d8322a3b21bb3d2010aca96c5090248223b6
   RNLocalize: cbcb55d0e19c78086ea4eea20e03fe8000bbbced
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 82c9e8f652789f67d98bed5aef9d6653f71b04a9
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 6bca2b1533bd782af99c755ccf9b322ffa84edc5
+PODFILE CHECKSUM: d34f3e71e434db4f0211ec41f8c89e1a077c236f
 
 COCOAPODS: 1.11.3

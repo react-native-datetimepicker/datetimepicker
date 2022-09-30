@@ -18,6 +18,7 @@ type DateTimePickerEvent = $ReadOnly<{|
 type NativeProps = $ReadOnly<{|
   ...ViewProps,
   onChange?: ?BubblingEventHandler<DateTimePickerEvent>,
+  onPickerDismiss?: ?BubblingEventHandler<null>,
   maximumDate?: ?Double,
   minimumDate?: ?Double,
   date?: ?Double,

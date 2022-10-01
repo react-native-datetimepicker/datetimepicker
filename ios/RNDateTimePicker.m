@@ -23,11 +23,11 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
   if ((self = [super initWithFrame:frame])) {
-    [self addTarget:self action:@selector(didChange)
-               forControlEvents:UIControlEventValueChanged];
     #ifndef RCT_NEW_ARCH_ENABLED
-      // somehow the onDismiss callback here is executed with Fabric as well as in RNDateTimePickerComponentView
-      // so do not register it with Fabric
+      // somehow, with Fabric, the callbacks are executed here as well as in RNDateTimePickerComponentView
+      // so do not register it with Fabric, to avoid potential problems
+      [self addTarget:self action:@selector(didChange)
+               forControlEvents:UIControlEventValueChanged];
       [self addTarget:self action:@selector(onDismiss:) forControlEvents:UIControlEventEditingDidEnd];
     #endif
 

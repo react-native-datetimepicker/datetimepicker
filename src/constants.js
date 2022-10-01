@@ -12,10 +12,11 @@ export const ANDROID_DISPLAY = Object.freeze({
 });
 
 export const EVENT_TYPE_SET = 'set';
+export const EVENT_TYPE_DISMISSED = 'dismissed';
 export const ANDROID_EVT_TYPE = Object.freeze({
   set: EVENT_TYPE_SET,
+  dismissed: EVENT_TYPE_DISMISSED,
   neutralButtonPressed: 'neutralButtonPressed',
-  dismissed: 'dismissed',
 });
 
 export const IOS_DISPLAY = Object.freeze({

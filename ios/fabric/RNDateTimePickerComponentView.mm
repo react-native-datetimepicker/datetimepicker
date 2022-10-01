@@ -41,6 +41,7 @@ NSDate* convertJSTimeToDate (double jsTime) {
         _dummyPicker = [RNDateTimePicker new];
         
         [_picker addTarget:self action:@selector(onChange:) forControlEvents:UIControlEventValueChanged];
+        [_picker addTarget:self action:@selector(onDismiss:) forControlEvents:UIControlEventEditingDidEnd];
         
         // Default Picker mode
         _picker.datePickerMode = UIDatePickerModeDate;
@@ -50,6 +51,16 @@ NSDate* convertJSTimeToDate (double jsTime) {
     }
     
     return self;
+}
+
+-(void)onDismiss:(RNDateTimePicker *)sender
+{
+    if (!_eventEmitter) {
+        return;
+    }
+    RNDateTimePickerEventEmitter::OnPickerDismiss event = {};
+    std::dynamic_pointer_cast<const RNDateTimePickerEventEmitter>(_eventEmitter)
+    ->onPickerDismiss(event);
 }
 
 -(void)onChange:(RNDateTimePicker *)sender
@@ -103,7 +114,7 @@ NSDate* convertJSTimeToDate (double jsTime) {
             return;
         }
     }
-        
+
     if (color) {
         [picker setValue:color forKey:@"textColor"];
         [picker setValue:@(NO) forKey:@"highlightsToday"];

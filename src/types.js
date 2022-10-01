@@ -34,10 +34,10 @@ export type NativeEventIOS = SyntheticEvent<
 
 export type DateTimePickerEvent = {
   type: AndroidEvtTypes,
-  nativeEvent: {
+  nativeEvent: $ReadOnly<{
     timestamp?: number,
     ...
-  },
+  }>,
   ...
 };
 
@@ -45,12 +45,13 @@ type BaseOptions = {|
   /**
    * The currently selected date.
    */
-  value?: ?Date,
+  value: Date,
 
   /**
-   * Date change handler.
+   * change handler.
    *
    * This is called when the user changes the date or time in the UI.
+   * Or when they clear / dismiss the dialog.
    * The first argument is an Event, the second a selected Date.
    */
   onChange?: ?(event: DateTimePickerEvent, date?: Date) => void,
@@ -90,7 +91,6 @@ export type BaseProps = $ReadOnly<{|
 
 export type IOSNativeProps = $ReadOnly<{|
   ...BaseProps,
-  date?: ?Date,
 
   /**
    * The date picker locale.

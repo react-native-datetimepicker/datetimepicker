@@ -51,10 +51,10 @@ describe('e2e tests', () => {
     }
   });
 
-  it('nothing should happen if date does not change', async () => {
-    if (isIOS()) {
-      await userOpensPicker({mode: 'date', display: 'compact'});
+  it('nothing should happen if picker is dismissed / cancelled', async () => {
+    await userOpensPicker({mode: 'date', display: 'default'});
 
+    if (isIOS()) {
       await element(
         by.traits(['staticText']).withAncestor(by.label('Date Picker')),
       ).tap();
@@ -65,7 +65,6 @@ describe('e2e tests', () => {
       await nextMonthArrow.tap();
       await userDismissesCompactDatePicker();
     } else {
-      await userOpensPicker({mode: 'date', display: 'default'});
       const calendarHorizontalScrollView = element(
         by
           .type('android.widget.ScrollView')
@@ -76,6 +75,7 @@ describe('e2e tests', () => {
       await userTapsCancelButtonAndroid();
     }
 
+    await elementByText('great').tap();
     await expect(getDateText()).toHaveText('11/13/2021');
   });
 
@@ -123,6 +123,7 @@ describe('e2e tests', () => {
     } else {
       await userChangesTimeValue({minutes: '22'});
       await userTapsCancelButtonAndroid();
+      await elementByText('great').tap();
     }
     await expect(getTimeText()).toHaveText('11:00');
   });

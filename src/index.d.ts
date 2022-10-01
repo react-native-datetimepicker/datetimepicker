@@ -67,8 +67,6 @@ export type BaseProps = Readonly<ViewProps & DateOptions>;
 
 export type IOSNativeProps = Readonly<
   BaseProps & {
-    date?: Date;
-
     /**
      * The date picker locale.
      */

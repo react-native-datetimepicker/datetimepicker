@@ -11,8 +11,12 @@
  */
 import RNDateTimePicker from './picker';
 import {dateToMilliseconds, sharedPropsValidation} from './utils';
-import {IOS_DISPLAY, ANDROID_MODE, EVENT_TYPE_SET} from './constants';
-import invariant from 'invariant';
+import {
+  IOS_DISPLAY,
+  ANDROID_MODE,
+  EVENT_TYPE_SET,
+  EVENT_TYPE_DISMISSED,
+} from './constants';
 import * as React from 'react';
 import {Platform} from 'react-native';
 
@@ -62,18 +66,31 @@ export default function Picker({
 
   const _onChange = (event: NativeEventIOS) => {
     const timestamp = event.nativeEvent.timestamp;
-    // $FlowFixMe Cannot assign object literal to `unifiedEvent` because number [1] is incompatible with undefined [2] in property `nativeEvent.timestamp`.
-    const unifiedEvent: DateTimePickerEvent = {...event, type: EVENT_TYPE_SET};
+    const unifiedEvent: DateTimePickerEvent = {
+      ...event,
+      type: EVENT_TYPE_SET,
+    };
 
     const date = timestamp !== undefined ? new Date(timestamp) : undefined;
 
     onChange && onChange(unifiedEvent, date);
   };
 
-  invariant(value, 'A date or time should be specified as `value`.');
+  const onDismiss = () => {
+    // TODO introduce separate onDismissed event listener
+    onChange &&
+      onChange(
+        {
+          type: EVENT_TYPE_DISMISSED,
+          nativeEvent: {
+            timestamp: value.getTime(),
+          },
+        },
+        value,
+      );
+  };
 
   return (
-    // $FlowFixMe - dozen of flow errors
     <RNDateTimePicker
       testID={testID}
       style={style}
@@ -85,6 +102,7 @@ export default function Picker({
       minuteInterval={minuteInterval}
       timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
       onChange={_onChange}
+      onPickerDismiss={onDismiss}
       textColor={textColor}
       accentColor={accentColor}
       themeVariant={themeVariant}

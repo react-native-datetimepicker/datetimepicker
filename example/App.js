@@ -101,11 +101,16 @@ export const App = () => {
       setShow(false);
     }
     if (event.type === 'dismissed') {
-      Alert.alert('picker was dismissed', undefined, [
-        {
-          text: 'great',
-        },
-      ]);
+      Alert.alert(
+        'picker was dismissed',
+        undefined,
+        [
+          {
+            text: 'great',
+          },
+        ],
+        {cancelable: true},
+      );
       return;
     }
 

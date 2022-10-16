@@ -1,8 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="SpinnerDatePickerDialog" tools:targetApi="lollipop">
+    <style name="SpinnerDatePickerDialogBase" tools:targetApi="lollipop">
         <item name="android:datePickerStyle">@style/SpinnerDatePickerStyle</item>
 		<item name="android:windowIsFloating">true</item>
     </style>
+    <style name="SpinnerDatePickerDialog" parent="SpinnerDatePickerDialogBase" />
 
     <style name="SpinnerDatePickerStyle" parent="android:Widget.Material.DatePicker" tools:targetApi="lollipop">
         <item name="android:datePickerMode">spinner</item>
@@ -25,10 +26,11 @@
         <item name="android:timePickerMode">clock</item>
     </style>
 
-    <style name="SpinnerTimePickerDialog" tools:targetApi="lollipop">
+    <style name="SpinnerTimePickerDialogBase" tools:targetApi="lollipop">
         <item name="android:timePickerStyle">@style/SpinnerTimePickerStyle</item>
 		<item name="android:windowIsFloating">true</item>
     </style>
+	<style name="SpinnerTimePickerDialog" parent="SpinnerTimePickerDialogBase" />
 
     <style name="SpinnerTimePickerStyle" parent="android:Widget.Material.TimePicker" tools:targetApi="lollipop">
         <item name="android:timePickerMode">spinner</item>

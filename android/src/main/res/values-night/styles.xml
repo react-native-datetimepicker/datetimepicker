@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+	<style name="SpinnerDatePickerDialog" parent="SpinnerDatePickerDialogBase">
+		<item name="colorPrimary">@android:color/white</item>
+	</style>
+
+	<style name="SpinnerTimePickerDialog" parent="SpinnerTimePickerDialogBase">
+		<item name="colorPrimary">@android:color/white</item>
+	</style>
+</resources>

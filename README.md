@@ -92,11 +92,14 @@ React Native date & time picker component for iOS, Android and Windows.
 ## Requirements
 
 - Only Android API level >=21 (Android 5), iOS >= 11 are supported.
-- Tested with Xcode 13.0 and RN 0.66.3. Other configurations are very likely to work as well but have not been tested.
+- Tested with Xcode 14.0 and RN 0.70. Other configurations are very likely to work as well but have not been tested.
 
 ## Expo users notice
 
-This module is part of Expo - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo SDK may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available in Expo. Use the command `expo install @react-native-community/datetimepicker` (not `yarn` or `npm`) to install this module - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
+This module is part of Expo Managed Workflow - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo SDK in the Managed Workflow may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available in Expo Managed Workflow.
+If you use the Managed Workflow, use the command `expo install @react-native-community/datetimepicker` (not `yarn` or `npm`) to install this module - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
+
+If you're using the [`expo prebuild`](https://docs.expo.dev/workflow/prebuild/) command and building your native app projects (e.g. with EAS Build or locally), you can use the latest version of the module.
 
 ## Getting started
 

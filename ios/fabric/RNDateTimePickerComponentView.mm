@@ -88,7 +88,8 @@ NSDate* convertJSTimeToDate (double jsTime) {
         return;
     }
     
-    CGSize size = [_dummyPicker sizeThatFits:UILayoutFittingCompressedSize];
+	size = [shadowPickerView.picker sizeThatFits:UILayoutFittingCompressedSize];
+    size.width += 10;
     auto newState = RNDateTimePickerState{RCTSizeFromCGSize(size)};
     _state->updateState(std::move(newState));
 }

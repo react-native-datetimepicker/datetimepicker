@@ -7,6 +7,8 @@
 
 package com.reactcommunity.rndatetimepicker;
 
+import static com.reactcommunity.rndatetimepicker.Common.ensureButtonsVisible;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -15,7 +17,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnClickListener;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -114,6 +115,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     }
 
     final DatePicker datePicker = dialog.getDatePicker();
+	dialog.setOnShowListener(ensureButtonsVisible(activityContext, dialog));
 
     Integer timeZoneOffsetInMilliseconds = getTimeZoneOffset(args);
     if (timeZoneOffsetInMilliseconds != null) {

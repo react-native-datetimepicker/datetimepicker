@@ -8,6 +8,8 @@
 
 package com.reactcommunity.rndatetimepicker;
 
+import static com.reactcommunity.rndatetimepicker.Common.ensureButtonsVisible;
+
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -113,6 +115,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     if (args != null && args.containsKey(RNConstants.ARG_NEGATIVE_BUTTON_LABEL)) {
       dialog.setButton(DialogInterface.BUTTON_NEGATIVE, args.getString(RNConstants.ARG_NEGATIVE_BUTTON_LABEL), dialog);
     }
+	dialog.setOnShowListener(ensureButtonsVisible(activityContext, dialog));
     return dialog;
   }
 

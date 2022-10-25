@@ -8,23 +8,6 @@
         <item name="android:datePickerMode">spinner</item>
     </style>
 
-    <style name="CalendarDatePickerDialog" parent="Theme.AppCompat.Light.Dialog" tools:targetApi="lollipop">
-        <item name="android:datePickerStyle">@style/CalendarDatePickerStyle</item>
-    </style>
-
-    <style name="CalendarDatePickerStyle" parent="android:Widget.Material.Light.DatePicker" tools:targetApi="lollipop">
-        <item name="android:datePickerMode">calendar</item>
-    </style>
-
-
-    <style name="ClockTimePickerDialog" parent="Theme.AppCompat.Light.Dialog" tools:targetApi="lollipop">
-        <item name="android:timePickerStyle">@style/ClockTimePickerStyle</item>
-    </style>
-
-    <style name="ClockTimePickerStyle" parent="android:Widget.Material.Light.TimePicker" tools:targetApi="lollipop">
-        <item name="android:timePickerMode">clock</item>
-    </style>
-
     <style name="SpinnerTimePickerDialogBase" parent="Theme.AppCompat.DayNight.Dialog" tools:targetApi="lollipop">
         <item name="android:timePickerStyle">@style/SpinnerTimePickerStyle</item>
     </style>

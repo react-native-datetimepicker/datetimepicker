@@ -74,13 +74,10 @@ public class RNTimePickerDialogFragment extends DialogFragment {
       is24hour = args.getBoolean(RNConstants.ARG_IS24HOUR, DateFormat.is24HourFormat(activityContext));
     }
 
-    if (display == RNTimePickerDisplay.CLOCK || display == RNTimePickerDisplay.SPINNER) {
-        int theme = display == RNTimePickerDisplay.CLOCK
-              ? R.style.ClockTimePickerDialog
-              : R.style.SpinnerTimePickerDialog;
+    if (display == RNTimePickerDisplay.SPINNER) {
         return new RNDismissableTimePickerDialog(
                 activityContext,
-                theme,
+				R.style.SpinnerTimePickerDialog,
                 onTimeSetListener,
                 hour,
                 minute,

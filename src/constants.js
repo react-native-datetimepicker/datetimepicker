@@ -7,6 +7,8 @@ export const MIN_MS = 60000;
 export const ANDROID_DISPLAY = Object.freeze({
   default: 'default',
   spinner: 'spinner',
+
+  // NOTE: the following are exposed, but the native module instead uses "default"
   clock: 'clock',
   calendar: 'calendar',
 });

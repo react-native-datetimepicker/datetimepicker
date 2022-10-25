@@ -53,7 +53,7 @@ public class Common {
 	}
 
 	@NonNull
-	public static DialogInterface.OnShowListener ensureButtonsVisible(@NonNull Context activityContext, final AlertDialog dialog) {
+	public static DialogInterface.OnShowListener setButtonTextColor(@NonNull Context activityContext, final AlertDialog dialog) {
 		return presentedDialog -> {
 			int textColorPrimary = getDefaultDialogButtonTextColor(activityContext);
 			Button positiveButton = dialog.getButton(DatePickerDialog.BUTTON_POSITIVE);

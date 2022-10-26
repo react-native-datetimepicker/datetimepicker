@@ -8,6 +8,8 @@
 
 package com.reactcommunity.rndatetimepicker;
 
+import static com.reactcommunity.rndatetimepicker.Common.setButtonTextColor;
+
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -72,13 +74,10 @@ public class RNTimePickerDialogFragment extends DialogFragment {
       is24hour = args.getBoolean(RNConstants.ARG_IS24HOUR, DateFormat.is24HourFormat(activityContext));
     }
 
-    if (display == RNTimePickerDisplay.CLOCK || display == RNTimePickerDisplay.SPINNER) {
-        int theme = display == RNTimePickerDisplay.CLOCK
-              ? R.style.ClockTimePickerDialog
-              : R.style.SpinnerTimePickerDialog;
+    if (display == RNTimePickerDisplay.SPINNER) {
         return new RNDismissableTimePickerDialog(
                 activityContext,
-                theme,
+				R.style.SpinnerTimePickerDialog,
                 onTimeSetListener,
                 hour,
                 minute,
@@ -113,6 +112,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     if (args != null && args.containsKey(RNConstants.ARG_NEGATIVE_BUTTON_LABEL)) {
       dialog.setButton(DialogInterface.BUTTON_NEGATIVE, args.getString(RNConstants.ARG_NEGATIVE_BUTTON_LABEL), dialog);
     }
+	dialog.setOnShowListener(setButtonTextColor(activityContext, dialog));
     return dialog;
   }
 

@@ -11,7 +11,6 @@ package com.reactcommunity.rndatetimepicker;
  * Date picker display options.
  */
 public enum RNDatePickerDisplay {
-  CALENDAR,
   SPINNER,
   DEFAULT
 }

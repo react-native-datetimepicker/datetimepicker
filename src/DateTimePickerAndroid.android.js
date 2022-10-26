@@ -28,7 +28,7 @@ import {
 function open(props: AndroidNativeProps) {
   const {
     mode = ANDROID_MODE.date,
-    display = ANDROID_DISPLAY.default,
+    display,
     value: originalValue,
     is24Hour,
     minimumDate,
@@ -49,9 +49,13 @@ function open(props: AndroidNativeProps) {
 
   const presentPicker = async () => {
     try {
+      const displayOverride =
+        display === ANDROID_DISPLAY.spinner
+          ? ANDROID_DISPLAY.spinner
+          : ANDROID_DISPLAY.default;
       const {action, day, month, year, minute, hour} = await openPicker({
         value: valueTimestamp,
-        display,
+        display: displayOverride,
         is24Hour,
         minimumDate,
         maximumDate,

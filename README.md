@@ -227,7 +227,7 @@ export const App = () => {
 
 By localization, we refer to the language (names of months and days), as well as order in which date can be presented in a picker (month/day vs. day/month) and 12 / 24 hour-format.
 
-On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://stackoverflow.com/a/2900144/2070942).
+On Android, the picker will be controlled by the system locale. If you wish to change it, [see instructions here](https://developer.android.com/guide/topics/resources/app-languages).
 
 On iOS, use XCode, as [documented here](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions) to inform the OS about the locales your application supports. iOS will automatically display the correctly localized DateTimePicker as long as the target language is contained in `project.pbxproj`.
 
@@ -258,7 +258,7 @@ The reason we recommend the imperative API is: on Android, the date/time picker 
 
 ## Component props / params of the Android imperative api
 
-> Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android, and [`CalendarDatePicker`](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/calendar-date-picker) +[TimePicker](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.timepicker?view=winrt-19041) on Windows.
+> Please note that this library currently exposes functionality from [`UIDatePicker`](https://developer.apple.com/documentation/uikit/uidatepicker?language=objc) on iOS and [DatePickerDialog](https://developer.android.com/reference/android/app/DatePickerDialog) + [TimePickerDialog](https://developer.android.com/reference/android/app/TimePickerDialog) on Android, and [`CalendarDatePicker`](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/calendar-date-picker) + [TimePicker](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.timepicker?view=winrt-19041) on Windows.
 >
 > These native classes offer only limited configuration, while there are dozens of possible options you as a developer may need. It follows that if your requirement is not supported by the backing native views, this library will _not_ be able to implement your requirement. When you open an issue with a feature request, please document if (or how) the feature can be implemented using the aforementioned native views. If the native views do not support what you need, such feature requests will be closed as not actionable.
 
@@ -283,7 +283,7 @@ Defines the visual display of the picker. The default value is `"default"`.
 
 List of possible values for Android
 
-- `"default"` - Show a default date picker (spinner/calendar/clock) based on `mode` and Android version.
+- `"default"` - Recommended. Show a default date picker (spinner/calendar/clock) based on `mode`.
 - `"spinner"`
 - `"calendar"` (only for `date` mode)
 - `"clock"` (only for `time` mode)
@@ -308,7 +308,12 @@ It is also called when user dismisses the picker, which you can detect by checki
 The values can be: `'set' | 'dismissed' | 'neutralButtonPressed'`. (`neutralButtonPressed` is only available on Android).
 
 ```js
-setDate = (event, date) => {};
+const setDate = (event: DateTimePickerEvent, date: Date) => {
+  const {
+    type,
+    nativeEvent: {timestamp},
+  } = event;
+};
 
 <RNDateTimePicker onChange={this.setDate} />;
 ```
@@ -326,7 +331,7 @@ Defines the date or time value used in the component.
 Defines the maximum date that can be selected. Note that on Android, this only works for `date` mode because [TimePicker](https://developer.android.com/reference/android/widget/TimePicker) does not support this.
 
 ```js
-<RNDateTimePicker maximumDate={new Date(2300, 10, 20)} />
+<RNDateTimePicker maximumDate={new Date(2030, 10, 20)} />
 ```
 
 #### `minimumDate` (`optional`)
@@ -469,13 +474,13 @@ on iOS, this in only supported when `display="spinner"`
 
 #### `style` (`optional`, `iOS only`)
 
-Sets style directly on picker component. By default, the picker height is determined based on the `display` prop.
+Sets style directly on picker component. By default, the picker dimensions are determined based on the props.
 
 Please note that by default, picker's text color is controlled by the application theme (light / dark mode). In dark mode, text is white and in light mode, text is black.
 If you want to control the application theme, we recommend using [react-native-theme-control](https://github.com/vonovak/react-native-theme-control).
 
 This means that e.g. if the device has dark mode turned on, and your screen background color is white, you will not see the picker. Please use the `Appearance` api to adjust the picker's background color so that it is visible, as we do in the [example App](/example/App.js).
-Alternatively, use the `themeVariant` prop or [opt-out from dark mode (discouraged)](https://stackoverflow.com/a/56546554/2070942).
+Alternatively, use the `themeVariant` prop.
 
 ```js
 <RNDateTimePicker style={{flex: 1}} />

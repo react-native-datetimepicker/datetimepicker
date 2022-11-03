@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.util.TypedValue;
 import android.widget.Button;
 
@@ -17,6 +18,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.facebook.react.bridge.Promise;
+
+import java.util.Locale;
 
 public class Common {
 
@@ -70,4 +73,20 @@ public class Common {
 			}
 		};
 	}
+
+  public static RNTimePickerDisplay getDisplayTime(Bundle args) {
+    RNTimePickerDisplay display = RNTimePickerDisplay.DEFAULT;
+    if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
+      display = RNTimePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
+    }
+    return display;
+  }
+
+  public static RNDatePickerDisplay getDisplayDate(Bundle args) {
+    RNDatePickerDisplay display = RNDatePickerDisplay.DEFAULT;
+    if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
+      display = RNDatePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
+    }
+    return display;
+  }
 }

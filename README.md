@@ -496,12 +496,6 @@ Callback that is called when an error occurs inside the date picker native code 
 
 ## Testing with Jest
 
-If you're rendering the picker component (using the `@testing-library/react-native` or similar), you need to mock the native module:
-
-```
-"setupFiles": ["./node_modules/@react-native-community/datetimepicker/jest/setup.js"]
-```
-
 For examples of how you can write your tests, look [here](/test/userlandTestExamples.test.js).
 
 ## Migration from the older components

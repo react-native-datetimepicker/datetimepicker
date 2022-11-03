@@ -8,6 +8,7 @@
 
 package com.reactcommunity.rndatetimepicker;
 
+import static com.reactcommunity.rndatetimepicker.Common.getDisplayTime;
 import static com.reactcommunity.rndatetimepicker.Common.setButtonTextColor;
 
 import android.app.Dialog;
@@ -23,8 +24,6 @@ import android.text.format.DateFormat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
-import java.util.Locale;
 
 @SuppressWarnings("ValidFragment")
 public class RNTimePickerDialogFragment extends DialogFragment {
@@ -65,14 +64,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
       minuteInterval = args.getInt(RNConstants.ARG_INTERVAL);
     }
 
-    RNTimePickerDisplay display = RNTimePickerDisplay.DEFAULT;
-    if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
-      display = RNTimePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
-    }
-
-    if (args != null) {
-      is24hour = args.getBoolean(RNConstants.ARG_IS24HOUR, DateFormat.is24HourFormat(activityContext));
-    }
+    RNTimePickerDisplay display = getDisplayTime(args);
 
     if (display == RNTimePickerDisplay.SPINNER) {
         return new RNDismissableTimePickerDialog(
@@ -103,16 +95,21 @@ public class RNTimePickerDialogFragment extends DialogFragment {
 
     TimePickerDialog dialog = getDialog(args, activityContext, onTimeSetListener);
 
-    if (args != null && args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
-      dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);
+    if (args != null) {
+      if (args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
+        dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);
+      }
+      if (args.containsKey(RNConstants.ARG_POSITIVE_BUTTON_LABEL)) {
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, args.getString(RNConstants.ARG_POSITIVE_BUTTON_LABEL), dialog);
+      }
+      if (args.containsKey(RNConstants.ARG_NEGATIVE_BUTTON_LABEL)) {
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, args.getString(RNConstants.ARG_NEGATIVE_BUTTON_LABEL), dialog);
+      }
+      RNTimePickerDisplay display = getDisplayTime(args);
+      if (display == RNTimePickerDisplay.SPINNER) {
+        dialog.setOnShowListener(setButtonTextColor(activityContext, dialog));
+      }
     }
-    if (args != null && args.containsKey(RNConstants.ARG_POSITIVE_BUTTON_LABEL)) {
-      dialog.setButton(DialogInterface.BUTTON_POSITIVE, args.getString(RNConstants.ARG_POSITIVE_BUTTON_LABEL), dialog);
-    }
-    if (args != null && args.containsKey(RNConstants.ARG_NEGATIVE_BUTTON_LABEL)) {
-      dialog.setButton(DialogInterface.BUTTON_NEGATIVE, args.getString(RNConstants.ARG_NEGATIVE_BUTTON_LABEL), dialog);
-    }
-	dialog.setOnShowListener(setButtonTextColor(activityContext, dialog));
     return dialog;
   }
 

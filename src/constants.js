@@ -57,5 +57,4 @@ export const DATE_SET_ACTION = 'dateSetAction';
 export const TIME_SET_ACTION = 'timeSetAction';
 export const DISMISS_ACTION = 'dismissedAction';
 
-export const NEUTRAL_BUTTON_LABEL = 'neutralButtonLabel';
 export const NEUTRAL_BUTTON_ACTION = 'neutralButtonAction';

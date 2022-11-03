@@ -7,6 +7,7 @@
 
 package com.reactcommunity.rndatetimepicker;
 
+import static com.reactcommunity.rndatetimepicker.Common.getDisplayDate;
 import static com.reactcommunity.rndatetimepicker.Common.setButtonTextColor;
 
 import android.annotation.SuppressLint;
@@ -39,6 +40,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   @Nullable
   private static OnClickListener mOnNeutralButtonActionListener;
 
+  @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     Bundle args = getArguments();
@@ -62,33 +64,31 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     final int month = date.month();
     final int day = date.day();
 
-    RNDatePickerDisplay display = RNDatePickerDisplay.DEFAULT;
+    RNDatePickerDisplay display = getDisplayDate(args);
 
     if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
       display = RNDatePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
     }
 
-    switch (display) {
-      case SPINNER:
-        return new RNDismissableDatePickerDialog(
-                activityContext,
-				R.style.SpinnerDatePickerDialog,
-                onDateSetListener,
-                year,
-                month,
-                day,
-                display
-        );
-      default:
-        return new RNDismissableDatePickerDialog(
-                activityContext,
-                onDateSetListener,
-                year,
-                month,
-                day,
-                display
-        );
+    if (display == RNDatePickerDisplay.SPINNER) {
+      return new RNDismissableDatePickerDialog(
+        activityContext,
+        R.style.SpinnerDatePickerDialog,
+        onDateSetListener,
+        year,
+        month,
+        day,
+        display
+      );
     }
+    return new RNDismissableDatePickerDialog(
+      activityContext,
+      onDateSetListener,
+      year,
+      month,
+      day,
+      display
+    );
   }
 
   static DatePickerDialog createDialog(
@@ -100,18 +100,23 @@ public class RNDatePickerDialogFragment extends DialogFragment {
 
     DatePickerDialog dialog = getDialog(args, activityContext, onDateSetListener);
 
-    if (args != null && args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
-      dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);
-    }
-    if (args != null && args.containsKey(RNConstants.ARG_POSITIVE_BUTTON_LABEL)) {
-      dialog.setButton(DialogInterface.BUTTON_POSITIVE, args.getString(RNConstants.ARG_POSITIVE_BUTTON_LABEL), dialog);
-    }
-    if (args != null && args.containsKey(RNConstants.ARG_NEGATIVE_BUTTON_LABEL)) {
-      dialog.setButton(DialogInterface.BUTTON_NEGATIVE, args.getString(RNConstants.ARG_NEGATIVE_BUTTON_LABEL), dialog);
+    if (args != null) {
+      if (args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
+        dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);
+      }
+      if (args.containsKey(RNConstants.ARG_POSITIVE_BUTTON_LABEL)) {
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, args.getString(RNConstants.ARG_POSITIVE_BUTTON_LABEL), dialog);
+      }
+      if (args.containsKey(RNConstants.ARG_NEGATIVE_BUTTON_LABEL)) {
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, args.getString(RNConstants.ARG_NEGATIVE_BUTTON_LABEL), dialog);
+      }
+      RNDatePickerDisplay display = getDisplayDate(args);
+      if (display == RNDatePickerDisplay.SPINNER) {
+        dialog.setOnShowListener(setButtonTextColor(activityContext, dialog));
+      }
     }
 
     final DatePicker datePicker = dialog.getDatePicker();
-	dialog.setOnShowListener(setButtonTextColor(activityContext, dialog));
 
     Integer timeZoneOffsetInMilliseconds = getTimeZoneOffset(args);
     if (timeZoneOffsetInMilliseconds != null) {
@@ -164,7 +169,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   }
 
   @Override
-  public void onDismiss(DialogInterface dialog) {
+  public void onDismiss(@NonNull DialogInterface dialog) {
     super.onDismiss(dialog);
     if (mOnDismissListener != null) {
       mOnDismissListener.onDismiss(dialog);

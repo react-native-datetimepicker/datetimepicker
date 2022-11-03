@@ -13,9 +13,9 @@ import RNDateTimePicker from './picker';
 import {dateToMilliseconds, sharedPropsValidation} from './utils';
 import {
   IOS_DISPLAY,
-  ANDROID_MODE,
   EVENT_TYPE_SET,
   EVENT_TYPE_DISMISSED,
+  IOS_MODE,
 } from './constants';
 import * as React from 'react';
 import {Platform} from 'react-native';
@@ -56,7 +56,7 @@ export default function Picker({
   accentColor,
   themeVariant,
   onChange,
-  mode = ANDROID_MODE.date,
+  mode = IOS_MODE.date,
   display: providedDisplay = IOS_DISPLAY.default,
   disabled = false,
 }: IOSNativeProps): React.Node {

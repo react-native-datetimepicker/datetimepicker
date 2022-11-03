@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.util.TypedValue;
 import android.widget.Button;
 
@@ -17,6 +18,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.facebook.react.bridge.Promise;
+
+import java.util.Locale;
 
 public class Common {
 
@@ -54,20 +57,41 @@ public class Common {
 
 	@NonNull
 	public static DialogInterface.OnShowListener setButtonTextColor(@NonNull Context activityContext, final AlertDialog dialog) {
-		return presentedDialog -> {
-			int textColorPrimary = getDefaultDialogButtonTextColor(activityContext);
-			Button positiveButton = dialog.getButton(DatePickerDialog.BUTTON_POSITIVE);
-			if (positiveButton != null) {
-				positiveButton.setTextColor(textColorPrimary);
-			}
-			Button negativeButton = dialog.getButton(DatePickerDialog.BUTTON_NEGATIVE);
-			if (negativeButton != null) {
-				negativeButton.setTextColor(textColorPrimary);
-			}
-			Button neutralButton = dialog.getButton(DatePickerDialog.BUTTON_NEUTRAL);
-			if (neutralButton != null) {
-				neutralButton.setTextColor(textColorPrimary);
-			}
-		};
+    return new DialogInterface.OnShowListener() {
+      @Override
+      public void onShow(DialogInterface dialogInterface) {
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        Button neutralButton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+
+        int textColorPrimary = getDefaultDialogButtonTextColor(activityContext);
+
+        if (positiveButton != null) {
+          positiveButton.setTextColor(textColorPrimary);
+        }
+        if (negativeButton != null) {
+          negativeButton.setTextColor(textColorPrimary);
+        }
+        if (neutralButton != null) {
+          neutralButton.setTextColor(textColorPrimary);
+        }
+      }
+    };
 	}
+
+  public static RNTimePickerDisplay getDisplayTime(Bundle args) {
+    RNTimePickerDisplay display = RNTimePickerDisplay.DEFAULT;
+    if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
+      display = RNTimePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
+    }
+    return display;
+  }
+
+  public static RNDatePickerDisplay getDisplayDate(Bundle args) {
+    RNDatePickerDisplay display = RNDatePickerDisplay.DEFAULT;
+    if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
+      display = RNDatePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
+    }
+    return display;
+  }
 }

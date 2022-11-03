@@ -57,21 +57,26 @@ public class Common {
 
 	@NonNull
 	public static DialogInterface.OnShowListener setButtonTextColor(@NonNull Context activityContext, final AlertDialog dialog) {
-		return presentedDialog -> {
-			int textColorPrimary = getDefaultDialogButtonTextColor(activityContext);
-			Button positiveButton = dialog.getButton(DatePickerDialog.BUTTON_POSITIVE);
-			if (positiveButton != null) {
-				positiveButton.setTextColor(textColorPrimary);
-			}
-			Button negativeButton = dialog.getButton(DatePickerDialog.BUTTON_NEGATIVE);
-			if (negativeButton != null) {
-				negativeButton.setTextColor(textColorPrimary);
-			}
-			Button neutralButton = dialog.getButton(DatePickerDialog.BUTTON_NEUTRAL);
-			if (neutralButton != null) {
-				neutralButton.setTextColor(textColorPrimary);
-			}
-		};
+    return new DialogInterface.OnShowListener() {
+      @Override
+      public void onShow(DialogInterface dialogInterface) {
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        Button neutralButton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+
+        int textColorPrimary = getDefaultDialogButtonTextColor(activityContext);
+
+        if (positiveButton != null) {
+          positiveButton.setTextColor(textColorPrimary);
+        }
+        if (negativeButton != null) {
+          negativeButton.setTextColor(textColorPrimary);
+        }
+        if (neutralButton != null) {
+          neutralButton.setTextColor(textColorPrimary);
+        }
+      }
+    };
 	}
 
   public static RNTimePickerDisplay getDisplayTime(Bundle args) {

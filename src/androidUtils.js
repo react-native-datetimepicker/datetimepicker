@@ -16,11 +16,9 @@ type Params = {
   is24Hour: AndroidNativeProps['is24Hour'],
   minimumDate: AndroidNativeProps['minimumDate'],
   maximumDate: AndroidNativeProps['maximumDate'],
-  neutralButtonLabel: AndroidNativeProps['neutralButtonLabel'],
   minuteInterval: AndroidNativeProps['minuteInterval'],
   timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
-  positiveButtonLabel: AndroidNativeProps['positiveButtonLabel'],
-  negativeButtonLabel: AndroidNativeProps['negativeButtonLabel'],
+  dialogButtons: AndroidNativeProps['dialogButtons'],
 };
 
 export type PresentPickerCallback = (Params) => Promise<DateTimePickerResult>;
@@ -36,9 +34,7 @@ function getOpenPicker(
         is24Hour,
         minuteInterval,
         timeZoneOffsetInMinutes,
-        neutralButtonLabel,
-        positiveButtonLabel,
-        negativeButtonLabel,
+        dialogButtons,
       }: Params) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[mode].open({
@@ -47,9 +43,7 @@ function getOpenPicker(
           minuteInterval,
           is24Hour,
           timeZoneOffsetInMinutes,
-          neutralButtonLabel,
-          positiveButtonLabel,
-          negativeButtonLabel,
+          dialogButtons,
         });
     default:
       return ({
@@ -58,9 +52,7 @@ function getOpenPicker(
         minimumDate,
         maximumDate,
         timeZoneOffsetInMinutes,
-        neutralButtonLabel,
-        positiveButtonLabel,
-        negativeButtonLabel,
+        dialogButtons,
       }: Params) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
@@ -68,10 +60,8 @@ function getOpenPicker(
           display,
           minimumDate,
           maximumDate,
-          neutralButtonLabel,
           timeZoneOffsetInMinutes,
-          positiveButtonLabel,
-          negativeButtonLabel,
+          dialogButtons,
         });
   }
 }
@@ -98,5 +88,15 @@ function validateAndroidProps(props: AndroidNativeProps) {
       !(display === ANDROID_DISPLAY.clock && mode === ANDROID_MODE.date),
     `display: ${display} and mode: ${mode} cannot be used together.`,
   );
+  if (
+    props?.positiveButtonLabel ||
+    props?.negativeButtonLabel ||
+    props?.neutralButtonLabel
+  ) {
+    console.warn(
+      'positiveButtonLabel, negativeButtonLabel and neutralButtonLabel are deprecated.' +
+        'Use positive / negative / neutralButton prop instead.',
+    );
+  }
 }
 export {getOpenPicker, timeZoneOffsetDateSetter, validateAndroidProps};

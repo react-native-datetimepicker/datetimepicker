@@ -1,5 +1,5 @@
 import {FC, Ref, SyntheticEvent} from 'react';
-import {NativeMethods, ViewProps} from 'react-native';
+import {ColorValue, NativeMethods, ViewProps} from 'react-native';
 
 type IOSMode = 'date' | 'time' | 'datetime' | 'countdown';
 type AndroidMode = 'date' | 'time';
@@ -121,6 +121,8 @@ export type IOSNativeProps = Readonly<
   }
 >;
 
+export type ButtonType = {label?: string; textColor?: ColorValue};
+
 export type AndroidNativeProps = Readonly<
   BaseProps &
     DateOptions &
@@ -140,9 +142,23 @@ export type AndroidNativeProps = Readonly<
        */
       minuteInterval?: MinuteInterval;
 
-      positiveButtonLabel?: string;
+      positiveButton?: ButtonType;
+      neutralButton?: ButtonType;
+      negativeButton?: ButtonType;
+
+      /**
+       * @deprecated use neutralButton instead
+       * */
       neutralButtonLabel?: string;
+      /**
+       * @deprecated use positiveButton instead
+       * */
+      positiveButtonLabel?: string;
+      /**
+       * @deprecated use negativeButton instead
+       * */
       negativeButtonLabel?: string;
+
       /**
        * callback when an error occurs inside the date picker native code (such as null activity)
        */

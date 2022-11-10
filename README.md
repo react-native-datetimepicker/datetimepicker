@@ -434,7 +434,32 @@ Allows changing of the time picker to a 24-hour format. By default, this value i
 <RNDateTimePicker is24Hour={true} />
 ```
 
-#### `positiveButtonLabel` (`optional`, `Android only`)
+#### `positiveButton` (`optional`, `Android only`)
+
+Set the positive button label and text color.
+
+```js
+<RNDateTimePicker positiveButton={{label: 'OK', textColor: 'green'}} />
+```
+
+#### `neutralButton` (`optional`, `Android only`)
+
+Allows displaying neutral button on picker dialog.
+Pressing button can be observed in onChange handler as `event.type === 'neutralButtonPressed'`
+
+```js
+<RNDateTimePicker neutralButton={{label: 'Clear', textColor: 'red'}} />
+```
+
+#### `negativeButton` (`optional`, `Android only`)
+
+Set the negative button label and text color.
+
+```js
+<RNDateTimePicker negativeButton={{label: 'Cancel', textColor: 'red'}} />
+```
+
+#### `positiveButtonLabel` (`optional`, `Android only`, deprecated)
 
 Changes the label of the positive button.
 
@@ -442,7 +467,7 @@ Changes the label of the positive button.
 <RNDateTimePicker positiveButtonLabel="OK!" />
 ```
 
-#### `negativeButtonLabel` (`optional`, `Android only`)
+#### `negativeButtonLabel` (`optional`, `Android only`, deprecated)
 
 Changes the label of the negative button.
 
@@ -450,7 +475,7 @@ Changes the label of the negative button.
 <RNDateTimePicker positiveButtonLabel="Negative" />
 ```
 
-#### `neutralButtonLabel` (`optional`, `Android only`)
+#### `neutralButtonLabel` (`optional`, `Android only`, deprecated)
 
 Allows displaying neutral button on picker dialog.
 Pressing button can be observed in onChange handler as `event.type === 'neutralButtonPressed'`

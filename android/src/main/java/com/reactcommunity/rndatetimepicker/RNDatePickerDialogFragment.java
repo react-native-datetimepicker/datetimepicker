@@ -9,6 +9,7 @@ package com.reactcommunity.rndatetimepicker;
 
 import static com.reactcommunity.rndatetimepicker.Common.getDisplayDate;
 import static com.reactcommunity.rndatetimepicker.Common.setButtonTextColor;
+import static com.reactcommunity.rndatetimepicker.Common.setButtonTitles;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -38,13 +39,13 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   @Nullable
   private OnDismissListener mOnDismissListener;
   @Nullable
-  private static OnClickListener mOnNeutralButtonActionListener;
+  private OnClickListener mOnNeutralButtonActionListener;
 
   @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     Bundle args = getArguments();
-    instance = createDialog(args, getActivity(), mOnDateSetListener);
+    instance = createDialog(args);
     return instance;
   }
 
@@ -91,28 +92,18 @@ public class RNDatePickerDialogFragment extends DialogFragment {
     );
   }
 
-  static DatePickerDialog createDialog(
-          Bundle args,
-          Context activityContext,
-          @Nullable OnDateSetListener onDateSetListener) {
-
+  private DatePickerDialog createDialog(Bundle args) {
+    Context activityContext = getActivity();
     final Calendar c = Calendar.getInstance();
 
-    DatePickerDialog dialog = getDialog(args, activityContext, onDateSetListener);
+    DatePickerDialog dialog = getDialog(args, activityContext, mOnDateSetListener);
 
     if (args != null) {
-      if (args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
-        dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);
-      }
-      if (args.containsKey(RNConstants.ARG_POSITIVE_BUTTON_LABEL)) {
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, args.getString(RNConstants.ARG_POSITIVE_BUTTON_LABEL), dialog);
-      }
-      if (args.containsKey(RNConstants.ARG_NEGATIVE_BUTTON_LABEL)) {
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, args.getString(RNConstants.ARG_NEGATIVE_BUTTON_LABEL), dialog);
-      }
-      RNDatePickerDisplay display = getDisplayDate(args);
-      if (display == RNDatePickerDisplay.SPINNER) {
-        dialog.setOnShowListener(setButtonTextColor(activityContext, dialog));
+      setButtonTitles(args, dialog, mOnNeutralButtonActionListener);
+      if (activityContext != null) {
+        RNDatePickerDisplay display = getDisplayDate(args);
+        boolean needsColorOverride = display == RNDatePickerDisplay.SPINNER;
+        dialog.setOnShowListener(setButtonTextColor(activityContext, dialog, args, needsColorOverride));
       }
     }
 

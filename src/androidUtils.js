@@ -7,8 +7,14 @@ import pickers from './picker';
 import type {AndroidNativeProps, DateTimePickerResult} from './types';
 import {sharedPropsValidation} from './utils';
 import invariant from 'invariant';
+import {processColor} from 'react-native';
 
 type Timestamp = number;
+
+type ProcessedButton = {
+  title: string,
+  textColor: $Call<typeof processColor>,
+};
 
 type Params = {
   value: Timestamp,
@@ -18,7 +24,11 @@ type Params = {
   maximumDate: AndroidNativeProps['maximumDate'],
   minuteInterval: AndroidNativeProps['minuteInterval'],
   timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
-  dialogButtons: AndroidNativeProps['dialogButtons'],
+  dialogButtons: {
+    positive: ProcessedButton,
+    negative: ProcessedButton,
+    neutral: ProcessedButton,
+  },
 };
 
 export type PresentPickerCallback = (Params) => Promise<DateTimePickerResult>;
@@ -89,9 +99,9 @@ function validateAndroidProps(props: AndroidNativeProps) {
     `display: ${display} and mode: ${mode} cannot be used together.`,
   );
   if (
-    props?.positiveButtonLabel ||
-    props?.negativeButtonLabel ||
-    props?.neutralButtonLabel
+    props?.positiveButtonLabel !== undefined ||
+    props?.negativeButtonLabel !== undefined ||
+    props?.neutralButtonLabel !== undefined
   ) {
     console.warn(
       'positiveButtonLabel, negativeButtonLabel and neutralButtonLabel are deprecated.' +

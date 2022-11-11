@@ -1,8 +1,6 @@
 package com.reactcommunity.rndatetimepicker;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -69,36 +67,30 @@ public class Common {
       @Override
       public void onShow(DialogInterface dialogInterface) {
         // change text color only if custom color is set or if spinner mode is set
+        // because spinner suffers from https://github.com/react-native-datetimepicker/datetimepicker/issues/543
 
         Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         Button neutralButton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
 
         int textColorPrimary = getDefaultDialogButtonTextColor(activityContext);
-
-        if (positiveButton != null) {
-          Integer color = getButtonColor(args, POSITIVE);
-          if (needsColorOverride || color != null) {
-            positiveButton.setTextColor(color != null ? color : textColorPrimary);
-          }
-        }
-        if (negativeButton != null) {
-          Integer color = getButtonColor(args, NEGATIVE);
-          if (needsColorOverride || color != null) {
-            negativeButton.setTextColor(color != null ? color : textColorPrimary);
-          }
-        }
-        if (neutralButton != null) {
-          Integer color = getButtonColor(args, NEUTRAL);
-          if (needsColorOverride || color != null) {
-            neutralButton.setTextColor(color != null ? color : textColorPrimary);
-          }
-        }
+        setTextColor(positiveButton, POSITIVE, args, needsColorOverride, textColorPrimary);
+        setTextColor(negativeButton, NEGATIVE, args, needsColorOverride, textColorPrimary);
+        setTextColor(neutralButton, NEUTRAL, args, needsColorOverride, textColorPrimary);
       }
     };
 	}
 
-  public static Integer getButtonColor(final Bundle args, String buttonKey) {
+  private static void setTextColor(Button button, String buttonKey, final Bundle args, final boolean needsColorOverride, int textColorPrimary) {
+    if (button == null) return;
+
+    Integer color = getButtonColor(args, buttonKey);
+    if (needsColorOverride || color != null) {
+      button.setTextColor(color != null ? color : textColorPrimary);
+    }
+  }
+
+  private static Integer getButtonColor(final Bundle args, String buttonKey) {
     Bundle buttons = args.getBundle(RNConstants.ARG_DIALOG_BUTTONS);
     if (buttons == null) {
       return null;
@@ -107,7 +99,7 @@ public class Common {
     if (buttonParams == null) {
       return null;
     }
-    // yes, this cast is safe because the color is passed as int from JS
+    // yes, this cast is safe. the color is passed as int from JS (RN.processColor)
     int color = (int) buttonParams.getDouble(TEXT_COLOR, Color.TRANSPARENT);
     if (color == Color.TRANSPARENT) {
       return null;
@@ -136,17 +128,15 @@ public class Common {
     if (buttons == null) {
       return;
     }
-    Bundle neutralButton = buttons.getBundle(NEUTRAL);
-    Bundle positiveButton = buttons.getBundle(POSITIVE);
-    Bundle negativeButton = buttons.getBundle(NEGATIVE);
-    if (neutralButton != null && neutralButton.getString(LABEL) != null) {
-      dialog.setButton(DialogInterface.BUTTON_NEUTRAL, neutralButton.getString(LABEL), onNeutralButtonActionListener);
+    setButtonLabel(buttons.getBundle(NEUTRAL), dialog, AlertDialog.BUTTON_NEUTRAL, onNeutralButtonActionListener);
+    setButtonLabel(buttons.getBundle(POSITIVE), dialog, AlertDialog.BUTTON_POSITIVE, (DialogInterface.OnClickListener) dialog);
+    setButtonLabel(buttons.getBundle(NEGATIVE), dialog, AlertDialog.BUTTON_NEGATIVE, (DialogInterface.OnClickListener) dialog);
+  }
+
+  private static void setButtonLabel(Bundle buttonConfig, AlertDialog dialog, int whichButton, DialogInterface.OnClickListener listener) {
+    if (buttonConfig == null || buttonConfig.getString(LABEL) == null) {
+      return;
     }
-    if (positiveButton != null && positiveButton.getString(LABEL) != null) {
-      dialog.setButton(DialogInterface.BUTTON_POSITIVE, positiveButton.getString(LABEL), (DialogInterface.OnClickListener) dialog);
-    }
-    if (negativeButton != null && negativeButton.getString(LABEL) != null) {
-      dialog.setButton(DialogInterface.BUTTON_NEGATIVE, negativeButton.getString(LABEL), (DialogInterface.OnClickListener) dialog);
-    }
+    dialog.setButton(whichButton, buttonConfig.getString(LABEL), listener);
   }
 }

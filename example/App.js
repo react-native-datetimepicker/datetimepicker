@@ -96,7 +96,6 @@ export const App = () => {
   };
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
     if (Platform.OS === 'android') {
       setShow(false);
     }
@@ -117,7 +116,7 @@ export const App = () => {
     if (event.type === 'neutralButtonPressed') {
       setDate(new Date(0));
     } else {
-      setDate(currentDate);
+      setDate(selectedDate);
     }
   };
 
@@ -353,7 +352,8 @@ export const App = () => {
                   onChange={onChange}
                   textColor={textColor || undefined}
                   accentColor={accentColor || undefined}
-                  neutralButtonLabel={neutralButtonLabel}
+                  neutralButton={{label: neutralButtonLabel}}
+                  negativeButton={{label: 'Cancel', textColor: 'red'}}
                   disabled={disabled}
                 />
               )}

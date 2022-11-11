@@ -10,6 +10,7 @@ package com.reactcommunity.rndatetimepicker;
 
 import static com.reactcommunity.rndatetimepicker.Common.getDisplayTime;
 import static com.reactcommunity.rndatetimepicker.Common.setButtonTextColor;
+import static com.reactcommunity.rndatetimepicker.Common.setButtonTitles;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -34,13 +35,13 @@ public class RNTimePickerDialogFragment extends DialogFragment {
   @Nullable
   private OnDismissListener mOnDismissListener;
   @Nullable
-  private static OnClickListener mOnNeutralButtonActionListener;
+  private OnClickListener mOnNeutralButtonActionListener;
 
   @NonNull
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     final Bundle args = getArguments();
-    instance = createDialog(args, getActivity(), mOnTimeSetListener);
+    instance = createDialog(args);
     return instance;
   }
 
@@ -92,25 +93,16 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     );
   }
 
-  static TimePickerDialog createDialog(
-          Bundle args, Context activityContext,
-          @Nullable OnTimeSetListener onTimeSetListener) {
-
-    TimePickerDialog dialog = getDialog(args, activityContext, onTimeSetListener);
+  private TimePickerDialog createDialog(Bundle args) {
+    Context activityContext = getActivity();
+    TimePickerDialog dialog = getDialog(args, activityContext, mOnTimeSetListener);
 
     if (args != null) {
-      if (args.containsKey(RNConstants.ARG_NEUTRAL_BUTTON_LABEL)) {
-        dialog.setButton(DialogInterface.BUTTON_NEUTRAL, args.getString(RNConstants.ARG_NEUTRAL_BUTTON_LABEL), mOnNeutralButtonActionListener);
-      }
-      if (args.containsKey(RNConstants.ARG_POSITIVE_BUTTON_LABEL)) {
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, args.getString(RNConstants.ARG_POSITIVE_BUTTON_LABEL), dialog);
-      }
-      if (args.containsKey(RNConstants.ARG_NEGATIVE_BUTTON_LABEL)) {
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, args.getString(RNConstants.ARG_NEGATIVE_BUTTON_LABEL), dialog);
-      }
-      RNTimePickerDisplay display = getDisplayTime(args);
-      if (display == RNTimePickerDisplay.SPINNER) {
-        dialog.setOnShowListener(setButtonTextColor(activityContext, dialog));
+      setButtonTitles(args, dialog, mOnNeutralButtonActionListener);
+      if (activityContext != null) {
+        RNTimePickerDisplay display = getDisplayTime(args);
+        boolean needsColorOverride = display == RNTimePickerDisplay.SPINNER;
+        dialog.setOnShowListener(setButtonTextColor(activityContext, dialog, args, needsColorOverride));
       }
     }
     return dialog;

@@ -21,12 +21,15 @@ export default function RNDateTimePickerAndroid(
     is24Hour,
     minimumDate,
     maximumDate,
-    neutralButtonLabel,
     minuteInterval,
+    onError,
     timeZoneOffsetInMinutes,
+    positiveButton,
+    negativeButton,
+    neutralButton,
     positiveButtonLabel,
     negativeButtonLabel,
-    onError,
+    neutralButtonLabel,
   } = props;
   const valueTimestamp = value.getTime();
 
@@ -45,13 +48,16 @@ export default function RNDateTimePickerAndroid(
         is24Hour,
         minimumDate,
         maximumDate,
-        neutralButtonLabel,
         minuteInterval,
         timeZoneOffsetInMinutes,
-        positiveButtonLabel,
-        negativeButtonLabel,
         onError,
         onChange,
+        positiveButton,
+        negativeButton,
+        neutralButton,
+        positiveButtonLabel,
+        negativeButtonLabel,
+        neutralButtonLabel,
       };
       DateTimePickerAndroid.open(params);
     },

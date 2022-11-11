@@ -145,6 +145,8 @@ export type IOSNativeProps = $ReadOnly<{|
   enabled?: boolean,
 |}>;
 
+export type ButtonType = {label?: string, textColor?: ColorValue};
+
 export type AndroidNativeProps = $ReadOnly<{|
   ...BaseProps,
   ...DateOptions,
@@ -173,8 +175,20 @@ export type AndroidNativeProps = $ReadOnly<{|
    */
   minuteInterval?: MinuteInterval,
 
+  positiveButton?: ButtonType,
+  neutralButton?: ButtonType,
+  negativeButton?: ButtonType,
+  /**
+   * @deprecated use neutralButton instead
+   * */
   neutralButtonLabel?: string,
+  /**
+   * @deprecated use positiveButton instead
+   * */
   positiveButtonLabel?: string,
+  /**
+   * @deprecated use negativeButton instead
+   * */
   negativeButtonLabel?: string,
   onError?: (Error) => void,
 |}>;

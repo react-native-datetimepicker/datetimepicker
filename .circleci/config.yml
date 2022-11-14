@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  rn: react-native-community/react-native@5.6.2
-  android: circleci/android@1.0.3
+  rn: react-native-community/react-native@7
+  android: circleci/android@2
 
 # - rn/yarn_install
 # fails with Error untarring cache: Error extracting tarball /var/folders/bq/mjrgbpkx5h1g_b22fpv0tlzc0000gn/T/cache376822577 : tmp/yarn/: Cannot extract through symlink tmp/yarn tmp/yarn/v6/: Cannot extract through symlink tmp/yarn/v6 tmp/yarn/v6/.tmp/: Cannot extract through symlink tmp/yarn/v6/.tmp tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/code-frame/: Cannot extract: exit status 1
@@ -12,7 +12,7 @@ jobs:
   analyse_js:
     executor:
       name: rn/linux_js
-      node_version: '16'
+      node_version: 'lts'
     steps:
       - checkout
       # - rn/yarn_install
@@ -65,18 +65,16 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
+      tag: '2022.01.1'
     steps:
       - checkout
       - run:
-          name: change default node version
-          command: |
-            nvm install v16.17.0
-            nvm alias default v16.17.0
-            echo 'export PATH=/opt/circleci/.nvm/versions/node/v16.17.0/bin:$PATH' >> $BASH_ENV
+          command: avdmanager list
+          name: list avds
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-29;default;x86
-          additional-args: --device "pixel_4_xl"
+          additional-args: --device pixel_4_xl
           install: true
       - android/start-emulator:
           avd-name: TestingAVD
@@ -105,7 +103,7 @@ jobs:
   publish:
     executor:
       name: rn/linux_js
-      node_version: '16'
+      node_version: 'lts'
     steps:
       - checkout
       # - rn/yarn_install

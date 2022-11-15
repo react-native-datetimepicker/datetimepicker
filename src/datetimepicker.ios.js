@@ -48,8 +48,6 @@ export default function Picker({
   locale,
   maximumDate,
   minimumDate,
-  style,
-  testID,
   minuteInterval,
   timeZoneOffsetInMinutes,
   textColor,
@@ -59,6 +57,7 @@ export default function Picker({
   mode = IOS_MODE.date,
   display: providedDisplay = IOS_DISPLAY.default,
   disabled = false,
+  ...other
 }: IOSNativeProps): React.Node {
   sharedPropsValidation({value});
 
@@ -92,8 +91,7 @@ export default function Picker({
 
   return (
     <RNDateTimePicker
-      testID={testID}
-      style={style}
+      {...other}
       date={dateToMilliseconds(value)}
       locale={locale !== null && locale !== '' ? locale : undefined}
       maximumDate={dateToMilliseconds(maximumDate)}

@@ -63,7 +63,7 @@ type TimeOptions = Readonly<
   }
 >;
 
-export type BaseProps = Readonly<ViewProps & DateOptions>;
+export type BaseProps = Readonly<Omit<ViewProps, 'children'> & DateOptions>;
 
 export type IOSNativeProps = Readonly<
   BaseProps & {

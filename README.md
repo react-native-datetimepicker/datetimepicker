@@ -76,12 +76,13 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`themeVariant` (`optional`, `iOS only`)](#themevariant-optional-ios-only)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
-    - [`positiveButtonLabel` (`optional`, `Android only`)](#positiveButtonLabel-optional-android-only)
-    - [`negativeButtonLabel` (`optional`, `Android only`)](#negativeButtonLabel-optional-android-only)
-    - [`neutralButtonLabel` (`optional`, `Android only`)](#neutralbuttonlabel-optional-android-only)
+    - [`positiveButton` (`optional`, `Android only`)](#positiveButton-optional-android-only)
+    - [`negativeButton` (`optional`, `Android only`)](#negativeButton-optional-android-only)
+    - [`neutralButton` (`optional`, `Android only`)](#neutralButton-optional-android-only)
     - [`minuteInterval` (`optional`)](#minuteinterval-optional)
     - [`style` (`optional`, `iOS only`)](#style-optional-ios-only)
     - [`disabled` (`optional`, `iOS only`)](#disabled-optional-ios-only)
+    - [`view props` (`optional`, `iOS only`)](#view-props-optional-ios-only)
     - [`onError` (`optional`, `Android only`)](#onError-optional-android-only)
   - [Testing with Jest](#testing-with-jest)
   - [Migration from the older components](#migration-from-the-older-components)
@@ -448,7 +449,7 @@ Allows displaying neutral button on picker dialog.
 Pressing button can be observed in onChange handler as `event.type === 'neutralButtonPressed'`
 
 ```js
-<RNDateTimePicker neutralButton={{label: 'Clear', textColor: 'red'}} />
+<RNDateTimePicker neutralButton={{label: 'Clear', textColor: 'grey'}} />
 ```
 
 #### `negativeButton` (`optional`, `Android only`)
@@ -514,6 +515,10 @@ Alternatively, use the `themeVariant` prop.
 #### `disabled` (`optional`, `iOS only`)
 
 If true, the user won't be able to interact with the view.
+
+#### `View Props` (`optional`, `iOS only`)
+
+On iOS, you can pass any [View props](https://reactnative.dev/docs/view#props) to the component. Given that the underlying component is a native view, not all of them are guaranteed to be supported, but `testID` and `onLayout` are known to work.
 
 #### `onError` (`optional`, `Android only`)
 

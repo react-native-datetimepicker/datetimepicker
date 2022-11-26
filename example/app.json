@@ -1,7 +1,11 @@
 {
+  "$schema": "https://raw.githubusercontent.com/microsoft/react-native-test-app/trunk/schema.json",
   "name": "date-time-picker-example",
   "displayName": "date-time-picker-example",
   "singleApp": "date-time-picker-example",
+  "android": {
+    "package": "com.datetimepickerexample"
+  },
   "components": [
     {
       "appKey": "date-time-picker-example",

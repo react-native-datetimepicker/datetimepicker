@@ -14,7 +14,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -23,6 +22,10 @@ import com.facebook.react.common.annotations.VisibleForTesting;
 import com.facebook.react.module.annotations.ReactModule;
 
 import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
+import static com.reactcommunity.rndatetimepicker.KeepDateInRangeListener.isDateAfterMaxDate;
+import static com.reactcommunity.rndatetimepicker.KeepDateInRangeListener.isDateBeforeMinDate;
+
+import java.util.Calendar;
 
 /**
  * {@link NativeModule} that allows JS to show a native date picker dialog and get called back when
@@ -46,10 +49,12 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
   private class DatePickerDialogListener implements OnDateSetListener, OnDismissListener, OnClickListener {
 
     private final Promise mPromise;
+    private final Bundle mArgs;
     private boolean mPromiseResolved = false;
 
-    public DatePickerDialogListener(final Promise promise) {
+    public DatePickerDialogListener(final Promise promise, Bundle arguments) {
       mPromise = promise;
+      mArgs = arguments;
     }
 
     @Override
@@ -60,6 +65,27 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
         result.putInt("year", year);
         result.putInt("month", month);
         result.putInt("day", day);
+
+        // https://issuetracker.google.com/issues/169602180
+        // TODO revisit day, month, year with timezoneoffset fixes
+        if (isDateAfterMaxDate(mArgs, year, month, day)) {
+          Calendar maxDate = Calendar.getInstance();
+          maxDate.setTimeInMillis(mArgs.getLong(RNConstants.ARG_MAXDATE));
+
+          result.putInt("year", maxDate.get(Calendar.YEAR));
+          result.putInt("month", maxDate.get(Calendar.MONTH) );
+          result.putInt("day", maxDate.get(Calendar.DAY_OF_MONTH));
+        }
+
+        if (isDateBeforeMinDate(mArgs, year, month, day)) {
+          Calendar minDate = Calendar.getInstance();
+          minDate.setTimeInMillis(mArgs.getLong(RNConstants.ARG_MINDATE));
+
+          result.putInt("year", minDate.get(Calendar.YEAR));
+          result.putInt("month", minDate.get(Calendar.MONTH) );
+          result.putInt("day", minDate.get(Calendar.DAY_OF_MONTH));
+        }
+
         mPromise.resolve(result);
         mPromiseResolved = true;
       }
@@ -117,7 +143,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
    *                dismiss, year, month and date are undefined.
    */
   @ReactMethod
-  public void open(@Nullable final ReadableMap options, final Promise promise) {
+  public void open(final ReadableMap options, final Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {
       promise.reject(
@@ -134,18 +160,16 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
         RNDatePickerDialogFragment oldFragment =
                 (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
 
-        if (oldFragment != null && options != null) {
+        if (oldFragment != null) {
           oldFragment.update(createFragmentArguments(options));
           return;
         }
 
         RNDatePickerDialogFragment fragment = new RNDatePickerDialogFragment();
 
-        if (options != null) {
-          fragment.setArguments(createFragmentArguments(options));
-        }
+        fragment.setArguments(createFragmentArguments(options));
 
-        final DatePickerDialogListener listener = new DatePickerDialogListener(promise);
+        final DatePickerDialogListener listener = new DatePickerDialogListener(promise, createFragmentArguments(options));
         fragment.setOnDismissListener(listener);
         fragment.setOnDateSetListener(listener);
         fragment.setOnNeutralButtonActionListener(listener);

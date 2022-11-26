@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -94,8 +93,7 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void open(@Nullable final ReadableMap options, final Promise promise) {
-
+  public void open(final ReadableMap options, final Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {
       promise.reject(
@@ -113,16 +111,14 @@ public class RNTimePickerDialogModule extends ReactContextBaseJavaModule {
         RNTimePickerDialogFragment oldFragment =
                 (RNTimePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
 
-        if (oldFragment != null && options != null) {
+        if (oldFragment != null) {
           oldFragment.update(createFragmentArguments(options));
           return;
         }
 
         RNTimePickerDialogFragment fragment = new RNTimePickerDialogFragment();
 
-        if (options != null) {
-          fragment.setArguments(createFragmentArguments(options));
-        }
+        fragment.setArguments(createFragmentArguments(options));
 
         final TimePickerDialogListener listener = new TimePickerDialogListener(promise);
         fragment.setOnDismissListener(listener);

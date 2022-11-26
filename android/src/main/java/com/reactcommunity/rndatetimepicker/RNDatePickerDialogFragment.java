@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnClickListener;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -59,7 +60,6 @@ public class RNDatePickerDialogFragment extends DialogFragment {
           Bundle args,
           Context activityContext,
           @Nullable OnDateSetListener onDateSetListener) {
-
     final RNDate date = new RNDate(args);
     final int year = date.year();
     final int month = date.month();
@@ -137,6 +137,11 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       c.set(Calendar.SECOND, 59);
       c.set(Calendar.MILLISECOND, 999);
       datePicker.setMaxDate(c.getTimeInMillis() - getOffset(c, timeZoneOffsetInMilliseconds));
+    }
+
+    if (args != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+      && (args.containsKey(RNConstants.ARG_MAXDATE) || args.containsKey(RNConstants.ARG_MINDATE))) {
+      datePicker.setOnDateChangedListener(new KeepDateInRangeListener(args));
     }
 
     return dialog;

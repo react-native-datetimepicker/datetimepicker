@@ -681,11 +681,11 @@ PODS:
     - React-jsi (= 0.70.0)
     - React-logger (= 0.70.0)
     - React-perflogger (= 0.70.0)
-  - ReactTestApp-DevSupport (1.6.13):
+  - ReactTestApp-DevSupport (1.6.19):
     - React-Core
     - React-jsi
   - ReactTestApp-Resources (1.0.0-dev)
-  - RNDateTimePicker (6.4.2):
+  - RNDateTimePicker (6.7.0):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -921,9 +921,9 @@ SPEC CHECKSUMS:
   React-rncore: 8858fe6b719170c20c197a8fd2dd53507bdae04b
   React-runtimeexecutor: 80c195ffcafb190f531fdc849dc2d19cb4bb2b34
   ReactCommon: de55f940495d7bf87b5d7bf55b5b15cdd50d7d7b
-  ReactTestApp-DevSupport: 8a8cff38c37cd8145a12ac7d7d0503dd08f97d65
+  ReactTestApp-DevSupport: dcff56cd656b2b47ac14e5908c03ce5d00a70004
   ReactTestApp-Resources: ff5f151e465e890010b417ce65ca6c5de6aeccbb
-  RNDateTimePicker: 0913d8322a3b21bb3d2010aca96c5090248223b6
+  RNDateTimePicker: 515431cd1a50a1fab054de40c7fc6a2cdd4803ab
   RNLocalize: cbcb55d0e19c78086ea4eea20e03fe8000bbbced
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 82c9e8f652789f67d98bed5aef9d6653f71b04a9

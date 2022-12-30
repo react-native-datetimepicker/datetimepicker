@@ -58,7 +58,7 @@ describe('e2e tests', () => {
   });
 
   it('nothing should happen if picker is dismissed / cancelled', async () => {
-    await userOpensPicker({mode: 'date', display: 'default'});
+    await userOpensPicker({mode: 'date', display: 'default', test});
 
     if (isIOS()) {
       await element(
@@ -71,11 +71,7 @@ describe('e2e tests', () => {
       await nextMonthArrow.tap();
       await userDismissesCompactDatePicker();
     } else {
-      const calendarHorizontalScrollView = element(
-        by
-          .type('android.widget.ScrollView')
-          .withAncestor(by.type('android.widget.DatePicker')),
-      );
+      const calendarHorizontalScrollView = getDatePickerAndroid();
       await calendarHorizontalScrollView.swipe('left', 'fast', 1);
       await calendarHorizontalScrollView.tap({x: 50, y: 200});
       await userTapsCancelButtonAndroid();

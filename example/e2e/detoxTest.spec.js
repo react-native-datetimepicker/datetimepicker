@@ -58,7 +58,7 @@ describe('e2e tests', () => {
   });
 
   it('nothing should happen if picker is dismissed / cancelled', async () => {
-    await userOpensPicker({mode: 'date', display: 'default', test});
+    await userOpensPicker({mode: 'date', display: 'default'});
 
     if (isIOS()) {
       await element(

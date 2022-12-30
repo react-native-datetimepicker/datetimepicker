@@ -145,6 +145,10 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       datePicker.setOnDateChangedListener(new KeepDateInRangeListener(args));
     }
 
+    if (args != null && args.containsKey(RNConstants.ARG_TESTID)) {
+      datePicker.setTag(args.getString(RNConstants.ARG_TESTID));
+    }
+
     return dialog;
   }
 

@@ -44,6 +44,7 @@ function open(props: AndroidNativeProps) {
     neutralButtonLabel,
     positiveButtonLabel,
     negativeButtonLabel,
+    testID,
   } = props;
   validateAndroidProps(props);
   invariant(originalValue, 'A date or time must be specified as `value` prop.');
@@ -84,6 +85,7 @@ function open(props: AndroidNativeProps) {
         minuteInterval,
         timeZoneOffsetInMinutes,
         dialogButtons,
+        testID,
       });
 
       switch (action) {

@@ -135,6 +135,9 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
    *   <li>
    *      {@code display} To set the date picker display to 'calendar/spinner/default'
    *   </li>
+   *   <li>
+   *      {@code testID} testID for testing with e.g. detox.
+   *   </li>
    * </ul>
    *
    * @param promise This will be invoked with parameters action, year,
@@ -197,6 +200,9 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
     }
     if (options.hasKey(RNConstants.ARG_TZOFFSET_MINS) && !options.isNull(RNConstants.ARG_TZOFFSET_MINS)) {
       args.putLong(RNConstants.ARG_TZOFFSET_MINS, (long) options.getDouble(RNConstants.ARG_TZOFFSET_MINS));
+    }
+    if (options.hasKey(RNConstants.ARG_TESTID) && !options.isNull(RNConstants.ARG_TESTID)) {
+      args.putString(RNConstants.ARG_TESTID, options.getString(RNConstants.ARG_TESTID));
     }
     return args;
   }

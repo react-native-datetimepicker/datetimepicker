@@ -24,6 +24,8 @@ type OpenParams = {
   maximumDate: AndroidNativeProps['maximumDate'],
   minuteInterval: AndroidNativeProps['minuteInterval'],
   timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
+  timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
+  testID: AndroidNativeProps['testID'],
   dialogButtons: {
     positive: ProcessedButton,
     negative: ProcessedButton,
@@ -64,6 +66,7 @@ function getOpenPicker(
         maximumDate,
         timeZoneOffsetInMinutes,
         dialogButtons,
+        testID,
       }: OpenParams) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
@@ -73,6 +76,7 @@ function getOpenPicker(
           maximumDate,
           timeZoneOffsetInMinutes,
           dialogButtons,
+          testID,
         });
   }
 }

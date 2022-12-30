@@ -517,9 +517,18 @@ Alternatively, use the `themeVariant` prop.
 
 If true, the user won't be able to interact with the view.
 
+#### `testID` (`optional`)
+
+Used to test your app with tools like e.g. detox.
+Fully supported on iOS. On Android, only supported for `mode="date"`.
+
+```js
+<RNDateTimePicker testID="datePicker" />
+```
+
 #### `View Props` (`optional`, `iOS only`)
 
-On iOS, you can pass any [View props](https://reactnative.dev/docs/view#props) to the component. Given that the underlying component is a native view, not all of them are guaranteed to be supported, but `testID` and `onLayout` are known to work.
+On iOS, you can pass any [View props](https://reactnative.dev/docs/view#props) to the component. Given that the underlying component is a native view, not all of them are guaranteed to be supported, but `onLayout` is known to work.
 
 #### `onError` (`optional`, `Android only`)
 

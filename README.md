@@ -519,7 +519,7 @@ If true, the user won't be able to interact with the view.
 
 #### `testID` (`optional`)
 
-Used to test your app with tools like e.g. detox.
+Usually used by app automation frameworks.
 Fully supported on iOS. On Android, only supported for `mode="date"`.
 
 ```js

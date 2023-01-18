@@ -147,9 +147,9 @@
     }
   },
   "codegenConfig": {
-    "name": "RNDateTimePickerSpec",
+    "name": "RNDateTimePicker",
     "type": "all",
-    "jsSrcsDir": "src",
+    "jsSrcsDir": "src/specs",
     "android": {
       "javaPackageName": "com.reactcommunity.rndatetimepicker"
     }

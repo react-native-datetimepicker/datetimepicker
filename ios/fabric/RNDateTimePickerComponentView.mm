@@ -11,7 +11,7 @@
 #import <react/renderer/components/RNDateTimePicker/RCTComponentViewHelpers.h>
 
 #import "RCTFabricComponentsPlugins.h"
-#import "RNDateTimePicker.h"
+#import "../RNDateTimePicker.h"
 
 using namespace facebook::react;
 

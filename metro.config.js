@@ -7,17 +7,12 @@
 
 const path = require('path');
 
-const exclusionList = (() => {
-  try {
-    return require('metro-config/src/defaults/exclusionList');
-  } catch (_) {
-    // `blacklist` was renamed to `exclusionList` in 0.60
-    return require('metro-config/src/defaults/blacklist');
-  }
-})();
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 const blockList = exclusionList([
   /node_modules\/.*\/node_modules\/react-native\/.*/,
+  /example\/node_modules\/react-native\/.*/,
+  /example\/node_modules\/react\/.*/,
 
   // This stops "react-native run-windows" from causing the metro server to
   // crash if its already running
@@ -38,7 +33,6 @@ module.exports = {
   projectRoot: path.join(__dirname, 'example'),
   watchFolders: [__dirname],
   resolver: {
-    blacklistRE: blockList,
     blockList,
   },
   transformer: {

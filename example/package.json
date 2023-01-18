@@ -1,0 +1,25 @@
+{
+  "name": "datetime-picker-example",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android --active-arch-only",
+    "ios": "react-native run-ios",
+    "pods": "pod-install --quiet",
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.71.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
+    "metro-react-native-babel-preset": "^0.73.5",
+    "mkdirp": "^1.0.0",
+    "react-native-test-app": "^2.0.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

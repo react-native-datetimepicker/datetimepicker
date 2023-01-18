@@ -7,6 +7,7 @@
  * @format
  * @flow strict-local
  */
+// $FlowFixMe
 import RNDateTimePicker from './specs/DateTimePickerNativeComponent';
 
 export default RNDateTimePicker;

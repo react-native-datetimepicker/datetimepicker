@@ -25,7 +25,7 @@ import {
   ANDROID_DISPLAY,
   IOS_DISPLAY,
 } from '../src/constants';
-import * as RNLocalize from 'react-native-localize';
+// import * as RNLocalize from 'react-native-localize';
 
 const ThemedText = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -176,7 +176,7 @@ export const App = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <ThemedText selectable testID="timeInfo">
-                TZ: {RNLocalize.getTimeZone()}, original:{' '}
+                {/*TZ: {RNLocalize.getTimeZone()}, original:{' '}*/}
                 {moment(sourceDate).format('MM/DD/YYYY HH:mm')}
               </ThemedText>
               <ThemedText>

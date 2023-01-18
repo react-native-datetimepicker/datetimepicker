@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.facebook.react.bridge.*;
 import com.facebook.react.common.annotations.VisibleForTesting;
-import com.facebook.react.module.annotations.ReactModule;
 
 import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
 import static com.reactcommunity.rndatetimepicker.KeepDateInRangeListener.isDateAfterMaxDate;
@@ -31,19 +30,18 @@ import java.util.Calendar;
  * {@link NativeModule} that allows JS to show a native date picker dialog and get called back when
  * the user selects a date.
  */
-@ReactModule(name = RNDatePickerDialogModule.FRAGMENT_TAG)
-public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
+public class DatePickerModuleImpl extends ReactContextBaseJavaModule {
 
   @VisibleForTesting
-  public static final String FRAGMENT_TAG = "RNDatePickerAndroid";
+  public static final String NAME = "RNDatePickerAndroid";
 
-  public RNDatePickerDialogModule(ReactApplicationContext reactContext) {
+  public DatePickerModuleImpl(ReactApplicationContext reactContext) {
     super(reactContext);
   }
 
   @Override
   public @NonNull String getName() {
-    return RNDatePickerDialogModule.FRAGMENT_TAG;
+    return NAME;
   }
 
   private class DatePickerDialogListener implements OnDateSetListener, OnDismissListener, OnClickListener {
@@ -115,7 +113,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void dismiss(Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
-    dismissDialog(activity, FRAGMENT_TAG, promise);
+    dismissDialog(activity, NAME, promise);
   }
   /**
    * Show a date picker dialog.
@@ -158,7 +156,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
       @Override
       public void run() {
         RNDatePickerDialogFragment oldFragment =
-                (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(FRAGMENT_TAG);
+          (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
 
         if (oldFragment != null) {
           oldFragment.update(createFragmentArguments(options));
@@ -173,7 +171,7 @@ public class RNDatePickerDialogModule extends ReactContextBaseJavaModule {
         fragment.setOnDismissListener(listener);
         fragment.setOnDateSetListener(listener);
         fragment.setOnNeutralButtonActionListener(listener);
-        fragment.show(fragmentManager, FRAGMENT_TAG);
+        fragment.show(fragmentManager, NAME);
       }
     });
   }

@@ -1,5 +1,5 @@
 const path = require('path');
-const {androidManifestPath, iosProjectPath} = require('react-native-test-app');
+const {androidManifestPath} = require('react-native-test-app');
 
 const project = (() => {
   try {
@@ -26,6 +26,12 @@ module.exports = {
     // Help rn-cli find and autolink this library
     '@react-native-community/datetimepicker': {
       root: __dirname,
+      platforms: {
+        android: {
+          // does not seem to have an effect?
+          // componentDescriptors: null,
+        },
+      },
     },
   },
   ...(project ? {project} : undefined),

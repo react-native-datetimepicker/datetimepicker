@@ -110,7 +110,6 @@ public class DatePickerModuleImpl extends ReactContextBaseJavaModule {
     }
   }
 
-  @ReactMethod
   public void dismiss(Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     dismissDialog(activity, NAME, promise);
@@ -140,7 +139,6 @@ public class DatePickerModuleImpl extends ReactContextBaseJavaModule {
    *                {@code dismissedAction}, depending on what the user did. If the action is
    *                dismiss, year, month and date are undefined.
    */
-  @ReactMethod
   public void open(final ReadableMap options, final Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {

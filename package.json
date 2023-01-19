@@ -147,7 +147,7 @@
     }
   },
   "codegenConfig": {
-    "name": "RNDateTimePicker",
+    "name": "RNDateTimePickerCGen",
     "type": "all",
     "jsSrcsDir": "src/specs",
     "android": {

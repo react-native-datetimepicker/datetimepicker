@@ -7,7 +7,7 @@
     <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{0986a4db-8e72-4bb7-ae32-7d9df1758a9d}</ProjectGuid>
-    <ProjectName>DateTimePickerWindows</ProjectName>
+    <ProjectName>DateTimePicker</ProjectName>
     <RootNamespace>DateTimePicker</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>

@@ -90,9 +90,9 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.6.0",
     "react": "18.2.0",
-    "react-native": "^0.71.1",
+    "react-native": "^0.71.2",
     "react-native-localize": "^2.2.0",
-    "react-native-test-app": "^2.3.2",
+    "react-native-test-app": "^2.3.4",
     "react-native-windows": "^0.70.0-preview.2",
     "react-test-renderer": "18.1.0",
     "semantic-release": "^19.0.3"

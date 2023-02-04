@@ -40,7 +40,10 @@ jobs:
           command: yarn install --frozen-lockfile
           name: yarn install
       - run:
-          command: RCT_NEW_ARCH_ENABLED=1 npx pod-install
+          command: cd example && yarn install --frozen-lockfile && cd -
+          name: yarn install example
+      - run:
+          command: (cd example && RCT_NEW_ARCH_ENABLED=1 npx pod-install)
           name: pod install
       - run:
           command: yarn detox:ios:build:release

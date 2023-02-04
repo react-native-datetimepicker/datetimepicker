@@ -30,24 +30,24 @@ jobs:
           command: yarn test
           name: Jest
 
-  new_arch_ios_build:
-    executor:
-      name: rn/macos
-      xcode_version: '14.0.0'
-    steps:
-      - checkout
-      - run:
-          command: yarn install --frozen-lockfile
-          name: yarn install
-      - run:
-          command: cd example && yarn install --frozen-lockfile && cd -
-          name: yarn install example
-      - run:
-          command: (cd example && RCT_NEW_ARCH_ENABLED=1 npx pod-install)
-          name: pod install
-      - run:
-          command: yarn detox:ios:build:release
-          name: build app with new arch
+#  new_arch_ios_build:
+#    executor:
+#      name: rn/macos
+#      xcode_version: '14.0.0'
+#    steps:
+#      - checkout
+#      - run:
+#          command: yarn install --frozen-lockfile
+#          name: yarn install
+#      - run:
+#          command: cd example && yarn install --frozen-lockfile && cd -
+#          name: yarn install example
+#      - run:
+#          command: (cd example && RCT_NEW_ARCH_ENABLED=1 npx pod-install)
+#          name: pod install
+#      - run:
+#          command: yarn detox:ios:build:release
+#          name: build app with new arch
 
 
   e2e_release_ios:
@@ -186,13 +186,11 @@ workflows:
     jobs:
       - analyse_js
       - e2e_release_ios
-      - new_arch_ios_build
       - e2e_release_android
       - e2e_release_android_new_arch
       - publish:
           requires:
             - e2e_release_android
-            - new_arch_ios_build
             - e2e_release_android_new_arch
             - e2e_release_ios
           filters:

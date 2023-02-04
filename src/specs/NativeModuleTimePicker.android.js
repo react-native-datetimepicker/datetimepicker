@@ -5,7 +5,7 @@ import {TurboModuleRegistry} from 'react-native';
 import type {DateTimePickerResult} from '../types';
 
 type OpenParams = $ReadOnly<{|
-  // TODO
+  // TODO does codegen handle object type?
 |}>;
 
 export interface Spec extends TurboModule {

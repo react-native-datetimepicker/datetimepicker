@@ -16,7 +16,6 @@ buildscript {
 
 def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim())
 
-println "Using React Native version ${REACT_NATIVE_VERSION}"
 allprojects {
     configurations.all {
       resolutionStrategy {

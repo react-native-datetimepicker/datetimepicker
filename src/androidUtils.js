@@ -31,7 +31,8 @@ export type OpenParams = {
   },
 };
 
-export type PresentPickerCallback = (OpenParams) => Promise<DateTimePickerResult>;
+export type PresentPickerCallback =
+  (OpenParams) => Promise<DateTimePickerResult>;
 
 function getOpenPicker(
   mode: AndroidNativeProps['mode'],

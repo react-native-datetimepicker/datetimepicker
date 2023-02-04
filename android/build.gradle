@@ -40,6 +40,4 @@ android {
 
 dependencies {
   implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}" // From node_modules
-//  implementation 'androidx.annotation:annotation:1.3.0'
-//  implementation 'androidx.fragment:fragment:1.4.1'
 }

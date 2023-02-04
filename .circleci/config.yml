@@ -100,6 +100,46 @@ jobs:
       - store_artifacts:
           path: ./artifacts
 
+
+  e2e_release_android_new_arch:
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: '2022.01.1'
+    steps:
+      - checkout
+      - run:
+          command: avdmanager list
+          name: list avds
+      - android/create-avd:
+          avd-name: TestingAVD
+          system-image: system-images;android-29;default;x86
+          additional-args: --device pixel_4_xl
+          install: true
+      - android/start-emulator:
+          avd-name: TestingAVD
+          no-window: true
+          restore-gradle-cache-prefix: v1a
+          post-emulator-launch-assemble-command: "pwd"
+      - android/disable-animations
+      - run:
+          command: npm install --global yarn
+          name: install yarn
+      - run:
+          command: yarn install --frozen-lockfile
+          name: yarn install
+      - run:
+          command: yarn bundle:android
+          name: bundle js
+      - run:
+          command: ORG_GRADLE_PROJECT_newArchEnabled=true yarn detox:android:build:release
+          name: build app for e2e tests
+      - run:
+          command: yarn detox:android:test:release
+          name: run e2e tests
+      - store_artifacts:
+          path: ./artifacts
+
   publish:
     executor:
       name: rn/linux_js
@@ -121,9 +161,11 @@ workflows:
       - analyse_js
       - e2e_release_ios
       - e2e_release_android
+      - e2e_release_android_new_arch
       - publish:
           requires:
             - e2e_release_android
+            - e2e_release_android_new_arch
             - e2e_release_ios
           filters:
             branches:

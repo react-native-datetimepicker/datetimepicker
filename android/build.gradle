@@ -20,6 +20,15 @@ android {
     }
 }
 
+repositories {
+  mavenLocal()
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url("$rootDir/../node_modules/react-native/android")
+  }
+  google()
+}
+
 dependencies {
-  implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}" // From node_modules
+  implementation "com.facebook.react:react-native:+" // From node_modules
 }

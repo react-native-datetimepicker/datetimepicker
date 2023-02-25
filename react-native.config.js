@@ -28,8 +28,7 @@ module.exports = {
       root: __dirname,
       platforms: {
         android: {
-          // TODO does not seem to have an effect?
-          // componentDescriptors: null,
+          componentDescriptors: null,
         },
       },
     },

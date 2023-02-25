@@ -24,6 +24,11 @@ module.exports = {
   dependencies: {
     '@react-native-community/datetimepicker': {
       root: path.join(__dirname, '..'),
+      platforms: {
+        android: {
+          componentDescriptors: null,
+        },
+      },
     },
   },
 };

@@ -16,7 +16,7 @@ type ProcessedButton = {
   textColor: $Call<typeof processColor>,
 };
 
-export type OpenParams = {
+type OpenParams = {
   value: Timestamp,
   display: AndroidNativeProps['display'],
   is24Hour: AndroidNativeProps['is24Hour'],

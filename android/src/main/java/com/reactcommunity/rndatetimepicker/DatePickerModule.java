@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.facebook.react.bridge.*;
 import com.facebook.react.common.annotations.VisibleForTesting;
+import com.facebook.react.module.annotations.ReactModule;
 
 import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
 import static com.reactcommunity.rndatetimepicker.KeepDateInRangeListener.isDateAfterMaxDate;
@@ -30,12 +31,13 @@ import java.util.Calendar;
  * {@link NativeModule} that allows JS to show a native date picker dialog and get called back when
  * the user selects a date.
  */
-public class DatePickerModuleImpl extends ReactContextBaseJavaModule {
+@ReactModule(name = DatePickerModule.NAME)
+public class DatePickerModule extends NativeModuleDatePickerSpec {
 
   @VisibleForTesting
-  public static final String NAME = "RNDatePickerAndroid";
+  public static final String NAME = "RNDatePicker";
 
-  public DatePickerModuleImpl(ReactApplicationContext reactContext) {
+  public DatePickerModule(ReactApplicationContext reactContext) {
     super(reactContext);
   }
 
@@ -110,6 +112,7 @@ public class DatePickerModuleImpl extends ReactContextBaseJavaModule {
     }
   }
 
+  @ReactMethod
   public void dismiss(Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     dismissDialog(activity, NAME, promise);
@@ -139,12 +142,13 @@ public class DatePickerModuleImpl extends ReactContextBaseJavaModule {
    *                {@code dismissedAction}, depending on what the user did. If the action is
    *                dismiss, year, month and date are undefined.
    */
+  @ReactMethod
   public void open(final ReadableMap options, final Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {
       promise.reject(
-        RNConstants.ERROR_NO_ACTIVITY,
-        "Tried to open a DatePicker dialog while not attached to an Activity");
+              RNConstants.ERROR_NO_ACTIVITY,
+              "Tried to open a DatePicker dialog while not attached to an Activity");
       return;
     }
 
@@ -154,7 +158,7 @@ public class DatePickerModuleImpl extends ReactContextBaseJavaModule {
       @Override
       public void run() {
         RNDatePickerDialogFragment oldFragment =
-          (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
+                (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
 
         if (oldFragment != null) {
           oldFragment.update(createFragmentArguments(options));

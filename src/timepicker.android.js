@@ -8,9 +8,8 @@
  * @flow strict-local
  */
 import {TIME_SET_ACTION, DISMISS_ACTION, ANDROID_DISPLAY} from './constants';
-import {NativeModules} from 'react-native';
 import {toMilliseconds} from './utils';
-
+import RNTimePickerAndroid from './specs/NativeModuleTimePicker';
 import type {TimePickerOptions, DateTimePickerResult} from './types';
 
 export default class TimePickerAndroid {
@@ -36,12 +35,11 @@ export default class TimePickerAndroid {
   static async open(options: TimePickerOptions): Promise<DateTimePickerResult> {
     toMilliseconds(options, 'value');
     options.display = options.display || ANDROID_DISPLAY.default;
-
-    return NativeModules.RNTimePickerAndroid.open(options);
+    return RNTimePickerAndroid.open(options);
   }
 
   static async dismiss(): Promise<boolean> {
-    return NativeModules.RNTimePickerAndroid.dismiss();
+    return RNTimePickerAndroid.dismiss();
   }
 
   /**

@@ -199,10 +199,12 @@ export const App = () => {
 
   const showDatepicker = () => {
     showMode('date');
+    setShow(true);
   };
 
   const showTimepicker = () => {
     showMode('time');
+    setShow(true);
   };
 
   return (

@@ -108,9 +108,6 @@ jobs:
       - run:
           command: yarn install --frozen-lockfile
           name: yarn install
-#      - run:
-#          command: cd example && yarn install --frozen-lockfile && cd -
-#          name: yarn install example
       - run:
           command: yarn bundle:android
           name: bundle js
@@ -151,9 +148,6 @@ jobs:
       - run:
           command: yarn install --frozen-lockfile
           name: yarn install
-#      - run:
-#          command: cd example && yarn install --frozen-lockfile && cd -
-#          name: yarn install example
       - run:
           command: yarn bundle:android
           name: bundle js

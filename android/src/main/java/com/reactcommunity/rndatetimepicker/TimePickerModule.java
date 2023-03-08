@@ -10,6 +10,7 @@ package com.reactcommunity.rndatetimepicker;
 
 import com.facebook.react.bridge.*;
 import com.facebook.react.common.annotations.VisibleForTesting;
+import com.facebook.react.module.annotations.ReactModule;
 
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.DialogInterface;
@@ -28,12 +29,13 @@ import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
  * {@link NativeModule} that allows JS to show a native time picker dialog and get called back when
  * the user selects a time.
  */
-public class TimePickerModuleImpl extends ReactContextBaseJavaModule {
+@ReactModule(name = TimePickerModule.NAME)
+public class TimePickerModule extends NativeModuleTimePickerSpec {
 
   @VisibleForTesting
-  public static final String NAME = "RNTimePickerAndroid";
+  public static final String NAME = "RNTimePicker";
 
-  public TimePickerModuleImpl(ReactApplicationContext reactContext) {
+  public TimePickerModule(ReactApplicationContext reactContext) {
     super(reactContext);
   }
 
@@ -95,8 +97,8 @@ public class TimePickerModuleImpl extends ReactContextBaseJavaModule {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
     if (activity == null) {
       promise.reject(
-        RNConstants.ERROR_NO_ACTIVITY,
-        "Tried to open a TimePicker dialog while not attached to an Activity");
+              RNConstants.ERROR_NO_ACTIVITY,
+              "Tried to open a TimePicker dialog while not attached to an Activity");
       return;
     }
     // We want to support both android.app.Activity and the pre-Honeycomb FragmentActivity
@@ -107,7 +109,7 @@ public class TimePickerModuleImpl extends ReactContextBaseJavaModule {
       @Override
       public void run() {
         RNTimePickerDialogFragment oldFragment =
-          (RNTimePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
+                (RNTimePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
 
         if (oldFragment != null) {
           oldFragment.update(createFragmentArguments(options));

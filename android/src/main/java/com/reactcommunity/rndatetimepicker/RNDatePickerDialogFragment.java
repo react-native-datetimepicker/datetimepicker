@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -67,8 +68,17 @@ public class RNDatePickerDialogFragment extends DialogFragment {
 
     RNDatePickerDisplay display = getDisplayDate(args);
 
+
     if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
       display = RNDatePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
+    }
+
+    if (args != null && args.containsKey(RNConstants.ARG_LOCALE)) {
+      Locale locale = new Locale(args.getString(RNConstants.ARG_LOCALE));
+      Locale.setDefault(locale);
+      Configuration config = new Configuration(activityContext.getResources().getConfiguration());
+      config.setLocale(locale);
+      activityContext.getResources().updateConfiguration(config, activityContext.getResources().getDisplayMetrics());
     }
 
     if (display == RNDatePickerDisplay.SPINNER) {

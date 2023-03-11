@@ -19,12 +19,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import java.util.Locale;
 
 @SuppressWarnings("ValidFragment")
 public class RNTimePickerDialogFragment extends DialogFragment {
@@ -66,6 +69,14 @@ public class RNTimePickerDialogFragment extends DialogFragment {
     int minuteInterval = RNConstants.DEFAULT_TIME_PICKER_INTERVAL;
     if (args != null && MinuteIntervalSnappableTimePickerDialog.isValidMinuteInterval(args.getInt(RNConstants.ARG_INTERVAL))) {
       minuteInterval = args.getInt(RNConstants.ARG_INTERVAL);
+    }
+
+    if (args != null && args.containsKey(RNConstants.ARG_LOCALE)) {
+      Locale locale = new Locale(args.getString(RNConstants.ARG_LOCALE));
+      Locale.setDefault(locale);
+      Configuration config = new Configuration(activityContext.getResources().getConfiguration());
+      config.setLocale(locale);
+      activityContext.getResources().updateConfiguration(config, activityContext.getResources().getDisplayMetrics());
     }
 
     RNTimePickerDisplay display = getDisplayTime(args);

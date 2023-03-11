@@ -168,6 +168,11 @@ export type AndroidNativeProps = $ReadOnly<{|
   display: Display,
 
   /**
+   * The date picker locale.
+   */
+  locale?: string,
+
+  /**
    * Timezone offset in minutes.
    *
    * By default, the date picker will use the device's timezone. With this

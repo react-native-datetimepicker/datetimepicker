@@ -29,6 +29,7 @@ type Params = {
     negative: ProcessedButton,
     neutral: ProcessedButton,
   },
+  locale: AndroidNativeProps['locale'],
 };
 
 export type PresentPickerCallback = (Params) => Promise<DateTimePickerResult>;
@@ -45,6 +46,7 @@ function getOpenPicker(
         minuteInterval,
         timeZoneOffsetInMinutes,
         dialogButtons,
+        locale,
       }: Params) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[mode].open({
@@ -54,6 +56,7 @@ function getOpenPicker(
           is24Hour,
           timeZoneOffsetInMinutes,
           dialogButtons,
+          locale,
         });
     default:
       return ({
@@ -63,6 +66,7 @@ function getOpenPicker(
         maximumDate,
         timeZoneOffsetInMinutes,
         dialogButtons,
+        locale,
       }: Params) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
@@ -72,6 +76,7 @@ function getOpenPicker(
           maximumDate,
           timeZoneOffsetInMinutes,
           dialogButtons,
+          locale,
         });
   }
 }

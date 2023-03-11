@@ -30,6 +30,7 @@ export default function RNDateTimePickerAndroid(
     positiveButtonLabel,
     negativeButtonLabel,
     neutralButtonLabel,
+    locale,
   } = props;
   const valueTimestamp = value.getTime();
 
@@ -58,6 +59,7 @@ export default function RNDateTimePickerAndroid(
         positiveButtonLabel,
         negativeButtonLabel,
         neutralButtonLabel,
+        locale,
       };
       DateTimePickerAndroid.open(params);
     },

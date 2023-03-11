@@ -68,7 +68,6 @@ public class RNDatePickerDialogFragment extends DialogFragment {
 
     RNDatePickerDisplay display = getDisplayDate(args);
 
-
     if (args != null && args.getString(RNConstants.ARG_DISPLAY, null) != null) {
       display = RNDatePickerDisplay.valueOf(args.getString(RNConstants.ARG_DISPLAY).toUpperCase(Locale.US));
     }

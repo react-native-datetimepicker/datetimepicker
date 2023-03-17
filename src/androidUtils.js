@@ -16,7 +16,7 @@ type ProcessedButton = {
   textColor: $Call<typeof processColor>,
 };
 
-type Params = {
+type OpenParams = {
   value: Timestamp,
   display: AndroidNativeProps['display'],
   is24Hour: AndroidNativeProps['is24Hour'],
@@ -31,7 +31,8 @@ type Params = {
   },
 };
 
-export type PresentPickerCallback = (Params) => Promise<DateTimePickerResult>;
+export type PresentPickerCallback =
+  (OpenParams) => Promise<DateTimePickerResult>;
 
 function getOpenPicker(
   mode: AndroidNativeProps['mode'],
@@ -45,7 +46,7 @@ function getOpenPicker(
         minuteInterval,
         timeZoneOffsetInMinutes,
         dialogButtons,
-      }: Params) =>
+      }: OpenParams) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[mode].open({
           value,
@@ -63,7 +64,7 @@ function getOpenPicker(
         maximumDate,
         timeZoneOffsetInMinutes,
         dialogButtons,
-      }: Params) =>
+      }: OpenParams) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
           value,

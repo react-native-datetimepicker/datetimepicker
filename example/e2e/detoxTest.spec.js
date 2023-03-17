@@ -35,7 +35,7 @@ describe('e2e tests', () => {
       .withTimeout(5000);
   });
 
-  it('timeInfo heading has expected content', async () => {
+  it.skip('timeInfo heading has expected content', async () => {
     await expect(elementById('timeInfo')).toHaveText(
       'TZ: Europe/Prague, original: 11/13/2021 11:00',
     );

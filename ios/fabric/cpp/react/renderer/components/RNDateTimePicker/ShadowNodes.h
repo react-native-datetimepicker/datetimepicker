@@ -9,8 +9,8 @@
 #pragma once
 
 #include "RNDateTimePickerState.h"
-#include <react/renderer/components/RNDateTimePicker/EventEmitters.h>
-#include <react/renderer/components/RNDateTimePicker/Props.h>
+#include <react/renderer/components/RNDateTimePickerCGen/EventEmitters.h>
+#include <react/renderer/components/RNDateTimePickerCGen/Props.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>
 #include <react/renderer/core/LayoutContext.h>

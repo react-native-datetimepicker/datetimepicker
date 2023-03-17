@@ -6,9 +6,9 @@
 #import <React/RCTConversions.h>
 
 #import "cpp/react/renderer/components/RNDateTimePicker/ComponentDescriptors.h"
-#import <react/renderer/components/RNDateTimePicker/EventEmitters.h>
-#import <react/renderer/components/RNDateTimePicker/Props.h>
-#import <react/renderer/components/RNDateTimePicker/RCTComponentViewHelpers.h>
+#import <react/renderer/components/RNDateTimePickerCGen/EventEmitters.h>
+#import <react/renderer/components/RNDateTimePickerCGen/Props.h>
+#import <react/renderer/components/RNDateTimePickerCGen/RCTComponentViewHelpers.h>
 
 #import "RCTFabricComponentsPlugins.h"
 #import "RNDateTimePicker.h"

@@ -7,6 +7,8 @@
 
 ; Ignore polyfills
 node_modules/react-native/Libraries/polyfills/.*
+.*/**/malformed_package_json/package.json
+
 
 ; Flow doesn't support platforms
 .*/Libraries/Utilities/LoadingView.js

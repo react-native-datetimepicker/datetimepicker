@@ -7,6 +7,6 @@
  * @format
  * @flow strict-local
  */
-import RNDateTimePicker from './specs/DateTimePickerNativeComponent';
+import RNDateTimePicker from './specs/NativeComponentDateTimePicker';
 
 export default RNDateTimePicker;

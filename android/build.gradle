@@ -1,34 +1,62 @@
-apply plugin: 'com.android.library'
-
-def safeExtGet(prop, fallback) {
-  def retValue = rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
-  return retValue
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
+def getExtOrIntegerDefault(name) {
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['ReactNativeDateTimePicker_' + name]).toInteger()
+}
+
+def isNewArchitectureEnabled() {
+    // To opt-in for the New Architecture, you can either:
+    // - Set `newArchEnabled` to true inside the `gradle.properties` file
+    // - Invoke gradle with `-newArchEnabled=true`
+    // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+apply plugin: 'com.android.library'
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
+
+
 android {
-    compileSdkVersion safeExtGet('compileSdkVersion', 28)
-    buildToolsVersion safeExtGet('buildToolsVersion', '28.0.3')
+    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+
+    // Used to override the NDK path/version on internal CI or by allowing
+    // users to customize the NDK path/version from their root project (e.g. for M1 support)
+    if (rootProject.hasProperty("ndkPath")) {
+        ndkPath rootProject.ext.ndkPath
+    }
+    if (rootProject.hasProperty("ndkVersion")) {
+        ndkVersion rootProject.ext.ndkVersion
+    }
 
     defaultConfig {
-        minSdkVersion safeExtGet('minSdkVersion', 21)
-        targetSdkVersion safeExtGet('targetSdkVersion', 28)
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+        targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
     }
-    lintOptions {
-        abortOnError false
+
+    sourceSets.main {
+        java {
+            if (!isNewArchitectureEnabled()) {
+                srcDirs += 'src/paper/java'
+            }
+        }
     }
 }
 
 repositories {
-  mavenLocal()
-  maven {
-    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-    url("$rootDir/../node_modules/react-native/android")
-  }
-  google()
+    google()
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
-  implementation "com.facebook.react:react-native:+" // From node_modules
+    //noinspection GradleDynamicVersion
+    implementation 'com.facebook.react:react-native:+'
 }

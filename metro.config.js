@@ -7,14 +7,7 @@
 
 const path = require('path');
 
-const exclusionList = (() => {
-  try {
-    return require('metro-config/src/defaults/exclusionList');
-  } catch (_) {
-    // `blacklist` was renamed to `exclusionList` in 0.60
-    return require('metro-config/src/defaults/blacklist');
-  }
-})();
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 
 const blockList = exclusionList([
   /node_modules\/.*\/node_modules\/react-native\/.*/,
@@ -38,7 +31,6 @@ module.exports = {
   projectRoot: path.join(__dirname, 'example'),
   watchFolders: [__dirname],
   resolver: {
-    blacklistRE: blockList,
     blockList,
   },
   transformer: {

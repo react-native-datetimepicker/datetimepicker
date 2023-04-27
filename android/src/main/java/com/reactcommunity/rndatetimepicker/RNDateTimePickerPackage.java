@@ -30,32 +30,35 @@ public class RNDateTimePickerPackage extends TurboReactPackage {
 
   @Override
   public ReactModuleInfoProvider getReactModuleInfoProvider() {
-    return () -> {
-      boolean isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
-      final Map<String, ReactModuleInfo> moduleInfos = new HashMap<>();
-      moduleInfos.put(
-        DatePickerModule.NAME,
-        new ReactModuleInfo(
-          DatePickerModule.NAME,
-          DatePickerModule.NAME,
-          false, // canOverrideExistingModule
-          false, // needsEagerInit
-          false, // hasConstants
-          false, // isCxxModule
-          isTurboModule // isTurboModule
-        ));
-      moduleInfos.put(
-        TimePickerModule.NAME,
-        new ReactModuleInfo(
-          TimePickerModule.NAME,
-          TimePickerModule.NAME,
-          false, // canOverrideExistingModule
-          false, // needsEagerInit
-          false, // hasConstants
-          false, // isCxxModule
-          isTurboModule // isTurboModule
-        ));
-      return moduleInfos;
+    return new ReactModuleInfoProvider() {
+      @Override
+      public Map<String, ReactModuleInfo> getReactModuleInfos() {
+        boolean isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
+        final Map<String, ReactModuleInfo> moduleInfos = new HashMap<>();
+        moduleInfos.put(
+                DatePickerModule.NAME,
+                new ReactModuleInfo(
+                        DatePickerModule.NAME,
+                        DatePickerModule.NAME,
+                        false, // canOverrideExistingModule
+                        false, // needsEagerInit
+                        false, // hasConstants
+                        false, // isCxxModule
+                        isTurboModule // isTurboModule
+                ));
+        moduleInfos.put(
+                TimePickerModule.NAME,
+                new ReactModuleInfo(
+                        TimePickerModule.NAME,
+                        TimePickerModule.NAME,
+                        false, // canOverrideExistingModule
+                        false, // needsEagerInit
+                        false, // hasConstants
+                        false, // isCxxModule
+                        isTurboModule // isTurboModule
+                ));
+        return moduleInfos;
+      }
     };
   }
 

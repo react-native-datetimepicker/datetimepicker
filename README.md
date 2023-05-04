@@ -477,7 +477,7 @@ Changes the label of the positive button.
 Changes the label of the negative button.
 
 ```js
-<RNDateTimePicker positiveButtonLabel="Negative" />
+<RNDateTimePicker negativeButtonLabel="Negative" />
 ```
 
 #### `neutralButtonLabel` (`optional`, `Android only`, deprecated)

@@ -91,6 +91,9 @@ jobs:
       - run:
           command: avdmanager list
           name: list avds
+      - run:
+          command: sdkmanager --list
+          name: list sdks
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-30;default;x86

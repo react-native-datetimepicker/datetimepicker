@@ -145,7 +145,7 @@
       "plugins": {
         "video": {
           "android": {
-            "size": [1440, 3040]
+            "size": [1280, 720]
           }
         }
       }

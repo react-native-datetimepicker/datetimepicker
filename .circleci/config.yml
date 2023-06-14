@@ -99,7 +99,7 @@ jobs:
           system-image: system-images;android-29;default;x86
           additional-args: --device pixel_3_xl
           install: true
-          background: true
+          background: false
       - run:
           command: npm install --global yarn
           name: install yarn
@@ -110,7 +110,7 @@ jobs:
           avd-name: TestingAVD
           no-window: true
           disable-animations: true
-          wait-for-emulator: false
+          wait-for-emulator: true
           restore-gradle-cache-post-emulator-launch: false
           post-emulator-launch-assemble-command: "pwd"
       - run:
@@ -119,7 +119,7 @@ jobs:
       - run:
           command: yarn detox:android:build:release
           name: build app for e2e tests
-      - android/wait-for-emulator
+#      - android/wait-for-emulator
       - run:
           command: yarn detox:android:test:release
           name: run e2e tests

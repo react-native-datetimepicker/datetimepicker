@@ -137,7 +137,7 @@ jobs:
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-31;default;x86_64
-          additional-args: --device pixel_2_xl
+          additional-args: --device pixel_3_xl
           install: true
           background: true
       - run:

@@ -139,24 +139,27 @@ jobs:
           system-image: system-images;android-31;default;x86_64
           additional-args: --device pixel_2_xl
           install: true
-      - android/start-emulator:
-          avd-name: TestingAVD
-          no-window: true
-          restore-gradle-cache-prefix: v1a
-          post-emulator-launch-assemble-command: "pwd"
-      - android/disable-animations
+          background: true
       - run:
           command: npm install --global yarn
           name: install yarn
       - run:
           command: yarn install --frozen-lockfile
           name: yarn install
+      - android/start-emulator:
+          avd-name: TestingAVD
+          no-window: true
+          disable-animations: true
+          wait-for-emulator: false
+          restore-gradle-cache-post-emulator-launch: false
+          post-emulator-launch-assemble-command: "pwd"
       - run:
           command: yarn bundle:android
           name: bundle js
       - run:
           command: ORG_GRADLE_PROJECT_newArchEnabled=true yarn detox:android:build:release
           name: build app for e2e tests
+      - android/wait-for-emulator
       - run:
           command: yarn detox:android:test:release
           name: run e2e tests

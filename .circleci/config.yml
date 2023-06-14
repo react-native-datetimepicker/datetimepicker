@@ -104,6 +104,7 @@ jobs:
           avd-name: TestingAVD
           no-window: true
           wait-for-emulator: false
+          disable-animations: true
           restore-gradle-cache-post-emulator-launch: false
           post-emulator-launch-assemble-command: "pwd"
       - run:
@@ -147,6 +148,7 @@ jobs:
           avd-name: TestingAVD
           no-window: true
           wait-for-emulator: false
+          disable-animations: true
           restore-gradle-cache-post-emulator-launch: false
           post-emulator-launch-assemble-command: "pwd"
       - run:

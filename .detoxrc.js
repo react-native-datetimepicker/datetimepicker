@@ -31,7 +31,7 @@ module.exports = {
       binaryPath:
         'example/ios/build/Build/Products/Debug-iphonesimulator/ReactTestApp.app',
       build:
-        "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13' -scheme date-time-picker-example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES CODE_SIGNING_ALLOWED=NO",
+        "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 14' -scheme date-time-picker-example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES CODE_SIGNING_ALLOWED=NO",
     },
     'ios.release': {
       type: 'ios.app',

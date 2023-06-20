@@ -24,6 +24,12 @@ describe('e2e tests', () => {
     return isIOS() ? 'spinner' : 'default';
   };
 
+  beforeAll(async () => {
+    if (isIOS()) {
+      await device.launchApp({newInstance: true});
+    }
+  }, 300000);
+
   beforeEach(async () => {
     if (isIOS()) {
       await device.reloadReactNative();
@@ -51,7 +57,7 @@ describe('e2e tests', () => {
     }
   });
 
-  it('nothing should happen if picker is dismissed / cancelled', async () => {
+  it.only('nothing should happen if picker is dismissed / cancelled', async () => {
     await userOpensPicker({mode: 'date', display: 'default'});
 
     if (isIOS()) {

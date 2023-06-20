@@ -1,5 +1,4 @@
 module.exports = {
-  setupFilesAfterEnv: ['./init.js'],
   maxWorkers: 1,
   testTimeout: 120000,
   verbose: true,

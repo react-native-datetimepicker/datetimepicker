@@ -118,7 +118,7 @@ jobs:
           command: yarn bundle:android
           name: bundle js
       - run:
-          command: yarn detox:android:build:release
+          command: ORG_GRADLE_PROJECT_newArchEnabled=false yarn detox:android:build:release
           name: build app for e2e tests
       - run:
           command: yarn detox:android:test:release

@@ -65,7 +65,7 @@ jobs:
           device: 'iPhone 13'
       # - rn/yarn_install
       - run:
-          command: yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile && npx patch-package
           name: yarn install
       - run:
           command: yarn bundle:ios
@@ -84,7 +84,7 @@ jobs:
   e2e_release_android:
     executor:
       name: android/android-machine
-      resource-class: large
+      resource-class: xlarge
       tag: '2023.04.1'
     steps:
       - checkout
@@ -96,7 +96,7 @@ jobs:
           name: list sdks
       - android/create-avd:
           avd-name: TestingAVD
-          system-image: system-images;android-29;default;x86
+          system-image: system-images;android-31;default;x86_64
           additional-args: --device pixel_3_xl
           install: true
           background: false
@@ -112,7 +112,7 @@ jobs:
           command: npm install --global yarn
           name: install yarn
       - run:
-          command: yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile && npx patch-package
           name: yarn install
       - run:
           command: yarn bundle:android
@@ -130,7 +130,7 @@ jobs:
   e2e_release_android_new_arch:
     executor:
       name: android/android-machine
-      resource-class: large
+      resource-class: xlarge
       tag: '2023.04.1'
     steps:
       - checkout
@@ -139,7 +139,7 @@ jobs:
           name: list avds
       - android/create-avd:
           avd-name: TestingAVD
-          system-image: system-images;android-34;google_apis;x86_64
+          system-image: system-images;android-31;default;x86_64
           additional-args: --device pixel_3_xl
           install: true
           background: false
@@ -154,7 +154,7 @@ jobs:
           command: npm install --global yarn
           name: install yarn
       - run:
-          command: yarn install --frozen-lockfile
+          command: yarn install --frozen-lockfile && npx patch-package
           name: yarn install
       - run:
           command: yarn bundle:android

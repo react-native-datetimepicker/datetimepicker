@@ -6,6 +6,10 @@
   "android": {
     "package": "com.datetimepickerexample"
   },
+  "ios": {
+    "bundleIdentifier": "com.datetimepickerexample",
+    "developmentTeam": ""
+  },
   "components": [
     {
       "appKey": "date-time-picker-example",

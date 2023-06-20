@@ -103,10 +103,11 @@ jobs:
       - android/start-emulator:
           avd-name: TestingAVD
           no-window: true
-          wait-for-emulator: false
+          wait-for-emulator: true
           disable-animations: true
           restore-gradle-cache-post-emulator-launch: false
           post-emulator-launch-assemble-command: "pwd"
+      #      - android/disable-animations
       - run:
           command: npm install --global yarn
           name: install yarn
@@ -119,8 +120,6 @@ jobs:
       - run:
           command: ORG_GRADLE_PROJECT_newArchEnabled=false yarn detox:android:build:release
           name: build app for e2e tests
-      - android/wait-for-emulator
-      - android/disable-animations
       - run:
           command: yarn detox:android:test:release
           name: run e2e tests
@@ -147,7 +146,7 @@ jobs:
       - android/start-emulator:
           avd-name: TestingAVD
           no-window: true
-          wait-for-emulator: false
+          wait-for-emulator: true
           disable-animations: true
           restore-gradle-cache-post-emulator-launch: false
           post-emulator-launch-assemble-command: "pwd"
@@ -163,8 +162,8 @@ jobs:
       - run:
           command: ORG_GRADLE_PROJECT_newArchEnabled=true yarn detox:android:build:release
           name: build app for e2e tests
-      - android/wait-for-emulator
-      - android/disable-animations
+      #      - android/wait-for-emulator
+      #      - android/disable-animations
       - run:
           command: yarn detox:android:test:release
           name: run e2e tests

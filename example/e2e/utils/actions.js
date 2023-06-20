@@ -58,8 +58,8 @@ async function userTapsOkButtonAndroid() {
 
 async function userDismissesCompactDatePicker() {
   await element(by.type('_UIDatePickerContainerView')).tap({
-    x: 50,
-    y: 50,
+    x: 150,
+    y: 150,
   });
 }
 

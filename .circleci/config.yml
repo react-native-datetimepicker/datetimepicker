@@ -96,7 +96,7 @@ jobs:
           name: list sdks
       - android/create-avd:
           avd-name: TestingAVD
-          system-image: system-images;android-31;default;x86_64
+          system-image: system-images;android-29;default;x86
           additional-args: --device pixel_3_xl
           install: true
           background: false
@@ -139,7 +139,7 @@ jobs:
           name: list avds
       - android/create-avd:
           avd-name: TestingAVD
-          system-image: system-images;android-31;default;x86_64
+          system-image: system-images;android-29;default;x86
           additional-args: --device pixel_3_xl
           install: true
           background: false

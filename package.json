@@ -38,7 +38,7 @@
     "detox:android:build:debug": "detox build -c android.emu.debug",
     "detox:android:test:debug": "adb shell service call alarm 3 s16 Europe/Prague && detox test -c android.emu.debug -l verbose",
     "detox:android:build:release": "detox build -c android.emu.release",
-    "detox:android:test:release": "adb shell service call alarm 3 s16 Europe/Prague && detox test -c android.emu.release --record-logs all --headless -l verbose",
+    "detox:android:test:release": "adb shell service call alarm 3 s16 Europe/Prague && detox test -c android.emu.release --record-videos all --record-logs all --headless -l verbose",
     "detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build"
   },
   "repository": {

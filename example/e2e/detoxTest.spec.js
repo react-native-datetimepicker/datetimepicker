@@ -256,8 +256,7 @@ describe('e2e tests', () => {
 
   it(':android: when component unmounts, dialog is dismissed', async () => {
     await elementById('showAndDismissPickerButton').tap();
-    await wait(1000);
-    await expect(getDatePickerAndroid()).toExist();
+    await waitFor(getDatePickerAndroid()).toExist().withTimeout(4000);
     await wait(6000);
 
     await expect(getDatePickerAndroid()).not.toExist();

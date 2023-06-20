@@ -84,7 +84,7 @@ jobs:
   e2e_release_android:
     executor:
       name: android/android-machine
-      resource-class: xlarge
+      resource-class: large
       tag: '2023.04.1'
     steps:
       - checkout
@@ -130,7 +130,7 @@ jobs:
   e2e_release_android_new_arch:
     executor:
       name: android/android-machine
-      resource-class: xlarge
+      resource-class: large
       tag: '2023.04.1'
     steps:
       - checkout

@@ -1,0 +1,17 @@
+diff --git a/node_modules/react-native-test-app/ios/.DS_Store b/node_modules/react-native-test-app/ios/.DS_Store
+new file mode 100644
+index 0000000..9ea91ff
+Binary files /dev/null and b/node_modules/react-native-test-app/ios/.DS_Store differ
+diff --git a/node_modules/react-native-test-app/ios/ReactTestApp/SceneDelegate.swift b/node_modules/react-native-test-app/ios/ReactTestApp/SceneDelegate.swift
+index 9db6b76..fd6cc20 100644
+--- a/node_modules/react-native-test-app/ios/ReactTestApp/SceneDelegate.swift
++++ b/node_modules/react-native-test-app/ios/ReactTestApp/SceneDelegate.swift
+@@ -54,7 +54,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+             object: [
+                 "scene": scene,
+                 "URLContexts": URLContexts,
+-            ]
++            ] as [String : Any]
+         )
+ 
+         // scene(_:openURLContexts:)

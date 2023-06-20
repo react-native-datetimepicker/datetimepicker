@@ -29,7 +29,7 @@
     "bundle:android": "mkdir -p example/dist && react-native bundle --platform android --dev false --entry-file index.js --bundle-output example/dist/main.android.jsbundle --assets-dest example/dist/res",
     "bundle:ios": "mkdir -p example/dist && react-native bundle --platform ios --dev false --entry-file index.js --bundle-output example/dist/main.ios.jsbundle --assets-dest example/dist/assets",
     "test": "jest",
-    "lint": "eslint {example,src,test}/**/*.js src/index.d.ts",
+    "lint": "NODE_ENV=lint eslint {example,src,test}/**/*.js src/index.d.ts",
     "flow": "flow check",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",
     "detox:ios:test:debug": "SIMCTL_CHILD_TZ=Europe/Prague detox test -c ios.sim.debug -l verbose",
@@ -67,84 +67,33 @@
   },
   "homepage": "https://github.com/react-native-community/datetimepicker#readme",
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@babel/preset-env": "^7.14.0",
-    "@babel/runtime": "^7.12.5",
-    "@react-native-community/eslint-config": "^3.1.0",
     "@react-native-segmented-control/segmented-control": "^2.4.0",
+    "@react-native/eslint-config": "^0.72.2",
     "@semantic-release/git": "^10.0.1",
     "@testing-library/react-native": "^9.0.0",
-    "babel-jest": "^29.0.2",
-    "detox": "19.13.0",
-    "eslint": "^8.23.0",
+    "babel-jest": "^29.5.0",
+    "detox": "^20.9.1",
+    "eslint": "^8.42.0",
     "eslint-plugin-ft-flow": "^2.0.1",
     "eslint-plugin-prettier": "^4.2.1",
     "flow-bin": "^0.182.0",
     "flow-typed": "^3.8.0",
-    "jest": "^29.0.2",
-    "jest-circus": "^29.0.2",
-    "metro-babel-register": "^0.72.2",
-    "metro-react-native-babel-preset": "^0.73.5",
+    "jest": "^29.5.0",
+    "metro-react-native-babel-preset": "0.73.9",
     "moment": "^2.24.0",
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
-    "prettier": "^2.6.0",
+    "prettier": "^2.8.8",
     "react": "18.2.0",
-    "react-native": "^0.71.4",
-    "react-native-localize": "^2.2.0",
-    "react-native-test-app": "^2.3.11",
+    "react-native": "^0.71.10",
+    "react-native-localize": "^3.0.0",
+    "react-native-test-app": "2.3.13",
     "react-native-windows": "^0.71.3",
-    "react-test-renderer": "18.1.0",
+    "react-test-renderer": "18.2.0",
     "semantic-release": "^19.0.3"
   },
   "dependencies": {
     "invariant": "^2.2.4"
-  },
-  "detox": {
-    "test-runner": "jest",
-    "runner-config": "example/e2e/config.json",
-    "configurations": {
-      "ios.sim.debug": {
-        "binaryPath": "example/ios/build/Build/Products/Debug-iphonesimulator/ReactTestApp.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 13' -scheme date-time-picker-example -configuration Debug -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
-        "type": "ios.simulator",
-        "device": {
-          "type": "iPhone 13"
-        }
-      },
-      "ios.sim.release": {
-        "binaryPath": "example/ios/build/Build/Products/Release-iphonesimulator/ReactTestApp.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace example/ios/date-time-picker-example.xcworkspace -sdk iphonesimulator -scheme date-time-picker-example -configuration Release -derivedDataPath example/ios/build -UseModernBuildSystem=YES",
-        "type": "ios.simulator",
-        "device": {
-          "type": "iPhone 13"
-        }
-      },
-      "android.emu.debug": {
-        "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
-        "type": "android.emulator",
-        "device": {
-          "avdName": "Pixel_5_Android_12_api_31"
-        }
-      },
-      "android.device.debug": {
-        "binaryPath": "example/android/app/build/outputs/apk/debug/app-debug.apk",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug)",
-        "type": "android.attached",
-        "device": {
-          "adbName": "34HDU19716000753"
-        }
-      },
-      "android.emu.release": {
-        "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release)",
-        "type": "android.emulator",
-        "device": {
-          "avdName": "TestingAVD"
-        }
-      }
-    }
   },
   "codegenConfig": {
     "name": "RNDateTimePickerCGen",

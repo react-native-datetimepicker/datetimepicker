@@ -53,8 +53,6 @@ allprojects {
 
             project.dependencies {
                 androidTestImplementation('com.wix:detox:+')
-                // pinning soloader to 0.10.4 fixes problem with detox "couldn't find DSO to load: libhermes.so" https://github.com/wix/Detox/issues/3487
-                implementation 'com.facebook.soloader:soloader:0.10.4+'
             }
         }
     }

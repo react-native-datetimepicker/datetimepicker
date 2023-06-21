@@ -24,6 +24,7 @@ if (isNewArchitectureEnabled()) {
 
 
 android {
+    namespace = "com.reactcommunity.rndatetimepicker"
     compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
 
     // Used to override the NDK path/version on internal CI or by allowing

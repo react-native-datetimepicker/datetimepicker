@@ -168,11 +168,11 @@ export const App = () => {
   };
 
   return (
-    <View>
+    <SafeAreaView>
       <Button onPress={showDatepicker} title="Show date picker!" />
       <Button onPress={showTimepicker} title="Show time picker!" />
       <Text>selected: {date.toLocaleString()}</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 ```
@@ -192,10 +192,7 @@ export const App = () => {
   };
 
   const showMode = (currentMode) => {
-    if (Platform.OS === 'android') {
-      setShow(false);
-      // for iOS, add a button that closes the picker
-    }
+    setShow(true);
     setMode(currentMode);
   };
 
@@ -208,7 +205,7 @@ export const App = () => {
   };
 
   return (
-    <View>
+    <SafeAreaView>
       <Button onPress={showDatepicker} title="Show date picker!" />
       <Button onPress={showTimepicker} title="Show time picker!" />
       <Text>selected: {date.toLocaleString()}</Text>
@@ -221,7 +218,7 @@ export const App = () => {
           onChange={onChange}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 ```

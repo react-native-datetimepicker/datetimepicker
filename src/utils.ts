@@ -1,29 +1,25 @@
-/**
- * @format
- * @flow strict-local
- */
 import type {DatePickerOptions, TimePickerOptions} from './types';
 import invariant from 'invariant';
 
 /**
  * Convert a Date to a timestamp.
  */
-export function toMilliseconds(
-  options: DatePickerOptions | TimePickerOptions,
-  ...keys: Array<string>
+export function toMilliseconds<T extends DatePickerOptions | TimePickerOptions>(
+  options: T,
+  ...keys: Array<keyof T>
 ) {
   keys.forEach(function each(key) {
     const value = options[key];
 
     // Is it a valid Date object?
-    // $FlowFixMe: Cannot get `Object.prototype.toString` because property `toString` [1] cannot be unbound from the context [2] where it was defined.
     if (Object.prototype.toString.call(value) === '[object Date]') {
+      // FIXME: Property 'getTime' does not exist on type 'T[keyof T]'.
       options[key] = value.getTime();
     }
   });
 }
 
-export function dateToMilliseconds(date: ?Date): ?number {
+export function dateToMilliseconds(date?: Date): number | undefined {
   if (!date) {
     return;
   }
@@ -35,9 +31,9 @@ export function sharedPropsValidation({
   timeZoneName,
   timeZoneOffsetInMinutes,
 }: {
-  value: Date,
-  timeZoneName?: ?string,
-  timeZoneOffsetInMinutes?: ?number,
+  value: Date;
+  timeZoneName?: string;
+  timeZoneOffsetInMinutes?: number;
 }) {
   invariant(value, 'A date or time must be specified as `value` prop');
   invariant(

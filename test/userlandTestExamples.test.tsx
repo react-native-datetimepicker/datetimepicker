@@ -15,7 +15,7 @@ import {createDateTimeSetEvtParams} from '../src/index';
 import {mockAndroidDialogDateChange, mockAndroidDialogDismissal} from '../jest';
 
 function TestAppWithComponent() {
-  const [date, setDate] = React.useState<?Date>();
+  const [date, setDate] = React.useState<Date>();
 
   return (
     <>

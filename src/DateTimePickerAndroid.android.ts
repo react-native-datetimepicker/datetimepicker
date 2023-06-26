@@ -1,7 +1,3 @@
-/**
- * @format
- * @flow strict-local
- */
 import {
   DATE_SET_ACTION,
   TIME_SET_ACTION,
@@ -107,8 +103,8 @@ function open(props: AndroidNativeProps) {
           break;
         }
       }
-    } catch (error) {
-      onError && onError(error);
+    } catch (error: any) {
+      onError?.(error);
     }
   };
   presentPicker();

@@ -49,9 +49,9 @@ export default class DatePickerAndroid {
   /**
    * A date has been selected.
    */
-  static +dateSetAction: 'dateSetAction' = DATE_SET_ACTION;
+  static dateSetAction: 'dateSetAction' = DATE_SET_ACTION;
   /**
    * The dialog has been dismissed.
    */
-  static +dismissedAction: 'dismissedAction' = DISMISS_ACTION;
+  static dismissedAction: 'dismissedAction' = DISMISS_ACTION;
 }

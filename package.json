@@ -2,12 +2,15 @@
   "name": "@react-native-community/datetimepicker",
   "version": "7.5.0",
   "description": "DateTimePicker component for React Native",
-  "main": "./src/index.js",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "react-native": "src/index.ts",
   "types": "src/index.d.ts",
   "files": [
     "ios",
     "android",
     "src",
+    "lib/",
     "jest",
     "flow-typed",
     "windows",
@@ -31,6 +34,7 @@
     "test": "jest",
     "lint": "NODE_ENV=lint eslint {example,src,test}/**/*.js src/index.d.ts",
     "flow": "flow check",
+    "typescript": "tsc --noEmit",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",
     "detox:ios:test:debug": "SIMCTL_CHILD_TZ=Europe/Prague detox test -c ios.sim.debug -l verbose",
     "detox:ios:build:release": "detox build -c ios.sim.release",
@@ -71,6 +75,12 @@
     "@react-native/eslint-config": "^0.72.2",
     "@semantic-release/git": "^10.0.1",
     "@testing-library/react-native": "^9.0.0",
+    "@tsconfig/react-native": "^3.0.2",
+    "@types/invariant": "^2.2.35",
+    "@types/jest": "^29.5.2",
+    "@types/react": "^18.2.14",
+    "@types/react-native": "^0.72.2",
+    "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.5.0",
     "detox": "^20.9.1",
     "eslint": "^8.42.0",
@@ -87,11 +97,13 @@
     "prettier": "^2.8.8",
     "react": "18.2.0",
     "react-native": "^0.71.10",
+    "react-native-builder-bob": "^0.20.4",
     "react-native-localize": "^3.0.0",
     "react-native-test-app": "2.3.13",
     "react-native-windows": "^0.71.3",
     "react-test-renderer": "18.2.0",
-    "semantic-release": "^19.0.3"
+    "semantic-release": "^19.0.3",
+    "typescript": "^5.1.3"
   },
   "dependencies": {
     "invariant": "^2.2.4"
@@ -103,5 +115,19 @@
     "android": {
       "javaPackageName": "com.reactcommunity.rndatetimepicker"
     }
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
   }
 }

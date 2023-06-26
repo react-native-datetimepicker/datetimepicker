@@ -1,7 +1,3 @@
-/**
- * @format
- * @flow strict-local
- */
 import {ANDROID_DISPLAY, ANDROID_MODE} from './constants';
 import pickers from './picker';
 import type {AndroidNativeProps, DateTimePickerResult} from './types';
@@ -12,29 +8,30 @@ import {processColor} from 'react-native';
 type Timestamp = number;
 
 type ProcessedButton = {
-  title: string,
-  textColor: $Call<typeof processColor>,
+  title: string;
+  textColor: typeof processColor;
 };
 
 type OpenParams = {
-  value: Timestamp,
-  display: AndroidNativeProps['display'],
-  is24Hour: AndroidNativeProps['is24Hour'],
-  minimumDate: AndroidNativeProps['minimumDate'],
-  maximumDate: AndroidNativeProps['maximumDate'],
-  minuteInterval: AndroidNativeProps['minuteInterval'],
-  timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
-  timeZoneName: AndroidNativeProps['timeZoneName'],
-  testID: AndroidNativeProps['testID'],
+  value: Timestamp;
+  display: AndroidNativeProps['display'];
+  is24Hour: AndroidNativeProps['is24Hour'];
+  minimumDate: AndroidNativeProps['minimumDate'];
+  maximumDate: AndroidNativeProps['maximumDate'];
+  minuteInterval: AndroidNativeProps['minuteInterval'];
+  timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'];
+  timeZoneName: AndroidNativeProps['timeZoneName'];
+  testID: AndroidNativeProps['testID'];
   dialogButtons: {
-    positive: ProcessedButton,
-    negative: ProcessedButton,
-    neutral: ProcessedButton,
-  },
+    positive: ProcessedButton;
+    negative: ProcessedButton;
+    neutral: ProcessedButton;
+  };
 };
 
-export type PresentPickerCallback =
-  (OpenParams) => Promise<DateTimePickerResult>;
+export type PresentPickerCallback = (
+  params: OpenParams,
+) => Promise<DateTimePickerResult>;
 
 function getOpenPicker(
   mode: AndroidNativeProps['mode'],

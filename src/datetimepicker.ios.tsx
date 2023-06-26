@@ -6,8 +6,6 @@
  *
  * This is a controlled component version of RNDateTimePicker
  *
- * @format
- * @flow strict-local
  */
 import RNDateTimePicker from './picker';
 import {dateToMilliseconds, sharedPropsValidation} from './utils';
@@ -28,7 +26,11 @@ import type {
 } from './types';
 
 const getDisplaySafe = (display: IOSDisplay): IOSDisplay => {
-  const majorVersionIOS = parseInt(Platform.Version, 10);
+  const platformVersion = Platform.Version;
+  const majorVersionIOS =
+    typeof platformVersion === 'string'
+      ? parseInt(platformVersion, 10)
+      : platformVersion;
   if (display === IOS_DISPLAY.inline && majorVersionIOS < 14) {
     // inline is available since 14.0
     return IOS_DISPLAY.spinner;

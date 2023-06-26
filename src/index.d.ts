@@ -224,4 +224,4 @@ declare const RNDateTimePicker: FC<
 >;
 
 export default RNDateTimePicker;
-export const DateTimePickerAndroid: typeof DateTimePickerAndroidType;
+export type DateTimePickerAndroid = typeof DateTimePickerAndroidType;

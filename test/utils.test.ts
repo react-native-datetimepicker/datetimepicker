@@ -1,4 +1,4 @@
-import {toMilliseconds} from '../src/utils.js';
+import {toMilliseconds} from '../src/utils';
 
 describe('utils', () => {
   describe('toMilliseconds', () => {

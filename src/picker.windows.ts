@@ -9,7 +9,7 @@
  */
 import {requireNativeComponent} from 'react-native';
 
-export default (requireNativeComponent(
+export default requireNativeComponent(
   'RNDateTimePickerWindows',
-  // $FlowFixMe Flow: Unclear type. Using `any`, `Object`, or `Function` types is not safe!
-): any);
+  // FIXME: Unclear type. Using `any`, `Object`, or `Function` types is not safe!
+) as any;

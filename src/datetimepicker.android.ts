@@ -38,7 +38,9 @@ export default function RNDateTimePickerAndroid(
   useEffect(() => {
     // This effect runs on unmount / with mode change, and will ensure the picker is closed.
     // This allows for controlling the opening state of the picker through declarative logic in jsx.
-    return () => DateTimePickerAndroid.dismiss(mode);
+    return () => {
+      DateTimePickerAndroid.dismiss(mode);
+    };
   }, [mode]);
 
   useEffect(

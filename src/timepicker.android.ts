@@ -45,9 +45,9 @@ export default class TimePickerAndroid {
   /**
    * A time has been selected.
    */
-  static +timeSetAction: 'timeSetAction' = TIME_SET_ACTION;
+  static timeSetAction: 'timeSetAction' = TIME_SET_ACTION;
   /**
    * The dialog has been dismissed.
    */
-  static +dismissedAction: 'dismissedAction' = DISMISS_ACTION;
+  static dismissedAction: 'dismissedAction' = DISMISS_ACTION;
 }

@@ -10,8 +10,7 @@ const getInlineTimePickerIOS = () => element(by.label('Time Picker'));
 
 const getDateTimePickerControlIOS = () => element(by.type('UIDatePicker'));
 
-const getDatePickerAndroid = () =>
-  element(by.type('android.widget.DatePicker'));
+const getDatePickerAndroid = () => element(by.id('dateTimePicker'));
 
 module.exports = {
   getTimeText,

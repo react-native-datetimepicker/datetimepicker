@@ -74,7 +74,7 @@ describe('e2e tests', () => {
       const calendarHorizontalScrollView = element(
         by
           .type('android.widget.ScrollView')
-          .withAncestor(by.type('android.widget.DatePicker')),
+          .withAncestor(by.id('dateTimePicker')),
       );
       await calendarHorizontalScrollView.swipe('left', 'fast', 1);
       await calendarHorizontalScrollView.tap({x: 50, y: 200});

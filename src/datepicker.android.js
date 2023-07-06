@@ -21,6 +21,7 @@ export default class DatePickerAndroid {
    *   - `value` (`Date` object) - date to show by default
    *   - `minimumDate` (`Date` object) - minimum date that can be selected
    *   - `maximumDate` (`Date` object) - maximum date that can be selected
+   *   - `testID` (`string`) - Sets view tag for use with automation frameworks
    *   - `display` (`enum('calendar', 'spinner', 'default')`) - To set the date-picker display to calendar/spinner/default
    *     - 'calendar': Show a date picker in calendar mode.
    *     - 'spinner': Show a date picker in spinner mode.

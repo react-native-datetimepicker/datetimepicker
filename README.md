@@ -528,7 +528,7 @@ Fully supported on iOS. On Android, only supported for `mode="date"`.
 
 #### `View Props` (`optional`, `iOS only`)
 
-On iOS, you can pass any [View props](https://reactnative.dev/docs/view#props) to the component. Given that the underlying component is a native view, not all of them are guaranteed to be supported, but `onLayout` is known to work.
+On iOS, you can pass any [View props](https://reactnative.dev/docs/view#props) to the component. Given that the underlying component is a native view, not all of them are guaranteed to be supported, but `testID` and `onLayout` are known to work.
 
 #### `onError` (`optional`, `Android only`)
 

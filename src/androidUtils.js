@@ -24,7 +24,6 @@ type OpenParams = {
   maximumDate: AndroidNativeProps['maximumDate'],
   minuteInterval: AndroidNativeProps['minuteInterval'],
   timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
-  timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
   testID: AndroidNativeProps['testID'],
   dialogButtons: {
     positive: ProcessedButton,

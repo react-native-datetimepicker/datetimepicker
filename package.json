@@ -35,6 +35,7 @@
     "lint": "NODE_ENV=lint eslint {example,src,test}/**/*.js src/index.d.ts",
     "flow": "flow check",
     "typescript": "tsc --noEmit",
+    "prepare": "bob build",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",
     "detox:ios:test:debug": "SIMCTL_CHILD_TZ=Europe/Prague detox test -c ios.sim.debug -l verbose",
     "detox:ios:build:release": "detox build -c ios.sim.release",

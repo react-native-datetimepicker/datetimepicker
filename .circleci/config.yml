@@ -12,7 +12,7 @@ jobs:
   analyse_js:
     executor:
       name: rn/linux_js
-      node_version: 'lts'
+      node_version: "lts"
     steps:
       - checkout
       # - rn/yarn_install
@@ -24,8 +24,8 @@ jobs:
           command: yarn lint
           name: Run ESLint
       - run:
-          command: yarn flow
-          name: Flow
+          command: yarn typescript
+          name: Typescript
       - run:
           command: yarn test
           name: Jest
@@ -49,11 +49,10 @@ jobs:
   #          command: yarn detox:ios:build:release
   #          name: build app with new arch
 
-
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '14.0.0'
+      xcode_version: "14.0.0"
     steps:
       - checkout
       - run:
@@ -62,7 +61,7 @@ jobs:
             HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
             HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
       - rn/ios_simulator_start:
-          device: 'iPhone 14'
+          device: "iPhone 14"
       # - rn/yarn_install
       - run:
           command: yarn install --frozen-lockfile && npx patch-package
@@ -71,7 +70,7 @@ jobs:
           command: yarn bundle:ios
           name: bundle js
       - rn/pod_install:
-          pod_install_directory: 'example/ios'
+          pod_install_directory: "example/ios"
       - run:
           command: yarn detox:ios:build:release
           name: build app for e2e tests
@@ -85,7 +84,7 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
-      tag: '2023.04.1'
+      tag: "2023.04.1"
     steps:
       - checkout
       - run:
@@ -126,12 +125,11 @@ jobs:
       - store_artifacts:
           path: ./artifacts
 
-
   e2e_release_android_new_arch:
     executor:
       name: android/android-machine
       resource-class: large
-      tag: '2023.04.1'
+      tag: "2023.04.1"
     steps:
       - checkout
       - run:
@@ -173,7 +171,7 @@ jobs:
   publish:
     executor:
       name: rn/linux_js
-      node_version: 'lts'
+      node_version: "lts"
     steps:
       - checkout
       # - rn/yarn_install

@@ -67,6 +67,9 @@ jobs:
           command: yarn install --frozen-lockfile && npx patch-package
           name: yarn install
       - run:
+          command: yarn prepare
+          name: build
+      - run:
           command: yarn bundle:ios
           name: bundle js
       - rn/pod_install:
@@ -114,6 +117,9 @@ jobs:
           command: yarn install --frozen-lockfile && npx patch-package
           name: yarn install
       - run:
+          command: yarn prepare
+          name: build
+      - run:
           command: yarn bundle:android
           name: bundle js
       - run:
@@ -154,6 +160,9 @@ jobs:
       - run:
           command: yarn install --frozen-lockfile && npx patch-package
           name: yarn install
+      - run:
+          command: yarn prepare
+          name: build
       - run:
           command: yarn bundle:android
           name: bundle js

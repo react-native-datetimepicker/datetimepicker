@@ -1,6 +1,4 @@
 const {
-  getTimeText,
-  getDateText,
   elementById,
   elementByText,
   getDateTimePickerIOS,
@@ -15,7 +13,7 @@ const {
   userTapsOkButtonAndroid,
   userDismissesCompactDatePicker,
 } = require('./utils/actions');
-const {isIOS, wait, Platform} = require('./utils/utils');
+const {isIOS, isAndroid, wait, Platform} = require('./utils/utils');
 const {device} = require('detox');
 const {describe} = require('jest-circus');
 
@@ -41,9 +39,17 @@ describe('e2e tests', () => {
       .withTimeout(5000);
   });
 
-  it.skip('timeInfo heading has expected content', async () => {
-    await expect(elementById('timeInfo')).toHaveText(
-      'TZ: Europe/Prague, original: 11/13/2021 11:00',
+  it('timeInfo heading has expected content', async () => {
+    await expect(element(by.id('utcTime'))).toHaveText('2021-11-13T01:00:00Z');
+    await expect(element(by.id('deviceTime'))).toHaveText(
+      '2021-11-13T02:00:00+01:00',
+    );
+    await expect(element(by.id('deviceTzName'))).toHaveText('Europe/Prague');
+    await expect(element(by.id('overriddenTime'))).toHaveText(
+      '2021-11-13T02:00:00+01:00',
+    );
+    await expect(element(by.id('overriddenTzName'))).toHaveText(
+      'Europe/Prague',
     );
   });
 
@@ -82,7 +88,13 @@ describe('e2e tests', () => {
     }
 
     await elementByText('great').tap();
-    await expect(getDateText()).toHaveText('11/13/2021');
+    await expect(element(by.id('utcTime'))).toHaveText('2021-11-13T01:00:00Z');
+    await expect(element(by.id('deviceTime'))).toHaveText(
+      '2021-11-13T02:00:00+01:00',
+    );
+    await expect(element(by.id('overriddenTime'))).toHaveText(
+      '2021-11-13T02:00:00+01:00',
+    );
   });
 
   it('should update dateTimeText when date changes', async () => {
@@ -90,7 +102,7 @@ describe('e2e tests', () => {
 
     if (isIOS()) {
       const testElement = getDateTimePickerControlIOS();
-      await testElement.setDatePickerDate('2021-11-02', 'yyyy-MM-dd');
+      await testElement.setDatePickerDate('2021-11-02T01:00:00Z', 'ISO8601');
     } else {
       const uiDevice = device.getUiDevice();
       const focusSecondOfNovemberInCalendar = async () => {
@@ -104,7 +116,14 @@ describe('e2e tests', () => {
 
       await userTapsOkButtonAndroid();
     }
-    await expect(getDateText()).toHaveText('11/02/2021');
+
+    await expect(element(by.id('utcTime'))).toHaveText('2021-11-02T01:00:00Z');
+    await expect(element(by.id('deviceTime'))).toHaveText(
+      '2021-11-02T02:00:00+01:00',
+    );
+    await expect(element(by.id('overriddenTime'))).toHaveText(
+      '2021-11-02T02:00:00+01:00',
+    );
   });
 
   it('should show time picker after tapping timePicker button', async () => {
@@ -131,7 +150,13 @@ describe('e2e tests', () => {
       await userTapsCancelButtonAndroid();
       await elementByText('great').tap();
     }
-    await expect(getTimeText()).toHaveText('11:00');
+    await expect(element(by.id('utcTime'))).toHaveText('2021-11-13T01:00:00Z');
+    await expect(element(by.id('deviceTime'))).toHaveText(
+      '2021-11-13T02:00:00+01:00',
+    );
+    await expect(element(by.id('overriddenTime'))).toHaveText(
+      '2021-11-13T02:00:00+01:00',
+    );
   });
 
   it('should change time text when time changes', async () => {
@@ -140,47 +165,168 @@ describe('e2e tests', () => {
     if (isIOS()) {
       const testElement = getDateTimePickerControlIOS();
       // TODO
-      await testElement.setDatePickerDate('15:44', 'HH:mm');
+      await testElement.setDatePickerDate('2021-11-13T14:44:00Z', 'ISO8601');
     } else {
       await userChangesTimeValue({hours: 15, minutes: 44});
       await userTapsOkButtonAndroid();
     }
-    await expect(getTimeText()).toHaveText('15:44');
+
+    await expect(element(by.id('utcTime'))).toHaveText('2021-11-13T14:44:00Z');
+    await expect(element(by.id('deviceTime'))).toHaveText(
+      '2021-11-13T15:44:00+01:00',
+    );
+    await expect(element(by.id('overriddenTime'))).toHaveText(
+      '2021-11-13T15:44:00+01:00',
+    );
+  });
+
+  describe('IANA time zone', () => {
+    it('should show utcTime, deviceTime, overriddenTime correctly', async () => {
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T01:00:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T02:00:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T02:00:00+01:00',
+      );
+
+      await expect(element(by.id('deviceTzName'))).toHaveText('Europe/Prague');
+      await expect(element(by.id('overriddenTzName'))).toHaveText(
+        'Europe/Prague',
+      );
+
+      await element(by.id('timezone')).swipe('left', 'fast', 0.5);
+
+      let timeZone = 'America/Vancouver';
+      if (isAndroid()) {
+        timeZone = timeZone.toUpperCase();
+      }
+
+      await waitFor(elementByText(timeZone)).toBeVisible().withTimeout(1000);
+
+      await elementByText(timeZone).tap();
+
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T01:00:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T02:00:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-12T17:00:00-08:00',
+      );
+      await expect(element(by.id('deviceTzName'))).toHaveText('Europe/Prague');
+      await expect(element(by.id('overriddenTzName'))).toHaveText(
+        'America/Vancouver',
+      );
+    });
+
+    it('daylight saving should work properly', async () => {
+      await element(by.id('timezone')).swipe('left', 'fast', 0.5);
+
+      let timeZone = 'America/Vancouver';
+      if (isAndroid()) {
+        timeZone = timeZone.toUpperCase();
+      }
+
+      await waitFor(elementByText(timeZone)).toBeVisible().withTimeout(1000);
+
+      await elementByText(timeZone).tap();
+
+      await userOpensPicker({mode: 'date', display: getPickerDisplay()});
+
+      if (isIOS()) {
+        const testElement = getDateTimePickerControlIOS();
+
+        await testElement.setDatePickerDate('2021-03-14T10:00:00Z', 'ISO8601');
+      } else {
+        const uiDevice = device.getUiDevice();
+
+        // Ensure you can't select yesterday (Android)
+        const focusFourteenthOfMarchInCalendar = async () => {
+          for (let i = 0; i < 3; i++) {
+            await uiDevice.pressDPadDown();
+          }
+
+          await uiDevice.pressDPadUp();
+
+          for (let i = 0; i < 8; i++) {
+            await uiDevice.pressEnter();
+          }
+
+          for (let i = 0; i < 2; i++) {
+            await uiDevice.pressDPadDown();
+          }
+        };
+        await focusFourteenthOfMarchInCalendar();
+        await uiDevice.pressEnter();
+        await userTapsOkButtonAndroid();
+
+        await userOpensPicker({mode: 'time', display: getPickerDisplay()});
+        await userChangesTimeValue({hours: '2', minutes: '0'});
+        await userTapsOkButtonAndroid();
+      }
+
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-03-14T10:00:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-03-14T11:00:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-03-14T03:00:00-07:00',
+      );
+    });
   });
 
   describe('time zone offset', () => {
-    it.skip('should update dateTimeText when date changes and set setTzOffsetInMinutes to 0', async () => {
-      // skip for now, there is a bug on android https://github.com/react-native-datetimepicker/datetimepicker/issues/528
-      await expect(getDateText()).toHaveText('11/13/2021');
-      await expect(getTimeText()).toHaveText('11:00');
+    it('should update dateTimeText when date changes and set setTzOffsetInMinutes to 0', async () => {
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T01:00:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T02:00:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T02:00:00+01:00',
+      );
+
+      let tzOffsetPreset = '0 mins';
+
       if (isIOS()) {
         await userOpensPicker({
           mode: 'date',
           display: 'spinner',
-          tzOffsetPreset: 'setTzOffsetToZero',
+          tzOffsetPreset,
         });
-        const testElement = getDateTimePickerIOS();
-        await testElement.setColumnToValue(0, 'November');
-        await testElement.setColumnToValue(1, '14');
-        await testElement.setColumnToValue(2, '2021');
       } else {
+        tzOffsetPreset = tzOffsetPreset.toUpperCase();
         await userOpensPicker({
           mode: 'date',
           display: 'default',
-          tzOffsetPreset: 'setTzOffsetToZero',
+          tzOffsetPreset,
         });
         await userTapsOkButtonAndroid();
       }
-      await expect(getDateText()).toHaveText('11/14/2021');
-      await expect(getTimeText()).toHaveText('11:00');
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T01:00:00Z',
+      );
     });
 
     it('setTz should change time text when setTzOffsetInMinutes is 120 minutes', async () => {
       await elementById('DateTimePickerScrollView').scrollTo('bottom');
+
+      let tzOffsetPreset = '+120 mins';
+      if (isAndroid()) {
+        tzOffsetPreset = tzOffsetPreset.toUpperCase();
+      }
+
       await userOpensPicker({
         mode: 'time',
         display: getPickerDisplay(),
-        tzOffsetPreset: 'setTzOffset',
+        tzOffsetPreset,
       });
 
       if (isIOS()) {
@@ -192,7 +338,15 @@ describe('e2e tests', () => {
         await userChangesTimeValue({hours: '7', minutes: '30'});
         await userTapsOkButtonAndroid();
       }
-      await expect(getTimeText()).toHaveText('06:30');
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T05:30:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T06:30:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T07:30:00+02:00',
+      );
     });
 
     it('should let you pick tomorrow but not yesterday when setting min/max', async () => {
@@ -203,12 +357,15 @@ describe('e2e tests', () => {
         const testElement = getDateTimePickerControlIOS();
 
         // Ensure you can't select yesterday (iOS)
-        await testElement.setDatePickerDate('2021-11-12', 'yyyy-MM-dd');
-        await expect(getDateText()).toHaveText('11/13/2021');
+        await testElement.setDatePickerDate('2021-11-12T01:00:00Z', 'ISO8601');
+
+        await expect(element(by.id('utcTime'))).toHaveText(
+          '2021-11-13T00:00:00Z',
+        );
 
         // Ensure you can select tomorrow (iOS)
         await userOpensPicker({mode: 'date', display: getPickerDisplay()});
-        await testElement.setDatePickerDate('2021-11-14', 'yyyy-MM-dd');
+        await testElement.setDatePickerDate('2021-11-14T01:00:00Z', 'ISO8601');
       } else {
         const uiDevice = device.getUiDevice();
 
@@ -218,13 +375,22 @@ describe('e2e tests', () => {
             await uiDevice.pressDPadDown();
           }
           for (let i = 0; i < 3; i++) {
-            await uiDevice.pressDPadLeft();
+            await uiDevice.pressDPadRight();
           }
         };
         await focusTwelethOfNovemberInCalendar();
         await uiDevice.pressEnter();
         await userTapsOkButtonAndroid();
-        await expect(getDateText()).toHaveText('11/13/2021');
+
+        await expect(element(by.id('utcTime'))).toHaveText(
+          '2021-11-13T01:00:00Z',
+        );
+        await expect(element(by.id('deviceTime'))).toHaveText(
+          '2021-11-13T02:00:00+01:00',
+        );
+        await expect(element(by.id('overriddenTime'))).toHaveText(
+          '2021-11-13T01:00:00Z',
+        );
 
         // Ensure you can select tomorrow (Android)
         await userOpensPicker({mode: 'date', display: getPickerDisplay()});
@@ -241,7 +407,15 @@ describe('e2e tests', () => {
         await userTapsOkButtonAndroid();
       }
 
-      await expect(getDateText()).toHaveText('11/14/2021');
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-14T01:00:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-14T02:00:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-14T01:00:00Z',
+      );
     });
   });
 
@@ -250,8 +424,13 @@ describe('e2e tests', () => {
     await userOpensPicker({mode: 'time', display: 'default'});
     await elementByText('clear').tap();
 
-    const dateText = getDateText();
-    await expect(dateText).toHaveText('01/01/1970');
+    await expect(element(by.id('utcTime'))).toHaveText('1970-01-01T00:00:00Z');
+    await expect(element(by.id('deviceTime'))).toHaveText(
+      '1970-01-01T01:00:00+01:00',
+    );
+    await expect(element(by.id('overriddenTime'))).toHaveText(
+      '1970-01-01T01:00:00+01:00',
+    );
   });
 
   it(':android: when component unmounts, dialog is dismissed', async () => {
@@ -264,23 +443,33 @@ describe('e2e tests', () => {
 
   describe('given 5-minute interval', () => {
     it(':android: clock picker should correct 18-minute selection to 20-minute one', async () => {
-      try {
-        await userOpensPicker({mode: 'time', display: 'clock', interval: 5});
+      await userOpensPicker({mode: 'time', display: 'clock', interval: 5});
 
-        await userChangesTimeValue({hours: '23', minutes: '18'});
+      await userChangesTimeValue({hours: '23', minutes: '18'});
 
-        await userTapsOkButtonAndroid();
+      await userTapsOkButtonAndroid();
 
-        await expect(getTimeText()).toHaveText('23:20');
-      } catch (err) {
-        console.error(err);
-      }
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T22:20:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T23:20:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T23:20:00+01:00',
+      );
     });
 
     it(':android: when the picker is shown as "spinner", swiping it down changes selected time', async () => {
-      const timeText = getTimeText();
-
-      await expect(timeText).toHaveText('11:00');
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T01:00:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T02:00:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T02:00:00+01:00',
+      );
 
       await userOpensPicker({mode: 'time', display: 'spinner', interval: 5});
 
@@ -290,7 +479,15 @@ describe('e2e tests', () => {
       await minutePicker.swipe('up', 'slow', 0.33);
       await userTapsOkButtonAndroid();
 
-      await expect(timeText).toHaveText('11:15');
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T01:15:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T02:15:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T02:15:00+01:00',
+      );
     });
 
     it(':ios: picker should offer only options divisible by 5 (0, 5, 10,...)', async () => {
@@ -300,9 +497,16 @@ describe('e2e tests', () => {
       await testElement.setColumnToValue(0, '2');
       await testElement.setColumnToValue(1, '15');
       await testElement.setColumnToValue(2, 'PM');
-      const timeText = getTimeText();
 
-      await expect(timeText).toHaveText('14:15');
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T13:15:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T14:15:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T14:15:00+01:00',
+      );
 
       const valueThatShouldNotBePresented = '18';
       try {
@@ -320,7 +524,15 @@ describe('e2e tests', () => {
         }
       }
 
-      await expect(timeText).toHaveText('14:45');
+      await expect(element(by.id('utcTime'))).toHaveText(
+        '2021-11-13T13:45:00Z',
+      );
+      await expect(element(by.id('deviceTime'))).toHaveText(
+        '2021-11-13T14:45:00+01:00',
+      );
+      await expect(element(by.id('overriddenTime'))).toHaveText(
+        '2021-11-13T14:45:00+01:00',
+      );
     });
   });
 });

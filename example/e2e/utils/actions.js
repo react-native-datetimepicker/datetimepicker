@@ -30,7 +30,7 @@ async function userOpensPicker({mode, display, interval, tzOffsetPreset}) {
     await element(by.text(String(interval))).tap();
   }
   if (tzOffsetPreset) {
-    await element(by.id(tzOffsetPreset)).tap();
+    await element(by.text(tzOffsetPreset)).tap();
   }
   await element(by.id('showPickerButton')).tap();
 }

@@ -33,7 +33,7 @@ import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
 public class TimePickerModule extends NativeModuleTimePickerSpec {
 
   @VisibleForTesting
-  public static final String NAME = "RNTimePicker";
+  public static final String NAME = "RNCTimePicker";
 
   public TimePickerModule(ReactApplicationContext reactContext) {
     super(reactContext);

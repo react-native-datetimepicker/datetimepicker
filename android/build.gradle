@@ -62,19 +62,6 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'
 }
 
-project.afterEvaluate {
-    def packageDebugResources = project.tasks.findByName('react-native-community_datetimepicker:packageDebugResources')
-    def compileDebugRenderscript = project.tasks.findByName('compileDebugRenderscript')
-    def generateDebugResValues = project.tasks.findByName('generateDebugResValues')
-
-    if (packageDebugResources != null && compileDebugRenderscript != null && generateDebugResValues != null) {
-        packageDebugResources.dependsOn compileDebugRenderscript, generateDebugResValues
-    }
-    
-    def compileDebugJavaWithJavac = project.tasks.findByName('compileDebugJavaWithJavac')
-    def compileDebugAidl = project.tasks.findByName('compileDebugAidl')
-
-    if (compileDebugJavaWithJavac != null && compileDebugAidl != null) {
-        compileDebugJavaWithJavac.dependsOn compileDebugAidl
-    }
+project.tasks.findByName('compileDebugJavaWithJavac').configure { compileDebugJavaWithJavac ->
+    compileDebugJavaWithJavac.dependsOn project.tasks.findByName('compileDebugAidl')
 }

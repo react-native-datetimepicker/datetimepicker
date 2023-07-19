@@ -35,7 +35,7 @@ import java.util.Calendar;
 public class DatePickerModule extends NativeModuleDatePickerSpec {
 
   @VisibleForTesting
-  public static final String NAME = "RNDatePicker";
+  public static final String NAME = "RNCDatePicker";
 
   public DatePickerModule(ReactApplicationContext reactContext) {
     super(reactContext);

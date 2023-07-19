@@ -192,9 +192,10 @@ workflows:
       - new_arch_ios_build_only
       - publish:
           requires:
+            - analyse_js
             - e2e_release_android
-            - new_arch_android_build_only
             - e2e_release_ios
+            - new_arch_android_build_only
             - new_arch_ios_build_only
           filters:
             branches:

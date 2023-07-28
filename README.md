@@ -153,7 +153,7 @@ export const App = () => {
   const showMode = (currentMode) => {
     DateTimePickerAndroid.open({
       value: date,
-      onChange,
+      onChange: onChange,
       mode: currentMode,
       is24Hour: true,
     });

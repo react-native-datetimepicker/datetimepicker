@@ -13,4 +13,4 @@ export interface Spec extends TurboModule {
   open(params: OpenParams): Promise<DateTimePickerResult>;
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('RNTimePicker') as Spec;
+export default TurboModuleRegistry.getEnforcing<Spec>('RNCTimePicker') as Spec;

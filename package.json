@@ -39,7 +39,9 @@
     "detox:android:test:debug": "adb shell service call alarm 3 s16 Europe/Prague && detox test -c android.emu.debug -l verbose",
     "detox:android:build:release": "detox build -c android.emu.release",
     "detox:android:test:release": "adb shell service call alarm 3 s16 Europe/Prague && detox test -c android.emu.release --record-videos all --record-logs all --headless -l verbose",
-    "detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build"
+    "detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build",
+    "plugin:build": "expo-module build plugin",
+    "expo-module": "expo-module"
   },
   "repository": {
     "type": "git",
@@ -76,6 +78,8 @@
     "eslint": "^8.42.0",
     "eslint-plugin-ft-flow": "^2.0.1",
     "eslint-plugin-prettier": "^4.2.1",
+    "expo": "^47.0.0",
+    "expo-module-scripts": "^3.0.11",
     "flow-bin": "^0.182.0",
     "flow-typed": "^3.8.0",
     "jest": "^29.5.0",
@@ -90,10 +94,19 @@
     "react-native-test-app": "2.3.13",
     "react-native-windows": "^0.71.3",
     "react-test-renderer": "18.2.0",
-    "semantic-release": "^19.0.3"
+    "semantic-release": "^19.0.3",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "invariant": "^2.2.4"
+  },
+  "peerDependencies": {
+    "expo": ">=47.0.0"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
   },
   "codegenConfig": {
     "name": "RNDateTimePickerCGen",

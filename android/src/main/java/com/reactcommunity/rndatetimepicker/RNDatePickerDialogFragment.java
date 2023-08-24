@@ -111,13 +111,16 @@ public class RNDatePickerDialogFragment extends DialogFragment {
 
     if (args.containsKey(RNConstants.ARG_MINDATE)) {
       datePicker.setMinDate(minDate);
+    } else {
+      // This is to work around a bug in DatePickerDialog where it doesn't display a title showing
+      // the date under certain conditions.
+      datePicker.setMinDate(RNConstants.DEFAULT_MIN_DATE);
     }
     if (args.containsKey(RNConstants.ARG_MAXDATE)) {
       datePicker.setMaxDate(maxDate);
     }
 
-    if (args != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-      && (args.containsKey(RNConstants.ARG_MAXDATE) || args.containsKey(RNConstants.ARG_MINDATE))) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && (args.containsKey(RNConstants.ARG_MAXDATE) || args.containsKey(RNConstants.ARG_MINDATE))) {
       datePicker.setOnDateChangedListener((view, year, monthOfYear, dayOfMonth) -> {
         Calendar calendar = Calendar.getInstance(Common.getTimeZone(args));
         calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
@@ -129,7 +132,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       });
     }
 
-    if (args != null && args.containsKey(RNConstants.ARG_TESTID)) {
+    if (args.containsKey(RNConstants.ARG_TESTID)) {
       datePicker.setTag(args.getString(RNConstants.ARG_TESTID));
     }
 

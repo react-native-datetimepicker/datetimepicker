@@ -181,15 +181,17 @@ RCT_CUSTOM_VIEW_PROPERTY(displayIOS, RNCUIDatePickerStyle, RNDateTimePicker)
 
 RCT_CUSTOM_VIEW_PROPERTY(timeZoneName, NSString, RNDateTimePicker)
 {
-  if (json) {
-    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:json];
-    if (timeZone != nil) {
-      [view setTimeZone:timeZone];
-      return;
+    if (json) {
+        NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:json];
+        if (timeZone == nil) {
+            RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames fallback to localTimeZone=%@", json, NSTimeZone.localTimeZone.name);
+            view.timeZone = NSTimeZone.localTimeZone;
+        } else {
+            view.timeZone = timeZone;
+        }
+    } else {
+        view.timeZone = NSTimeZone.localTimeZone;
     }
-  }
-  RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames fallback to localTimeZone=%@", json, NSTimeZone.localTimeZone.name);
-  [view setTimeZone:[NSTimeZone localTimeZone]];
 }
 
 @end

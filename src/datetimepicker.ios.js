@@ -84,6 +84,7 @@ export default function Picker({
           type: EVENT_TYPE_DISMISSED,
           nativeEvent: {
             timestamp: value.getTime(),
+            utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
           },
         },
         value,

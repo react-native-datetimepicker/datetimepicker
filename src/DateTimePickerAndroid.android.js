@@ -89,21 +89,20 @@ function open(props: AndroidNativeProps) {
       switch (action) {
         case DATE_SET_ACTION:
         case TIME_SET_ACTION: {
-          let date = new Date(timestamp);
-          const [event] = createDateTimeSetEvtParams(date);
-          event.nativeEvent.utcOffset = utcOffset;
-          onChange?.(event, new Date(timestamp));
+          const date = new Date(timestamp);
+          const [event] = createDateTimeSetEvtParams(date, utcOffset);
+          onChange?.(event, date);
           break;
         }
 
         case NEUTRAL_BUTTON_ACTION: {
-          const [event] = createNeutralEvtParams(originalValue);
+          const [event] = createNeutralEvtParams(originalValue, utcOffset);
           onChange?.(event, originalValue);
           break;
         }
         case DISMISS_ACTION:
         default: {
-          const [event] = createDismissEvtParams(originalValue);
+          const [event] = createDismissEvtParams(originalValue, utcOffset);
           onChange?.(event, originalValue);
           break;
         }

@@ -218,17 +218,23 @@ NSDate* convertJSTimeToDate (double jsTime) {
     if (oldPickerProps.timeZoneOffsetInMinutes != newPickerProps.timeZoneOffsetInMinutes) {
         // JS standard for time zones is minutes.
         picker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:newPickerProps.timeZoneOffsetInMinutes * 60.0];
+        needsToUpdateMeasurements = true;
     }
 
     if (oldPickerProps.timeZoneName != newPickerProps.timeZoneName) {
         NSString *timeZoneName = [NSString stringWithUTF8String:newPickerProps.timeZoneName.c_str()];
-        NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:timeZoneName];
-        if (timeZone != nil) {
-            picker.timeZone = timeZone;
+        if ([@"" isEqualToString:timeZoneName]) {
+            picker.timeZone = NSTimeZone.localTimeZone;
         } else {
-            RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames fallback to localTimeZone=%@", timeZoneName, NSTimeZone.localTimeZone.name);
-            picker.timeZone = [NSTimeZone localTimeZone];
+            NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:timeZoneName];
+            if (timeZone != nil) {
+                picker.timeZone = timeZone;
+            } else {
+                RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames fallback to localTimeZone=%@", timeZoneName, NSTimeZone.localTimeZone.name);
+                picker.timeZone = NSTimeZone.localTimeZone;
+            }
         }
+        needsToUpdateMeasurements = true;
     }
 
     if (oldPickerProps.accentColor != newPickerProps.accentColor) {

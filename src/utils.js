@@ -35,7 +35,7 @@ export function sharedPropsValidation({
   timeZoneName,
   timeZoneOffsetInMinutes,
 }: {
-  value: ?Date,
+  value: Date,
   timeZoneName?: ?string,
   timeZoneOffsetInMinutes?: ?number,
 }) {
@@ -45,10 +45,7 @@ export function sharedPropsValidation({
     '`value` prop must be an instance of Date object',
   );
   invariant(
-    timeZoneName == null ||
-      timeZoneName === undefined ||
-      timeZoneOffsetInMinutes == null ||
-      timeZoneOffsetInMinutes === undefined,
+    timeZoneName == null || timeZoneOffsetInMinutes == null,
     '`timeZoneName` and `timeZoneOffsetInMinutes` cannot be specified at the same time',
   );
 }

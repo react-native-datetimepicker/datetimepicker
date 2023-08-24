@@ -57,7 +57,7 @@ static YGSize RNDateTimePickerShadowViewMeasure(YGNodeRef node, float width, YGM
       [shadowPickerView.picker setTimeZone: timeZone];
     } else {
       RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames fallback to localTimeZone=%@", shadowPickerView.timeZoneName, NSTimeZone.localTimeZone.name);
-      [shadowPickerView.picker setTimeZone:[NSTimeZone localTimeZone]];
+      [shadowPickerView.picker setTimeZone:NSTimeZone.localTimeZone];
     }
 
     if (@available(iOS 14.0, *)) {

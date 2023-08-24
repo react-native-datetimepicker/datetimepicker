@@ -37,7 +37,7 @@ export type DateTimePickerEvent = {
   type: AndroidEvtTypes,
   nativeEvent: $ReadOnly<{
     timestamp: number,
-    utcOffset?: number,
+    utcOffset: number,
     ...
   }>,
   ...

@@ -40,17 +40,15 @@ describe('e2e tests', () => {
   });
 
   it('timeInfo heading has expected content', async () => {
-    await expect(element(by.id('utcTime'))).toHaveText('2021-11-13T01:00:00Z');
-    await expect(element(by.id('deviceTime'))).toHaveText(
+    await expect(elementById('utcTime')).toHaveText('2021-11-13T01:00:00Z');
+    await expect(elementById('deviceTime')).toHaveText(
       '2021-11-13T02:00:00+01:00',
     );
-    await expect(element(by.id('deviceTzName'))).toHaveText('Europe/Prague');
-    await expect(element(by.id('overriddenTime'))).toHaveText(
+    await expect(elementById('deviceTzName')).toHaveText('Europe/Prague');
+    await expect(elementById('overriddenTime')).toHaveText(
       '2021-11-13T02:00:00+01:00',
     );
-    await expect(element(by.id('overriddenTzName'))).toHaveText(
-      'Europe/Prague',
-    );
+    await expect(elementById('overriddenTzName')).toHaveText('Europe/Prague');
   });
 
   it('should show date picker after tapping datePicker button', async () => {

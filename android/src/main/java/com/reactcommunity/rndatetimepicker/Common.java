@@ -156,7 +156,7 @@ public class Common {
       } else if (!"GMT".equals(TimeZone.getTimeZone(timeZoneName).getID())) {
         return TimeZone.getTimeZone(timeZoneName);
       }
-      RNLog.w(null, "'" + timeZoneName + "' does not exist in TimeZone.getAvailableIDs() fallback to TimeZone.getDefault()=" + TimeZone.getDefault().getID());
+      RNLog.w(null, "'" + timeZoneName + "' does not exist in TimeZone.getAvailableIDs(). Falling back to TimeZone.getDefault()=" + TimeZone.getDefault().getID());
     }
 
     return TimeZone.getDefault();

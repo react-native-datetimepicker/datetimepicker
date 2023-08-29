@@ -230,7 +230,7 @@ NSDate* convertJSTimeToDate (double jsTime) {
             if (timeZone != nil) {
                 picker.timeZone = timeZone;
             } else {
-                RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames fallback to localTimeZone=%@", timeZoneName, NSTimeZone.localTimeZone.name);
+                RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames. Falling back to localTimeZone=%@", timeZoneName, NSTimeZone.localTimeZone.name);
                 picker.timeZone = NSTimeZone.localTimeZone;
             }
         }

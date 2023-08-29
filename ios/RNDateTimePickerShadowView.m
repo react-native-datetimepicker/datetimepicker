@@ -52,11 +52,15 @@ static YGSize RNDateTimePickerShadowViewMeasure(YGNodeRef node, float width, YGM
     [shadowPickerView.picker setLocale:shadowPickerView.locale];
     [shadowPickerView.picker setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:shadowPickerView.timeZoneOffsetInMinutes * 60]];
 
-    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:shadowPickerView.timeZoneName];
-    if (timeZone != nil) {
-      [shadowPickerView.picker setTimeZone: timeZone];
+    if (shadowPickerView.timeZoneName) {
+      NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:shadowPickerView.timeZoneName];
+      if (timeZone != nil) {
+        [shadowPickerView.picker setTimeZone:timeZone];
+      } else {
+        RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames. Falling back to localTimeZone=%@", shadowPickerView.timeZoneName, NSTimeZone.localTimeZone.name);
+        [shadowPickerView.picker setTimeZone:NSTimeZone.localTimeZone];
+      }
     } else {
-      RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames fallback to localTimeZone=%@", shadowPickerView.timeZoneName, NSTimeZone.localTimeZone.name);
       [shadowPickerView.picker setTimeZone:NSTimeZone.localTimeZone];
     }
 

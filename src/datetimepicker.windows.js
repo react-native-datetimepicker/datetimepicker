@@ -54,7 +54,11 @@ export default function RNDateTimePickerQWE(
     const {onChange} = props;
     const unifiedEvent: DateTimePickerEvent = {
       ...event,
-      nativeEvent: {...event.nativeEvent, timestamp: event.nativeEvent.newDate},
+      nativeEvent: {
+        ...event.nativeEvent,
+        timestamp: event.nativeEvent.newDate,
+        utcOffset: 0,
+      },
       type: EVENT_TYPE_SET,
     };
 

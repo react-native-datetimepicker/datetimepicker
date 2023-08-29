@@ -39,6 +39,7 @@ namespace winrt::DateTimePicker::implementation {
     IMapView<hstring, ViewManagerPropertyType> DateTimePickerViewManager::NativeProps() noexcept {
         auto nativeProps = winrt::single_threaded_map<hstring, ViewManagerPropertyType>();
 
+        nativeProps.Insert(L"accessibilityLabel", ViewManagerPropertyType::String);
         nativeProps.Insert(L"dayOfWeekFormat", ViewManagerPropertyType::String);
         nativeProps.Insert(L"dateFormat", ViewManagerPropertyType::String);
         nativeProps.Insert(L"firstDayOfWeek", ViewManagerPropertyType::Number);

@@ -29,15 +29,13 @@ type MinuteInterval = ?(1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30);
 export type NativeEventIOS = SyntheticEvent<
   $ReadOnly<{|
     timestamp: number,
-    utcOffset: number,
   |}>,
 >;
 
 export type DateTimePickerEvent = {
   type: AndroidEvtTypes,
   nativeEvent: $ReadOnly<{
-    timestamp: number,
-    utcOffset: number,
+    timestamp?: number,
     ...
   }>,
   ...
@@ -94,13 +92,6 @@ type ViewPropsWithoutChildren = $Diff<
 export type BaseProps = $ReadOnly<{|
   ...ViewPropsWithoutChildren,
   ...DateOptions,
-  /**
-   * Timezone in database name.
-   *
-   * By default, the date picker will use the device's timezone. With this
-   * parameter, it is possible to force a certain timezone based on IANA
-   */
-  timeZoneName?: ?string,
 |}>;
 
 export type IOSNativeProps = $ReadOnly<{|
@@ -184,7 +175,6 @@ export type AndroidNativeProps = $ReadOnly<{|
    * instance, to show times in Pacific Standard Time, pass -7 * 60.
    */
   timeZoneOffsetInMinutes?: ?number,
-
   /**
    * The interval at which minutes can be selected.
    */
@@ -221,8 +211,11 @@ export type TimePickerOptions = {|
 
 export type DateTimePickerResult = $ReadOnly<{|
   action: 'timeSetAction' | 'dateSetAction' | 'dismissedAction',
-  timestamp: number,
-  utcOffset: number,
+  year: number,
+  month: number,
+  day: number,
+  hour: number,
+  minute: number,
 |}>;
 
 export type RCTDateTimePickerNative = Class<HostComponent<IOSNativeProps>>;
@@ -254,4 +247,5 @@ export type WindowsNativeProps = $ReadOnly<{|
   timeZoneOffsetInSeconds?: number,
   is24Hour?: boolean,
   minuteInterval?: number,
+  accessibilityLabel?: string,
 |}>;

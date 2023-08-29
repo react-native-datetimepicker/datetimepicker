@@ -66,6 +66,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
     - [`minimumDate` (`optional`)](#minimumdate-optional)
+    - [`timeZoneName` (`optional`, `iOS or Android only`)](#timeZoneName-optional-ios-and-android-only)
     - [`timeZoneOffsetInMinutes` (`optional`, `iOS or Android only`)](#timezoneoffsetinminutes-optional-ios-and-android-only)
     - [`timeZoneOffsetInSeconds` (`optional`, `Windows only`)](#timezoneoffsetinsecond-optional-windows-only)
     - [`dayOfWeekFormat` (`optional`, `Windows only`)](#dayOfWeekFormat-optional-windows-only)
@@ -309,11 +310,13 @@ This is called when the user changes the date or time in the UI. It receives the
 It is also called when user dismisses the picker, which you can detect by checking the `event.type` property.
 The values can be: `'set' | 'dismissed' | 'neutralButtonPressed'`. (`neutralButtonPressed` is only available on Android).
 
+The `utcOffset` field is only available on Android and iOS. It is the offset in minutes between the selected date and UTC time.
+
 ```js
 const setDate = (event: DateTimePickerEvent, date: Date) => {
   const {
     type,
-    nativeEvent: {timestamp},
+    nativeEvent: {timestamp, utcOffset},
   } = event;
 };
 
@@ -344,10 +347,21 @@ Defines the minimum date that can be selected. Note that on Android, this only w
 <RNDateTimePicker minimumDate={new Date(1950, 0, 1)} />
 ```
 
+#### `timeZoneName` (`optional`, `iOS and Android only`)
+
+Allows changing of the time zone of the date picker. By default, it uses the device's time zone.
+Use the time zone name from the IANA (TZDB) database name in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+
+```js
+<RNDateTimePicker timeZoneName={'Europe/Prague'} />
+```
+
 #### `timeZoneOffsetInMinutes` (`optional`, `iOS and Android only`)
 
-Allows changing of the timeZone of the date picker. By default, it uses the device's time zone.
-We strongly recommend avoiding this prop on android because of known issues in the implementation (eg. [#528](https://github.com/react-native-datetimepicker/datetimepicker/issues/528)).
+Allows changing of the time zone of the date picker. By default, it uses the device's time zone.
+We **strongly** recommend using `timeZoneName` prop instead; this prop has known issues in the android implementation (eg. [#528](https://github.com/react-native-datetimepicker/datetimepicker/issues/528)).
+
+This prop will be removed in a future release.
 
 ```js
 // GMT+1

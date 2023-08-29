@@ -13,6 +13,7 @@ import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNati
 
 type DateTimePickerEvent = $ReadOnly<{|
   timestamp: Double,
+  utcOffset: Int32,
 |}>;
 
 type NativeProps = $ReadOnly<{|
@@ -26,6 +27,7 @@ type NativeProps = $ReadOnly<{|
   minuteInterval?: ?Int32,
   mode?: WithDefault<'date' | 'time' | 'datetime' | 'countdown', 'date'>,
   timeZoneOffsetInMinutes?: ?Double,
+  timeZoneName?: ?string,
   textColor?: ?ColorValue,
   accentColor?: ?ColorValue,
   themeVariant?: WithDefault<'dark' | 'light' | 'unspecified', 'unspecified'>,

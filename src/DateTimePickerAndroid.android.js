@@ -13,11 +13,7 @@ import {
 import invariant from 'invariant';
 
 import type {AndroidNativeProps} from './types';
-import {
-  getOpenPicker,
-  timeZoneOffsetDateSetter,
-  validateAndroidProps,
-} from './androidUtils';
+import {getOpenPicker, validateAndroidProps} from './androidUtils';
 import pickers from './picker';
 import {
   createDateTimeSetEvtParams,
@@ -36,6 +32,7 @@ function open(props: AndroidNativeProps) {
     maximumDate,
     minuteInterval,
     timeZoneOffsetInMinutes,
+    timeZoneName,
     onChange,
     onError,
     positiveButton,
@@ -76,7 +73,7 @@ function open(props: AndroidNativeProps) {
         display === ANDROID_DISPLAY.spinner
           ? ANDROID_DISPLAY.spinner
           : ANDROID_DISPLAY.default;
-      const {action, day, month, year, minute, hour} = await openPicker({
+      const {action, timestamp, utcOffset} = await openPicker({
         value: valueTimestamp,
         display: displayOverride,
         is24Hour,
@@ -84,37 +81,28 @@ function open(props: AndroidNativeProps) {
         maximumDate,
         minuteInterval,
         timeZoneOffsetInMinutes,
+        timeZoneName,
         dialogButtons,
         testID,
       });
 
       switch (action) {
-        case DATE_SET_ACTION: {
-          let date = new Date(valueTimestamp);
-          date.setFullYear(year, month, day);
-          date = timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes);
-          const [event] = createDateTimeSetEvtParams(date);
-          onChange?.(event, date);
-          break;
-        }
-
+        case DATE_SET_ACTION:
         case TIME_SET_ACTION: {
-          let date = new Date(valueTimestamp);
-          date.setHours(hour, minute);
-          date = timeZoneOffsetDateSetter(date, timeZoneOffsetInMinutes);
-          const [event] = createDateTimeSetEvtParams(date);
+          const date = new Date(timestamp);
+          const [event] = createDateTimeSetEvtParams(date, utcOffset);
           onChange?.(event, date);
           break;
         }
 
         case NEUTRAL_BUTTON_ACTION: {
-          const [event] = createNeutralEvtParams(originalValue);
+          const [event] = createNeutralEvtParams(originalValue, utcOffset);
           onChange?.(event, originalValue);
           break;
         }
         case DISMISS_ACTION:
         default: {
-          const [event] = createDismissEvtParams(originalValue);
+          const [event] = createDismissEvtParams(originalValue, utcOffset);
           onChange?.(event, originalValue);
           break;
         }

@@ -19,7 +19,8 @@ export type EvtTypes = 'set' | 'neutralButtonPressed' | 'dismissed';
 export type DateTimePickerEvent = {
   type: EvtTypes;
   nativeEvent: {
-    timestamp?: number;
+    timestamp: number;
+    utcOffset: number;
   };
 };
 
@@ -63,7 +64,15 @@ type TimeOptions = Readonly<
   }
 >;
 
-export type BaseProps = Readonly<Omit<ViewProps, 'children'> & DateOptions>;
+export type BaseProps = Readonly<
+  Omit<ViewProps, 'children'> &
+    DateOptions & {
+      /**
+       * The tz database name in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+       */
+      timeZoneName?: string;
+    }
+>;
 
 export type IOSNativeProps = Readonly<
   BaseProps & {

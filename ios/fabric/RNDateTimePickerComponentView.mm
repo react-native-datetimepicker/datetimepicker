@@ -36,20 +36,20 @@ NSDate* convertJSTimeToDate (double jsTime) {
     if (self = [super initWithFrame:frame]) {
         static const auto defaultProps = std::make_shared<const RNDateTimePickerProps>();
         _props = defaultProps;
-        
+
         _picker = [RNDateTimePicker new];
         _dummyPicker = [RNDateTimePicker new];
-        
+
         [_picker addTarget:self action:@selector(onChange:) forControlEvents:UIControlEventValueChanged];
         [_picker addTarget:self action:@selector(onDismiss:) forControlEvents:UIControlEventEditingDidEnd];
-        
+
         // Default Picker mode
         _picker.datePickerMode = UIDatePickerModeDate;
         _dummyPicker.datePickerMode = UIDatePickerModeDate;
-        
+
         self.contentView = _picker;
     }
-    
+
     return self;
 }
 
@@ -68,13 +68,13 @@ NSDate* convertJSTimeToDate (double jsTime) {
     if (!_eventEmitter) {
         return;
     }
-    
+
     NSTimeInterval timestamp = [sender.date timeIntervalSince1970];
     RNDateTimePickerEventEmitter::OnChange event = {
         // Sending time in milliseconds
         .timestamp = timestamp * 1000
     };
-    
+
     std::dynamic_pointer_cast<const RNDateTimePickerEventEmitter>(_eventEmitter)
     ->onChange(event);
 }
@@ -135,7 +135,7 @@ NSDate* convertJSTimeToDate (double jsTime) {
  */
 - (void)updateState:(const State::Shared &)state oldState:(const State::Shared &)oldState {
     _state = std::static_pointer_cast<const RNDateTimePickerShadowNode::ConcreteState>(state);
-    
+
     if (oldState == nullptr) {
         // Calculate the initial picker measurements
         [self updateMeasurements];
@@ -149,24 +149,24 @@ NSDate* convertJSTimeToDate (double jsTime) {
  * Props that will to update measurements: date, locale, mode, displayIOS.
  */
 - (Boolean)updatePropsForPicker:(UIDatePicker *)picker props:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps {
-    
+
     const auto &oldPickerProps = *std::static_pointer_cast<const RNDateTimePickerProps>(_props);
     const auto &newPickerProps = *std::static_pointer_cast<const RNDateTimePickerProps>(props);
     Boolean needsToUpdateMeasurements = false;
-    
+
     if (oldPickerProps.date != newPickerProps.date) {
         picker.date = convertJSTimeToDate(newPickerProps.date);
         needsToUpdateMeasurements = true;
     }
-    
+
     if (oldPickerProps.minimumDate != newPickerProps.minimumDate) {
         picker.minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
     }
-    
+
     if (oldPickerProps.maximumDate != newPickerProps.maximumDate) {
         picker.maximumDate = convertJSTimeToDate(newPickerProps.maximumDate);
     }
-    
+
     if (oldPickerProps.locale != newPickerProps.locale) {
         NSString *convertedLocale = RCTNSStringFromString(newPickerProps.locale);
         NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:convertedLocale];
@@ -174,7 +174,7 @@ NSDate* convertJSTimeToDate (double jsTime) {
         picker.locale = locale;
         needsToUpdateMeasurements = true;
     }
-    
+
     if (oldPickerProps.mode != newPickerProps.mode) {
         switch(newPickerProps.mode) {
             case RNDateTimePickerMode::Time:
@@ -191,7 +191,7 @@ NSDate* convertJSTimeToDate (double jsTime) {
         }
         needsToUpdateMeasurements = true;
     }
-    
+
     if (@available(iOS 14.0, *)) {
         if (oldPickerProps.displayIOS != newPickerProps.displayIOS) {
             switch(newPickerProps.displayIOS) {
@@ -210,19 +210,36 @@ NSDate* convertJSTimeToDate (double jsTime) {
             needsToUpdateMeasurements = true;
         }
     }
-    
+
     if (oldPickerProps.minuteInterval != newPickerProps.minuteInterval) {
         picker.minuteInterval = newPickerProps.minuteInterval;
     }
-    
+
     if (oldPickerProps.timeZoneOffsetInMinutes != newPickerProps.timeZoneOffsetInMinutes) {
         // JS standard for time zones is minutes.
         picker.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:newPickerProps.timeZoneOffsetInMinutes * 60.0];
+        needsToUpdateMeasurements = true;
     }
-    
+
+    if (oldPickerProps.timeZoneName != newPickerProps.timeZoneName) {
+        NSString *timeZoneName = [NSString stringWithUTF8String:newPickerProps.timeZoneName.c_str()];
+        if ([@"" isEqualToString:timeZoneName]) {
+            picker.timeZone = NSTimeZone.localTimeZone;
+        } else {
+            NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:timeZoneName];
+            if (timeZone != nil) {
+                picker.timeZone = timeZone;
+            } else {
+                RCTLogWarn(@"'%@' does not exist in NSTimeZone.knownTimeZoneNames. Falling back to localTimeZone=%@", timeZoneName, NSTimeZone.localTimeZone.name);
+                picker.timeZone = NSTimeZone.localTimeZone;
+            }
+        }
+        needsToUpdateMeasurements = true;
+    }
+
     if (oldPickerProps.accentColor != newPickerProps.accentColor) {
         UIColor *color = RCTUIColorFromSharedColor(newPickerProps.accentColor);
-        
+
         if (color != nil) {
             [picker setTintColor:color];
         } else {
@@ -233,11 +250,11 @@ NSDate* convertJSTimeToDate (double jsTime) {
             }
         }
     }
-    
+
     if (oldPickerProps.textColor != newPickerProps.textColor) {
         [self updateTextColorForPicker:picker color:RCTUIColorFromSharedColor(newPickerProps.textColor)];
     }
-    
+
     if (@available(iOS 13.0, *)) {
         if (oldPickerProps.themeVariant != newPickerProps.themeVariant) {
             switch (newPickerProps.themeVariant) {
@@ -252,11 +269,11 @@ NSDate* convertJSTimeToDate (double jsTime) {
             }
         }
     }
-    
+
     if (oldPickerProps.enabled != newPickerProps.enabled) {
         picker.enabled = newPickerProps.enabled;
     }
-    
+
     return needsToUpdateMeasurements;
 }
 
@@ -264,13 +281,13 @@ NSDate* convertJSTimeToDate (double jsTime) {
 {
     // Updating the dummy first to check if we need to update measurements
     Boolean needsToUpdateMeasurements = [self updatePropsForPicker:_dummyPicker props:props oldProps:oldProps];
-    
+
     if (needsToUpdateMeasurements) {
         [self updateMeasurements];
     }
-    
+
     [self updatePropsForPicker:_picker props:props oldProps:oldProps];
-    
+
     [super updateProps:props oldProps:oldProps];
 }
 

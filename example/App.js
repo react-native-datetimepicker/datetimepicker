@@ -161,7 +161,7 @@ export const App = () => {
   };
 
   const renderItem = ({item}) => {
-    const isNumber = !isNaN(item);
+    const isNumber = typeof item === 'number';
     const title = isNumber
       ? item > 0
         ? `+${item} mins`
@@ -203,13 +203,6 @@ export const App = () => {
           {flex: 1, backgroundColor: isDarkMode ? Colors.black : Colors.white},
         ]}>
         <StatusBar barStyle="default" />
-        {global.HermesInternal != null && (
-          <View style={styles.engine}>
-            <Text testID="hermesIndicator" style={styles.footer}>
-              Engine: Hermes
-            </Text>
-          </View>
-        )}
         <View>
           <View style={styles.header}>
             <ThemedText style={styles.text}>Example DateTime Picker</ThemedText>

@@ -19,7 +19,8 @@ export type EvtTypes = 'set' | 'neutralButtonPressed' | 'dismissed';
 export type DateTimePickerEvent = {
   type: EvtTypes;
   nativeEvent: {
-    timestamp?: number;
+    timestamp: number;
+    utcOffset: number;
   };
 };
 

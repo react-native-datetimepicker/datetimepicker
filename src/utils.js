@@ -48,4 +48,9 @@ export function sharedPropsValidation({
     timeZoneName == null || timeZoneOffsetInMinutes == null,
     '`timeZoneName` and `timeZoneOffsetInMinutes` cannot be specified at the same time',
   );
+  if (timeZoneOffsetInMinutes !== undefined) {
+    console.warn(
+      '`timeZoneOffsetInMinutes` is deprecated and will be removed in a future release. Use `timeZoneName` instead.',
+    );
+  }
 }

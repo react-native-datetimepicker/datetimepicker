@@ -353,8 +353,7 @@ Allows changing of the time zone of the date picker. By default, it uses the dev
 Use the time zone name from the IANA (TZDB) database name in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
 
 ```js
-// GMT+1
-<RNDateTimePicker timeZoneOffsetInMinutes={60} />
+<RNDateTimePicker timeZoneName={'Europe/Prague'} />
 ```
 
 #### `timeZoneOffsetInMinutes` (`optional`, `iOS and Android only`)

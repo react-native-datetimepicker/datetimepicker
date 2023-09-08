@@ -1,4 +1,3 @@
-// @ts-ignore Not able to find exported module
 import type {SyntheticEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 import type {HostComponent, processColor} from 'react-native';
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';

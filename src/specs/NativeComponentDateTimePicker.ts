@@ -1,4 +1,3 @@
-// @flow strict-local
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import type {HostComponent} from 'react-native';

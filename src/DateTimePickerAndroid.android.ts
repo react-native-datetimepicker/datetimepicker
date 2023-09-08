@@ -10,7 +10,7 @@ import invariant from 'invariant';
 
 import type {AndroidNativeProps} from './types';
 import {getOpenPicker, validateAndroidProps} from './androidUtils';
-import pickers from './picker';
+import pickers from './picker.android';
 import {
   createDateTimeSetEvtParams,
   createDismissEvtParams,
@@ -49,17 +49,17 @@ function open(props: AndroidNativeProps) {
     try {
       const dialogButtons = {
         positive: {
-          label: positiveButtonLabel,
+          title: positiveButtonLabel,
           ...positiveButton,
           textColor: processColor(positiveButton?.textColor),
         },
         neutral: {
-          label: neutralButtonLabel,
+          title: neutralButtonLabel,
           ...neutralButton,
           textColor: processColor(neutralButton?.textColor),
         },
         negative: {
-          label: negativeButtonLabel,
+          title: negativeButtonLabel,
           ...negativeButton,
           textColor: processColor(negativeButton?.textColor),
         },
@@ -111,7 +111,6 @@ function open(props: AndroidNativeProps) {
 }
 
 function dismiss(mode: AndroidNativeProps['mode']): Promise<boolean> {
-  // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
   return pickers[mode].dismiss();
 }
 

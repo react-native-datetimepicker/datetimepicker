@@ -49,17 +49,17 @@ function open(props: AndroidNativeProps) {
     try {
       const dialogButtons = {
         positive: {
-          title: positiveButtonLabel,
+          label: positiveButtonLabel,
           ...positiveButton,
           textColor: processColor(positiveButton?.textColor),
         },
         neutral: {
-          title: neutralButtonLabel,
+          label: neutralButtonLabel,
           ...neutralButton,
           textColor: processColor(neutralButton?.textColor),
         },
         negative: {
-          title: negativeButtonLabel,
+          label: negativeButtonLabel,
           ...negativeButton,
           textColor: processColor(negativeButton?.textColor),
         },

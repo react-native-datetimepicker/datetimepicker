@@ -4,7 +4,12 @@
  */
 'use strict';
 
-import {requireNativeComponent, StyleSheet} from 'react-native';
+import {
+  requireNativeComponent,
+  StyleProp,
+  StyleSheet,
+  ViewStyle,
+} from 'react-native';
 import type {
   WindowsNativeProps,
   WindowsDatePickerChangeEvent,
@@ -21,10 +26,26 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RNDateTimePickerWindows = requireNativeComponent(
-  'RNDateTimePickerWindows',
-);
-const RNTimePickerWindows = requireNativeComponent('RNTimePickerWindows');
+type DateTimePickerWindowsNativeProps = Omit<
+  WindowsNativeProps,
+  'onChange' | 'mode' | 'value'
+> & {
+  onChange: (event: WindowsDatePickerChangeEvent) => void;
+};
+export const RNDateTimePickerWindows =
+  requireNativeComponent<DateTimePickerWindowsNativeProps>(
+    'RNDateTimePickerWindows',
+  );
+
+type TimePickerWindowsNativeProps = {
+  style?: StyleProp<ViewStyle>;
+  is24Hour?: boolean;
+  selectedTime?: number;
+  minuteInterval?: number;
+  onChange: (event: WindowsDatePickerChangeEvent) => void;
+};
+const RNTimePickerWindows =
+  requireNativeComponent<TimePickerWindowsNativeProps>('RNTimePickerWindows');
 
 export default function RNDateTimePickerQWE(
   props: WindowsNativeProps,

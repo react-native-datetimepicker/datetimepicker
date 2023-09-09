@@ -1,6 +1,7 @@
 import type {
   HostComponent,
   NativeSyntheticEvent,
+  ViewStyle,
   processColor,
 } from 'react-native';
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
@@ -15,6 +16,7 @@ import {
   WINDOWS_MODE,
   ANDROID_EVT_TYPE,
 } from './constants';
+import {StyleProp} from 'react-native';
 
 export type IOSDisplay = keyof typeof IOS_DISPLAY;
 export type IOSMode = keyof typeof IOS_MODE;
@@ -275,5 +277,6 @@ export type WindowsNativeProps = Readonly<
     minuteInterval?: number;
     maximumDate?: Date;
     minimumDate?: Date;
+    style?: StyleProp<ViewStyle>;
   }
 >;

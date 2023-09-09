@@ -3,9 +3,6 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
- * @format
- * @flow strict-local
  */
 import {DATE_SET_ACTION, DISMISS_ACTION, ANDROID_DISPLAY} from './constants';
 import {toMilliseconds} from './utils';
@@ -49,9 +46,9 @@ export default class DatePickerAndroid {
   /**
    * A date has been selected.
    */
-  static dateSetAction: 'dateSetAction' = DATE_SET_ACTION;
+  static dateSetAction = DATE_SET_ACTION;
   /**
    * The dialog has been dismissed.
    */
-  static dismissedAction: 'dismissedAction' = DISMISS_ACTION;
+  static dismissedAction = DISMISS_ACTION;
 }

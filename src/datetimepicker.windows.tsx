@@ -57,7 +57,7 @@ export default function RNDateTimePickerQWE(
       type: EVENT_TYPE_SET,
     };
 
-    onChange && onChange(unifiedEvent, new Date(event.nativeEvent.newDate));
+    onChange?.(unifiedEvent, new Date(event.nativeEvent.newDate));
   };
 
   const timezoneOffsetInSeconds = (() => {
@@ -76,7 +76,6 @@ export default function RNDateTimePickerQWE(
     return (
       <RNDateTimePickerWindows
         {...localProps}
-        // @ts-ignore Doesnt match on the props
         onChange={_onChange}
         timeZoneOffsetInSeconds={timezoneOffsetInSeconds}
       />

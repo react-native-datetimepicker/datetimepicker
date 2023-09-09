@@ -1,5 +1,5 @@
 import {ANDROID_DISPLAY, ANDROID_MODE} from './constants';
-import pickers from './picker';
+import pickers from './picker.android';
 import type {AndroidNativeProps, DateTimePickerResult} from './types';
 import {sharedPropsValidation} from './utils';
 import invariant from 'invariant';
@@ -47,7 +47,6 @@ function getOpenPicker(
         timeZoneName,
         dialogButtons,
       }: OpenParams) =>
-        // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[mode].open({
           value,
           display,
@@ -68,7 +67,6 @@ function getOpenPicker(
         dialogButtons,
         testID,
       }: OpenParams) =>
-        // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
           value,
           display,

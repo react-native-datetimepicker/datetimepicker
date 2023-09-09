@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  * This is a controlled component version of RNDateTimePicker
- *
  */
-import RNDateTimePicker from './picker';
+import RNDateTimePicker from './picker.ios';
 import {dateToMilliseconds, sharedPropsValidation} from './utils';
 import {
   IOS_DISPLAY,
@@ -61,7 +60,7 @@ export default function Picker({
   display: providedDisplay = IOS_DISPLAY.default,
   disabled = false,
   ...other
-}: IOSNativeProps): React.Node {
+}: IOSNativeProps): React.ReactNode {
   sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName});
 
   const display = getDisplaySafe(providedDisplay);
@@ -80,17 +79,16 @@ export default function Picker({
 
   const onDismiss = () => {
     // TODO introduce separate onDismissed event listener
-    onChange &&
-      onChange(
-        {
-          type: EVENT_TYPE_DISMISSED,
-          nativeEvent: {
-            timestamp: value.getTime(),
-            utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
-          },
+    onChange?.(
+      {
+        type: EVENT_TYPE_DISMISSED,
+        nativeEvent: {
+          timestamp: value.getTime(),
+          utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
         },
-        value,
-      );
+      },
+      value,
+    );
   };
 
   return (

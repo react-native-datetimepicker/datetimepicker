@@ -1,7 +1,3 @@
-/**
- * @format
- * @flow strict-local
- */
 import {ANDROID_DISPLAY, ANDROID_MODE} from './constants';
 import {useEffect} from 'react';
 

@@ -33,7 +33,6 @@
     "bundle:ios": "mkdir -p example/dist && react-native bundle --platform ios --dev false --entry-file index.js --bundle-output example/dist/main.ios.jsbundle --assets-dest example/dist/assets",
     "test": "jest",
     "lint": "NODE_ENV=lint eslint {example,src,test}/**/*.js src/index.d.ts",
-    "flow": "flow check",
     "typescript": "tsc --noEmit",
     "prepare": "bob build",
     "detox:ios:build:debug": "detox build -c ios.sim.debug",

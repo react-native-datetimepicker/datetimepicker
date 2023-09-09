@@ -1,7 +1,3 @@
-/**
- * @format
- * @flow strict-local
- */
 import DatePickerAndroid from './datepicker';
 import TimePickerAndroid from './timepicker';
 import {ANDROID_MODE} from './constants';

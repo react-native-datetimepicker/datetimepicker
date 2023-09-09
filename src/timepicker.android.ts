@@ -3,9 +3,6 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
- * @format
- * @flow strict-local
  */
 import {TIME_SET_ACTION, DISMISS_ACTION, ANDROID_DISPLAY} from './constants';
 import {toMilliseconds} from './utils';
@@ -45,9 +42,9 @@ export default class TimePickerAndroid {
   /**
    * A time has been selected.
    */
-  static timeSetAction: 'timeSetAction' = TIME_SET_ACTION;
+  static timeSetAction = TIME_SET_ACTION;
   /**
    * The dialog has been dismissed.
    */
-  static dismissedAction: 'dismissedAction' = DISMISS_ACTION;
+  static dismissedAction = DISMISS_ACTION;
 }

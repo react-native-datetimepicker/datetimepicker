@@ -1,5 +1,3 @@
-// @flow strict-local
-
 import type {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
 import {TurboModuleRegistry} from 'react-native';
 import type {DateTimePickerResult} from '../types';
@@ -13,4 +11,4 @@ export interface Spec extends TurboModule {
   open(params: OpenParams): Promise<DateTimePickerResult>;
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('RNCTimePicker') as Spec;
+export default TurboModuleRegistry.getEnforcing<Spec>('RNCTimePicker');

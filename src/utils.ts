@@ -12,7 +12,7 @@ export function toMilliseconds<T extends DatePickerOptions | TimePickerOptions>(
     const value = options[key];
 
     // Is it a valid Date object?
-    if (Object.prototype.toString.call(value) === '[object Date]') {
+    if (value instanceof Date) {
       // FIXME: Property 'getTime' does not exist on type 'T[keyof T]'.
       options[key] = value.getTime();
     }

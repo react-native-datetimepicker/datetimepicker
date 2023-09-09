@@ -51,17 +51,17 @@ function open(props: AndroidNativeProps) {
         positive: {
           label: positiveButtonLabel,
           ...positiveButton,
-          textColor: processColor(positiveButton?.textColor),
+          textColor: processColor(positiveButton?.textColor || undefined),
         },
         neutral: {
           label: neutralButtonLabel,
           ...neutralButton,
-          textColor: processColor(neutralButton?.textColor),
+          textColor: processColor(neutralButton?.textColor || undefined),
         },
         negative: {
           label: negativeButtonLabel,
           ...negativeButton,
-          textColor: processColor(negativeButton?.textColor),
+          textColor: processColor(negativeButton?.textColor || undefined),
         },
       };
 

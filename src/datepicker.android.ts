@@ -39,7 +39,7 @@ export default class DatePickerAndroid {
     return RNDatePickerAndroid.open(options);
   }
 
-  static async dismiss(): Promise<boolean> {
+  static async dismiss() {
     return RNDatePickerAndroid.dismiss();
   }
 

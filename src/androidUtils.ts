@@ -1,16 +1,14 @@
 import {ANDROID_DISPLAY, ANDROID_MODE} from './constants';
 import pickers from './picker.android';
-import type {AndroidNativeProps, DateTimePickerResult} from './types';
+import type {
+  AndroidNativeProps,
+  ButtonType,
+  DateTimePickerResult,
+} from './types';
 import {sharedPropsValidation} from './utils';
 import invariant from 'invariant';
-import {processColor} from 'react-native';
 
 type Timestamp = number;
-
-type ProcessedButton = {
-  label?: string;
-  textColor: ReturnType<typeof processColor>;
-};
 
 type OpenParams = {
   value: Timestamp;
@@ -23,9 +21,9 @@ type OpenParams = {
   timeZoneName: AndroidNativeProps['timeZoneName'];
   testID: AndroidNativeProps['testID'];
   dialogButtons: {
-    positive: ProcessedButton;
-    negative: ProcessedButton;
-    neutral: ProcessedButton;
+    positive: ButtonType;
+    negative: ButtonType;
+    neutral: ButtonType;
   };
 };
 

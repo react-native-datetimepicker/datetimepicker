@@ -36,11 +36,6 @@ type MinuteInterval =
   | 20
   | 30;
 
-export type ProcessedButton = {
-  label?: string;
-  textColor: ReturnType<typeof processColor>;
-};
-
 export type NativeEventIOS = NativeSyntheticEvent<
   Readonly<{
     timestamp: number;
@@ -174,7 +169,10 @@ export type IOSNativeProps = Readonly<
   }
 >;
 
-export type ButtonType = {label?: string; textColor?: ColorValue};
+export type ButtonType = {
+  label?: string;
+  textColor?: ReturnType<typeof processColor>;
+};
 
 export type AndroidNativeProps = Readonly<
   BaseProps &
@@ -216,11 +214,22 @@ export type AndroidNativeProps = Readonly<
 
 export type DatePickerOptions = DateOptions &
   TimeZoneOptions & {
+    dialogButtons: {
+      positive: ButtonType;
+      neutral: ButtonType;
+      negative: ButtonType;
+    };
     display?: Display;
+    testID?: string;
   };
 
 export type TimePickerOptions = TimeOptions &
   TimeZoneOptions & {
+    dialogButtons: {
+      positive: ButtonType;
+      neutral: ButtonType;
+      negative: ButtonType;
+    };
     minuteInterval?: MinuteInterval;
     display?: Display;
   };

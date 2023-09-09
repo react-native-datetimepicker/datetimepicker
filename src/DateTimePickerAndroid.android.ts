@@ -110,7 +110,7 @@ function open(props: AndroidNativeProps) {
   presentPicker();
 }
 
-function dismiss(mode: AndroidNativeProps['mode']): Promise<boolean> {
+function dismiss(mode: AndroidNativeProps['mode']) {
   return pickers[mode].dismiss();
 }
 

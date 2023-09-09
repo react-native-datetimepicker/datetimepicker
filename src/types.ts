@@ -1,5 +1,8 @@
-import type {SyntheticEvent} from 'react-native/Libraries/Types/CoreEventTypes';
-import type {HostComponent, processColor} from 'react-native';
+import type {
+  HostComponent,
+  NativeSyntheticEvent,
+  processColor,
+} from 'react-native';
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {ElementRef} from 'react';
 import type {ColorValue} from 'react-native/Libraries/StyleSheet/StyleSheet';
@@ -34,11 +37,11 @@ type MinuteInterval =
   | 30;
 
 export type ProcessedButton = {
-  label: string;
+  label?: string;
   textColor: ReturnType<typeof processColor>;
 };
 
-export type NativeEventIOS = SyntheticEvent<
+export type NativeEventIOS = NativeSyntheticEvent<
   Readonly<{
     timestamp: number;
     utcOffset: number;
@@ -96,14 +99,25 @@ type TimeOptions = Readonly<
 
 type ViewPropsWithoutChildren = Omit<ViewProps, 'children'>;
 
+/**
+ * Timezone in database name.
+ *
+ ** By default, the date picker will use the device's timezone. With this
+ * parameter, it is possible to force a certain timezone based on IANA
+ *
+ * Timezone offset in minutes.
+ *
+ ** By default, the date picker will use the device's timezone. With this
+ * parameter, it is possible to force a certain timezone offset. For
+ * instance, to show times in Pacific Standard Time, pass -7 * 60.
+ */
+type TimeZoneOptions = {
+  timeZoneName?: string;
+  timeZoneOffsetInMinutes?: number;
+};
+
 export type BaseProps = Readonly<
-  ViewPropsWithoutChildren &
-    DateOptions & /**
-     * Timezone in database name.
-     *
-     * By default, the date picker will use the device's timezone. With this
-     * parameter, it is possible to force a certain timezone based on IANA
-     */ {timeZoneName?: string}
+  ViewPropsWithoutChildren & DateOptions & TimeZoneOptions
 >;
 
 export type IOSNativeProps = Readonly<
@@ -122,15 +136,6 @@ export type IOSNativeProps = Readonly<
      * The date picker mode.
      */
     mode?: IOSMode;
-
-    /**
-     * Timezone offset in minutes.
-     *
-     * By default, the date picker will use the device's timezone. With this
-     * parameter, it is possible to force a certain timezone offset. For
-     * instance, to show times in Pacific Standard Time, pass -7 * 60.
-     */
-    timeZoneOffsetInMinutes?: number;
 
     /**
      * The date picker text color.
@@ -186,15 +191,6 @@ export type AndroidNativeProps = Readonly<
       display: Display;
 
       /**
-       * Timezone offset in minutes.
-       *
-       * By default, the date picker will use the device's timezone. With this
-       * parameter, it is possible to force a certain timezone offset. For
-       * instance, to show times in Pacific Standard Time, pass -7 * 60.
-       */
-      timeZoneOffsetInMinutes?: number;
-
-      /**
        * The interval at which minutes can be selected.
        */
       minuteInterval?: MinuteInterval;
@@ -218,14 +214,16 @@ export type AndroidNativeProps = Readonly<
     }
 >;
 
-export type DatePickerOptions = DateOptions & {
-  display?: Display;
-};
+export type DatePickerOptions = DateOptions &
+  TimeZoneOptions & {
+    display?: Display;
+  };
 
-export type TimePickerOptions = TimeOptions & {
-  minuteInterval?: MinuteInterval;
-  display?: Display;
-};
+export type TimePickerOptions = TimeOptions &
+  TimeZoneOptions & {
+    minuteInterval?: MinuteInterval;
+    display?: Display;
+  };
 
 export type DateTimePickerResult = Readonly<{
   action:

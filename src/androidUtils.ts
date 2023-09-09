@@ -8,8 +8,8 @@ import {processColor} from 'react-native';
 type Timestamp = number;
 
 type ProcessedButton = {
-  title: string;
-  textColor: typeof processColor;
+  label?: string;
+  textColor: ReturnType<typeof processColor>;
 };
 
 type OpenParams = {
@@ -48,7 +48,7 @@ function getOpenPicker(
         dialogButtons,
       }: OpenParams) =>
         pickers[mode].open({
-          value,
+          value: new Date(value),
           display,
           minuteInterval,
           is24Hour,
@@ -68,7 +68,7 @@ function getOpenPicker(
         testID,
       }: OpenParams) =>
         pickers[ANDROID_MODE.date].open({
-          value,
+          value: new Date(value),
           display,
           minimumDate,
           maximumDate,

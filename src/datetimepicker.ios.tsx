@@ -74,7 +74,7 @@ export default function Picker({
 
     const date = timestamp !== undefined ? new Date(timestamp) : undefined;
 
-    onChange && onChange(unifiedEvent, date);
+    onChange?.(unifiedEvent, date);
   };
 
   const onDismiss = () => {

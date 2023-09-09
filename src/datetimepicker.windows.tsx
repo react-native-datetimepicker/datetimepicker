@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// $FlowExpectedError - this export is used in tests only, so don't care
 export const RNDateTimePickerWindows = requireNativeComponent(
   'RNDateTimePickerWindows',
 );
@@ -41,7 +40,6 @@ export default function RNDateTimePickerQWE(
     onChange: props.onChange,
     placeholderText: props.placeholderText,
     selectedDate: props.value ? props.value.getTime() : undefined, // time in milliseconds
-    // @ts-ignore Doesn't exist on the props
     style: [styles.rnDatePicker, props.style],
   };
 
@@ -83,7 +81,6 @@ export default function RNDateTimePickerQWE(
   } else if (mode === WINDOWS_MODE.time) {
     return (
       <RNTimePickerWindows
-        // @ts-ignore Doesn't exist on the props
         style={props.style}
         is24Hour={props.is24Hour}
         selectedTime={localProps.selectedDate}

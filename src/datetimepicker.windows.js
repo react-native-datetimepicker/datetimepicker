@@ -7,7 +7,8 @@
 'use strict';
 
 import {
-  type requireNativeComponent,
+  type HostComponent,
+  requireNativeComponent,
   StyleSheet,
 } from 'react-native';
 import type {

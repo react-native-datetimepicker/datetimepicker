@@ -14,6 +14,7 @@ export function toMilliseconds<T extends DatePickerOptions | TimePickerOptions>(
     // Is it a valid Date object?
     if (value instanceof Date) {
       // FIXME: Property 'getTime' does not exist on type 'T[keyof T]'.
+      // @ts-ignore
       options[key] = value.getTime();
     }
   });

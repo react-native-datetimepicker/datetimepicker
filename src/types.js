@@ -254,4 +254,5 @@ export type WindowsNativeProps = $ReadOnly<{|
   timeZoneOffsetInSeconds?: number,
   is24Hour?: boolean,
   minuteInterval?: number,
+  accessibilityLabel?: string,
 |}>;

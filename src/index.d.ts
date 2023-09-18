@@ -211,6 +211,7 @@ export type WindowsNativeProps = Readonly<
       timeZoneOffsetInSeconds?: number;
       is24Hour?: boolean;
       minuteInterval?: number;
+      accessibilityLabel?: string;
     }
 >;
 

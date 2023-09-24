@@ -21,6 +21,9 @@ jobs:
           command: yarn install --frozen-lockfile
           name: yarn install
       - run:
+          command: yarn prepare
+          name: build
+      - run:
           command: yarn lint
           name: Run ESLint
       - run:

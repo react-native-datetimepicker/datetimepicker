@@ -278,5 +278,6 @@ export type WindowsNativeProps = Readonly<
     maximumDate?: Date;
     minimumDate?: Date;
     style?: StyleProp<ViewStyle>;
+    accessibilityLabel?: string;
   }
 >;

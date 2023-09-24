@@ -53,6 +53,7 @@ export default function RNDateTimePickerQWE(
   sharedPropsValidation({value: props?.value});
 
   const localProps = {
+    accessibilityLabel: props.accessibilityLabel,
     dayOfWeekFormat: props.dayOfWeekFormat,
     dateFormat: props.dateFormat,
     firstDayOfWeek: props.firstDayOfWeek,

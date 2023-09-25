@@ -242,7 +242,7 @@ export const App = () => {
               title={'Device TzName:'}
               body={RNLocalize.getTimeZone()}
             />
-            {(tzName || !isNaN(tzOffsetInMinutes)) && (
+            {(tzName || !Number.isNaN(tzOffsetInMinutes)) && (
               <>
                 <Info
                   testID={'overriddenTime'}

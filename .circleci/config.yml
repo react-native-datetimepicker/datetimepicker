@@ -27,7 +27,7 @@ jobs:
           command: yarn lint
           name: Run ESLint
       - run:
-          command: yarn typescript
+          command: yarn types
           name: Typescript
       - run:
           command: yarn test

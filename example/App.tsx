@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   SafeAreaView,
   ScrollView,
@@ -12,6 +13,8 @@ import {
   Switch,
   Alert,
   FlatList,
+  TextInputProps,
+  TextProps,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SegmentedControl from './SegmentedControl';
@@ -43,7 +46,7 @@ const timezone = [
   'Australia/Adelaide',
 ];
 
-const ThemedText = (props) => {
+const ThemedText = (props: TextProps) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const textColorByMode = {color: isDarkMode ? Colors.white : Colors.black};
@@ -53,7 +56,7 @@ const ThemedText = (props) => {
     style: [props.style, textColorByMode],
   });
 };
-const ThemedTextInput = (props) => {
+const ThemedTextInput = (props: TextInputProps) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const textColorByMode = {color: isDarkMode ? Colors.white : Colors.black};
@@ -65,7 +68,15 @@ const ThemedTextInput = (props) => {
   });
 };
 
-const Info = ({testID, title, body}) => {
+const Info = ({
+  testID,
+  title,
+  body,
+}: {
+  testID: string;
+  title: string;
+  body: string;
+}) => {
   return (
     <View style={{flexDirection: 'row'}}>
       <ThemedText style={{flex: 1}}>{title}</ThemedText>
@@ -80,11 +91,13 @@ const MODE_VALUES = Platform.select({
   ios: Object.values(IOS_MODE),
   android: Object.values(ANDROID_MODE),
   windows: [],
+  default: [],
 });
 const DISPLAY_VALUES = Platform.select({
   ios: Object.values(IOS_DISPLAY),
   android: Object.values(ANDROID_DISPLAY),
   windows: [],
+  default: [],
 });
 const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
 
@@ -92,22 +105,28 @@ export const App = () => {
   // Sat, 13 Nov 2021 10:00:00 GMT (local: Saturday, November 13, 2021 11:00:00 AM GMT+01:00)
   const sourceMoment = moment.unix(1636765200);
   const sourceDate = sourceMoment.local().toDate();
-  const [date, setDate] = useState(sourceDate);
-  const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(undefined);
-  const [tzName, setTzName] = useState(RNLocalize.getTimeZone());
-  const [mode, setMode] = useState(MODE_VALUES[0]);
+  const [date, setDate] = useState<Date | undefined>(sourceDate);
+  const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState<
+    number | undefined
+  >(undefined);
+  const [tzName, setTzName] = useState<string | undefined>(
+    RNLocalize.getTimeZone(),
+  );
+  const [mode, setMode] = useState(MODE_VALUES?.[0]);
   const [show, setShow] = useState(false);
-  const [textColor, setTextColor] = useState();
-  const [accentColor, setAccentColor] = useState();
+  const [textColor, setTextColor] = useState<string | undefined>();
+  const [accentColor, setAccentColor] = useState<string | undefined>();
   const [display, setDisplay] = useState(DISPLAY_VALUES[0]);
   const [interval, setMinInterval] = useState(1);
-  const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
+  const [neutralButtonLabel, setNeutralButtonLabel] = useState<
+    string | undefined
+  >(undefined);
   const [disabled, setDisabled] = useState(false);
-  const [minimumDate, setMinimumDate] = useState();
-  const [maximumDate, setMaximumDate] = useState();
+  const [minimumDate, setMinimumDate] = useState<Date | undefined>();
+  const [maximumDate, setMaximumDate] = useState<Date | undefined>();
 
   // Windows-specific
-  const [time, setTime] = useState(undefined);
+  const [time, setTime] = useState<Date | undefined>(undefined);
   const [maxDate] = useState(new Date('2021'));
   const [minDate] = useState(new Date('2018'));
   const [is24Hours, set24Hours] = useState(false);
@@ -117,7 +136,7 @@ export const App = () => {
     '{dayofweek.abbreviated(2)}',
   );
 
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<ScrollView>(null);
 
   const handleResetPress = () => {
     setDate(undefined);
@@ -148,7 +167,7 @@ export const App = () => {
     }
   };
 
-  const onTimeChange = (event: any, newTime?: Date) => {
+  const onTimeChange = (_event: any, newTime?: Date) => {
     if (Platform.OS === 'windows') {
       setTime(newTime);
     }
@@ -160,7 +179,7 @@ export const App = () => {
     backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item}: {item: string | number | undefined}) => {
     const isNumber = typeof item === 'number';
     const title = isNumber
       ? item > 0

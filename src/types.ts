@@ -2,7 +2,6 @@ import type {
   HostComponent,
   NativeSyntheticEvent,
   ViewStyle,
-  processColor,
 } from 'react-native';
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {ElementRef} from 'react';
@@ -173,7 +172,7 @@ export type IOSNativeProps = Readonly<
 
 export type ButtonType = {
   label?: string;
-  textColor?: ReturnType<typeof processColor>;
+  textColor?: ColorValue;
 };
 
 export type AndroidNativeProps = Readonly<

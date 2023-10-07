@@ -171,9 +171,22 @@ export type IOSNativeProps = Readonly<
   }
 >;
 
+/**
+ * Publicly exposed button type for Android
+ */
 export type ButtonType = {
   label?: string;
-  textColor?: ReturnType<typeof processColor>;
+  textColor?: ColorValue;
+};
+
+/**
+ * Private exposed button type for Android
+ * We process the color for the user so they can pass in a ColorValue
+ */
+
+export type ProcessedButton = {
+  title: string;
+  textColor: ReturnType<typeof processColor>;
 };
 
 export type AndroidNativeProps = Readonly<

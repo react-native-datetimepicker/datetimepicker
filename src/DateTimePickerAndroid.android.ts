@@ -47,6 +47,26 @@ function open(props: AndroidNativeProps) {
 
   const presentPicker = async () => {
     try {
+      const dialogButtons = {
+        positive: {
+          label: positiveButtonLabel,
+          ...positiveButton,
+          textColor: processColor(positiveButton?.textColor),
+          title: positiveButton?.label || positiveButtonLabel || 'OK',
+        },
+        neutral: {
+          label: neutralButtonLabel,
+          ...neutralButton,
+          textColor: processColor(neutralButton?.textColor),
+          title: neutralButton?.label || neutralButtonLabel || 'OK',
+        },
+        negative: {
+          label: negativeButtonLabel,
+          ...negativeButton,
+          textColor: processColor(negativeButton?.textColor),
+          title: negativeButton?.label || negativeButtonLabel || 'OK',
+        },
+      };
       const displayOverride =
         display === ANDROID_DISPLAY.spinner
           ? ANDROID_DISPLAY.spinner
@@ -60,23 +80,7 @@ function open(props: AndroidNativeProps) {
         minuteInterval,
         timeZoneOffsetInMinutes,
         timeZoneName,
-        dialogButtons: {
-          positive: {
-            title: positiveButtonLabel || 'OK',
-            ...positiveButton,
-            textColor: processColor(positiveButton?.textColor || undefined),
-          },
-          neutral: {
-            title: neutralButtonLabel || 'Clear',
-            ...neutralButton,
-            textColor: processColor(neutralButton?.textColor || undefined),
-          },
-          negative: {
-            title: negativeButtonLabel || 'Cancel',
-            ...negativeButton,
-            textColor: processColor(negativeButton?.textColor || undefined),
-          },
-        },
+        dialogButtons,
         testID,
       });
 

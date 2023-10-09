@@ -52,19 +52,16 @@ function open(props: AndroidNativeProps) {
           label: positiveButtonLabel,
           ...positiveButton,
           textColor: processColor(positiveButton?.textColor),
-          title: positiveButton?.label || positiveButtonLabel || 'OK',
         },
         neutral: {
           label: neutralButtonLabel,
           ...neutralButton,
           textColor: processColor(neutralButton?.textColor),
-          title: neutralButton?.label || neutralButtonLabel || 'OK',
         },
         negative: {
           label: negativeButtonLabel,
           ...negativeButton,
           textColor: processColor(negativeButton?.textColor),
-          title: negativeButton?.label || negativeButtonLabel || 'OK',
         },
       };
       const displayOverride =

@@ -185,7 +185,7 @@ export type ButtonType = {
  */
 
 export type ProcessedButton = {
-  title: string;
+  label?: string;
   textColor: ReturnType<typeof processColor>;
 };
 
@@ -227,24 +227,24 @@ export type AndroidNativeProps = Readonly<
     }
 >;
 
+type NativeDialogButtons = {
+  dialogButtons: {
+    positive: ProcessedButton;
+    neutral: ProcessedButton;
+    negative: ProcessedButton;
+  };
+};
+
 export type DatePickerOptions = DateOptions &
-  TimeZoneOptions & {
-    dialogButtons: {
-      positive: ButtonType;
-      neutral: ButtonType;
-      negative: ButtonType;
-    };
+  TimeZoneOptions &
+  NativeDialogButtons & {
     display?: Display;
     testID?: string;
   };
 
 export type TimePickerOptions = TimeOptions &
-  TimeZoneOptions & {
-    dialogButtons: {
-      positive: ButtonType;
-      neutral: ButtonType;
-      negative: ButtonType;
-    };
+  TimeZoneOptions &
+  NativeDialogButtons & {
     minuteInterval?: MinuteInterval;
     display?: Display;
   };

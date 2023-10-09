@@ -31,6 +31,12 @@ import {
 } from '../src/constants';
 import * as RNLocalize from 'react-native-localize';
 
+type SegmentedControlOnChangeEvent = {
+  nativeEvent: {
+    selectedSegmentIndex: number;
+  };
+};
+
 const timezone = [
   120,
   0,
@@ -130,7 +136,9 @@ export const App = () => {
   const [maxDate] = useState(new Date('2021'));
   const [minDate] = useState(new Date('2018'));
   const [is24Hours, set24Hours] = useState(false);
-  const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Monday);
+  const [firstDayOfWeek, setFirstDayOfWeek] = useState<number>(
+    DAY_OF_WEEK.Monday,
+  );
   const [dateFormat, setDateFormat] = useState('longdate');
   const [dayOfWeekFormat, setDayOfWeekFormat] = useState(
     '{dayofweek.abbreviated(2)}',
@@ -285,16 +293,16 @@ export const App = () => {
           <ThemedText>mode prop:</ThemedText>
           <SegmentedControl
             values={MODE_VALUES}
-            selectedIndex={MODE_VALUES.indexOf(mode)}
-            onChange={(event) => {
+            selectedIndex={mode ? MODE_VALUES.indexOf(mode) : 0}
+            onChange={(event: SegmentedControlOnChangeEvent) => {
               setMode(MODE_VALUES[event.nativeEvent.selectedSegmentIndex]);
             }}
           />
           <ThemedText>display prop:</ThemedText>
           <SegmentedControl
             values={DISPLAY_VALUES}
-            selectedIndex={DISPLAY_VALUES.indexOf(display)}
-            onChange={(event) => {
+            selectedIndex={display ? DISPLAY_VALUES.indexOf(display) : 0}
+            onChange={(event: SegmentedControlOnChangeEvent) => {
               setDisplay(
                 DISPLAY_VALUES[event.nativeEvent.selectedSegmentIndex],
               );
@@ -304,9 +312,9 @@ export const App = () => {
           <SegmentedControl
             values={MINUTE_INTERVALS.map(String)}
             selectedIndex={MINUTE_INTERVALS.indexOf(interval)}
-            onChange={(event) => {
+            onChange={(event: SegmentedControlOnChangeEvent) => {
               setMinInterval(
-                MINUTE_INTERVALS[event.nativeEvent.selectedSegmentIndex],
+                MINUTE_INTERVALS[event.nativeEvent.selectedSegmentIndex] || 0,
               );
             }}
           />
@@ -443,11 +451,14 @@ export const App = () => {
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
-            {global.HermesInternal !== null && (
-              <View style={styles.engine}>
-                <Text style={styles.footer}>Engine: Hermes</Text>
-              </View>
-            )}
+            {
+              // @ts-expect-error
+              global.HermesInternal !== null && (
+                <View style={styles.engine}>
+                  <Text style={styles.footer}>Engine: Hermes</Text>
+                </View>
+              )
+            }
             <View style={styles.body}>
               <View testID="appRootView" style={styles.containerWindows}>
                 <View style={styles.header}>
@@ -458,7 +469,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={dateFormat}
-                    onValueChange={(value) => setDateFormat(value)}>
+                    onValueChange={(value: string) => setDateFormat(value)}>
                     <Picker.Item
                       label="day month year"
                       value="day month year"
@@ -476,7 +487,9 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={dayOfWeekFormat}
-                    onValueChange={(value) => setDayOfWeekFormat(value)}>
+                    onValueChange={(value: string) =>
+                      setDayOfWeekFormat(value)
+                    }>
                     <Picker.Item
                       label="abbreviated(2)"
                       value="{dayofweek.abbreviated(2)}"
@@ -493,7 +506,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={firstDayOfWeek}
-                    onValueChange={(value) => setFirstDayOfWeek(value)}>
+                    onValueChange={(value: number) => setFirstDayOfWeek(value)}>
                     <Picker.Item label="Sunday" value={DAY_OF_WEEK.Sunday} />
                     <Picker.Item label="Monday" value={DAY_OF_WEEK.Monday} />
                     <Picker.Item label="Tuesday" value={DAY_OF_WEEK.Tuesday} />
@@ -545,7 +558,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35, marginTop: 10}}
                     selectedValue={is24Hours}
-                    onValueChange={(value) => set24Hours(value)}>
+                    onValueChange={(value: boolean) => set24Hours(value)}>
                     <Picker.Item label="12-hour clock" value={false} />
                     <Picker.Item label="24-hour clock" value={true} />
                   </Picker>
@@ -555,7 +568,7 @@ export const App = () => {
                   <Picker
                     style={{width: 200, height: 35}}
                     selectedValue={interval}
-                    onValueChange={(value) => setMinInterval(value)}>
+                    onValueChange={(value: number) => setMinInterval(value)}>
                     <Picker.Item label="1 minute step" value={1} />
                     <Picker.Item label="12 minute step" value={12} />
                     <Picker.Item label="15 minute step" value={15} />

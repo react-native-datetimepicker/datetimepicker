@@ -99,7 +99,9 @@ const MODE_VALUES = Platform.select({
   windows: [],
   default: [],
 });
-const DISPLAY_VALUES = Platform.select({
+const DISPLAY_VALUES = Platform.select<
+  Array<keyof typeof IOS_DISPLAY | keyof typeof ANDROID_DISPLAY>
+>({
   ios: Object.values(IOS_DISPLAY),
   android: Object.values(ANDROID_DISPLAY),
   windows: [],

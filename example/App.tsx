@@ -546,11 +546,9 @@ export const App = () => {
                       ? moment(date).format('MM/DD/YYYY')
                       : moment().format('MM/DD/YYYY')}
                   </Text>
-                  <Button
-                    style={styles.resetButton}
-                    title="Reset calendar"
-                    onPress={handleResetPress}
-                  />
+                  <View style={styles.resetButton}>
+                    <Button title="Reset calendar" onPress={handleResetPress} />
+                  </View>
                 </View>
 
                 <View style={{flexDirection: 'row'}}>

@@ -20,6 +20,7 @@
     <ClInclude Include="DateTimePickerViewManager.h" />
     <ClInclude Include="TimePickerViewManager.h" />
     <ClInclude Include="ReactPackageProvider.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DateTimePickerWindows.def" />
@@ -34,5 +35,10 @@
   <ItemGroup>
     <Midl Include="ReactPackageProvider.idl" />
     <Midl Include="DateTimePickerView.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DateTimePicker.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

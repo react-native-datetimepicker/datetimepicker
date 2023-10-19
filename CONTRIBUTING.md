@@ -23,7 +23,7 @@ yarn test
 
 Detox is a gray box end-to-end testing and automation library for mobile apps.
 
-- [Dependencies required](https://github.com/wix/Detox/blob/master/docs/Introduction.GettingStarted.md#step-1-install-dependencies)
+- [Dependencies required](https://wix.github.io/Detox/docs/introduction/getting-started/#detox-prerequisites)
 
 For cleaning all the detox builds just run `npm run detox:clean`.
 

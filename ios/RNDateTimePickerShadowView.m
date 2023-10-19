@@ -70,6 +70,15 @@ static YGSize RNDateTimePickerShadowViewMeasure(YGNodeRef node, float width, YGM
 
     size = [shadowPickerView.picker sizeThatFits:UILayoutFittingCompressedSize];
     size.width += 10;
+    if (@available(iOS 14.0, *)) {
+      if(shadowPickerView.picker.datePickerMode == UIDatePickerModeDateAndTime
+         && shadowPickerView.picker.datePickerStyle == UIDatePickerStyleInline) {
+        // fixes calculation bug in iOS component when mode is DateAndTime and style is Inline
+        // the sizing seems to not include the bottom time control at all which should have a
+        // standard row size of 44
+        size.height += 44;
+      }
+   }
   });
 
   return (YGSize){

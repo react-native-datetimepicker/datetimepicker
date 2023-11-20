@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "Pager_viewAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "Pager_viewAbility_label",
+      "value": "label"
+    }
+  ]
+}

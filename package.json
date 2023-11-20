@@ -1,19 +1,26 @@
 {
   "name": "@react-native-community/datetimepicker",
-  "version": "7.6.1",
+  "version": "7.5.0-0.0.1",
   "description": "DateTimePicker component for React Native",
-  "main": "./src/index.js",
-  "types": "src/index.d.ts",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "react-native": "src/index",
+  "source": "src/index",
   "files": [
     "ios",
     "android",
+    "harmony",
     "src",
+    "lib",
     "jest",
     "flow-typed",
     "windows",
     "RNDateTimePicker.podspec",
     "!android/build",
     "!ios/build",
+    "!harmony/oh_modules",
+    "!harmony/**/build",
+    "!harmony/**/oh_modules",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
@@ -21,7 +28,16 @@
   "publishConfig": {
     "access": "public"
   },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module"
+    ]
+  },
   "scripts": {
+    "prepack": "bob build",
     "start": "react-native start",
     "start:android": "react-native run-android",
     "start:ios": "react-native run-ios",
@@ -43,7 +59,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/react-native-community/datetimepicker.git"
+    "url": "https://github.com/react-native-oh-library/datetimepicker"
   },
   "keywords": [
     "react-native-component",
@@ -86,9 +102,10 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.8.8",
     "react": "18.2.0",
-    "react-native": "^0.71.10",
+    "react-native": "0.72.0",
+    "react-native-builder-bob": "^0.18.3",
     "react-native-localize": "^3.0.0",
-    "react-native-test-app": "2.5.32",
+    "react-native-test-app": "2.3.13",
     "react-native-windows": "^0.71.3",
     "react-test-renderer": "18.2.0",
     "semantic-release": "^19.0.3"

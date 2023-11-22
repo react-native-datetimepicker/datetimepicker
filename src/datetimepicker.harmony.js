@@ -24,19 +24,19 @@
 import RNDateTimePicker from './picker';
 import {dateToMilliseconds, sharedPropsValidation} from './utils';
 import {
-    IOS_DISPLAY,
-    EVENT_TYPE_SET,
-    EVENT_TYPE_DISMISSED,
-    IOS_MODE,
+  IOS_DISPLAY,
+  EVENT_TYPE_SET,
+  EVENT_TYPE_DISMISSED,
+  IOS_MODE,
 } from './constants';
 import * as React from 'react';
 //import {Platform} from 'react-native';
 
 import type {
-    DateTimePickerEvent,
-    NativeEventIOS,
-    IOSNativeProps,
-    IOSDisplay,
+  DateTimePickerEvent,
+  NativeEventIOS,
+  IOSNativeProps,
+  IOSDisplay,
 } from './types';
 
 // const getDisplaySafe = (display: IOSDisplay): IOSDisplay=>{
@@ -56,76 +56,76 @@ import type {
 // }
 
 export default function Picker({
-    value,
-    locale,
-    maximumDate,
-    minimumDate,
-    minuteInterval,
-    timeZoneOffsetInMinutes,
-    timeZoneName,
-    textColor,
-    accentColor,
-    themeVariant,
-    onChange,
-    mode = IOS_MODE.date,
-    display: providedDisplay = IOS_DISPLAY.default,
-    disabled = false,
-    is24Hour = true,
-    ...other
-}:IOSNativeProps): React.Node {
-    sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName});
+  value,
+  locale,
+  maximumDate,
+  minimumDate,
+  minuteInterval,
+  timeZoneOffsetInMinutes,
+  timeZoneName,
+  textColor,
+  accentColor,
+  themeVariant,
+  onChange,
+  mode = IOS_MODE.date,
+  display: providedDisplay = IOS_DISPLAY.default,
+  disabled = false,
+  is24Hour = true,
+  ...other
+}: IOSNativeProps): React.Node {
+  sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName});
 
-    // const display = getDisplaySafe(providedDisplay)
-    const display = providedDisplay;
+  // const display = getDisplaySafe(providedDisplay)
+  const display = providedDisplay;
 
-    const _onChange = (event: NativeEventIOS) => {
-        const timestamp = event.nativeEvent.timestamp;
-        const unifiedEvent: DateTimePickerEvent = {
-            ...event,
-            type:EVENT_TYPE_SET,
-        };
-
-        const date = timestamp !== undefined ? new Date(timestamp) : undefined;
-
-        onChange && onChange(unifiedEvent, date);
+  const _onChange = (event: NativeEventIOS) => {
+    const timestamp = event.nativeEvent.timestamp;
+    const unifiedEvent: DateTimePickerEvent = {
+      ...event,
+      type: EVENT_TYPE_SET,
     };
 
-    const onDismiss = ()=> {
-        // TODO introduce separate onDismissed event listener
-        onChange &&
-          onChange(
-              {
-                  type:EVENT_TYPE_DISMISSED,
-                  nativeEvent: {
-                    timestamp: value.getTime(),
-                    utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
-                },
-              },
-              value,
-          );
-    };
+    const date = timestamp !== undefined ? new Date(timestamp) : undefined;
 
-    return (
-      <RNDateTimePicker
-        {...other}
-        date={dateToMilliseconds(value)}
-        locale = {locale !== null && locale !=='' ? locale : undefined}
-        maximumDate = {dateToMilliseconds(maximumDate)}
-        minimumDate = {dateToMilliseconds(minimumDate)}
-        mode = {mode}
-        minuteInterval = {minuteInterval}
-        timeZoneOffsetInMinutes = {timeZoneOffsetInMinutes}
-        timeZoneName = {timeZoneName}
-        onChange = {_onChange}
-        onPickerDismiss = {onDismiss}
-        textColor = {textColor}
-        accentColor = {accentColor}
-        themeVariant = {themeVariant}
-        onStartShouldSetResponder = {()=> true}
-        onResponderTerminationRequest = {()=> false}
-        displayIOS = {display}
-        enabled = {disabled !== true}
-        is24Hour = {is24Hour}
-      />
-    );
+    onChange && onChange(unifiedEvent, date);
+  };
+
+  const onDismiss = () => {
+    // TODO introduce separate onDismissed event listener
+    onChange &&
+      onChange(
+        {
+          type: EVENT_TYPE_DISMISSED,
+          nativeEvent: {
+            timestamp: value.getTime(),
+            utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
+          },
+        },
+        value,
+      );
+  };
+
+  return (
+    <RNDateTimePicker
+      {...other}
+      date={dateToMilliseconds(value)}
+      locale={locale !== null && locale !== '' ? locale : undefined}
+      maximumDate={dateToMilliseconds(maximumDate)}
+      minimumDate={dateToMilliseconds(minimumDate)}
+      mode={mode}
+      minuteInterval={minuteInterval}
+      timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+      timeZoneName={timeZoneName}
+      onChange={_onChange}
+      onPickerDismiss={onDismiss}
+      textColor={textColor}
+      accentColor={accentColor}
+      themeVariant={themeVariant}
+      onStartShouldSetResponder={() => true}
+      onResponderTerminationRequest={() => false}
+      displayIOS={display}
+      enabled={disabled !== true}
+      is24Hour={is24Hour}
+    />
+  );
 }

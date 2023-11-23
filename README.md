@@ -94,7 +94,7 @@ React Native date & time picker component for iOS, Android and Windows.
 ## Requirements
 
 - Only Android API level >=21 (Android 5), iOS >= 11 are supported.
-- Tested with Xcode 14.0 and RN 0.71.4. Other configurations are very likely to work as well but have not been tested.
+- Tested with Xcode 14.0 and RN 0.72.7. Other configurations are very likely to work as well but have not been tested.
 
 The module supports the [new React Native architecture](https://reactnative.dev/docs/next/the-new-architecture/why) (Fabric rendering of iOS components, and turbomodules on Android). If you are using the new architecture, you will need to use React Native 0.71.4 or higher.
 

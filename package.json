@@ -69,6 +69,7 @@
   "devDependencies": {
     "@react-native-segmented-control/segmented-control": "^2.4.0",
     "@react-native/eslint-config": "^0.72.2",
+    "@react-native/metro-config": "^0.73.2",
     "@semantic-release/git": "^10.0.1",
     "@testing-library/react-native": "9.1.0",
     "babel-jest": "^29.5.0",

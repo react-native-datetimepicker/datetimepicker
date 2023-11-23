@@ -1,6 +1,6 @@
 {
   "name": "@react-native-oh-library/datetimepicker",
-  "version": "7.5.0-0.0.1",
+  "version": "7.6.1-0.0.1",
   "description": "DateTimePicker component for React Native",
   "harmony": {
     "alias": "@react-native-community/datetimepicker"
@@ -105,10 +105,10 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.8.8",
     "react": "18.2.0",
-    "react-native": "0.72.0",
+    "react-native": "^0.71.10",
     "react-native-builder-bob": "^0.18.3",
     "react-native-localize": "^3.0.0",
-    "react-native-test-app": "2.3.13",
+    "react-native-test-app": "2.5.32",
     "react-native-windows": "^0.71.3",
     "react-test-renderer": "18.2.0",
     "semantic-release": "^19.0.3"

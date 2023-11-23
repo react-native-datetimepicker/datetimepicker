@@ -1,16 +1,18 @@
-### 🚧🚧 Looking for collaborators and financial backers 🚧🚧
+# 🚧🚧 Looking for collaborators and financial backers 🚧🚧
 
-See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313).
+Please support maintenance of the module with a monthly donation or help us with issues and pull requests.
 
-### Financial backers
+[Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker).
 
-Support us with a monthly donation to help us keep the module maintained. [Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker).
+See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313) for context.
 
 <a href="https://opencollective.com/react-native-datetimepicker/donate" target="_blank">
   <img src="https://opencollective.com/react-native-datetimepicker/backers.svg?width=890" width=890 />
 </a>
 
-# React Native DateTimePicker
+---
+
+## React Native DateTimePicker
 
 This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
 The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace at some point, with a major version bump.
@@ -20,7 +22,7 @@ The module is still published on `npm` under the old namespace (as documented) b
 ![MIT License][license-badge]
 [![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
-React Native date & time picker component for iOS, Android and Windows.
+React Native date & time picker component for iOS, Android and Windows (please note Windows is not actively maintained).
 
 ## Screenshots
 

@@ -1,6 +1,6 @@
 {
   "name": "@react-native-oh-tpl/datetimepicker",
-  "version": "7.6.1-0.0.1",
+  "version": "7.6.2-0.0.2",
   "description": "DateTimePicker component for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

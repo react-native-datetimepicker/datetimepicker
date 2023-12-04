@@ -75,6 +75,7 @@ export struct RNDateTimePicker {
         this.descriptor = (newDescriptor as PickerDescriptor)
         Logger.debug(TAG,`[RNOH]: in RNDateTimePicker,descriptor change :${JSON.stringify(this.descriptor.props)}`)
         this.isMilitaryTime = this.descriptor.props.is24Hour
+        this.selectDate = new Date(Number.parseInt(this.descriptor.props.date));
       }
     )
     Logger.info(TAG,`[RNOH]: in RNDateTimePicker,propsout :${JSON.stringify(this.descriptor.props)}`)

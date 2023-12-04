@@ -30,30 +30,27 @@ jobs:
           command: yarn test
           name: Jest
 
-  #  new_arch_ios_build:
-  #    executor:
-  #      name: rn/macos
-  #      xcode_version: '14.0.0'
-  #    steps:
-  #      - checkout
-  #      - run:
-  #          command: yarn install --frozen-lockfile
-  #          name: yarn install
-  #      - run:
-  #          command: cd example && yarn install --frozen-lockfile && cd -
-  #          name: yarn install example
-  #      - run:
-  #          command: (cd example && RCT_NEW_ARCH_ENABLED=1 npx pod-install)
-  #          name: pod install
-  #      - run:
-  #          command: yarn detox:ios:build:release
-  #          name: build app with new arch
+  new_arch_ios_build_only:
+    executor:
+      name: rn/macos
+      xcode_version: '15.0.0'
+    steps:
+      - checkout
+      - run:
+          command: yarn install --frozen-lockfile
+          name: yarn install
+      - run:
+          command: (cd example && RCT_NEW_ARCH_ENABLED=1 npx pod-install)
+          name: pod install
+      - run:
+          command: yarn detox:ios:build:release
+          name: build app with new arch
 
 
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '14.0.0'
+      xcode_version: '15.0.0'
     steps:
       - checkout
       - run:
@@ -70,8 +67,11 @@ jobs:
       - run:
           command: yarn bundle:ios
           name: bundle js
-      - rn/pod_install:
-          pod_install_directory: 'example/ios'
+#      - rn/pod_install:
+#          pod_install_directory: 'example/ios'
+      - run:
+          command: (cd example && npx pod-install)
+          name: pod install
       - run:
           command: yarn detox:ios:build:release
           name: build app for e2e tests
@@ -192,11 +192,13 @@ workflows:
       - e2e_release_ios
       - e2e_release_android
       - e2e_release_android_new_arch
+      - new_arch_ios_build_only
       - publish:
           requires:
             - e2e_release_android
             - e2e_release_android_new_arch
             - e2e_release_ios
+            - new_arch_ios_build_only
           filters:
             branches:
               only: master

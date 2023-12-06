@@ -143,7 +143,8 @@ export struct RNDateTimePicker {
             .onChange((newDate:Date) => {
               Logger.debug(TAG,"CalendarPicker onChange:" + JSON.stringify(newDate))
               //0927验证发现 没有执行回调
-              this.selectDate.setFullYear(newDate.getFullYear(), newDate.getMonth(), newDate.getDay())
+              // this.selectDate.setFullYear(newDate.getFullYear(), newDate.getMonth(), newDate.getDay())
+              this.selectDate = newDate
               this.onDateChange(this.selectDate)
             })
         } else if (this.descriptor.props.displayIOS === "spinner" || this.descriptor.props.displayIOS === "default") {
@@ -158,8 +159,9 @@ export struct RNDateTimePicker {
             .lunar(this.isLunar)
             .enabled(this.descriptor.props.enabled)
             .width("100%").height("100%")
-            .onChange((value: DatePickerResult) => {
-              this.selectDate.setFullYear(value.year, value.month, value.day)
+            .onDateChange((value: Date) => {
+              // this.selectDate.setFullYear(value.year, value.month, value.day)
+              this.selectDate = value
               Logger.debug(TAG,"DatePicker,select current date is: "+ JSON.stringify(value))
               this.onDateChange(this.selectDate)
             })

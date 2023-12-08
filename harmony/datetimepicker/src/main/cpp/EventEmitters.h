@@ -21,7 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#pragma once
+
+#ifndef HEADER_FILE_CPP_E_E_ERS_H
+#define HEADER_FILE_CPP_E_E_ERS_H
 
 #include <react/renderer/components/view/ViewEventEmitter.h>
 #include <jsi/jsi.h>
@@ -49,3 +51,4 @@ public:
 
 } // namespace react
 } // namespace facebook
+#endif

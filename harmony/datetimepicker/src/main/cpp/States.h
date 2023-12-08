@@ -21,7 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#pragma once
+
+#ifndef HEADER_FILE_CPP_S_TES_H
+#define HEADER_FILE_CPP_S_TES_H
 
 #ifdef ANDROID
 #include <folly/dynamic.h>
@@ -48,3 +50,4 @@ class RNDateTimePickerState {
 };
 } // namespace react
 } // namespace facebook
+#endif

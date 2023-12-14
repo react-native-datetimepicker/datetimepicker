@@ -2,9 +2,9 @@
     {
         "Name": "datetimepicker",
         "License": "MIT License",
-        "License File": "https://github.com/react-native-oh-library/datetimepicker/blob/harmony/LICENSE.md",
+        "License File": "https://github.com/react-native-datetimepicker/datetimepicker/blob/master/LICENSE.md",
         "Version Number": "7.6.2",
-        "Owner" : "Dylan Vann <dylan@dylanvann.com>"
+        "Owner" : "Martijn Swaagman <mswaagman@godaddy.com>"
         "Upstream URL": "https://github.com/react-native-datetimepicker/datetimepicker",
         "Description": "datetimepicker, React Native date & time picker component."
     }

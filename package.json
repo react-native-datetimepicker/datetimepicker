@@ -5,16 +5,13 @@
   "harmony": {
     "alias": "@react-native-community/datetimepicker"
   },
-  "main": "lib/commonjs/index",
-  "module": "lib/module/index",
-  "react-native": "src/index",
-  "source": "src/index",
+  "main": "./src/index.js",
+  "types": "src/index.d.ts",
   "files": [
     "ios",
     "android",
     "harmony",
     "src",
-    "lib",
     "jest",
     "flow-typed",
     "windows",
@@ -41,7 +38,6 @@
     ]
   },
   "scripts": {
-    "prepack": "bob build",
     "start": "react-native start",
     "start:android": "react-native run-android",
     "start:ios": "react-native run-ios",
@@ -108,7 +104,6 @@
     "react": "18.2.0",
     "react-native": "^0.72.7",
     "react-native-localize": "^3.0.3",
-    "react-native-builder-bob": "^0.18.3",
     "react-native-test-app": "^2.5.32",
 
     "react-native-windows": "^0.71.3",

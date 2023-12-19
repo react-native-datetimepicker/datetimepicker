@@ -29,14 +29,6 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "react-native-builder-bob": {
-    "source": "src",
-    "output": "lib",
-    "targets": [
-      "commonjs",
-      "module"
-    ]
-  },
   "scripts": {
     "start": "react-native start",
     "start:android": "react-native run-android",

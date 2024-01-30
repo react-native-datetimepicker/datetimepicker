@@ -1,16 +1,33 @@
-### 🚧🚧 Looking for collaborators and financial backers 🚧🚧
+# 🚧🚧 Looking for collaborators and financial backers 🚧🚧
 
-See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313).
+Please support maintenance of the module with a monthly donation or help us with issues and pull requests.
 
-### Financial backers
+[Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker).
 
-Support us with a monthly donation to help us keep the module maintained. [Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker).
+See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313) for context. Thank you!
 
 <a href="https://opencollective.com/react-native-datetimepicker/donate" target="_blank">
   <img src="https://opencollective.com/react-native-datetimepicker/backers.svg?width=890" width=890 />
 </a>
 
-# React Native DateTimePicker
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+---
+
+## React Native DateTimePicker
 
 This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
 The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace at some point, with a major version bump.
@@ -20,7 +37,7 @@ The module is still published on `npm` under the old namespace (as documented) b
 ![MIT License][license-badge]
 [![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
-React Native date & time picker component for iOS, Android and Windows.
+React Native date & time picker component for iOS, Android and Windows (please note Windows is not actively maintained).
 
 ## Screenshots
 
@@ -94,7 +111,7 @@ React Native date & time picker component for iOS, Android and Windows.
 ## Requirements
 
 - Only Android API level >=21 (Android 5), iOS >= 11 are supported.
-- Tested with Xcode 14.0 and RN 0.71.4. Other configurations are very likely to work as well but have not been tested.
+- Tested with Xcode 14.0 and RN 0.72.7. Other configurations are very likely to work as well but have not been tested.
 
 The module supports the [new React Native architecture](https://reactnative.dev/docs/next/the-new-architecture/why) (Fabric rendering of iOS components, and turbomodules on Android). If you are using the new architecture, you will need to use React Native 0.71.4 or higher.
 

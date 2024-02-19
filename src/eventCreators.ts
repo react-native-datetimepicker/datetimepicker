@@ -1,6 +1,3 @@
-/**
- * @flow strict-local
- */
 import type {DateTimePickerEvent} from './types';
 import {ANDROID_EVT_TYPE, EVENT_TYPE_SET} from './constants';
 

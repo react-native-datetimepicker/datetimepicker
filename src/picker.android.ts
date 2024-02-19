@@ -1,9 +1,5 @@
-/**
- * @format
- * @flow strict-local
- */
-import DatePickerAndroid from './datepicker';
-import TimePickerAndroid from './timepicker';
+import DatePickerAndroid from './datepicker.android';
+import TimePickerAndroid from './timepicker.android';
 import {ANDROID_MODE} from './constants';
 
 const pickers = {

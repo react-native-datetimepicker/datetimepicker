@@ -1,7 +1,3 @@
-/**
- * @format
- * @flow strict-local
- */
 import {Platform} from 'react-native';
 
 const warn = () => {

@@ -1,15 +1,14 @@
 /**
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
- * @format
- * @flow strict-local
  */
 'use strict';
 
 import {
-  type HostComponent,
   requireNativeComponent,
+  StyleProp,
   StyleSheet,
+  ViewStyle,
 } from 'react-native';
 import type {
   WindowsNativeProps,
@@ -27,15 +26,30 @@ const styles = StyleSheet.create({
   },
 });
 
-// $FlowExpectedError - this export is used in tests only, so don't care
-export const RNDateTimePickerWindows = requireNativeComponent(
-  'RNDateTimePickerWindows',
-);
-const RNTimePickerWindows = requireNativeComponent('RNTimePickerWindows');
+type DateTimePickerWindowsNativeProps = Omit<
+  WindowsNativeProps,
+  'onChange' | 'mode' | 'value'
+> & {
+  onChange: (event: WindowsDatePickerChangeEvent) => void;
+};
+export const RNDateTimePickerWindows =
+  requireNativeComponent<DateTimePickerWindowsNativeProps>(
+    'RNDateTimePickerWindows',
+  );
+
+type TimePickerWindowsNativeProps = {
+  style?: StyleProp<ViewStyle>;
+  is24Hour?: boolean;
+  selectedTime?: number;
+  minuteInterval?: number;
+  onChange: (event: WindowsDatePickerChangeEvent) => void;
+};
+const RNTimePickerWindows =
+  requireNativeComponent<TimePickerWindowsNativeProps>('RNTimePickerWindows');
 
 export default function RNDateTimePickerQWE(
   props: WindowsNativeProps,
-): React.Node {
+): React.ReactNode {
   sharedPropsValidation({value: props?.value});
 
   const localProps = {
@@ -63,14 +77,14 @@ export default function RNDateTimePickerQWE(
       type: EVENT_TYPE_SET,
     };
 
-    onChange && onChange(unifiedEvent, new Date(event.nativeEvent.newDate));
+    onChange?.(unifiedEvent, new Date(event.nativeEvent.newDate));
   };
 
   const timezoneOffsetInSeconds = (() => {
     // The Date object returns timezone in minutes. Convert that to seconds
     // and multiply by -1 so that the offset can be added to UTC+0 time to get
     // the correct value on the native side.
-    if (timezoneOffsetInSeconds == null && props.value != null) {
+    if (props.timeZoneOffsetInSeconds == null && props.value != null) {
       return -60 * props.value.getTimezoneOffset();
     }
     return props.timeZoneOffsetInSeconds;

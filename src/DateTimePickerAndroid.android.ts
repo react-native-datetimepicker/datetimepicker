@@ -1,7 +1,3 @@
-/**
- * @format
- * @flow strict-local
- */
 import {
   DATE_SET_ACTION,
   TIME_SET_ACTION,
@@ -14,7 +10,7 @@ import invariant from 'invariant';
 
 import type {AndroidNativeProps} from './types';
 import {getOpenPicker, validateAndroidProps} from './androidUtils';
-import pickers from './picker';
+import pickers from './picker.android';
 import {
   createDateTimeSetEvtParams,
   createDismissEvtParams,
@@ -68,7 +64,6 @@ function open(props: AndroidNativeProps) {
           textColor: processColor(negativeButton?.textColor),
         },
       };
-
       const displayOverride =
         display === ANDROID_DISPLAY.spinner
           ? ANDROID_DISPLAY.spinner
@@ -107,15 +102,14 @@ function open(props: AndroidNativeProps) {
           break;
         }
       }
-    } catch (error) {
-      onError && onError(error);
+    } catch (error: any) {
+      onError?.(error);
     }
   };
   presentPicker();
 }
 
-function dismiss(mode: AndroidNativeProps['mode']): Promise<boolean> {
-  // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
+function dismiss(mode: AndroidNativeProps['mode']) {
   return pickers[mode].dismiss();
 }
 

@@ -1,7 +1,3 @@
-/**
- * @format
- * @flow strict-local
- */
 export const MIN_MS = 60000;
 
 export const ANDROID_DISPLAY = Object.freeze({

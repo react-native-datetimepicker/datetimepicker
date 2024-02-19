@@ -5,11 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  * This is a controlled component version of RNDateTimePicker
- *
- * @format
- * @flow strict-local
  */
-import RNDateTimePicker from './picker';
+import RNDateTimePicker from './picker.ios';
 import {dateToMilliseconds, sharedPropsValidation} from './utils';
 import {
   IOS_DISPLAY,
@@ -28,7 +25,11 @@ import type {
 } from './types';
 
 const getDisplaySafe = (display: IOSDisplay): IOSDisplay => {
-  const majorVersionIOS = parseInt(Platform.Version, 10);
+  const platformVersion = Platform.Version;
+  const majorVersionIOS =
+    typeof platformVersion === 'string'
+      ? parseInt(platformVersion, 10)
+      : platformVersion;
   if (display === IOS_DISPLAY.inline && majorVersionIOS < 14) {
     // inline is available since 14.0
     return IOS_DISPLAY.spinner;
@@ -59,7 +60,7 @@ export default function Picker({
   display: providedDisplay = IOS_DISPLAY.default,
   disabled = false,
   ...other
-}: IOSNativeProps): React.Node {
+}: IOSNativeProps): React.ReactNode {
   sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName});
 
   const display = getDisplaySafe(providedDisplay);
@@ -73,22 +74,21 @@ export default function Picker({
 
     const date = timestamp !== undefined ? new Date(timestamp) : undefined;
 
-    onChange && onChange(unifiedEvent, date);
+    onChange?.(unifiedEvent, date);
   };
 
   const onDismiss = () => {
     // TODO introduce separate onDismissed event listener
-    onChange &&
-      onChange(
-        {
-          type: EVENT_TYPE_DISMISSED,
-          nativeEvent: {
-            timestamp: value.getTime(),
-            utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
-          },
+    onChange?.(
+      {
+        type: EVENT_TYPE_DISMISSED,
+        nativeEvent: {
+          timestamp: value.getTime(),
+          utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
         },
-        value,
-      );
+      },
+      value,
+    );
   };
 
   return (

@@ -1,0 +1,13 @@
+{
+  "license": "ISC",
+  "types": "",
+  "devDependencies": {
+    "rnoh": "file:../rnoh"
+  },
+  "name": "rnoh-date-time-picker",
+  "description": "date-time-picker in harmony",
+  "main": "index.ets",
+  "version": "0.0.1",
+  "dependencies": {}
+}
+

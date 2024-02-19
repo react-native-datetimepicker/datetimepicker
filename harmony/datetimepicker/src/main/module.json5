@@ -1,0 +1,9 @@
+{
+  "module": {
+    "name": "datetimepicker",
+    "type": "har",
+    "deviceTypes": [
+      "default"
+    ]
+  }
+}

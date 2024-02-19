@@ -35,6 +35,7 @@ type NativeProps = $ReadOnly<{|
     'default' | 'spinner' | 'compact' | 'inline',
     'default',
   >,
+  is24Hour?: WithDefault<boolean, true>,
   enabled?: WithDefault<boolean, true>,
 |}>;
 

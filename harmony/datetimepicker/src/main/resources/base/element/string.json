@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "Pager_viewAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "Pager_viewAbility_label",
+      "value": "label"
+    }
+  ]
+}

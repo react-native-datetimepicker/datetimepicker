@@ -27,7 +27,7 @@ const blockList = exclusionList([
   /.*\.ProjectImports\.zip/,
 ]);
 
-module.exports = {
+const config = {
   projectRoot: path.join(__dirname, 'example'),
   watchFolders: [__dirname],
   resolver: {
@@ -42,3 +42,7 @@ module.exports = {
     }),
   },
 };
+
+// Starting with react-native 0.72, we are required to provide a full config.
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);

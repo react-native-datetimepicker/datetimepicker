@@ -18,20 +18,20 @@ class RNDateTimePickerComponentDescriptor final : public ConcreteComponentDescri
   public:
     using ConcreteComponentDescriptor::ConcreteComponentDescriptor;
 
-    void adopt(ShadowNode::Unshared const &shadowNode) const override {
-      react_native_assert(std::dynamic_pointer_cast<RNDateTimePickerShadowNode>(shadowNode));
-      auto pickerShadowNode = std::static_pointer_cast<RNDateTimePickerShadowNode>(shadowNode);
+    void adopt(ShadowNode &shadowNode) const override {
+      react_native_assert(dynamic_cast<RNDateTimePickerShadowNode*>(&shadowNode));
+      auto &pickerShadowNode = static_cast<RNDateTimePickerShadowNode&>(shadowNode);
 
       react_native_assert(
-        std::dynamic_pointer_cast<YogaLayoutableShadowNode>(pickerShadowNode));
-      auto layoutableShadowNode =
-        std::static_pointer_cast<YogaLayoutableShadowNode>(pickerShadowNode);
+        dynamic_cast<YogaLayoutableShadowNode*>(&pickerShadowNode));
+      auto &layoutableShadowNode =
+        static_cast<YogaLayoutableShadowNode&>(pickerShadowNode);
 
-      auto state = std::static_pointer_cast<const RNDateTimePickerShadowNode::ConcreteState>(shadowNode->getState());
+      auto state = std::static_pointer_cast<const RNDateTimePickerShadowNode::ConcreteState>(shadowNode.getState());
       auto stateData = state->getData();
-        
+
       if(stateData.frameSize.width != 0 && stateData.frameSize.height != 0) {
-        layoutableShadowNode->setSize(Size{stateData.frameSize.width, stateData.frameSize.height});
+        layoutableShadowNode.setSize(Size{stateData.frameSize.width, stateData.frameSize.height});
       }
 
       ConcreteComponentDescriptor::adopt(shadowNode);

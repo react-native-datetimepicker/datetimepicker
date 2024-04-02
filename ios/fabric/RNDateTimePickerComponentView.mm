@@ -10,7 +10,7 @@
 #import <react/renderer/components/RNDateTimePickerCGen/Props.h>
 #import <react/renderer/components/RNDateTimePickerCGen/RCTComponentViewHelpers.h>
 
-#import "RCTFabricComponentsPlugins.h"
+#import <React/RCTFabricComponentsPlugins.h>
 #import "RNDateTimePicker.h"
 
 using namespace facebook::react;

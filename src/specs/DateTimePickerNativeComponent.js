@@ -40,4 +40,5 @@ type NativeProps = $ReadOnly<{|
 
 export default (codegenNativeComponent<NativeProps>('RNDateTimePicker', {
   excludedPlatforms: ['android'],
+  interfaceOnly: true,
 }): HostComponent<NativeProps>);

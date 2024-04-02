@@ -1,22 +1,17 @@
 const path = require('path');
-const {androidManifestPath} = require('react-native-test-app');
 
 const project = (() => {
   try {
-    return {
+    const { configureProjects } = require('react-native-test-app');
+    return configureProjects({
       android: {
         sourceDir: path.join('example', 'android'),
-        manifestPath: androidManifestPath(
-          path.join(__dirname, 'example', 'android'),
-        ),
       },
       ios: {
         sourceDir: path.join('example', 'ios'),
       },
-    };
-  } catch (e) {
-    console.error('example config not found', e);
-
+    });
+  } catch (_) {
     return undefined;
   }
 })();
@@ -33,5 +28,5 @@ module.exports = {
       },
     },
   },
-  ...(project ? {project} : undefined),
+  ...(project ? { project } : undefined),
 };

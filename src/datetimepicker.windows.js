@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
 export const RNDateTimePickerWindows = requireNativeComponent(
   'RNDateTimePickerWindows',
 );
+
+// $FlowFixMe[underconstrained-implicit-instantiation]
 const RNTimePickerWindows = requireNativeComponent('RNTimePickerWindows');
 
 export default function RNDateTimePickerQWE(
@@ -66,6 +68,7 @@ export default function RNDateTimePickerQWE(
     onChange && onChange(unifiedEvent, new Date(event.nativeEvent.newDate));
   };
 
+  // $FlowFixMe[recursive-definition]
   const timezoneOffsetInSeconds = (() => {
     // The Date object returns timezone in minutes. Convert that to seconds
     // and multiply by -1 so that the offset can be added to UTC+0 time to get

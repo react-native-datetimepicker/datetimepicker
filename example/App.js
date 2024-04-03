@@ -25,7 +25,7 @@ import {
   IOS_MODE,
   ANDROID_DISPLAY,
   IOS_DISPLAY,
-} from '../src/constants';
+} from '@react-native-community/datetimepicker/src/constants';
 import * as RNLocalize from 'react-native-localize';
 
 const timezone = [
@@ -632,3 +632,5 @@ const styles = StyleSheet.create({
     width: 350,
   },
 });
+
+export default App;

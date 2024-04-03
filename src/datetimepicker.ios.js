@@ -57,6 +57,7 @@ export default function Picker({
   onChange,
   mode = IOS_MODE.date,
   display: providedDisplay = IOS_DISPLAY.default,
+  // $FlowFixMe[incompatible-type]
   disabled = false,
   ...other
 }: IOSNativeProps): React.Node {

@@ -17,7 +17,7 @@ export function toMilliseconds(
 
     // Is it a valid Date object?
     // $FlowFixMe: Cannot get `Object.prototype.toString` because property `toString` [1] cannot be unbound from the context [2] where it was defined.
-    if (Object.prototype.toString.call(value) === '[object Date]') {
+    if (value instanceof Date) {
       options[key] = value.getTime();
     }
   });

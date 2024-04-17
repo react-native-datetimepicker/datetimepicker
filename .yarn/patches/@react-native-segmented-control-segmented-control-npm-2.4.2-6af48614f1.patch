@@ -1,0 +1,44 @@
+diff --git a/js/SegmentedControl.js b/js/SegmentedControl.js
+index d82ecb5f97436518c38a0954467771b2f4224911..6eae664bf920ab5b847c618b4b3cb3342ec5ffeb 100644
+--- a/js/SegmentedControl.js
++++ b/js/SegmentedControl.js
+@@ -92,6 +92,19 @@ const SegmentedControl = ({
+           selectedIndex={selectedIndex}
+         />
+       )}
++      {selectedIndex != null && segmentWidth ? (
++         <Animated.View
++           style={[
++             styles.slider,
++             {
++               transform: [{translateX: animation}],
++               width: segmentWidth - 4,
++               backgroundColor:
++                 tintColor || (colorScheme === 'dark' ? '#636366' : 'white'),
++             },
++           ]}
++         />
++       ) : null}
+       <View style={styles.segmentsContainer}>
+         {values &&
+           values.map((value, index) => {
+@@ -113,19 +126,6 @@ const SegmentedControl = ({
+             );
+           })}
+       </View>
+-      {selectedIndex != null && segmentWidth ? (
+-        <Animated.View
+-          style={[
+-            styles.slider,
+-            {
+-              transform: [{translateX: animation}],
+-              width: segmentWidth - 4,
+-              backgroundColor:
+-                tintColor || (colorScheme === 'dark' ? '#636366' : 'white'),
+-            },
+-          ]}
+-        />
+-      ) : null}
+     </View>
+   );
+ };

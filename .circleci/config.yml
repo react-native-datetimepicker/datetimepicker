@@ -62,7 +62,7 @@ jobs:
           device: 'iPhone 14'
       # - rn/yarn_install
       - run:
-          command: yarn install --frozen-lockfile && npx patch-package
+          command: yarn install --immutable
           name: yarn install
       - run:
           command: yarn bundle:ios
@@ -112,7 +112,7 @@ jobs:
           command: npm install --global yarn
           name: install yarn
       - run:
-          command: yarn install --frozen-lockfile && npx patch-package
+          command: yarn install --immutable
           name: yarn install
       - run:
           command: yarn bundle:android
@@ -154,7 +154,7 @@ jobs:
           command: npm install --global yarn
           name: install yarn
       - run:
-          command: yarn install --frozen-lockfile && npx patch-package
+          command: yarn install --immutable
           name: yarn install
       - run:
           command: yarn bundle:android

@@ -61,3 +61,6 @@ buck-out/
 example/ios/Pods/
 
 .xcode.env
+
+# Yarn
+.yarn/install-state.gz

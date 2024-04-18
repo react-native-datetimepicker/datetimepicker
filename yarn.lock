@@ -2699,7 +2699,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-community/datetimepicker@workspace:."
   dependencies:
-    "@react-native-segmented-control/segmented-control": "patch:@react-native-segmented-control/segmented-control@npm%3A2.4.2#~/.yarn/patches/@react-native-segmented-control-segmented-control-npm-2.4.2-6af48614f1.patch"
+    "@react-native-segmented-control/segmented-control": "npm:^2.5.2"
     "@react-native/eslint-config": "npm:^0.72.2"
     "@react-native/metro-config": "npm:^0.73.2"
     "@semantic-release/git": "npm:^10.0.1"
@@ -2726,23 +2726,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-segmented-control/segmented-control@npm:2.4.2":
-  version: 2.4.2
-  resolution: "@react-native-segmented-control/segmented-control@npm:2.4.2"
+"@react-native-segmented-control/segmented-control@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "@react-native-segmented-control/segmented-control@npm:2.5.2"
   peerDependencies:
     react: ">=16.0"
     react-native: ">=0.62"
-  checksum: 10c0/b5a170d7de5486fec85b320452e70566385803a5253d84b1db2484f24c33cd3a88b707abaf914630516d97457eebb7bb484c573940b24208f6ef19b4d3e78e98
-  languageName: node
-  linkType: hard
-
-"@react-native-segmented-control/segmented-control@patch:@react-native-segmented-control/segmented-control@npm%3A2.4.2#~/.yarn/patches/@react-native-segmented-control-segmented-control-npm-2.4.2-6af48614f1.patch":
-  version: 2.4.2
-  resolution: "@react-native-segmented-control/segmented-control@patch:@react-native-segmented-control/segmented-control@npm%3A2.4.2#~/.yarn/patches/@react-native-segmented-control-segmented-control-npm-2.4.2-6af48614f1.patch::version=2.4.2&hash=b72ed1"
-  peerDependencies:
-    react: ">=16.0"
-    react-native: ">=0.62"
-  checksum: 10c0/29bf47c15e91bebf683e2f77550bf199a6c80fa987a3b8ceef61fc3699a319a1d51d1f0d1b99a40a2fec1d00d372ea46c2d00e296eb56f3a279a13ab3ad741d2
+  checksum: 10c0/c70120bb920723a87022928138f2a19b88276dc1f38506627b9667c0d90cc99b4b0b293c450c4909ccb83377caed32d6a9cd74702a0e3d825fe9b83367bbde41
   languageName: node
   linkType: hard
 

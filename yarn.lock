@@ -2729,7 +2729,7 @@ __metadata:
     react: "npm:18.2.0"
     react-native: "npm:^0.72.0"
     react-native-localize: "npm:^3.0.3"
-    react-native-test-app: "npm:3.0.14"
+    react-native-test-app: "npm:3.0.7"
     react-native-windows: "npm:^0.72.0"
     react-test-renderer: "npm:18.2.0"
     semantic-release: "npm:^19.0.3"
@@ -11811,9 +11811,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-test-app@npm:3.0.14":
-  version: 3.0.14
-  resolution: "react-native-test-app@npm:3.0.14"
+"react-native-test-app@npm:3.0.7":
+  version: 3.0.7
+  resolution: "react-native-test-app@npm:3.0.7"
   dependencies:
     "@rnx-kit/react-native-host": "npm:^0.4.0"
     ajv: "npm:^8.0.0"
@@ -11841,7 +11841,7 @@ __metadata:
     init: scripts/init.js
     init-test-app: scripts/init.js
     install-windows-test-app: windows/test-app.js
-  checksum: 10c0/1239602dfa8813214f331d2ff510e71cf9818f078f30ef9c583119fdc46660404d4d35af09449c9a0bc447116fd1a929881d6dc4f880a8a017852761b58dc99d
+  checksum: 10c0/0798c323ae5319c80df2fe670d9b7103aa1a2d34f9aeeba5a4c82a30144daed6a5f127be9b5e550b28ebd2f92f4b8cd97cb0ff7f4157896d7e901b524849b904
   languageName: node
   linkType: hard
 

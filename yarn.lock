@@ -2729,7 +2729,7 @@ __metadata:
     react: "npm:18.2.0"
     react-native: "npm:^0.72.0"
     react-native-localize: "npm:^3.0.3"
-    react-native-test-app: "npm:3.1.0"
+    react-native-test-app: "npm:3.0.0"
     react-native-windows: "npm:^0.72.0"
     react-test-renderer: "npm:18.2.0"
     semantic-release: "npm:^19.0.3"
@@ -2986,12 +2986,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rnx-kit/react-native-host@npm:^0.4.2":
-  version: 0.4.7
-  resolution: "@rnx-kit/react-native-host@npm:0.4.7"
+"@rnx-kit/react-native-host@npm:^0.3.1":
+  version: 0.3.2
+  resolution: "@rnx-kit/react-native-host@npm:0.3.2"
   peerDependencies:
     react-native: ">=0.66"
-  checksum: 10c0/c162abde5595e14b580e1d5bfe7500f777a8b26988873f4376a6e2f98d051ff2a0dc9fae17172813e2aecfcc3a7adf03ac16f396ee12342d46a50895b66f6cd3
+  checksum: 10c0/dd82840f4dd0a1d6b4f0265ec2f8acb16ade977ce36f6230a77fb2dbbc07c23c59210f8596836811883f804cede545bd1055c6b29ab3167735e55bbefcd06f4e
   languageName: node
   linkType: hard
 
@@ -10146,7 +10146,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
+"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
@@ -11811,15 +11811,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-test-app@npm:3.1.0":
-  version: 3.1.0
-  resolution: "react-native-test-app@npm:3.1.0"
+"react-native-test-app@npm:3.0.0":
+  version: 3.0.0
+  resolution: "react-native-test-app@npm:3.0.0"
   dependencies:
-    "@rnx-kit/react-native-host": "npm:^0.4.2"
+    "@rnx-kit/react-native-host": "npm:^0.3.1"
     ajv: "npm:^8.0.0"
     chalk: "npm:^4.1.0"
     cliui: "npm:^8.0.0"
     fast-xml-parser: "npm:^4.0.0"
+    minimist: "npm:^1.2.8"
     prompts: "npm:^2.4.0"
     semver: "npm:^7.3.5"
     uuid: "npm:^8.3.2"
@@ -11841,7 +11842,7 @@ __metadata:
     init: scripts/init.js
     init-test-app: scripts/init.js
     install-windows-test-app: windows/test-app.js
-  checksum: 10c0/088e458bc707565c8b90520abc21c2ef96d77c2fb4838db78d7c2a6e4330583a11f30f3dee462c9cd14bba44aae08f15e04ab3d8fc2c23f78ba0440e1c7d469b
+  checksum: 10c0/b8a1e832254d1033f848d5d289925c63209356d2a9ecbcfeabfc2578c8b950416cb3e7c49d8cf761081ef0571a4305df4c43554966a9771703e0e5ce16bf77be
   languageName: node
   linkType: hard
 

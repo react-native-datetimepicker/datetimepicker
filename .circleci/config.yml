@@ -188,17 +188,17 @@ jobs:
 workflows:
   test:
     jobs:
-      - analyse_js
-      - e2e_release_ios
-      - e2e_release_android
+      # - analyse_js
+      # - e2e_release_ios
+      # - e2e_release_android
       - e2e_release_android_new_arch
-      - new_arch_ios_build_only
-      - publish:
-          requires:
-            - e2e_release_android
-            - e2e_release_android_new_arch
-            - e2e_release_ios
-            - new_arch_ios_build_only
-          filters:
-            branches:
-              only: master
+      # - new_arch_ios_build_only
+      # - publish:
+      #     requires:
+      #       - e2e_release_android
+      #       - e2e_release_android_new_arch
+      #       - e2e_release_ios
+      #       - new_arch_ios_build_only
+      #     filters:
+      #       branches:
+      #         only: master

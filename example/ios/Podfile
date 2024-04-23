@@ -1,10 +1,9 @@
-require_relative '../../node_modules/react-native-test-app/test_app'
+ws_dir = Pathname.new(__dir__)
+ws_dir = ws_dir.parent until
+  File.exist?("#{ws_dir}/node_modules/react-native-test-app/test_app.rb") ||
+  ws_dir.expand_path.to_s == '/'
+require "#{ws_dir}/node_modules/react-native-test-app/test_app.rb"
 
 workspace 'date-time-picker-example.xcworkspace'
-
-# Flipper causes the build to fail on release when fabric is enabled
-# https://github.com/facebook/react-native/issues/33764
-
-use_flipper! false unless ENV['ENABLE_FLIPPER']
 
 use_test_app!

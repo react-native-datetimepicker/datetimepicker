@@ -6,7 +6,6 @@
 *.sln.docstates
 
 # Build results
-ARM/
 ARM64/
 AppPackages/
 [Bb]in/

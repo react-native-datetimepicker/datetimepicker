@@ -6,9 +6,11 @@
 .gradle/
 .idea/
 .vs/
+.xcode.env
 Pods/
 build/
-dist/
+dist/*
+!dist/.gitignore
 local.properties
 msbuild.binlog
 node_modules/

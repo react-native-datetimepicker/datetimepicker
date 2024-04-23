@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = package['license']
   s.author       = package['author']
   s.homepage     = package['homepage']
-  s.platforms = { :ios => "11.0", :visionos => "1.0" }
+  s.platforms    = { :ios => "11.0", :visionos => "1.0" }
   s.source       = { :git => "https://github.com/react-native-community/datetimepicker", :tag => "v#{s.version}" }
   s.source_files = "ios/**/*.{h,m,mm,cpp}"
   s.requires_arc = true

@@ -2722,14 +2722,14 @@ __metadata:
     flow-bin: "npm:^0.182.0"
     flow-typed: "npm:^3.8.0"
     invariant: "npm:^2.2.4"
-    jest: "npm:^29.2.1"
+    jest: "npm:^29.5.0"
     moment: "npm:^2.24.0"
     moment-timezone: "npm:^0.5.41"
     prettier: "npm:^2.8.8"
     react: "npm:18.2.0"
     react-native: "npm:^0.72.0"
     react-native-localize: "npm:^3.0.3"
-    react-native-test-app: "npm:^3.5.3"
+    react-native-test-app: "npm:^2.5.32"
     react-native-windows: "npm:^0.72.0"
     react-test-renderer: "npm:18.2.0"
     semantic-release: "npm:^19.0.3"
@@ -2986,12 +2986,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rnx-kit/react-native-host@npm:^0.4.6":
-  version: 0.4.6
-  resolution: "@rnx-kit/react-native-host@npm:0.4.6"
+"@rnx-kit/react-native-host@npm:^0.2.9":
+  version: 0.2.9
+  resolution: "@rnx-kit/react-native-host@npm:0.2.9"
   peerDependencies:
-    react-native: ">=0.66"
-  checksum: 10c0/0b69a4ae90df23ce5c39176a35c556c7595686df805c1cd93ef1aecacd47713a085d36c833f0f9856803ea56d6456bad97c9f36dbd0ef081826abf4abfcc657d
+    react-native: ">=0.64"
+  checksum: 10c0/5a0fdfc6550d329d6c6569b8fbcbde2a5e82bc5acb0ea47925a18055b5c27f50bc68d1c3112719679e50ada78f2a84acecbc9da88d3c0bf012f7e69a7686b802
   languageName: node
   linkType: hard
 
@@ -8512,7 +8512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.2.1":
+"jest@npm:^29.5.0":
   version: 29.7.0
   resolution: "jest@npm:29.7.0"
   dependencies:
@@ -10146,7 +10146,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
+"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
@@ -11811,28 +11811,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-test-app@npm:^3.5.3":
-  version: 3.5.3
-  resolution: "react-native-test-app@npm:3.5.3"
+"react-native-test-app@npm:^2.5.32":
+  version: 2.5.35
+  resolution: "react-native-test-app@npm:2.5.35"
   dependencies:
-    "@rnx-kit/react-native-host": "npm:^0.4.6"
+    "@rnx-kit/react-native-host": "npm:^0.2.9"
     ajv: "npm:^8.0.0"
+    chalk: "npm:^4.1.0"
     cliui: "npm:^8.0.0"
     fast-xml-parser: "npm:^4.0.0"
+    minimist: "npm:^1.2.8"
     prompts: "npm:^2.4.0"
     semver: "npm:^7.3.5"
-    uuid: "npm:^9.0.0"
-    yoctocolors: "npm:^2.0.0"
+    uuid: "npm:^8.3.2"
   peerDependencies:
-    "@callstack/react-native-visionos": 0.73 - 0.74
     "@expo/config-plugins": ">=5.0"
     react: 17.0.1 - 18.2
-    react-native: 0.66 - 0.74 || >=0.75.0-0 <0.75.0
-    react-native-macos: ^0.0.0-0 || 0.66 || 0.68 || 0.71 - 0.73
-    react-native-windows: ^0.0.0-0 || 0.66 - 0.73
+    react-native: ^0.0.0-0 || 0.64 - 0.73 || 1000.0.0
+    react-native-macos: ^0.0.0-0 || 0.64 || 0.66 || 0.68 || 0.71 - 0.73
+    react-native-windows: ^0.0.0-0 || 0.64 - 0.73
   peerDependenciesMeta:
-    "@callstack/react-native-visionos":
-      optional: true
     "@expo/config-plugins":
       optional: true
     react-native-macos:
@@ -11840,11 +11838,11 @@ __metadata:
     react-native-windows:
       optional: true
   bin:
-    configure-test-app: scripts/configure.mjs
-    init: scripts/init.mjs
-    init-test-app: scripts/init.mjs
-    install-windows-test-app: windows/test-app.mjs
-  checksum: 10c0/b24cfdd0de8e850c8442da348926301c3f36e970d07cbc25e2dd68e99fb31959d6cfc9428d98aad18f0612a22dcae726bff41be3c02500a9ade397abc6e873e6
+    configure-test-app: scripts/configure.js
+    init: scripts/init.js
+    init-test-app: scripts/init.js
+    install-windows-test-app: windows/test-app.js
+  checksum: 10c0/1880018afc6db7aff63456581479fd05cb0b18d3440b68e5d0714641bb2999f3689d2f02c19053b42ef4923201b5f43858aac12ab3d65bb76b42079e57817e59
   languageName: node
   linkType: hard
 
@@ -13967,21 +13965,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.0":
+"uuid@npm:^8.3.0, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
     uuid: dist/bin/uuid
   checksum: 10c0/bcbb807a917d374a49f475fae2e87fdca7da5e5530820ef53f65ba1d12131bd81a92ecf259cc7ce317cbe0f289e7d79fdfebcef9bfa3087c8c8a2fa304c9be54
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^9.0.0":
-  version: 9.0.1
-  resolution: "uuid@npm:9.0.1"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 10c0/1607dd32ac7fc22f2d8f77051e6a64845c9bce5cd3dd8aa0070c074ec73e666a1f63c7b4e0f4bf2bc8b9d59dc85a15e17807446d9d2b17c8485fbc2147b27f9b
   languageName: node
   linkType: hard
 
@@ -14454,12 +14443,5 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
-  languageName: node
-  linkType: hard
-
-"yoctocolors@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "yoctocolors@npm:2.0.0"
-  checksum: 10c0/994f5d99e7647a1b333331ffecbbf7c4463d9c2823e371b44e21146a4496cad0f14fbe2f73f44383312a6f843d93523f830f1360009f0ac93027b167ef5c63be
   languageName: node
   linkType: hard

@@ -18,19 +18,19 @@ class RNDateTimePickerComponentDescriptor final : public ConcreteComponentDescri
   public:
     using ConcreteComponentDescriptor::ConcreteComponentDescriptor;
 
-  void adopt(ShadowNode& shadowNode) const override {
-    auto& pickerShadowNode = static_cast<RNDateTimePickerShadowNode&>(shadowNode);
-    auto& layoutableShadowNode = static_cast<YogaLayoutableShadowNode&>(pickerShadowNode);
+    void adopt(ShadowNode& shadowNode) const override {
+      auto& pickerShadowNode = static_cast<RNDateTimePickerShadowNode&>(shadowNode);
+      auto& layoutableShadowNode = static_cast<YogaLayoutableShadowNode&>(pickerShadowNode);
 
-    auto state = std::static_pointer_cast<const RNDateTimePickerShadowNode::ConcreteState>(shadowNode.getState());
-    auto stateData = state->getData();
+      auto state = std::static_pointer_cast<const RNDateTimePickerShadowNode::ConcreteState>(shadowNode.getState());
+      auto stateData = state->getData();
 
-    if(stateData.frameSize.width != 0 && stateData.frameSize.height != 0) {
-      layoutableShadowNode.setSize(Size{stateData.frameSize.width, stateData.frameSize.height});
+      if(stateData.frameSize.width != 0 && stateData.frameSize.height != 0) {
+        layoutableShadowNode.setSize(Size{stateData.frameSize.width, stateData.frameSize.height});
+      }
+
+      ConcreteComponentDescriptor::adopt(shadowNode);
     }
-
-    ConcreteComponentDescriptor::adopt(shadowNode);
-  }
 };
 
 } // namespace react

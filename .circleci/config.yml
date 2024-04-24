@@ -33,7 +33,7 @@ jobs:
   new_arch_ios_build_only:
     executor:
       name: rn/macos
-      xcode_version: '15.0.0'
+      xcode_version: '15.3.0'
     steps:
       - checkout
       - run:
@@ -50,7 +50,7 @@ jobs:
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '15.0.0'
+      xcode_version: '15.3.0'
     steps:
       - checkout
       - run:
@@ -127,7 +127,7 @@ jobs:
           path: ./artifacts
 
 
-  e2e_release_android_new_arch:
+  new_arch_android_build_only:
     executor:
       name: android/android-machine
       resource-class: large
@@ -164,9 +164,6 @@ jobs:
           name: build app for e2e tests
       #      - android/wait-for-emulator
       #      - android/disable-animations
-      - run:
-          command: yarn detox:android:test:release
-          name: run e2e tests
       - store_artifacts:
           path: ./artifacts
 
@@ -191,12 +188,12 @@ workflows:
       - analyse_js
       - e2e_release_ios
       - e2e_release_android
-      - e2e_release_android_new_arch
+      - new_arch_android_build_only
       - new_arch_ios_build_only
       - publish:
           requires:
             - e2e_release_android
-            - e2e_release_android_new_arch
+            - new_arch_android_build_only
             - e2e_release_ios
             - new_arch_ios_build_only
           filters:

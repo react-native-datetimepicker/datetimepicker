@@ -8,6 +8,7 @@ import type {PresentPickerCallback} from '../src/androidUtils';
 
 export const mockAndroidDialogDateChange = (datePickedByUser: Date) => {
   jest.spyOn(androidUtils, 'getOpenPicker').mockImplementation(() => {
+    // $FlowFixMe[missing-local-annot]
     async function fakeDateTimePickerAndroidOpener({
       value: timestampFromPickerValueProp,
     }) {

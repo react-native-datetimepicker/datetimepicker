@@ -87,7 +87,7 @@
     "prettier": "^2.8.8",
     "react": "18.2.0",
     "react-native": "^0.73.0",
-    "react-native-localize": "^3.0.3",
+    "react-native-localize": "^3.1.0",
     "react-native-test-app": "^3.5.3",
     "react-native-windows": "^0.73.0",
     "react-test-renderer": "18.2.0",

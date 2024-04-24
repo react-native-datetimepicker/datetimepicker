@@ -2695,7 +2695,7 @@ __metadata:
     prettier: "npm:^2.8.8"
     react: "npm:18.2.0"
     react-native: "npm:^0.73.0"
-    react-native-localize: "npm:^3.0.3"
+    react-native-localize: "npm:^3.1.0"
     react-native-test-app: "npm:^3.5.3"
     react-native-windows: "npm:^0.73.0"
     react-test-renderer: "npm:18.2.0"
@@ -11625,7 +11625,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-localize@npm:^3.0.3":
+"react-native-localize@npm:^3.1.0":
   version: 3.1.0
   resolution: "react-native-localize@npm:3.1.0"
   peerDependencies:

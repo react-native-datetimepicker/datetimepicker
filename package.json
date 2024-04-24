@@ -109,6 +109,11 @@
     "react-native": "^0.73.0",
     "react-native-windows": "^0.73.0"
   },
+  "peerDependenciesMeta": {
+    "react-native-windows": {
+      "optional": true
+    }
+  },
   "packageManager": "yarn@4.1.1",
   "workspaces": [
     "example"

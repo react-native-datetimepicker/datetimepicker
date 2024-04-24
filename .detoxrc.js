@@ -14,7 +14,7 @@ module.exports = {
     },
     emulator: {
       type: 'android.emulator',
-      // utilBinaryPaths: ['example/e2e/test-butler-app.apk'],
+      utilBinaryPaths: ['example/e2e/test-butler-app.apk'],
       device: {
         avdName: 'TestingAVD',
       },

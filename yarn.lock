@@ -2701,9 +2701,12 @@ __metadata:
     react-test-renderer: "npm:18.2.0"
     semantic-release: "npm:^19.0.3"
   peerDependencies:
-    react: 18.2.0
+    react: "*"
     react-native: ^0.73.0
     react-native-windows: ^0.73.0
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
   languageName: unknown
   linkType: soft
 

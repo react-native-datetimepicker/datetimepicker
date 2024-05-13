@@ -88,6 +88,8 @@ jobs:
       tag: default
     steps:
       - checkout
+      - android/change-java-version:
+          java-version: 17 
       - run:
           command: avdmanager list
           name: list avds
@@ -134,6 +136,8 @@ jobs:
       tag: default
     steps:
       - checkout
+      - android/change-java-version:
+           java-version: 17 
       - run:
           command: avdmanager list
           name: list avds

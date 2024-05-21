@@ -75,9 +75,11 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'
 }
 
-tasks.named('extractDeepLinksDebug') {
-    dependsOn tasks.named(':@react-native-community_datetimepicker:generateDebugResValues')
-}
-tasks.named('packageDebugResources') {
-    dependsOn tasks.named(':@react-native-community_datetimepicker:generateDebugResValues')
+afterEvaluate {
+    tasks.findByName('extractDeepLinksDebug')?.configure {
+        dependsOn ':@react-native-community_datetimepicker:generateDebugResValues'
+    }
+    tasks.findByName('packageDebugResources')?.configure {
+        dependsOn ':@react-native-community_datetimepicker:generateDebugResValues'
+    }
 }

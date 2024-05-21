@@ -60,6 +60,7 @@ android {
         }
         if (task.name == 'extractDeepLinksDebug') {
             task.dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
+            task.mustRunAfter(':@react-native-community_datetimepicker:generateDebugResValues')
         }
     }
 }
@@ -77,9 +78,11 @@ dependencies {
 
 afterEvaluate {
     tasks.findByName('extractDeepLinksDebug')?.configure {
-        dependsOn ':@react-native-community_datetimepicker:generateDebugResValues'
+        dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
+        mustRunAfter(':@react-native-community_datetimepicker:generateDebugResValues')
     }
     tasks.findByName('packageDebugResources')?.configure {
-        dependsOn ':@react-native-community_datetimepicker:generateDebugResValues'
+        dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
+        mustRunAfter(':@react-native-community_datetimepicker:generateDebugResValues')
     }
 }

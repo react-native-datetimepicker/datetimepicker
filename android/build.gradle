@@ -58,6 +58,9 @@ android {
         if (task.name == 'packageDebugResources') {
             task.dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
         }
+        if (task.name == 'extractDeepLinksDebug') {
+            task.dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
+        }
     }
 }
 

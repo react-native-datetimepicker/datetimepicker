@@ -54,11 +54,10 @@ android {
         }
     }
 
-    tasks.whenTaskAdded { 
-        task ->
-            if (task.name == 'packageDebugResources') {
-                task.dependsOn('generateDebugResValues')
-            }
+    tasks.whenTaskAdded { task ->
+        if (task.name == 'packageDebugResources') {
+            task.dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
+        }
     }
 }
 

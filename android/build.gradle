@@ -74,3 +74,10 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'
 }
+
+tasks.named('extractDeepLinksDebug') {
+    dependsOn tasks.named(':@react-native-community_datetimepicker:generateDebugResValues')
+}
+tasks.named('packageDebugResources') {
+    dependsOn tasks.named(':@react-native-community_datetimepicker:generateDebugResValues')
+}

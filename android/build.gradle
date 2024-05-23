@@ -25,10 +25,11 @@ if (isNewArchitectureEnabled()) {
 
 android {
     def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
-    if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
-      namespace "com.reactcommunity.rndatetimepicker"
-      buildFeatures {
-        buildConfig true
+    if (agpVersion.tokenize('.')[0].toInteger() >= 7 && agpVersion.tokenize('.')[1].toInteger() >= 3) {
+        compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+        namespace "com.reactcommunity.rndatetimepicker"
+        buildFeatures {
+            buildConfig true
         }
     }
 
@@ -49,10 +50,10 @@ android {
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
     }
 
-    sourceSets.main {
-        java {
-            if (!isNewArchitectureEnabled()) {
-                srcDirs += 'src/paper/java'
+    sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += ['src/paper/java']
             }
         }
     }

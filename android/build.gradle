@@ -42,8 +42,11 @@ if (isNewArchitectureEnabled()) {
 android {
     compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
 
-    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
-    if (agpVersion.tokenize('.')[0].toInteger() >= 7 && agpVersion.tokenize('.')[1].toInteger() >= 3) {
+    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+    def majorVersion = agpVersion[0].toInteger()
+    def minorVersion = agpVersion[1].toInteger()
+
+    if ((majorVersion == 7 && minorVersion >= 3) || majorVersion > 7) {
         namespace "com.reactcommunity.rndatetimepicker"
         buildFeatures {
             buildConfig true

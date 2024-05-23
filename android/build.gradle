@@ -24,17 +24,15 @@ if (isNewArchitectureEnabled()) {
 
 
 android {
+    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+
     def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
     if (agpVersion.tokenize('.')[0].toInteger() >= 7 && agpVersion.tokenize('.')[1].toInteger() >= 3) {
-        compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
         namespace "com.reactcommunity.rndatetimepicker"
         buildFeatures {
             buildConfig true
         }
     }
-
-    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
-
     // Used to override the NDK path/version on internal CI or by allowing
     // users to customize the NDK path/version from their root project (e.g. for M1 support)
     if (rootProject.hasProperty("ndkPath")) {
@@ -53,14 +51,11 @@ android {
     sourceSets {
         main {
             if (isNewArchitectureEnabled()) {
-                java.srcDirs += ['src/paper']
+                java.srcDirs += ['src/newArch']
+            } else {
+                java.srcDirs += ['src/oldArch']
             }
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

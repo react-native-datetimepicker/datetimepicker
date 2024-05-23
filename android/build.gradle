@@ -65,15 +65,19 @@ android {
         minSdkVersion getExtOrIntegerDefault('minSdkVersion')
         targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
-        vectorDrawables.useSupportLibrary = true
     }
 
-    sourceSets {
-        main {
-            if (isNewArchitectureEnabled()) {
-                java.srcDirs += ['src/newArch']
-            } else {
-                java.srcDirs += ['src/oldArch']
+    if (agpVersion < 8) {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    sourceSets.main {
+        java {
+            if (!isNewArchitectureEnabled()) {
+                srcDirs += 'src/paper/java'
             }
         }
     }

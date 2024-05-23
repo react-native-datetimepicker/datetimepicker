@@ -74,6 +74,7 @@ React Native date & time picker component for iOS, Android and Windows (please n
   - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
   - [Usage](#usage)
+  - [React Native Support](#react-native-support)
   - [Localization note](#localization-note)
   - [Android imperative API](#android-imperative-api)
   - [Props / params](#component-props--params-of-the-android-imperative-api)
@@ -141,6 +142,17 @@ Autolinking is not yet implemented on Windows, so [manual installation ](/docs/m
 #### RN >= 0.60
 
 If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
+
+## React Native Support
+Check the `react-native` version support table below to find the corrosponding `datetimepicker` version to meet support requirements.
+
+| react-native version |  version |
+| -------------------- | -------- |
+|      0.73.0+         |  7.6.3+  |
+|    <=0.72.0          | <=7.6.2  |
+|      0.70.0+         |  7.0.1+  |
+|     <0.70.0          | <=7.0.0  |
+
 
 ## Usage
 

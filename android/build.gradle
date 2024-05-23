@@ -53,7 +53,7 @@ android {
     sourceSets {
         main {
             if (isNewArchitectureEnabled()) {
-                java.srcDirs += ['src/paper/java']
+                java.srcDirs += ['src/paper']
             }
         }
     }

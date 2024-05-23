@@ -3,6 +3,10 @@ buildscript {
         google()
         mavenCentral()
     }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+    }
 }
 
 def getExtOrIntegerDefault(name) {
@@ -54,14 +58,9 @@ android {
         }
     }
 
-    tasks.whenTaskAdded { task ->
-        if (task.name == 'packageDebugResources') {
-            task.dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
-        }
-        if (task.name == 'extractDeepLinksDebug') {
-            task.dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
-            task.mustRunAfter(':@react-native-community_datetimepicker:generateDebugResValues')
-        }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -74,15 +73,4 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'
-}
-
-afterEvaluate {
-    tasks.findByName('extractDeepLinksDebug')?.configure {
-        dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
-        mustRunAfter(':@react-native-community_datetimepicker:generateDebugResValues')
-    }
-    tasks.findByName('packageDebugResources')?.configure {
-        dependsOn(':@react-native-community_datetimepicker:generateDebugResValues')
-        mustRunAfter(':@react-native-community_datetimepicker:generateDebugResValues')
-    }
 }

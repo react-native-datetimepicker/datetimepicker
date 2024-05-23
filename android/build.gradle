@@ -1,3 +1,5 @@
+import java.nio.file.Paths
+
 buildscript {
     repositories {
         google()
@@ -15,6 +17,20 @@ def isNewArchitectureEnabled() {
     // - Invoke gradle with `-newArchEnabled=true`
     // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
     return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
+static def findNodeModulePath(baseDir, packageName) {
+    def basePath = baseDir.toPath().normalize()
+    // Node's module resolution algorithm searches up to the root directory,
+    // after which the base path will be null
+    while (basePath) {
+        def candidatePath = Paths.get(basePath.toString(), "node_modules", packageName)
+        if (candidatePath.toFile().exists()) {
+            return candidatePath.toString()
+        }
+        basePath = basePath.getParent()
+    }
+    return null
 }
 
 apply plugin: 'com.android.library'
@@ -46,6 +62,7 @@ android {
         minSdkVersion getExtOrIntegerDefault('minSdkVersion')
         targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        vectorDrawables.useSupportLibrary = true
     }
 
     sourceSets {
@@ -57,18 +74,15 @@ android {
             }
         }
     }
-
-    applicationVariants.all { variant ->
-        def variantName = variant.name.capitalize()
-        tasks["package${variantName}Resources"].configure {
-            dependsOn tasks["generate${variantName}ResValues"]
-        }
-    }
 }
 
+def reactNativePath = findNodeModulePath(projectDir, "react-native")
+
 repositories {
+    maven {
+        url "${reactNativePath}/android"
+    }
     google()
-    mavenLocal()
     mavenCentral()
 }
 

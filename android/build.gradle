@@ -57,6 +57,13 @@ android {
             }
         }
     }
+
+    applicationVariants.all { variant ->
+        def variantName = variant.name.capitalize()
+        tasks["package${variantName}Resources"].configure {
+            dependsOn tasks["generate${variantName}ResValues"]
+        }
+    }
 }
 
 repositories {

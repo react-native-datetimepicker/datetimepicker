@@ -3,10 +3,6 @@ buildscript {
         google()
         mavenCentral()
     }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
-    }
 }
 
 def getExtOrIntegerDefault(name) {
@@ -31,6 +27,9 @@ android {
     def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
     if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
       namespace "com.reactcommunity.rndatetimepicker"
+      buildFeatures {
+        buildConfig true
+        }
     }
 
     compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')

@@ -149,8 +149,8 @@ Check the `react-native` version support table below to find the corrosponding `
 | react-native version |  version |
 | -------------------- | -------- |
 |      0.73.0+         |  7.6.3+  |
-|      <=0.72.0        | <=7.6.2  |
-|      0.7.0+          |  7.0.1+  |
+|    <=0.72.0          | <=7.6.2  |
+|      0.70.0+         |  7.0.1+  |
 |      <0.7.0          | <=7.0.0  |
 
 

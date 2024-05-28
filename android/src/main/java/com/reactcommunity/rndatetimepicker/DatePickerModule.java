@@ -26,9 +26,9 @@ import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
 import java.util.Calendar;
 
 /**
-* {@link NativeModule} that allows JS to show a native date picker dialog and get called back when
-* the user selects a date.
-*/
+ * {@link NativeModule} that allows JS to show a native date picker dialog and get called back when
+ * the user selects a date.
+ */
 @ReactModule(name = DatePickerModule.NAME)
 public class DatePickerModule extends NativeModuleDatePickerSpec {
 
@@ -101,33 +101,33 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
     dismissDialog(activity, NAME, promise);
   }
   /**
-  * Show a date picker dialog.
-  *
-  * @param options a map containing options. Available keys are:
-  *
-  * <ul>
-  *   <li>{@code date} (timestamp in milliseconds) the date to show by default</li>
-  *   <li>
-  *     {@code minimumDate} (timestamp in milliseconds) the minimum date the user should be allowed
-  *     to select
-  *   </li>
-  *   <li>
-  *     {@code maximumDate} (timestamp in milliseconds) the maximum date the user should be allowed
-  *     to select
-  *    </li>
-  *   <li>
-  *      {@code display} To set the date picker display to 'calendar/spinner/default'
-  *   </li>
-  *   <li>
-  *      {@code testID} testID for testing with e.g. detox.
-  *   </li>
-  * </ul>
-  *
-  * @param promise This will be invoked with parameters action, year,
-  *                month (0-11), day, where action is {@code dateSetAction} or
-  *                {@code dismissedAction}, depending on what the user did. If the action is
-  *                dismiss, year, month and date are undefined.
-  */
+   * Show a date picker dialog.
+   *
+   * @param options a map containing options. Available keys are:
+   *
+   * <ul>
+   *   <li>{@code date} (timestamp in milliseconds) the date to show by default</li>
+   *   <li>
+   *     {@code minimumDate} (timestamp in milliseconds) the minimum date the user should be allowed
+   *     to select
+   *   </li>
+   *   <li>
+   *     {@code maximumDate} (timestamp in milliseconds) the maximum date the user should be allowed
+   *     to select
+   *    </li>
+   *   <li>
+   *      {@code display} To set the date picker display to 'calendar/spinner/default'
+   *   </li>
+   *   <li>
+   *      {@code testID} testID for testing with e.g. detox.
+   *   </li>
+   * </ul>
+   *
+   * @param promise This will be invoked with parameters action, year,
+   *                month (0-11), day, where action is {@code dateSetAction} or
+   *                {@code dismissedAction}, depending on what the user did. If the action is
+   *                dismiss, year, month and date are undefined.
+   */
   @ReactMethod
   public void open(final ReadableMap options, final Promise promise) {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
@@ -165,7 +165,7 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
 
   private Bundle createFragmentArguments(ReadableMap options) {
     final Bundle args = Common.createFragmentArguments(options);
-    
+
     if (options.hasKey(RNConstants.ARG_MINDATE) && !options.isNull(RNConstants.ARG_MINDATE)) {
       args.putLong(RNConstants.ARG_MINDATE, (long) options.getDouble(RNConstants.ARG_MINDATE));
     }

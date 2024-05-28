@@ -171,6 +171,7 @@ export type AndroidNativeProps = Readonly<
       /**
        * callback when an error occurs inside the date picker native code (such as null activity)
        */
+      firstDayOfWeek?: DAY_OF_WEEK;
       onError?: (arg: Error) => void;
     }
 >;

@@ -205,6 +205,7 @@ export type AndroidNativeProps = $ReadOnly<{|
    * @deprecated use negativeButton instead
    * */
   negativeButtonLabel?: string,
+  firstDayOfWeek?: typeof DAY_OF_WEEK,
   onError?: (Error) => void,
 |}>;
 

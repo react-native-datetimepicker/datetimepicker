@@ -253,6 +253,13 @@ export const App = () => {
                 />
               </>
             )}
+            <Info
+              testID={'firstDayOfWeek'}
+              title={'First Day of Week:'}
+              body={`${Object.keys(DAY_OF_WEEK).find(
+                (key) => DAY_OF_WEEK[key] === firstDayOfWeek,
+              )}`}
+            />
           </View>
         </View>
         <ScrollView
@@ -334,6 +341,60 @@ export const App = () => {
               testID="neutralButtonLabelTextInput"
             />
           </View>
+
+          <View
+            style={{
+              flexDirection: 'column',
+              flexWrap: 'wrap',
+              paddingBottom: 10,
+            }}>
+            <ThemedText style={styles.textLabel}>
+              firstDayOfWeek (android only)
+            </ThemedText>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+              }}>
+              <Button
+                title={'Sunday'}
+                value={DAY_OF_WEEK.Sunday}
+                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Sunday)}
+              />
+              <Button
+                title={'Monday'}
+                value={DAY_OF_WEEK.Monday}
+                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Monday)}
+              />
+              <Button
+                title={'Tuesday'}
+                value={DAY_OF_WEEK.Tuesday}
+                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Tuesday)}
+              />
+              <Button
+                title={'Wednesday'}
+                value={DAY_OF_WEEK.Wednesday}
+                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Wednesday)}
+              />
+              <Button
+                title={'Thursday'}
+                value={DAY_OF_WEEK.Thursday}
+                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Thursday)}
+              />
+              <Button
+                title={'Friday'}
+                value={DAY_OF_WEEK.Friday}
+                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Friday)}
+              />
+              <Button
+                title={'Saturday'}
+                value={DAY_OF_WEEK.Saturday}
+                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Saturday)}
+              />
+            </View>
+          </View>
+
           <View style={styles.header}>
             <ThemedText style={styles.textLabel}>
               [android] show and dismiss picker after 3 secs
@@ -410,6 +471,7 @@ export const App = () => {
                 neutralButton={{label: neutralButtonLabel}}
                 negativeButton={{label: 'Cancel', textColor: 'red'}}
                 disabled={disabled}
+                firstDayOfWeek={firstDayOfWeek}
               />
             )}
           </View>

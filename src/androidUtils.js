@@ -26,6 +26,7 @@ type OpenParams = {
   timeZoneOffsetInMinutes: AndroidNativeProps['timeZoneOffsetInMinutes'],
   timeZoneName: AndroidNativeProps['timeZoneName'],
   testID: AndroidNativeProps['testID'],
+  firstDayOfWeek: AndroidNativeProps['firstDayOfWeek'],
   dialogButtons: {
     positive: ProcessedButton,
     negative: ProcessedButton,
@@ -70,6 +71,7 @@ function getOpenPicker(
         timeZoneName,
         dialogButtons,
         testID,
+        firstDayOfWeek,
       }: OpenParams) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
@@ -81,6 +83,7 @@ function getOpenPicker(
           timeZoneName,
           dialogButtons,
           testID,
+          firstDayOfWeek,
         });
   }
 }

@@ -42,6 +42,7 @@ function open(props: AndroidNativeProps) {
     positiveButtonLabel,
     negativeButtonLabel,
     testID,
+    firstDayOfWeek,
   } = props;
   validateAndroidProps(props);
   invariant(originalValue, 'A date or time must be specified as `value` prop.');
@@ -84,6 +85,7 @@ function open(props: AndroidNativeProps) {
         timeZoneName,
         dialogButtons,
         testID,
+        firstDayOfWeek,
       });
 
       switch (action) {

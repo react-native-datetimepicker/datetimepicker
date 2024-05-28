@@ -356,6 +356,7 @@ export const App = () => {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 flexWrap: 'wrap',
+                gap: 5,
               }}>
               <Button
                 title={'Sunday'}

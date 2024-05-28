@@ -23,7 +23,13 @@ async function userChangesTimeValue(
   }
 }
 
-async function userOpensPicker({mode, display, interval, tzOffsetPreset}) {
+async function userOpensPicker({
+  mode,
+  display,
+  interval,
+  tzOffsetPreset,
+  firstDayOfWeek,
+}) {
   await element(by.text(mode)).tap();
   await element(by.text(display)).tap();
   if (interval) {
@@ -31,6 +37,9 @@ async function userOpensPicker({mode, display, interval, tzOffsetPreset}) {
   }
   if (tzOffsetPreset) {
     await element(by.text(tzOffsetPreset)).tap();
+  }
+  if (firstDayOfWeek) {
+    await element(by.text(firstDayOfWeek)).tap();
   }
   await element(by.id('showPickerButton')).tap();
 }

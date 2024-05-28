@@ -447,4 +447,66 @@ describe('e2e tests', () => {
       });
     });
   });
+
+  describe(':android: firstDayOfWeek functionality', () => {
+    it(':android: picker should have Sunday as firstDayOfWeek and select Sunday date', async () => {
+      const targetDate = '2021-11-07T01:00:00Z';
+      const targetDateWithTZ = '2021-11-07T02:00:00+01:00';
+
+      await userOpensPicker({mode: 'date', display: getPickerDisplay()});
+      await expect(getDatePickerAndroid()).toBeVisible();
+
+      const uiDevice = device.getUiDevice();
+      const focusSeventhOfNovemberInCalendar = async () => {
+        for (let i = 0; i < 4; i++) {
+          await uiDevice.pressDPadDown();
+        }
+        for (let i = 0; i < 2; i++) {
+          await uiDevice.pressDPadLeft();
+        }
+      };
+      await focusSeventhOfNovemberInCalendar();
+      await uiDevice.pressEnter();
+      await userTapsOkButtonAndroid();
+
+      await expect(elementById('firstDayOfWeek')).toHaveText('Sunday');
+
+      await assertTimeLabels({
+        utcTime: targetDate,
+        deviceTime: targetDateWithTZ,
+      });
+    });
+
+    it(':android: should select firstDayOfWeek as Tuesday and select the Sunday date', async () => {
+      const targetDate = '2021-11-07T01:00:00Z';
+      const targetDateWithTZ = '2021-11-07T02:00:00+01:00';
+
+      await userOpensPicker({
+        mode: 'date',
+        display: getPickerDisplay(),
+        firstDayOfWeek: 'TUESDAY',
+      });
+      await expect(getDatePickerAndroid()).toBeVisible();
+
+      const uiDevice = device.getUiDevice();
+      const focusSeventhOfNovemberInCalendar = async () => {
+        for (let i = 0; i < 3; i++) {
+          await uiDevice.pressDPadDown();
+        }
+        for (let i = 0; i < 3; i++) {
+          await uiDevice.pressDPadRight();
+        }
+      };
+      await focusSeventhOfNovemberInCalendar();
+      await uiDevice.pressEnter();
+      await userTapsOkButtonAndroid();
+
+      await expect(elementById('firstDayOfWeek')).toHaveText('Tuesday');
+
+      await assertTimeLabels({
+        utcTime: targetDate,
+        deviceTime: targetDateWithTZ,
+      });
+    });
+  });
 });

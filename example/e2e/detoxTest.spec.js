@@ -174,7 +174,7 @@ describe('e2e tests', () => {
 
       await waitFor(elementByText(timeZone)).toBeVisible().withTimeout(1000);
 
-      await elementByText(timeZone).tap();
+      await elementByText(timeZone).multiTap(2);
 
       await assertTimeLabels({
         utcTime: '2021-11-13T01:00:00Z',
@@ -197,7 +197,7 @@ describe('e2e tests', () => {
 
       await waitFor(elementByText(timeZone)).toBeVisible().withTimeout(1000);
 
-      await elementByText(timeZone).tap();
+      await elementByText(timeZone).multiTap(2);
 
       await userOpensPicker({mode: 'date', display: getPickerDisplay()});
 
@@ -274,6 +274,8 @@ describe('e2e tests', () => {
       if (isAndroid()) {
         tzOffsetPreset = tzOffsetPreset.toUpperCase();
       }
+
+      await elementById('DateTimePickerScrollView').scrollTo('top');
 
       await userOpensPicker({
         mode: 'time',

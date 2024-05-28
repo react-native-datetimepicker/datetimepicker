@@ -111,7 +111,7 @@ export const App = () => {
   const [maxDate] = useState(new Date('2021'));
   const [minDate] = useState(new Date('2018'));
   const [is24Hours, set24Hours] = useState(false);
-  const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Monday);
+  const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Sunday);
   const [dateFormat, setDateFormat] = useState('longdate');
   const [dayOfWeekFormat, setDayOfWeekFormat] = useState(
     '{dayofweek.abbreviated(2)}',

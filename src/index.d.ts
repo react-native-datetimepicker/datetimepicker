@@ -168,7 +168,7 @@ export type AndroidNativeProps = Readonly<
        * */
       negativeButtonLabel?: string;
       /**
-       * Sets the first day of the week shown in the calendar. Defaults to DAY_OF_WEEK.Sunday
+       * Sets the first day of the week shown in the calendar
        */
       firstDayOfWeek?: DAY_OF_WEEK;
       /**

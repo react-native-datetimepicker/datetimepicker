@@ -5,13 +5,13 @@ const {
   getDatePickerAndroid,
   getDateTimePickerControlIOS,
   getInlineTimePickerIOS,
+  getDatePickerButtonIOS,
 } = require('./utils/matchers');
 const {
   userChangesTimeValue,
   userOpensPicker,
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
-  userDismissesCompactDatePicker,
 } = require('./utils/actions');
 const {isIOS, isAndroid, wait, Platform} = require('./utils/utils');
 const {device} = require('detox');
@@ -63,15 +63,15 @@ describe('e2e tests', () => {
     await userOpensPicker({mode: 'date', display: 'default'});
 
     if (isIOS()) {
-      await element(
-        by.traits(['staticText']).withAncestor(by.label('Date Picker')),
-      ).tap();
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
+      await getDatePickerButtonIOS().tap();
+
       // 'label' maps to 'description' in view hierarchy debugger
       const nextMonthArrow = element(by.label('Next Month'));
 
       await nextMonthArrow.tap();
       await nextMonthArrow.tap();
-      await userDismissesCompactDatePicker();
+      await getDatePickerButtonIOS().tap();
     } else {
       const calendarHorizontalScrollView = element(
         by

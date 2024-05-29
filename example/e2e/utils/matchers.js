@@ -10,6 +10,8 @@ const getDateTimePickerControlIOS = () => element(by.type('UIDatePicker'));
 
 const getDatePickerAndroid = () => element(by.id('dateTimePicker'));
 
+const getDatePickerButtonIOS = () => element(by.id('dateTimePicker'));
+
 module.exports = {
   elementById,
   elementByText,
@@ -17,4 +19,5 @@ module.exports = {
   getDateTimePickerControlIOS,
   getDatePickerAndroid,
   getInlineTimePickerIOS,
+  getDatePickerButtonIOS,
 };

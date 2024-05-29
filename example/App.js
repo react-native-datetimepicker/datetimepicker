@@ -351,13 +351,7 @@ export const App = () => {
             <ThemedText style={styles.textLabel}>
               firstDayOfWeek (android only)
             </ThemedText>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-                gap: 5,
-              }}>
+            <View style={styles.firstDayOfWeekContainer}>
               <Button
                 title={'Sunday'}
                 value={DAY_OF_WEEK.Sunday}
@@ -693,6 +687,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
     width: 350,
+  },
+  firstDayOfWeekContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: 5,
   },
 });
 

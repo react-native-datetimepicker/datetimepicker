@@ -144,15 +144,15 @@ Autolinking is not yet implemented on Windows, so [manual installation ](/docs/m
 If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
 
 ## React Native Support
+
 Check the `react-native` version support table below to find the corrosponding `datetimepicker` version to meet support requirements.
 
-| react-native version |  version |
-| -------------------- | -------- |
-|      0.73.0+         |  7.6.3+  |
-|    <=0.72.0          | <=7.6.2  |
-|      0.70.0+         |  7.0.1+  |
-|     <0.70.0          | <=7.0.0  |
-
+| react-native version | version |
+| -------------------- | ------- |
+| 0.73.0+              | 7.6.3+  |
+| <=0.72.0             | <=7.6.2 |
+| 0.70.0+              | 7.0.1+  |
+| <0.70.0              | <=7.0.0 |
 
 ## Usage
 
@@ -424,7 +424,7 @@ Reference: https://docs.microsoft.com/en-us/uwp/api/windows.globalization.dateti
 <RNDateTimePicker dateFormat="dayofweek day month" />
 ```
 
-#### `firstDayOfWeek` (`optional`, `Windows only`)
+#### `firstDayOfWeek` (`optional`, `Android and Windows only`)
 
 Indicates which day is shown as the first day of the week.
 

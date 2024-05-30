@@ -1,3 +1,5 @@
+const {elementById} = require('./matchers');
+
 async function userChangesTimeValue(
   {hours, minutes} = {hours: undefined, minutes: undefined},
 ) {
@@ -36,7 +38,9 @@ async function userOpensPicker({
     await element(by.text(String(interval))).tap();
   }
   if (tzOffsetPreset) {
+    await elementById('DateTimePickerScrollView').scrollTo('bottom');
     await element(by.text(tzOffsetPreset)).tap();
+    await elementById('DateTimePickerScrollView').scrollTo('top');
   }
   if (firstDayOfWeek) {
     await element(by.text(firstDayOfWeek)).tap();

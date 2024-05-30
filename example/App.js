@@ -168,7 +168,7 @@ export const App = () => {
         : `${item} mins`
       : item;
     return (
-      <View style={{marginHorizontal: 1}}>
+      <View style={{marginHorizontal: 1}} testID={`${item}`}>
         <Button
           title={title || 'undefined'}
           onPress={() => {

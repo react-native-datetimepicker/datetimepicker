@@ -165,9 +165,15 @@ describe('e2e tests', () => {
 
       await expect(elementById('overriddenTzName')).toHaveText('Europe/Prague');
 
-      await elementById('timezone').swipe('left', 'fast', 0.5);
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
 
       let timeZone = 'America/Vancouver';
+      await waitFor(elementById('timezone')).toBeVisible().withTimeout(1000);
+      await waitFor(elementById(timeZone))
+        .toBeVisible()
+        .whileElement(by.id('timezone'))
+        .scroll(200, 'right');
+
       if (isAndroid()) {
         timeZone = timeZone.toUpperCase();
       }
@@ -188,9 +194,15 @@ describe('e2e tests', () => {
     });
 
     it('daylight saving should work properly', async () => {
-      await elementById('timezone').swipe('left', 'fast', 0.5);
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
 
       let timeZone = 'America/Vancouver';
+      await waitFor(elementById('timezone')).toBeVisible().withTimeout(1000);
+      await waitFor(elementById(timeZone))
+        .toBeVisible()
+        .whileElement(by.id('timezone'))
+        .scroll(200, 'right');
+
       if (isAndroid()) {
         timeZone = timeZone.toUpperCase();
       }
@@ -228,6 +240,7 @@ describe('e2e tests', () => {
         await uiDevice.pressEnter();
         await userTapsOkButtonAndroid();
 
+        await elementById('DateTimePickerScrollView').scrollTo('top');
         await userOpensPicker({mode: 'time', display: getPickerDisplay()});
         await userChangesTimeValue({hours: '2', minutes: '0'});
         await userTapsOkButtonAndroid();

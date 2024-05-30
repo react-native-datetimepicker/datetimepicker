@@ -32,6 +32,8 @@ async function userOpensPicker({
   tzOffsetPreset,
   firstDayOfWeek,
 }) {
+  await elementById('DateTimePickerScrollView').scrollTo('top');
+
   await element(by.text(mode)).tap();
   await element(by.text(display)).tap();
   if (interval) {

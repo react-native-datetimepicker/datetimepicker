@@ -119,9 +119,11 @@ describe('e2e tests', () => {
       ios: 'inline',
       android: 'default',
     });
+    await elementById('DateTimePickerScrollView').scrollTo('top');
     await userOpensPicker({mode: 'time', display});
 
     if (isIOS()) {
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
       await expect(getInlineTimePickerIOS()).toBeVisible();
     } else {
       await expect(element(by.type('android.widget.TimePicker'))).toBeVisible();
@@ -211,6 +213,7 @@ describe('e2e tests', () => {
 
       await elementByText(timeZone).multiTap(2);
 
+      await elementById('DateTimePickerScrollView').scrollTo('top');
       await userOpensPicker({mode: 'date', display: getPickerDisplay()});
 
       if (isIOS()) {
@@ -325,7 +328,9 @@ describe('e2e tests', () => {
         await expect(elementById('utcTime')).toHaveText('2021-11-13T00:00:00Z');
 
         // Ensure you can select tomorrow (iOS)
+        await elementById('DateTimePickerScrollView').scrollTo('top');
         await userOpensPicker({mode: 'date', display: getPickerDisplay()});
+        await elementById('DateTimePickerScrollView').scrollTo('bottom');
         await testElement.setDatePickerDate('2021-11-14T01:00:00Z', 'ISO8601');
       } else {
         const uiDevice = device.getUiDevice();

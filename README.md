@@ -145,7 +145,7 @@ If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your proje
 
 ## React Native Support
 
-Check the `react-native` version support table below to find the corrosponding `datetimepicker` version to meet support requirements.
+Check the `react-native` version support table below to find the corresponding `datetimepicker` version to meet support requirements.
 
 | react-native version | version |
 | -------------------- | ------- |

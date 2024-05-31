@@ -45,7 +45,7 @@ async function userOpensPicker({
     await elementById('DateTimePickerScrollView').scrollTo('top');
   }
   if (firstDayOfWeek) {
-    await element(by.text(firstDayOfWeek)).tap();
+    await element(by.id(firstDayOfWeek)).tap();
   }
   await element(by.id('showPickerButton')).tap();
 }
@@ -71,9 +71,25 @@ async function userTapsOkButtonAndroid() {
   await okButton.tap();
 }
 
+// Helper function to select a day in the calendar
+// A negative number xPos and yPos means we go left and up respectively
+// A positive number xPos and yPos means we go right and down respectively
+async function userSelectsDayInCalendar(uiDevice, {xPos, yPos}) {
+  for (let i = 0; i < Math.abs(yPos); i++) {
+    yPos < 0 ? await uiDevice.pressDPadUp(i) : await uiDevice.pressDPadDown(i);
+  }
+  for (let j = 0; j < Math.abs(xPos); j++) {
+    xPos < 0
+      ? await uiDevice.pressDPadLeft(j)
+      : await uiDevice.pressDPadRight(j);
+  }
+  await uiDevice.pressEnter();
+}
+
 module.exports = {
   userOpensPicker,
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
   userChangesTimeValue,
+  userSelectsDayInCalendar,
 };

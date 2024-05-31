@@ -180,6 +180,20 @@ export const App = () => {
     );
   };
 
+  const renderDayOfWeekItem = ({item}) => {
+    const key = item[0];
+    const value = item[1];
+    return (
+      <View style={{marginHorizontal: 1}} testID={`${key}`}>
+        <Button
+          title={`${key}`}
+          value={value}
+          onPress={() => setFirstDayOfWeek(value)}
+        />
+      </View>
+    );
+  };
+
   const toggleMinMaxDateInUTC = () => {
     setTzOffsetInMinutes(0);
     setTzName(undefined);
@@ -352,40 +366,12 @@ export const App = () => {
               firstDayOfWeek (android only)
             </ThemedText>
             <View style={styles.firstDayOfWeekContainer}>
-              <Button
-                title={'Sunday'}
-                value={DAY_OF_WEEK.Sunday}
-                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Sunday)}
-              />
-              <Button
-                title={'Monday'}
-                value={DAY_OF_WEEK.Monday}
-                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Monday)}
-              />
-              <Button
-                title={'Tuesday'}
-                value={DAY_OF_WEEK.Tuesday}
-                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Tuesday)}
-              />
-              <Button
-                title={'Wednesday'}
-                value={DAY_OF_WEEK.Wednesday}
-                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Wednesday)}
-              />
-              <Button
-                title={'Thursday'}
-                value={DAY_OF_WEEK.Thursday}
-                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Thursday)}
-              />
-              <Button
-                title={'Friday'}
-                value={DAY_OF_WEEK.Friday}
-                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Friday)}
-              />
-              <Button
-                title={'Saturday'}
-                value={DAY_OF_WEEK.Saturday}
-                onPress={() => setFirstDayOfWeek(DAY_OF_WEEK.Saturday)}
+              <FlatList
+                testID="firstDayOfWeekSelector"
+                style={{marginBottom: 10}}
+                horizontal={true}
+                renderItem={renderDayOfWeekItem}
+                data={Object.entries(DAY_OF_WEEK)}
               />
             </View>
           </View>

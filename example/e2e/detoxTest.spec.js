@@ -12,6 +12,7 @@ const {
   userOpensPicker,
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
+  userSelectsDayInCalendar,
 } = require('./utils/actions');
 const {isIOS, isAndroid, wait, Platform} = require('./utils/utils');
 const {device} = require('detox');
@@ -467,64 +468,45 @@ describe('e2e tests', () => {
   });
 
   describe(':android: firstDayOfWeek functionality', () => {
-    it(':android: picker should have Sunday as firstDayOfWeek and select Sunday date', async () => {
-      const targetDate = '2021-11-07T01:00:00Z';
-      const targetDateWithTZ = '2021-11-07T02:00:00+01:00';
+    it.each([
+      {
+        firstDayOfWeekIn: 'Sunday',
+        selectDayPositions: {xPosIn: -2, yPosIn: 4},
+      },
+      {
+        firstDayOfWeekIn: 'Tuesday',
+        selectDayPositions: {xPosIn: 3, yPosIn: 3},
+      },
+    ])(
+      ':android: picker should have $firstDayOfWeekIn as firstDayOfWeek and select Sunday date',
+      async ({firstDayOfWeekIn, selectDayPositions}) => {
+        const targetDate = '2021-11-07T01:00:00Z';
+        const targetDateWithTZ = '2021-11-07T02:00:00+01:00';
 
-      await userOpensPicker({mode: 'date', display: getPickerDisplay()});
-      await expect(getDatePickerAndroid()).toBeVisible();
+        await userOpensPicker({
+          mode: 'date',
+          display: getPickerDisplay(),
+          firstDayOfWeek: firstDayOfWeekIn,
+        });
+        await expect(getDatePickerAndroid()).toBeVisible();
 
-      const uiDevice = device.getUiDevice();
-      const focusSeventhOfNovemberInCalendar = async () => {
-        for (let i = 0; i < 4; i++) {
-          await uiDevice.pressDPadDown();
-        }
-        for (let i = 0; i < 2; i++) {
-          await uiDevice.pressDPadLeft();
-        }
-      };
-      await focusSeventhOfNovemberInCalendar();
-      await uiDevice.pressEnter();
-      await userTapsOkButtonAndroid();
+        const uiDevice = device.getUiDevice();
+        await userSelectsDayInCalendar(uiDevice, {
+          xPos: selectDayPositions.xPosIn,
+          yPos: selectDayPositions.yPosIn,
+        });
 
-      await expect(elementById('firstDayOfWeek')).toHaveText('Sunday');
+        await userTapsOkButtonAndroid();
 
-      await assertTimeLabels({
-        utcTime: targetDate,
-        deviceTime: targetDateWithTZ,
-      });
-    });
+        await expect(elementById('firstDayOfWeek')).toHaveText(
+          firstDayOfWeekIn,
+        );
 
-    it(':android: should select firstDayOfWeek as Tuesday and select the Sunday date', async () => {
-      const targetDate = '2021-11-07T01:00:00Z';
-      const targetDateWithTZ = '2021-11-07T02:00:00+01:00';
-
-      await userOpensPicker({
-        mode: 'date',
-        display: getPickerDisplay(),
-        firstDayOfWeek: 'TUESDAY',
-      });
-      await expect(getDatePickerAndroid()).toBeVisible();
-
-      const uiDevice = device.getUiDevice();
-      const focusSeventhOfNovemberInCalendar = async () => {
-        for (let i = 0; i < 3; i++) {
-          await uiDevice.pressDPadDown();
-        }
-        for (let i = 0; i < 3; i++) {
-          await uiDevice.pressDPadRight();
-        }
-      };
-      await focusSeventhOfNovemberInCalendar();
-      await uiDevice.pressEnter();
-      await userTapsOkButtonAndroid();
-
-      await expect(elementById('firstDayOfWeek')).toHaveText('Tuesday');
-
-      await assertTimeLabels({
-        utcTime: targetDate,
-        deviceTime: targetDateWithTZ,
-      });
-    });
+        await assertTimeLabels({
+          utcTime: targetDate,
+          deviceTime: targetDateWithTZ,
+        });
+      },
+    );
   });
 });

@@ -1,3 +1,5 @@
+const {elementById} = require('./matchers');
+
 async function userChangesTimeValue(
   {hours, minutes} = {hours: undefined, minutes: undefined},
 ) {
@@ -23,14 +25,27 @@ async function userChangesTimeValue(
   }
 }
 
-async function userOpensPicker({mode, display, interval, tzOffsetPreset}) {
+async function userOpensPicker({
+  mode,
+  display,
+  interval,
+  tzOffsetPreset,
+  firstDayOfWeek,
+}) {
+  await elementById('DateTimePickerScrollView').scrollTo('top');
+
   await element(by.text(mode)).tap();
   await element(by.text(display)).tap();
   if (interval) {
     await element(by.text(String(interval))).tap();
   }
   if (tzOffsetPreset) {
+    await elementById('DateTimePickerScrollView').scrollTo('bottom');
     await element(by.text(tzOffsetPreset)).tap();
+    await elementById('DateTimePickerScrollView').scrollTo('top');
+  }
+  if (firstDayOfWeek) {
+    await element(by.id(firstDayOfWeek)).tap();
   }
   await element(by.id('showPickerButton')).tap();
 }
@@ -56,8 +71,26 @@ async function userTapsOkButtonAndroid() {
   await okButton.tap();
 }
 
-async function userDismissesCompactDatePicker() {
-  await element(by.type('_UIDatePickerContainerView')).tap();
+async function userSwipesTimezoneListUntilDesiredIsVisible(timeZone) {
+  await waitFor(elementById(timeZone))
+    .toBeVisible()
+    .whileElement(by.id('timezone'))
+    .scroll(200, 'right');
+}
+
+// Helper function to select a day in the calendar
+// A negative number xPos and yPos means we go left and up respectively
+// A positive number xPos and yPos means we go right and down respectively
+async function userSelectsDayInCalendar(uiDevice, {xPos, yPos}) {
+  for (let i = 0; i < Math.abs(yPos); i++) {
+    yPos < 0 ? await uiDevice.pressDPadUp(i) : await uiDevice.pressDPadDown(i);
+  }
+  for (let j = 0; j < Math.abs(xPos); j++) {
+    xPos < 0
+      ? await uiDevice.pressDPadLeft(j)
+      : await uiDevice.pressDPadRight(j);
+  }
+  await uiDevice.pressEnter();
 }
 
 module.exports = {
@@ -65,5 +98,6 @@ module.exports = {
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
   userChangesTimeValue,
-  userDismissesCompactDatePicker,
+  userSelectsDayInCalendar,
+  userSwipesTimezoneListUntilDesiredIsVisible,
 };

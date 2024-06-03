@@ -184,6 +184,11 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
     if (options.hasKey(RNConstants.ARG_TESTID) && !options.isNull(RNConstants.ARG_TESTID)) {
       args.putString(RNConstants.ARG_TESTID, options.getString(RNConstants.ARG_TESTID));
     }
+    if (options.hasKey(RNConstants.FIRST_DAY_OF_WEEK) && !options.isNull(RNConstants.FIRST_DAY_OF_WEEK)) {
+      // FIRST_DAY_OF_WEEK is 0-indexed, since it uses the same constants DAY_OF_WEEK used in the Windows implementation
+      // Android DatePicker uses 1-indexed values, SUNDAY being 1 and SATURDAY being 7, so the +1 is necessary in this case
+      args.putInt(RNConstants.FIRST_DAY_OF_WEEK, options.getInt(RNConstants.FIRST_DAY_OF_WEEK)+1);
+    }
     return args;
   }
 }

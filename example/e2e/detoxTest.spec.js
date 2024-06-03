@@ -5,13 +5,15 @@ const {
   getDatePickerAndroid,
   getDateTimePickerControlIOS,
   getInlineTimePickerIOS,
+  getDatePickerButtonIOS,
 } = require('./utils/matchers');
 const {
   userChangesTimeValue,
   userOpensPicker,
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
-  userDismissesCompactDatePicker,
+  userSelectsDayInCalendar,
+  userSwipesTimezoneListUntilDesiredIsVisible,
 } = require('./utils/actions');
 const {isIOS, isAndroid, wait, Platform} = require('./utils/utils');
 const {device} = require('detox');
@@ -63,15 +65,15 @@ describe('e2e tests', () => {
     await userOpensPicker({mode: 'date', display: 'default'});
 
     if (isIOS()) {
-      await element(
-        by.traits(['staticText']).withAncestor(by.label('Date Picker')),
-      ).tap();
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
+      await getDatePickerButtonIOS().tap();
+
       // 'label' maps to 'description' in view hierarchy debugger
       const nextMonthArrow = element(by.label('Next Month'));
 
       await nextMonthArrow.tap();
       await nextMonthArrow.tap();
-      await userDismissesCompactDatePicker();
+      await getDatePickerButtonIOS().tap();
     } else {
       const calendarHorizontalScrollView = element(
         by
@@ -119,9 +121,11 @@ describe('e2e tests', () => {
       ios: 'inline',
       android: 'default',
     });
+    await elementById('DateTimePickerScrollView').scrollTo('top');
     await userOpensPicker({mode: 'time', display});
 
     if (isIOS()) {
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
       await expect(getInlineTimePickerIOS()).toBeVisible();
     } else {
       await expect(element(by.type('android.widget.TimePicker'))).toBeVisible();
@@ -165,16 +169,19 @@ describe('e2e tests', () => {
 
       await expect(elementById('overriddenTzName')).toHaveText('Europe/Prague');
 
-      await elementById('timezone').swipe('left', 'fast', 0.5);
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
 
       let timeZone = 'America/Vancouver';
+      await waitFor(elementById('timezone')).toBeVisible().withTimeout(1000);
+      await userSwipesTimezoneListUntilDesiredIsVisible(timeZone);
+
       if (isAndroid()) {
         timeZone = timeZone.toUpperCase();
       }
 
       await waitFor(elementByText(timeZone)).toBeVisible().withTimeout(1000);
 
-      await elementByText(timeZone).tap();
+      await elementByText(timeZone).multiTap(2);
 
       await assertTimeLabels({
         utcTime: '2021-11-13T01:00:00Z',
@@ -188,17 +195,21 @@ describe('e2e tests', () => {
     });
 
     it('daylight saving should work properly', async () => {
-      await elementById('timezone').swipe('left', 'fast', 0.5);
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
 
       let timeZone = 'America/Vancouver';
+      await waitFor(elementById('timezone')).toBeVisible().withTimeout(1000);
+      await userSwipesTimezoneListUntilDesiredIsVisible(timeZone);
+
       if (isAndroid()) {
         timeZone = timeZone.toUpperCase();
       }
 
       await waitFor(elementByText(timeZone)).toBeVisible().withTimeout(1000);
 
-      await elementByText(timeZone).tap();
+      await elementByText(timeZone).multiTap(2);
 
+      await elementById('DateTimePickerScrollView').scrollTo('top');
       await userOpensPicker({mode: 'date', display: getPickerDisplay()});
 
       if (isIOS()) {
@@ -228,6 +239,7 @@ describe('e2e tests', () => {
         await uiDevice.pressEnter();
         await userTapsOkButtonAndroid();
 
+        await elementById('DateTimePickerScrollView').scrollTo('top');
         await userOpensPicker({mode: 'time', display: getPickerDisplay()});
         await userChangesTimeValue({hours: '2', minutes: '0'});
         await userTapsOkButtonAndroid();
@@ -275,6 +287,8 @@ describe('e2e tests', () => {
         tzOffsetPreset = tzOffsetPreset.toUpperCase();
       }
 
+      await elementById('DateTimePickerScrollView').scrollTo('top');
+
       await userOpensPicker({
         mode: 'time',
         display: getPickerDisplay(),
@@ -310,7 +324,9 @@ describe('e2e tests', () => {
         await expect(elementById('utcTime')).toHaveText('2021-11-13T00:00:00Z');
 
         // Ensure you can select tomorrow (iOS)
+        await elementById('DateTimePickerScrollView').scrollTo('top');
         await userOpensPicker({mode: 'date', display: getPickerDisplay()});
+        await elementById('DateTimePickerScrollView').scrollTo('bottom');
         await testElement.setDatePickerDate('2021-11-14T01:00:00Z', 'ISO8601');
       } else {
         const uiDevice = device.getUiDevice();
@@ -444,5 +460,48 @@ describe('e2e tests', () => {
         deviceTime: '2021-11-13T14:45:00+01:00',
       });
     });
+  });
+
+  describe(':android: firstDayOfWeek functionality', () => {
+    it.each([
+      {
+        firstDayOfWeekIn: 'Sunday',
+        selectDayPositions: {xPosIn: -2, yPosIn: 4},
+      },
+      {
+        firstDayOfWeekIn: 'Tuesday',
+        selectDayPositions: {xPosIn: 3, yPosIn: 3},
+      },
+    ])(
+      ':android: picker should have $firstDayOfWeekIn as firstDayOfWeek and select Sunday date',
+      async ({firstDayOfWeekIn, selectDayPositions}) => {
+        const targetDate = '2021-11-07T01:00:00Z';
+        const targetDateWithTZ = '2021-11-07T02:00:00+01:00';
+
+        await userOpensPicker({
+          mode: 'date',
+          display: getPickerDisplay(),
+          firstDayOfWeek: firstDayOfWeekIn,
+        });
+        await expect(getDatePickerAndroid()).toBeVisible();
+
+        const uiDevice = device.getUiDevice();
+        await userSelectsDayInCalendar(uiDevice, {
+          xPos: selectDayPositions.xPosIn,
+          yPos: selectDayPositions.yPosIn,
+        });
+
+        await userTapsOkButtonAndroid();
+
+        await expect(elementById('firstDayOfWeek')).toHaveText(
+          firstDayOfWeekIn,
+        );
+
+        await assertTimeLabels({
+          utcTime: targetDate,
+          deviceTime: targetDateWithTZ,
+        });
+      },
+    );
   });
 });

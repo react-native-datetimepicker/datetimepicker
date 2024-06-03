@@ -71,6 +71,13 @@ async function userTapsOkButtonAndroid() {
   await okButton.tap();
 }
 
+async function userSwipesTimezoneListUntilDesiredIsVisible(timeZone) {
+  await waitFor(elementById(timeZone))
+    .toBeVisible()
+    .whileElement(by.id('timezone'))
+    .scroll(200, 'right');
+}
+
 // Helper function to select a day in the calendar
 // A negative number xPos and yPos means we go left and up respectively
 // A positive number xPos and yPos means we go right and down respectively
@@ -92,4 +99,5 @@ module.exports = {
   userTapsOkButtonAndroid,
   userChangesTimeValue,
   userSelectsDayInCalendar,
+  userSwipesTimezoneListUntilDesiredIsVisible,
 };

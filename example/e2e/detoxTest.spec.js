@@ -13,6 +13,7 @@ const {
   userTapsCancelButtonAndroid,
   userTapsOkButtonAndroid,
   userSelectsDayInCalendar,
+  userSwipesTimezoneListUntilDesiredIsVisible,
 } = require('./utils/actions');
 const {isIOS, isAndroid, wait, Platform} = require('./utils/utils');
 const {device} = require('detox');
@@ -172,10 +173,7 @@ describe('e2e tests', () => {
 
       let timeZone = 'America/Vancouver';
       await waitFor(elementById('timezone')).toBeVisible().withTimeout(1000);
-      await waitFor(elementById(timeZone))
-        .toBeVisible()
-        .whileElement(by.id('timezone'))
-        .scroll(200, 'right');
+      await userSwipesTimezoneListUntilDesiredIsVisible(timeZone);
 
       if (isAndroid()) {
         timeZone = timeZone.toUpperCase();
@@ -201,10 +199,7 @@ describe('e2e tests', () => {
 
       let timeZone = 'America/Vancouver';
       await waitFor(elementById('timezone')).toBeVisible().withTimeout(1000);
-      await waitFor(elementById(timeZone))
-        .toBeVisible()
-        .whileElement(by.id('timezone'))
-        .scroll(200, 'right');
+      await userSwipesTimezoneListUntilDesiredIsVisible(timeZone);
 
       if (isAndroid()) {
         timeZone = timeZone.toUpperCase();

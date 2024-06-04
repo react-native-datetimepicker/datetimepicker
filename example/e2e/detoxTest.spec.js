@@ -14,6 +14,7 @@ const {
   userTapsOkButtonAndroid,
   userSelectsDayInCalendar,
   userSwipesTimezoneListUntilDesiredIsVisible,
+  userDismissesCompactDatePicker,
 } = require('./utils/actions');
 const {isIOS, isAndroid, wait, Platform} = require('./utils/utils');
 const {device} = require('detox');
@@ -72,7 +73,7 @@ describe('e2e tests', () => {
 
       await nextMonthArrow.tap();
       await nextMonthArrow.tap();
-      await getDatePickerButtonIOS().tap();
+      await userDismissesCompactDatePicker();
     } else {
       const calendarHorizontalScrollView = element(
         by

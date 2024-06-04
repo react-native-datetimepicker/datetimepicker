@@ -336,7 +336,7 @@ export const App = () => {
               placeholder="accentColor"
             />
           </View>
-          <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={styles.header}>
             <ThemedText style={styles.textLabel}>
               disabled (iOS only)
             </ThemedText>
@@ -360,7 +360,7 @@ export const App = () => {
             style={{
               flexDirection: 'column',
               flexWrap: 'wrap',
-              paddingBottom: 10,
+              paddingBottom: 0,
             }}>
             <ThemedText style={styles.textLabel}>
               firstDayOfWeek (android only)
@@ -368,7 +368,7 @@ export const App = () => {
             <View style={styles.firstDayOfWeekContainer}>
               <FlatList
                 testID="firstDayOfWeekSelector"
-                style={{marginBottom: 10}}
+                style={{marginBottom: 5}}
                 horizontal={true}
                 renderItem={renderDayOfWeekItem}
                 data={Object.entries(DAY_OF_WEEK)}
@@ -647,7 +647,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textLabel: {
-    margin: 10,
+    marginHorizontal: 5,
     flex: 1,
   },
   textInput: {

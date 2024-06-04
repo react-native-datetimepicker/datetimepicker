@@ -9,7 +9,7 @@ module.exports = {
     simulator: {
       type: 'ios.simulator',
       device: {
-        type: 'iPhone 14',
+        type: 'iPhone 15 Pro Max',
       },
     },
     emulator: {

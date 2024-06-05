@@ -93,6 +93,10 @@ async function userSelectsDayInCalendar(uiDevice, {xPos, yPos}) {
   await uiDevice.pressEnter();
 }
 
+async function userDismissesCompactDatePicker() {
+  await element(by.type('_UIDatePickerContainerView')).tap();
+}
+
 module.exports = {
   userOpensPicker,
   userTapsCancelButtonAndroid,
@@ -100,4 +104,5 @@ module.exports = {
   userChangesTimeValue,
   userSelectsDayInCalendar,
   userSwipesTimezoneListUntilDesiredIsVisible,
+  userDismissesCompactDatePicker,
 };

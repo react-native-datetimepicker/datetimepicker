@@ -46,7 +46,6 @@ jobs:
           command: yarn detox:ios:build:release
           name: build app with new arch
 
-
   e2e_release_ios:
     executor:
       name: rn/macos
@@ -59,7 +58,7 @@ jobs:
             HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
             HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
       - rn/ios_simulator_start:
-          device: 'iPhone 14'
+          device: 'iPhone 15 Pro Max'
       # - rn/yarn_install
       - run:
           command: yarn install --immutable
@@ -67,8 +66,8 @@ jobs:
       - run:
           command: yarn bundle:ios
           name: bundle js
-#      - rn/pod_install:
-#          pod_install_directory: 'example/ios'
+      #      - rn/pod_install:
+      #          pod_install_directory: 'example/ios'
       - run:
           command: (cd example && npx pod-install)
           name: pod install
@@ -89,7 +88,7 @@ jobs:
     steps:
       - checkout
       - android/change-java-version:
-          java-version: 17 
+          java-version: 17
       - run:
           command: avdmanager list
           name: list avds
@@ -99,7 +98,7 @@ jobs:
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-29;default;x86
-          additional-args: --device pixel_3_xl
+          additional-args: --device pixel_6_pro
           install: true
           background: false
       - android/start-emulator:
@@ -108,7 +107,7 @@ jobs:
           wait-for-emulator: true
           disable-animations: true
           restore-gradle-cache-post-emulator-launch: false
-          post-emulator-launch-assemble-command: "pwd"
+          post-emulator-launch-assemble-command: 'pwd'
       #      - android/disable-animations
       - run:
           command: npm install --global yarn
@@ -128,7 +127,6 @@ jobs:
       - store_artifacts:
           path: ./artifacts
 
-
   new_arch_android_build_only:
     executor:
       name: android/android-machine
@@ -137,14 +135,14 @@ jobs:
     steps:
       - checkout
       - android/change-java-version:
-           java-version: 17 
+          java-version: 17
       - run:
           command: avdmanager list
           name: list avds
       - android/create-avd:
           avd-name: TestingAVD
           system-image: system-images;android-29;default;x86
-          additional-args: --device pixel_3_xl
+          additional-args: --device pixel_6_pro
           install: true
           background: false
       - android/start-emulator:
@@ -153,7 +151,7 @@ jobs:
           wait-for-emulator: true
           disable-animations: true
           restore-gradle-cache-post-emulator-launch: false
-          post-emulator-launch-assemble-command: "pwd"
+          post-emulator-launch-assemble-command: 'pwd'
       - run:
           command: npm install --global yarn
           name: install yarn

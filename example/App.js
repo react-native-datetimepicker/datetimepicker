@@ -111,7 +111,7 @@ export const App = () => {
   const [maxDate] = useState(new Date('2021'));
   const [minDate] = useState(new Date('2018'));
   const [is24Hours, set24Hours] = useState(false);
-  const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Monday);
+  const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Sunday);
   const [dateFormat, setDateFormat] = useState('longdate');
   const [dayOfWeekFormat, setDayOfWeekFormat] = useState(
     '{dayofweek.abbreviated(2)}',
@@ -168,13 +168,27 @@ export const App = () => {
         : `${item} mins`
       : item;
     return (
-      <View style={{marginHorizontal: 1}}>
+      <View style={{marginHorizontal: 1}} testID={`${item}`}>
         <Button
           title={title || 'undefined'}
           onPress={() => {
             setTzOffsetInMinutes(isNumber ? item : undefined);
             setTzName(isNumber ? undefined : item);
           }}
+        />
+      </View>
+    );
+  };
+
+  const renderDayOfWeekItem = ({item}) => {
+    const key = item[0];
+    const value = item[1];
+    return (
+      <View style={{marginHorizontal: 1}} testID={`${key}`}>
+        <Button
+          title={`${key}`}
+          value={value}
+          onPress={() => setFirstDayOfWeek(value)}
         />
       </View>
     );
@@ -253,6 +267,13 @@ export const App = () => {
                 />
               </>
             )}
+            <Info
+              testID={'firstDayOfWeek'}
+              title={'First Day of Week:'}
+              body={`${Object.keys(DAY_OF_WEEK).find(
+                (key) => DAY_OF_WEEK[key] === firstDayOfWeek,
+              )}`}
+            />
           </View>
         </View>
         <ScrollView
@@ -315,7 +336,7 @@ export const App = () => {
               placeholder="accentColor"
             />
           </View>
-          <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={styles.header}>
             <ThemedText style={styles.textLabel}>
               disabled (iOS only)
             </ThemedText>
@@ -334,6 +355,27 @@ export const App = () => {
               testID="neutralButtonLabelTextInput"
             />
           </View>
+
+          <View
+            style={{
+              flexDirection: 'column',
+              flexWrap: 'wrap',
+              paddingBottom: 0,
+            }}>
+            <ThemedText style={styles.textLabel}>
+              firstDayOfWeek (android only)
+            </ThemedText>
+            <View style={styles.firstDayOfWeekContainer}>
+              <FlatList
+                testID="firstDayOfWeekSelector"
+                style={{marginBottom: 5}}
+                horizontal={true}
+                renderItem={renderDayOfWeekItem}
+                data={Object.entries(DAY_OF_WEEK)}
+              />
+            </View>
+          </View>
+
           <View style={styles.header}>
             <ThemedText style={styles.textLabel}>
               [android] show and dismiss picker after 3 secs
@@ -410,6 +452,7 @@ export const App = () => {
                 neutralButton={{label: neutralButtonLabel}}
                 negativeButton={{label: 'Cancel', textColor: 'red'}}
                 disabled={disabled}
+                firstDayOfWeek={firstDayOfWeek}
               />
             )}
           </View>
@@ -604,7 +647,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textLabel: {
-    margin: 10,
+    marginHorizontal: 5,
     flex: 1,
   },
   textInput: {
@@ -630,6 +673,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
     width: 350,
+  },
+  firstDayOfWeekContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: 5,
   },
 });
 

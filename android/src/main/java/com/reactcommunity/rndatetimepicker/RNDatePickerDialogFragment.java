@@ -116,8 +116,11 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       // the date under certain conditions.
       datePicker.setMinDate(RNConstants.DEFAULT_MIN_DATE);
     }
-    if (args.containsKey(RNConstants.ARG_MAXDATE)) {
-      datePicker.setMaxDate(maxDate);
+    
+    // Only compatible with SDK 21 and above
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && args.containsKey(RNConstants.FIRST_DAY_OF_WEEK)) {
+      final int firstDayOfWeek = args.getInt(RNConstants.FIRST_DAY_OF_WEEK);
+      datePicker.setFirstDayOfWeek(firstDayOfWeek);
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && (args.containsKey(RNConstants.ARG_MAXDATE) || args.containsKey(RNConstants.ARG_MINDATE))) {

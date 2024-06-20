@@ -38,6 +38,14 @@
 
 RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+  [super willMoveToSuperview:newSuperview];
+  if ([self datePickerMode] == UIDatePickerModeCountDownTimer) {
+    [self resetDate];
+  }
+}
+
 - (void)didChange
 {
   if (_onChange) {
@@ -49,6 +57,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 {
   if (_onPickerDismiss) {
     _onPickerDismiss(@{});
+  }
+
+  if ([self datePickerMode] == UIDatePickerModeCountDownTimer) {
+    [self resetDate];
   }
 }
 
@@ -70,6 +82,13 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
     if (![self.date isEqualToDate:date]) {
         [super setDate:date animated:NO];
     }
+}
+
+- (void)resetDate
+{
+  NSDate *dateCopy = [[NSDate alloc] initWithTimeInterval:0 sinceDate:self.date];
+  [self setDate:[NSDate dateWithTimeIntervalSince1970:0]];
+  [self setDate:dateCopy animated:YES];
 }
 
 @end

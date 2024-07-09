@@ -181,6 +181,9 @@ jobs:
           command: yarn install --immutable
           name: yarn install
       - run:
+          command: yarn plugin:build
+          name: build expo config plugin
+      - run:
           command: npx semantic-release
           name: Publish to NPM
 

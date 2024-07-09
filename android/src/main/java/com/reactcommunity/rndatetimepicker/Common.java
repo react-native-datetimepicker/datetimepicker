@@ -63,14 +63,14 @@ public class Common {
 		TypedValue typedValue = new TypedValue();
 		Resources.Theme theme = activity.getTheme();
 		theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true);
-    @ColorInt int colorId;
-    if (typedValue.resourceId != 0) {
-      // Resolved to a color resource ID
-      colorId = ContextCompat.getColor(activity, typedValue.resourceId);
-    } else {
-      // Resolved to a raw color value
-      colorId = typedValue.data;
-    }
+        @ColorInt int colorId;
+        if (typedValue.resourceId != 0) {
+          // Resolved to a color resource ID
+          colorId = ContextCompat.getColor(activity, typedValue.resourceId);
+        } else {
+          // Resolved to a raw color value
+          colorId = typedValue.data;
+        }
 		return colorId;
 	}
 

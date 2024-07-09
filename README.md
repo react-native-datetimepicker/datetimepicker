@@ -291,7 +291,8 @@ The reason we recommend the imperative API is: on Android, the date/time picker 
 
 ### Android styling
 
-The native components DatePickerDialog and TimePickerDialog on Android can be customized by using the config plugin if you use config plugins in your project ([EAS Build](https://docs.expo.dev/build/introduction/)) or by manually updating the file `styles.xml`. The plugin allows you to configure various properties that cannot be set at runtime and require building a new app binary to take effect.
+Styling of the dialogs on Android can be easily customized by using the provided config plugin, provided that you use a [Expo development build](https://docs.expo.dev/develop/development-builds/introduction/). The plugin allows you to configure color properties that cannot be set at runtime and require building a new app binary to take effect.
+
 Refer to this documentation for more information: [android-styling.md](/docs/android-styling.md).
 
 ## Component props / params of the Android imperative api

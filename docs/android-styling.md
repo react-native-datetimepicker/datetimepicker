@@ -1,65 +1,43 @@
 ## Android Styling
 
+To use the features documented here, you need to use a [Expo Development build](https://docs.expo.dev/develop/development-builds/introduction/).
+
+Make changes as documented below and then run the following commands to see the changes:
+
+- `npx expo prebuild -p android --clean` (apply configuration to the native code)
+- `expo run:android` (build the native code)
+
 ### Configuration in app.json/app.config.js
 
 ```json
 {
   "expo": {
     "plugins": [
-      [
-        "@react-native-community/datetimepicker",
-        {
-          "android": {
-            "datePicker": {
-              "light": {
-                "colorAccent": "#FF5722",
-              },
-              "dark": {
-                "colorAccent": "#383838",
-              }
+      "@react-native-community/datetimepicker",
+      {
+        "android": {
+          "datePicker": {
+            "colorAccent": {
+              "light": "#FF5722",
+              "dark": "#383838"
             },
-            "timePicker": {
-              "light": {
-                "background": "#FFC107"
-              },
-              "dark": {
-                "background": "#FFC107"
-              }
+            "textColorPrimary": {
+              "light": "#FF5722",
+              "dark": "#383838"
             }
+          },
+          "timePicker": {
+            "background": {"light": "#FF5722", "dark": "#383838"},
+            "numbersBackgroundColor": {"light": "#FF5722", "dark": "#383838"}
           }
         }
-      ]
+      }
     ]
   }
 }
 ```
 
-Due to a limitation in the way the plugin system works, it's not possible to write a custom styles.xml for the values-night, so when customizing a specific property, you must declare a value for both the `light` and `dark` themes. If you don't, the plugin will not work and the following error will be thrown:
-
-> Error: The color "*" in values-night has no declaration in the base values folder; this can lead to crashes when the resource is queried in a configuration that does not match this qualifier
-
-#### Invalid declaration example
-
-  ```json
-  {
-    "expo": {
-      "plugins": [
-        [
-          "@react-native-community/datetimepicker",
-          {
-            "android": {
-              "datePicker": {
-                "light": {
-                  "colorAccent": "#FF5722",
-                }
-              }
-            }
-          }
-        ]
-      ]
-    }
-  }
-  ```
+It's not possible to specify a color only for dark mode. If you wish to influence dark mode color you must declare a value for both the `light` and `dark` modes. Plugin will throw an error otherwise.
 
 ### Configurable properties
 

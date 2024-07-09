@@ -8,85 +8,73 @@ import {
 
 type ResourceXML = AndroidConfig.Resources.ResourceXML;
 
+const moduleName = 'RNDatetimePicker: ';
+
 const DATE_PICKER_ALLOWED_ATTRIBUTES = {
-  colorAccent: {attrName: 'colorAccent', colorName: 'datePicker_colorAccent'},
+  colorAccent: {attrName: 'colorAccent'},
   colorControlActivated: {
     attrName: 'colorControlActivated',
-    colorName: 'datePicker_colorControlActivated',
   },
   colorControlHighlight: {
     attrName: 'colorControlHighlight',
-    colorName: 'datePicker_colorControlHighlight',
   },
   selectableItemBackgroundBorderless: {
     attrName: 'android:selectableItemBackgroundBorderless',
-    colorName: 'datePicker_selectableItemBackgroundBorderless',
   },
   textColor: {
     attrName: 'android:textColor',
-    colorName: 'datePicker_textColor',
   },
   textColorPrimary: {
     attrName: 'android:textColorPrimary',
-    colorName: 'datePicker_textColorPrimary',
   },
   textColorPrimaryInverse: {
     attrName: 'android:textColorPrimaryInverse',
-    colorName: 'datePicker_textColorPrimaryInverse',
   },
   textColorSecondary: {
     attrName: 'android:textColorSecondary',
-    colorName: 'datePicker_textColorSecondary',
   },
   textColorSecondaryInverse: {
     attrName: 'android:textColorSecondaryInverse',
-    colorName: 'datePicker_textColorSecondaryInverse',
   },
   windowBackground: {
     attrName: 'android:windowBackground',
-    colorName: 'datePicker_windowBackground',
   },
 } as const;
 
-type DatePickerProps = {
-  [key in keyof typeof DATE_PICKER_ALLOWED_ATTRIBUTES]?: string;
+type ColorDefinition = {
+  light: string;
+  dark?: string;
 };
-
-type DatePickerTheme = {light?: DatePickerProps; dark?: DatePickerProps};
+type DatePickerProps = {
+  [key in keyof typeof DATE_PICKER_ALLOWED_ATTRIBUTES]?: ColorDefinition;
+};
 
 const TIME_PICKER_ALLOWED_ATTRIBUTES = {
   background: {
     attrName: 'android:background',
-    colorName: 'timePicker_background',
   },
   headerBackground: {
     attrName: 'android:headerBackground',
-    colorName: 'timePicker_headerBackground',
   },
   numbersBackgroundColor: {
     attrName: 'android:numbersBackgroundColor',
-    colorName: 'timePicker_numbersBackgroundColor',
   },
   numbersSelectorColor: {
     attrName: 'android:numbersSelectorColor',
-    colorName: 'timePicker_numbersSelectorColor',
   },
   numbersTextColor: {
     attrName: 'android:numbersTextColor',
-    colorName: 'timePicker_numbersTextColor',
   },
 } as const;
 
 type TimePickerProps = {
-  [key in keyof typeof TIME_PICKER_ALLOWED_ATTRIBUTES]?: string;
+  [key in keyof typeof TIME_PICKER_ALLOWED_ATTRIBUTES]?: ColorDefinition;
 };
-
-type TimePickerTheme = {light?: TimePickerProps; dark?: TimePickerProps};
 
 type Options = {
   android?: {
-    datePicker?: DatePickerTheme;
-    timePicker?: TimePickerTheme;
+    datePicker?: DatePickerProps;
+    timePicker?: TimePickerProps;
   };
 };
 
@@ -101,6 +89,50 @@ const {assignStylesValue, getAppThemeLightNoActionBarGroup} =
 
 const {assignColorValue} = AndroidConfig.Colors;
 
+const insertColorEntries = (
+  android: Options['android'] = {},
+  config: {modResults: ResourceXML},
+  themedColorExtractor: (
+    color: ColorDefinition,
+    attrName: string,
+  ) => string | undefined,
+) => {
+  for (const {theme, attrPrefix} of [
+    {theme: android.datePicker, attrPrefix: 'datePicker'},
+    {theme: android.timePicker, attrPrefix: 'timePicker'},
+  ]) {
+    config.modResults = setAndroidColors(
+      config.modResults,
+      attrPrefix,
+      themedColorExtractor,
+      theme,
+    );
+  }
+};
+
+const setAndroidColors = (
+  colors: ResourceXML,
+  attrPrefix: string,
+  themedColorExtractor: (
+    color: ColorDefinition,
+    attrName: string,
+  ) => string | undefined,
+  theme?: DatePickerProps | TimePickerProps,
+): ResourceXML => {
+  if (!theme) {
+    return colors;
+  }
+  colors = Object.entries(theme).reduce((acc, [attrName, colors]) => {
+    const color = {
+      name: `${attrPrefix}_${attrName}`,
+      value: themedColorExtractor(colors, attrName) ?? null,
+    };
+    return assignColorValue(acc, color);
+  }, colors);
+
+  return colors;
+};
+
 const withDateTimePickerStyles: ConfigPlugin<Options> = (
   baseConfig,
   options = {},
@@ -108,57 +140,47 @@ const withDateTimePickerStyles: ConfigPlugin<Options> = (
   const {android = {}} = options;
 
   let newConfig = withAndroidColors(baseConfig, (config) => {
-    for (const {attrs, theme} of [
-      {attrs: DATE_PICKER_ALLOWED_ATTRIBUTES, theme: android.datePicker?.light},
-      {attrs: TIME_PICKER_ALLOWED_ATTRIBUTES, theme: android.timePicker?.light},
-    ]) {
-      if (theme) {
-        config.modResults = setAndroidColors(config.modResults, theme, attrs);
+    insertColorEntries(android, config, (color, attrName) => {
+      const value = color.light;
+      if (!value) {
+        throw new Error(
+          `${moduleName}A light color value was not provided for "${attrName}". Providing at least a light color is required.`,
+        );
       }
-    }
-
+      return value;
+    });
     return config;
   });
 
   newConfig = withAndroidColorsNight(newConfig, (config) => {
-    for (const {attrs, theme} of [
-      {attrs: DATE_PICKER_ALLOWED_ATTRIBUTES, theme: android.datePicker?.dark},
-      {attrs: TIME_PICKER_ALLOWED_ATTRIBUTES, theme: android.timePicker?.dark},
-    ]) {
-      if (theme) {
-        config.modResults = setAndroidColors(config.modResults, theme, attrs);
-      }
-    }
-
+    insertColorEntries(android, config, (color) => color.dark);
     return config;
   });
 
   newConfig = withAndroidStyles(newConfig, (config) => {
-    if (android.datePicker) {
-      config.modResults = setAndroidPickerStyles(
-        config.modResults,
-        android.datePicker,
-        {
-          allowedAttributes: DATE_PICKER_ALLOWED_ATTRIBUTES,
-          styleName: DATE_PICKER_STYLE_NAME,
-          parentStyle: 'Theme.AppCompat.Light.Dialog',
-          themeAttribute: DATE_PICKER_THEME_ATTRIBUTE,
-        },
-      );
-    }
+    config.modResults = setAndroidPickerStyles(
+      config.modResults,
+      android.datePicker,
+      {
+        styleName: DATE_PICKER_STYLE_NAME,
+        parentStyle: 'Theme.AppCompat.Light.Dialog',
+        themeAttribute: DATE_PICKER_THEME_ATTRIBUTE,
+        allowedAttributes: DATE_PICKER_ALLOWED_ATTRIBUTES,
+        attrPrefix: 'datePicker',
+      },
+    );
 
-    if (android.timePicker) {
-      config.modResults = setAndroidPickerStyles(
-        config.modResults,
-        android.timePicker,
-        {
-          allowedAttributes: TIME_PICKER_ALLOWED_ATTRIBUTES,
-          styleName: TIME_PICKER_STYLE_NAME,
-          parentStyle: 'android:Widget.Material.Light.TimePicker',
-          themeAttribute: TIME_PICKER_THEME_ATTRIBUTE,
-        },
-      );
-    }
+    config.modResults = setAndroidPickerStyles(
+      config.modResults,
+      android.timePicker,
+      {
+        styleName: TIME_PICKER_STYLE_NAME,
+        parentStyle: 'android:Widget.Material.Light.TimePicker',
+        themeAttribute: TIME_PICKER_THEME_ATTRIBUTE,
+        allowedAttributes: TIME_PICKER_ALLOWED_ATTRIBUTES,
+        attrPrefix: 'timePicker',
+      },
+    );
 
     return config;
   });
@@ -168,25 +190,41 @@ const withDateTimePickerStyles: ConfigPlugin<Options> = (
 
 const setAndroidPickerStyles = (
   styles: ResourceXML,
-  theme: DatePickerTheme | TimePickerTheme,
+  theme: DatePickerProps | TimePickerProps | undefined,
   config: {
-    allowedAttributes:
-      | typeof DATE_PICKER_ALLOWED_ATTRIBUTES
-      | typeof TIME_PICKER_ALLOWED_ATTRIBUTES;
     styleName: string;
     parentStyle: string;
     themeAttribute: string;
+    allowedAttributes:
+      | typeof DATE_PICKER_ALLOWED_ATTRIBUTES
+      | typeof TIME_PICKER_ALLOWED_ATTRIBUTES;
+    attrPrefix: string;
   },
 ): ResourceXML => {
-  const {allowedAttributes, styleName, parentStyle, themeAttribute} = config;
+  if (!theme) {
+    return styles;
+  }
+  const {
+    allowedAttributes,
+    styleName,
+    parentStyle,
+    themeAttribute,
+    attrPrefix,
+  } = config;
 
-  styles = Object.keys({...theme.light, ...theme.dark}).reduce((acc, attr) => {
+  styles = Object.keys(theme).reduce((acc, userFacingAttrName) => {
     const entry =
-      allowedAttributes[attr as keyof (DatePickerProps | TimePickerProps)];
+      allowedAttributes[
+        userFacingAttrName as keyof (DatePickerProps | TimePickerProps)
+      ];
     if (!entry) {
-      return acc;
+      throw new Error(
+        `${moduleName}Invalid attribute name: ${userFacingAttrName}. Supported are ${Object.keys(
+          allowedAttributes,
+        ).join(', ')}`,
+      );
     }
-    const {attrName, colorName} = entry;
+    const {attrName} = entry;
 
     return assignStylesValue(acc, {
       add: true,
@@ -195,7 +233,7 @@ const setAndroidPickerStyles = (
         parent: parentStyle,
       },
       name: attrName,
-      value: `@color/${colorName}`,
+      value: `@color/${attrPrefix}_${userFacingAttrName}`,
     });
   }, styles);
 
@@ -207,26 +245,6 @@ const setAndroidPickerStyles = (
   });
 
   return styles;
-};
-
-const setAndroidColors = (
-  colors: ResourceXML,
-  theme: DatePickerProps | TimePickerProps,
-  allowedAttributes:
-    | typeof DATE_PICKER_ALLOWED_ATTRIBUTES
-    | typeof TIME_PICKER_ALLOWED_ATTRIBUTES,
-): ResourceXML => {
-  colors = Object.keys(theme).reduce((acc, attr) => {
-    const {colorName} =
-      allowedAttributes[attr as keyof typeof allowedAttributes];
-
-    return assignColorValue(acc, {
-      value: theme[attr as keyof typeof allowedAttributes],
-      name: colorName,
-    });
-  }, colors);
-
-  return colors;
 };
 
 export default withDateTimePickerStyles;

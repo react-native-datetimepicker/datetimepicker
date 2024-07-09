@@ -77,6 +77,7 @@ React Native date & time picker component for iOS, Android and Windows (please n
   - [React Native Support](#react-native-support)
   - [Localization note](#localization-note)
   - [Android imperative API](#android-imperative-api)
+  - [Android styling](#android-styling)
   - [Props / params](#component-props--params-of-the-android-imperative-api)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
@@ -287,6 +288,12 @@ DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
 ```
 
 The reason we recommend the imperative API is: on Android, the date/time picker opens in a dialog, similar to `ReactNative.alert()` from core react native. The imperative api models this behavior better than the declarative component api. While the component approach is perfectly functional, based on the issue tracker history, it appears to be more prone to introducing bugs.
+
+### Android styling
+
+Styling of the dialogs on Android can be easily customized by using the provided config plugin, provided that you use a [Expo development build](https://docs.expo.dev/develop/development-builds/introduction/). The plugin allows you to configure color properties that cannot be set at runtime and requires building a new app binary to take effect.
+
+Refer to this documentation for more information: [android-styling.md](/docs/android-styling.md).
 
 ## Component props / params of the Android imperative api
 

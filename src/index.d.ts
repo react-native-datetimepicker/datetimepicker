@@ -174,7 +174,7 @@ export type AndroidNativeProps = Readonly<
       /**
        * callback when an error occurs inside the date picker native code (such as null activity)
        */
-      onError?: (arg: Error) => void;
+      onError?: (_arg: Error) => void;
     }
 >;
 

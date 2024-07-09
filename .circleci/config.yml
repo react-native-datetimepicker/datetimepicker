@@ -13,6 +13,7 @@ jobs:
     executor:
       name: rn/linux_js
       node_version: 'lts'
+      resource_class: large
     steps:
       - checkout
       # - rn/yarn_install
@@ -180,6 +181,9 @@ jobs:
       - run:
           command: yarn install --immutable
           name: yarn install
+      - run:
+          command: yarn plugin:build
+          name: build expo config plugin
       - run:
           command: npx semantic-release
           name: Publish to NPM

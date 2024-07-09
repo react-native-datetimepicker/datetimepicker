@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: '@react-native',
+  extends: ['@react-native', 'plugin:jest/recommended'],
   globals: {
     expect: true,
     element: true,
@@ -16,5 +16,6 @@ module.exports = {
   },
   rules: {
     'no-var': 2,
+    'jest/no-conditional-expect': 0,
   },
 };

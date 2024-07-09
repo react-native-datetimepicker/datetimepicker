@@ -81,6 +81,7 @@
     "detox": "^20.19.3",
     "eslint": "^8.42.0",
     "eslint-plugin-ft-flow": "^2.0.1",
+    "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "expo": "^51.0.18",
     "expo-module-scripts": "^3.5.2",

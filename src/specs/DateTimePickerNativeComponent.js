@@ -13,29 +13,32 @@ import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNati
 
 type DateTimePickerEvent = $ReadOnly<{|
   timestamp: Double,
+  utcOffset: Int32,
 |}>;
 
 type NativeProps = $ReadOnly<{|
   ...ViewProps,
-  onChange?: ?BubblingEventHandler<DateTimePickerEvent>,
-  onPickerDismiss?: ?BubblingEventHandler<null>,
-  maximumDate?: ?Double,
-  minimumDate?: ?Double,
-  date?: ?Double,
-  locale?: ?string,
-  minuteInterval?: ?Int32,
-  mode?: WithDefault<'date' | 'time' | 'datetime' | 'countdown', 'date'>,
-  timeZoneOffsetInMinutes?: ?Double,
-  textColor?: ?ColorValue,
   accentColor?: ?ColorValue,
-  themeVariant?: WithDefault<'dark' | 'light' | 'unspecified', 'unspecified'>,
+  date?: ?Double,
   displayIOS?: WithDefault<
     'default' | 'spinner' | 'compact' | 'inline',
     'default',
   >,
+  locale?: ?string,
+  maximumDate?: ?Double,
+  minimumDate?: ?Double,
+  minuteInterval?: ?Int32,
+  mode?: WithDefault<'date' | 'time' | 'datetime' | 'countdown', 'date'>,
+  onChange?: ?BubblingEventHandler<DateTimePickerEvent>,
+  onPickerDismiss?: ?BubblingEventHandler<null>,
+  textColor?: ?ColorValue,
+  themeVariant?: WithDefault<'dark' | 'light' | 'unspecified', 'unspecified'>,
+  timeZoneName?: ?string,
+  timeZoneOffsetInMinutes?: ?Double,
   enabled?: WithDefault<boolean, true>,
 |}>;
 
 export default (codegenNativeComponent<NativeProps>('RNDateTimePicker', {
   excludedPlatforms: ['android'],
+  interfaceOnly: true,
 }): HostComponent<NativeProps>);

@@ -22,8 +22,6 @@ import com.facebook.react.common.annotations.VisibleForTesting;
 import com.facebook.react.module.annotations.ReactModule;
 
 import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
-import static com.reactcommunity.rndatetimepicker.KeepDateInRangeListener.isDateAfterMaxDate;
-import static com.reactcommunity.rndatetimepicker.KeepDateInRangeListener.isDateBeforeMinDate;
 
 import java.util.Calendar;
 
@@ -41,8 +39,9 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
     super(reactContext);
   }
 
+  @NonNull
   @Override
-  public @NonNull String getName() {
+  public String getName() {
     return NAME;
   }
 
@@ -60,31 +59,15 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
       if (!mPromiseResolved && getReactApplicationContext().hasActiveReactInstance()) {
+        final RNDate date = new RNDate(mArgs);
+        Calendar calendar = Calendar.getInstance(Common.getTimeZone(mArgs));
+        calendar.set(year, month, day, date.hour(), date.minute(), 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
         WritableMap result = new WritableNativeMap();
         result.putString("action", RNConstants.ACTION_DATE_SET);
-        result.putInt("year", year);
-        result.putInt("month", month);
-        result.putInt("day", day);
-
-        // https://issuetracker.google.com/issues/169602180
-        // TODO revisit day, month, year with timezoneoffset fixes
-        if (isDateAfterMaxDate(mArgs, year, month, day)) {
-          Calendar maxDate = Calendar.getInstance();
-          maxDate.setTimeInMillis(mArgs.getLong(RNConstants.ARG_MAXDATE));
-
-          result.putInt("year", maxDate.get(Calendar.YEAR));
-          result.putInt("month", maxDate.get(Calendar.MONTH) );
-          result.putInt("day", maxDate.get(Calendar.DAY_OF_MONTH));
-        }
-
-        if (isDateBeforeMinDate(mArgs, year, month, day)) {
-          Calendar minDate = Calendar.getInstance();
-          minDate.setTimeInMillis(mArgs.getLong(RNConstants.ARG_MINDATE));
-
-          result.putInt("year", minDate.get(Calendar.YEAR));
-          result.putInt("month", minDate.get(Calendar.MONTH) );
-          result.putInt("day", minDate.get(Calendar.DAY_OF_MONTH));
-        }
+        result.putDouble("timestamp", calendar.getTimeInMillis());
+        result.putDouble("utcOffset", calendar.getTimeZone().getOffset(calendar.getTimeInMillis()) / 1000 / 60);
 
         mPromise.resolve(result);
         mPromiseResolved = true;
@@ -157,35 +140,32 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
 
     final FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
-    UiThreadUtil.runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        RNDatePickerDialogFragment oldFragment =
-                (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
+    UiThreadUtil.runOnUiThread(() -> {
+      RNDatePickerDialogFragment oldFragment =
+              (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
 
-        if (oldFragment != null) {
-          oldFragment.update(createFragmentArguments(options));
-          return;
-        }
+      Bundle arguments = createFragmentArguments(options);
 
-        RNDatePickerDialogFragment fragment = new RNDatePickerDialogFragment();
-
-        fragment.setArguments(createFragmentArguments(options));
-
-        final DatePickerDialogListener listener = new DatePickerDialogListener(promise, createFragmentArguments(options));
-        fragment.setOnDismissListener(listener);
-        fragment.setOnDateSetListener(listener);
-        fragment.setOnNeutralButtonActionListener(listener);
-        fragment.show(fragmentManager, NAME);
+      if (oldFragment != null) {
+        oldFragment.update(arguments);
+        return;
       }
+
+      RNDatePickerDialogFragment fragment = new RNDatePickerDialogFragment();
+
+      fragment.setArguments(arguments);
+
+      final DatePickerDialogListener listener = new DatePickerDialogListener(promise, arguments);
+      fragment.setOnDismissListener(listener);
+      fragment.setOnDateSetListener(listener);
+      fragment.setOnNeutralButtonActionListener(listener);
+      fragment.show(fragmentManager, NAME);
     });
   }
 
   private Bundle createFragmentArguments(ReadableMap options) {
-    final Bundle args = new Bundle();
-    if (options.hasKey(RNConstants.ARG_VALUE) && !options.isNull(RNConstants.ARG_VALUE)) {
-      args.putLong(RNConstants.ARG_VALUE, (long) options.getDouble(RNConstants.ARG_VALUE));
-    }
+    final Bundle args = Common.createFragmentArguments(options);
+
     if (options.hasKey(RNConstants.ARG_MINDATE) && !options.isNull(RNConstants.ARG_MINDATE)) {
       args.putLong(RNConstants.ARG_MINDATE, (long) options.getDouble(RNConstants.ARG_MINDATE));
     }
@@ -203,6 +183,11 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
     }
     if (options.hasKey(RNConstants.ARG_TESTID) && !options.isNull(RNConstants.ARG_TESTID)) {
       args.putString(RNConstants.ARG_TESTID, options.getString(RNConstants.ARG_TESTID));
+    }
+    if (options.hasKey(RNConstants.FIRST_DAY_OF_WEEK) && !options.isNull(RNConstants.FIRST_DAY_OF_WEEK)) {
+      // FIRST_DAY_OF_WEEK is 0-indexed, since it uses the same constants DAY_OF_WEEK used in the Windows implementation
+      // Android DatePicker uses 1-indexed values, SUNDAY being 1 and SATURDAY being 7, so the +1 is necessary in this case
+      args.putInt(RNConstants.FIRST_DAY_OF_WEEK, options.getInt(RNConstants.FIRST_DAY_OF_WEEK)+1);
     }
     return args;
   }

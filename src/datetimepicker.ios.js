@@ -50,16 +50,18 @@ export default function Picker({
   minimumDate,
   minuteInterval,
   timeZoneOffsetInMinutes,
+  timeZoneName,
   textColor,
   accentColor,
   themeVariant,
   onChange,
   mode = IOS_MODE.date,
   display: providedDisplay = IOS_DISPLAY.default,
+  // $FlowFixMe[incompatible-type]
   disabled = false,
   ...other
 }: IOSNativeProps): React.Node {
-  sharedPropsValidation({value});
+  sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName});
 
   const display = getDisplaySafe(providedDisplay);
 
@@ -83,6 +85,7 @@ export default function Picker({
           type: EVENT_TYPE_DISMISSED,
           nativeEvent: {
             timestamp: value.getTime(),
+            utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
           },
         },
         value,
@@ -99,6 +102,7 @@ export default function Picker({
       mode={mode}
       minuteInterval={minuteInterval}
       timeZoneOffsetInMinutes={timeZoneOffsetInMinutes}
+      timeZoneName={timeZoneName}
       onChange={_onChange}
       onPickerDismiss={onDismiss}
       textColor={textColor}

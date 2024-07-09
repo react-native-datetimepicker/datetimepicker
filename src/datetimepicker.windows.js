@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
 export const RNDateTimePickerWindows = requireNativeComponent(
   'RNDateTimePickerWindows',
 );
+
+// $FlowFixMe[underconstrained-implicit-instantiation]
 const RNTimePickerWindows = requireNativeComponent('RNTimePickerWindows');
 
 export default function RNDateTimePickerQWE(
@@ -39,6 +41,7 @@ export default function RNDateTimePickerQWE(
   sharedPropsValidation({value: props?.value});
 
   const localProps = {
+    accessibilityLabel: props.accessibilityLabel,
     dayOfWeekFormat: props.dayOfWeekFormat,
     dateFormat: props.dateFormat,
     firstDayOfWeek: props.firstDayOfWeek,
@@ -54,13 +57,18 @@ export default function RNDateTimePickerQWE(
     const {onChange} = props;
     const unifiedEvent: DateTimePickerEvent = {
       ...event,
-      nativeEvent: {...event.nativeEvent, timestamp: event.nativeEvent.newDate},
+      nativeEvent: {
+        ...event.nativeEvent,
+        timestamp: event.nativeEvent.newDate,
+        utcOffset: 0,
+      },
       type: EVENT_TYPE_SET,
     };
 
     onChange && onChange(unifiedEvent, new Date(event.nativeEvent.newDate));
   };
 
+  // $FlowFixMe[recursive-definition]
   const timezoneOffsetInSeconds = (() => {
     // The Date object returns timezone in minutes. Convert that to seconds
     // and multiply by -1 so that the offset can be added to UTC+0 time to get

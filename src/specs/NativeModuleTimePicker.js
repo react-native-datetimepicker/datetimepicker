@@ -2,15 +2,25 @@
 
 import type {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
 import {TurboModuleRegistry} from 'react-native';
-import type {DateTimePickerResult} from '../types';
 
-type OpenParams = $ReadOnly<{|
-  // TODO does codegen handle object type?
-|}>;
+export type TimePickerOpenParams = $ReadOnly<{
+  dialogButtons?: $ReadOnly<{string: string}>,
+  display?: string,
+  is24Hour?: boolean,
+  minuteInterval?: number,
+  timeZoneOffsetInMinutes?: number,
+}>;
+
+type TimeSetAction = 'timeSetAction' | 'dismissedAction';
+type TimePickerResult = $ReadOnly<{
+  action: TimeSetAction,
+  timestamp: number,
+  utcOffset: number,
+}>;
 
 export interface Spec extends TurboModule {
-  dismiss(): Promise<boolean>;
-  open(params: OpenParams): Promise<DateTimePickerResult>;
+  +dismiss: () => Promise<boolean>;
+  +open: (params: TimePickerOpenParams) => Promise<TimePickerResult>;
 }
 
 export default (TurboModuleRegistry.getEnforcing<Spec>('RNCTimePicker'): ?Spec);

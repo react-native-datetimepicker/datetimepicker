@@ -12,11 +12,13 @@ public final class RNConstants {
   public static final String ARG_DISPLAY = "display";
   public static final String ARG_DIALOG_BUTTONS = "dialogButtons";
   public static final String ARG_TZOFFSET_MINS = "timeZoneOffsetInMinutes";
+  public static final String ARG_TZ_NAME = "timeZoneName";
   public static final String ARG_TESTID = "testID";
   public static final String ACTION_DATE_SET = "dateSetAction";
   public static final String ACTION_TIME_SET = "timeSetAction";
   public static final String ACTION_DISMISSED = "dismissedAction";
   public static final String ACTION_NEUTRAL_BUTTON = "neutralButtonAction";
+  public static final String FIRST_DAY_OF_WEEK = "firstDayOfWeek";
 
   /**
    * Minimum date supported by {@link TimePickerDialog}, 01 Jan 1900

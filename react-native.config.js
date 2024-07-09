@@ -1,22 +1,30 @@
-const path = require('path');
-const {androidManifestPath} = require('react-native-test-app');
-
 const project = (() => {
+  const fs = require('fs');
+  const path = require('path');
   try {
-    return {
+    const {configureProjects} = require('react-native-test-app');
+
+    return configureProjects({
       android: {
         sourceDir: path.join('example', 'android'),
-        manifestPath: androidManifestPath(
-          path.join(__dirname, 'example', 'android'),
-        ),
+        manifestPath: path.join(__dirname, 'example', 'android'),
       },
       ios: {
-        sourceDir: path.join('example', 'ios'),
+        sourceDir: 'example/ios',
       },
-    };
+      windows: fs.existsSync(
+        'example/windows/date-time-picker-example.sln',
+      ) && {
+        sourceDir: path.join('example', 'windows'),
+        solutionFile: path.join(
+          'example',
+          'windows',
+          'date-time-picker-example.sln',
+        ),
+        project: path.join(__dirname, 'example', 'windows'),
+      },
+    });
   } catch (e) {
-    console.error('example config not found', e);
-
     return undefined;
   }
 })();
@@ -26,10 +34,13 @@ module.exports = {
     // Help rn-cli find and autolink this library
     '@react-native-community/datetimepicker': {
       root: __dirname,
-      platforms: {
-        android: {
-          componentDescriptors: null,
-        },
+    },
+  },
+  dependency: {
+    platforms: {
+      windows: {
+        sourceDir: 'windows',
+        solutionFile: 'DateTimePickerWindows.sln',
       },
     },
   },

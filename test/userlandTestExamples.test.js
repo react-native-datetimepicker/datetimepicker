@@ -77,7 +77,7 @@ describe('userland tests', () => {
     fireEvent(
       UNSAFE_getByType(DateTimePicker),
       'onChange',
-      ...createDateTimeSetEvtParams(date),
+      ...createDateTimeSetEvtParams(date, 0),
     );
     getByText('1560000000');
   });

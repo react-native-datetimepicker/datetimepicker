@@ -1,16 +1,33 @@
-### 🚧🚧 Looking for collaborators and financial backers 🚧🚧
+# 🚧🚧 Looking for collaborators and financial backers 🚧🚧
 
-See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313).
+Please support maintenance of the module with a monthly donation or help us with issues and pull requests.
 
-### Financial backers
+[Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker).
 
-Support us with a monthly donation to help us keep the module maintained. [Become a backer on OpenCollective](https://opencollective.com/react-native-datetimepicker) or [sponsor us on GitHub Sponsors](https://github.com/sponsors/react-native-datetimepicker).
+See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313) for context. Thank you!
 
 <a href="https://opencollective.com/react-native-datetimepicker/donate" target="_blank">
   <img src="https://opencollective.com/react-native-datetimepicker/backers.svg?width=890" width=890 />
 </a>
 
-# React Native DateTimePicker
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+---
+
+## React Native DateTimePicker
 
 This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
 The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace at some point, with a major version bump.
@@ -20,7 +37,7 @@ The module is still published on `npm` under the old namespace (as documented) b
 ![MIT License][license-badge]
 [![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
-React Native date & time picker component for iOS, Android and Windows.
+React Native date & time picker component for iOS, Android and Windows (please note Windows is not actively maintained).
 
 ## Screenshots
 
@@ -57,6 +74,7 @@ React Native date & time picker component for iOS, Android and Windows.
   - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
   - [Usage](#usage)
+  - [React Native Support](#react-native-support)
   - [Localization note](#localization-note)
   - [Android imperative API](#android-imperative-api)
   - [Android styling](#android-styling)
@@ -67,6 +85,7 @@ React Native date & time picker component for iOS, Android and Windows.
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
     - [`minimumDate` (`optional`)](#minimumdate-optional)
+    - [`timeZoneName` (`optional`, `iOS or Android only`)](#timeZoneName-optional-ios-and-android-only)
     - [`timeZoneOffsetInMinutes` (`optional`, `iOS or Android only`)](#timezoneoffsetinminutes-optional-ios-and-android-only)
     - [`timeZoneOffsetInSeconds` (`optional`, `Windows only`)](#timezoneoffsetinsecond-optional-windows-only)
     - [`dayOfWeekFormat` (`optional`, `Windows only`)](#dayOfWeekFormat-optional-windows-only)
@@ -94,7 +113,7 @@ React Native date & time picker component for iOS, Android and Windows.
 ## Requirements
 
 - Only Android API level >=21 (Android 5), iOS >= 11 are supported.
-- Tested with Xcode 14.0 and RN 0.71.4. Other configurations are very likely to work as well but have not been tested.
+- Tested with Xcode 14.0 and RN 0.72.7. Other configurations are very likely to work as well but have not been tested.
 
 The module supports the [new React Native architecture](https://reactnative.dev/docs/next/the-new-architecture/why) (Fabric rendering of iOS components, and turbomodules on Android). If you are using the new architecture, you will need to use React Native 0.71.4 or higher.
 
@@ -124,6 +143,17 @@ Autolinking is not yet implemented on Windows, so [manual installation ](/docs/m
 #### RN >= 0.60
 
 If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
+
+## React Native Support
+
+Check the `react-native` version support table below to find the corresponding `datetimepicker` version to meet support requirements.
+
+| react-native version | version |
+| -------------------- | ------- |
+| 0.73.0+              | 7.6.3+  |
+| <=0.72.0             | <=7.6.2 |
+| 0.70.0+              | 7.0.1+  |
+| <0.70.0              | <=7.0.0 |
 
 ## Usage
 
@@ -315,11 +345,13 @@ This is called when the user changes the date or time in the UI. It receives the
 It is also called when user dismisses the picker, which you can detect by checking the `event.type` property.
 The values can be: `'set' | 'dismissed' | 'neutralButtonPressed'`. (`neutralButtonPressed` is only available on Android).
 
+The `utcOffset` field is only available on Android and iOS. It is the offset in minutes between the selected date and UTC time.
+
 ```js
 const setDate = (event: DateTimePickerEvent, date: Date) => {
   const {
     type,
-    nativeEvent: {timestamp},
+    nativeEvent: {timestamp, utcOffset},
   } = event;
 };
 
@@ -350,10 +382,21 @@ Defines the minimum date that can be selected. Note that on Android, this only w
 <RNDateTimePicker minimumDate={new Date(1950, 0, 1)} />
 ```
 
+#### `timeZoneName` (`optional`, `iOS and Android only`)
+
+Allows changing of the time zone of the date picker. By default, it uses the device's time zone.
+Use the time zone name from the IANA (TZDB) database name in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+
+```js
+<RNDateTimePicker timeZoneName={'Europe/Prague'} />
+```
+
 #### `timeZoneOffsetInMinutes` (`optional`, `iOS and Android only`)
 
-Allows changing of the timeZone of the date picker. By default, it uses the device's time zone.
-We strongly recommend avoiding this prop on android because of known issues in the implementation (eg. [#528](https://github.com/react-native-datetimepicker/datetimepicker/issues/528)).
+Allows changing of the time zone of the date picker. By default, it uses the device's time zone.
+We **strongly** recommend using `timeZoneName` prop instead; this prop has known issues in the android implementation (eg. [#528](https://github.com/react-native-datetimepicker/datetimepicker/issues/528)).
+
+This prop will be removed in a future release.
 
 ```js
 // GMT+1
@@ -387,7 +430,7 @@ Reference: https://docs.microsoft.com/en-us/uwp/api/windows.globalization.dateti
 <RNDateTimePicker dateFormat="dayofweek day month" />
 ```
 
-#### `firstDayOfWeek` (`optional`, `Windows only`)
+#### `firstDayOfWeek` (`optional`, `Android and Windows only`)
 
 Indicates which day is shown as the first day of the week.
 
@@ -564,6 +607,8 @@ Please see [manual-installation.md](/docs/manual-installation.md)
 4. Run `yarn start` to start Metro Bundler
 5. Run `yarn run start:ios` or `yarn run start:android` or `yarn run start:windows`
 6. To do any development on the library, open the example project (in the `example` folder) in xCode or Android Studio. The example project depends on the library code, which you can edit and observe any changes in the example project.
+
+This project is tested with BrowserStack.
 
 [circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
 [circle-ci-status]: https://circleci.com/gh/react-native-datetimepicker/datetimepicker.svg?style=svg

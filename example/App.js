@@ -11,21 +11,37 @@ import {
   useColorScheme,
   Switch,
   Alert,
+  FlatList,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SegmentedControl from './SegmentedControl';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useRef, useState} from 'react';
 import {Picker} from 'react-native-windows';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import {
   ANDROID_MODE,
   DAY_OF_WEEK,
   IOS_MODE,
   ANDROID_DISPLAY,
   IOS_DISPLAY,
-} from '../src/constants';
-// import * as RNLocalize from 'react-native-localize';
+} from '@react-native-community/datetimepicker/src/constants';
+import * as RNLocalize from 'react-native-localize';
+
+const timezone = [
+  120,
+  0,
+  -120,
+  undefined,
+  'America/New_York',
+  'America/Vancouver',
+  'Europe/London',
+  'Europe/Istanbul',
+  'Asia/Hong_Kong',
+  'Australia/Brisbane',
+  'Australia/Sydney',
+  'Australia/Adelaide',
+];
 
 const ThemedText = (props) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -49,6 +65,17 @@ const ThemedTextInput = (props) => {
   });
 };
 
+const Info = ({testID, title, body}) => {
+  return (
+    <View style={{flexDirection: 'row'}}>
+      <ThemedText style={{flex: 1}}>{title}</ThemedText>
+      <ThemedText testID={testID} style={{flex: 1}}>
+        {body}
+      </ThemedText>
+    </View>
+  );
+};
+
 const MODE_VALUES = Platform.select({
   ios: Object.values(IOS_MODE),
   android: Object.values(ANDROID_MODE),
@@ -63,10 +90,11 @@ const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
 
 export const App = () => {
   // Sat, 13 Nov 2021 10:00:00 GMT (local: Saturday, November 13, 2021 11:00:00 AM GMT+01:00)
-  const sourceMoment = moment.unix(1636797600);
+  const sourceMoment = moment.unix(1636765200);
   const sourceDate = sourceMoment.local().toDate();
   const [date, setDate] = useState(sourceDate);
   const [tzOffsetInMinutes, setTzOffsetInMinutes] = useState(undefined);
+  const [tzName, setTzName] = useState(RNLocalize.getTimeZone());
   const [mode, setMode] = useState(MODE_VALUES[0]);
   const [show, setShow] = useState(false);
   const [textColor, setTextColor] = useState();
@@ -80,10 +108,10 @@ export const App = () => {
 
   // Windows-specific
   const [time, setTime] = useState(undefined);
-  const [maxDate, setMinDate] = useState(new Date('2021'));
-  const [minDate, setMaxDate] = useState(new Date('2018'));
+  const [maxDate] = useState(new Date('2021'));
+  const [minDate] = useState(new Date('2018'));
   const [is24Hours, set24Hours] = useState(false);
-  const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Monday);
+  const [firstDayOfWeek, setFirstDayOfWeek] = useState(DAY_OF_WEEK.Sunday);
   const [dateFormat, setDateFormat] = useState('longdate');
   const [dayOfWeekFormat, setDayOfWeekFormat] = useState(
     '{dayofweek.abbreviated(2)}',
@@ -132,8 +160,43 @@ export const App = () => {
     backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
   };
 
+  const renderItem = ({item}) => {
+    const isNumber = typeof item === 'number';
+    const title = isNumber
+      ? item > 0
+        ? `+${item} mins`
+        : `${item} mins`
+      : item;
+    return (
+      <View style={{marginHorizontal: 1}} testID={`${item}`}>
+        <Button
+          title={title || 'undefined'}
+          onPress={() => {
+            setTzOffsetInMinutes(isNumber ? item : undefined);
+            setTzName(isNumber ? undefined : item);
+          }}
+        />
+      </View>
+    );
+  };
+
+  const renderDayOfWeekItem = ({item}) => {
+    const key = item[0];
+    const value = item[1];
+    return (
+      <View style={{marginHorizontal: 1}} testID={`${key}`}>
+        <Button
+          title={`${key}`}
+          value={value}
+          onPress={() => setFirstDayOfWeek(value)}
+        />
+      </View>
+    );
+  };
+
   const toggleMinMaxDateInUTC = () => {
     setTzOffsetInMinutes(0);
+    setTzName(undefined);
 
     const startOfTodayUTC = sourceMoment.utc().startOf('day').toDate();
     setMinimumDate(maximumDate ? undefined : startOfTodayUTC);
@@ -147,8 +210,72 @@ export const App = () => {
 
   if (Platform.OS !== 'windows') {
     return (
-      <SafeAreaView style={[backgroundStyle, {flex: 1}]}>
-        <StatusBar barStyle="dark-content" />
+      <SafeAreaView
+        testID="appRootView"
+        style={[
+          backgroundStyle,
+          {flex: 1, backgroundColor: isDarkMode ? Colors.black : Colors.white},
+        ]}>
+        <StatusBar barStyle="default" />
+        <View>
+          <View style={styles.header}>
+            <ThemedText style={styles.text}>Example DateTime Picker</ThemedText>
+          </View>
+          <View>
+            <Info
+              testID={'utcTime'}
+              title={'UTC Time:'}
+              body={moment(date).utc().format()}
+            />
+            <Info
+              testID={'deviceTime'}
+              title={'Device Time:'}
+              body={moment(date).format()}
+            />
+            <Info
+              testID={'deviceTzName'}
+              title={'Device TzName:'}
+              body={RNLocalize.getTimeZone()}
+            />
+            {(tzName || !isNaN(tzOffsetInMinutes)) && (
+              <>
+                <Info
+                  testID={'overriddenTime'}
+                  title={'Overridden Time:'}
+                  body={(() => {
+                    if (tzName) {
+                      return moment(date).tz(tzName).format();
+                    }
+                    if (tzOffsetInMinutes !== undefined) {
+                      return moment(date).utcOffset(tzOffsetInMinutes).format();
+                    }
+                    return '';
+                  })()}
+                />
+                <Info
+                  testID={tzName ? 'overriddenTzName' : 'overriddenTzOffset'}
+                  title={(() => {
+                    if (tzName) {
+                      return 'Overridden TzName:';
+                    }
+                    if (tzOffsetInMinutes !== undefined) {
+                      return 'Overridden TzOffset:';
+                    }
+                    return '';
+                  })()}
+                  body={tzName || `${tzOffsetInMinutes} mins`}
+                />
+              </>
+            )}
+            <Info
+              testID={'firstDayOfWeek'}
+              title={'First Day of Week:'}
+              body={`${Object.keys(DAY_OF_WEEK).find(
+                (key) => DAY_OF_WEEK[key] === firstDayOfWeek,
+              )}`}
+            />
+          </View>
+        </View>
         <ScrollView
           testID="DateTimePickerScrollView"
           ref={scrollRef}
@@ -157,207 +284,177 @@ export const App = () => {
               scrollRef.current?.scrollToEnd({animated: true});
             }
           }}>
-          {global.HermesInternal != null && (
-            <View style={styles.engine}>
-              <Text testID="hermesIndicator" style={styles.footer}>
-                Engine: Hermes
-              </Text>
-            </View>
-          )}
-          <View
-            testID="appRootView"
-            style={{
-              backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            }}>
-            <View style={styles.header}>
-              <ThemedText style={styles.text}>
-                Example DateTime Picker
-              </ThemedText>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <ThemedText selectable testID="timeInfo">
-                {/*TZ: {RNLocalize.getTimeZone()}, original:{' '}*/}
-                {moment(sourceDate).format('MM/DD/YYYY HH:mm')}
-              </ThemedText>
-              <ThemedText>
-                , TZOffset:{new Date().getTimezoneOffset() / 60}
-              </ThemedText>
-            </View>
-            <ThemedText>mode prop:</ThemedText>
-            <SegmentedControl
-              values={MODE_VALUES}
-              selectedIndex={MODE_VALUES.indexOf(mode)}
-              onChange={(event) => {
-                setMode(MODE_VALUES[event.nativeEvent.selectedSegmentIndex]);
+          <ThemedText>mode prop:</ThemedText>
+          <SegmentedControl
+            values={MODE_VALUES}
+            selectedIndex={MODE_VALUES.indexOf(mode)}
+            onChange={(event) => {
+              setMode(MODE_VALUES[event.nativeEvent.selectedSegmentIndex]);
+            }}
+          />
+          <ThemedText>display prop:</ThemedText>
+          <SegmentedControl
+            values={DISPLAY_VALUES}
+            selectedIndex={DISPLAY_VALUES.indexOf(display)}
+            onChange={(event) => {
+              setDisplay(
+                DISPLAY_VALUES[event.nativeEvent.selectedSegmentIndex],
+              );
+            }}
+          />
+          <ThemedText>minute interval prop:</ThemedText>
+          <SegmentedControl
+            values={MINUTE_INTERVALS.map(String)}
+            selectedIndex={MINUTE_INTERVALS.indexOf(interval)}
+            onChange={(event) => {
+              setMinInterval(
+                MINUTE_INTERVALS[event.nativeEvent.selectedSegmentIndex],
+              );
+            }}
+          />
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
+              text color (iOS only)
+            </ThemedText>
+            <ThemedTextInput
+              value={textColor}
+              onChangeText={(text) => {
+                setTextColor(text.toLowerCase());
               }}
+              placeholder="textColor"
             />
-            <ThemedText>display prop:</ThemedText>
-            <SegmentedControl
-              values={DISPLAY_VALUES}
-              selectedIndex={DISPLAY_VALUES.indexOf(display)}
-              onChange={(event) => {
-                setDisplay(
-                  DISPLAY_VALUES[event.nativeEvent.selectedSegmentIndex],
-                );
+          </View>
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
+              accent color (iOS only)
+            </ThemedText>
+            <ThemedTextInput
+              value={accentColor}
+              onChangeText={(text) => {
+                setAccentColor(text.toLowerCase());
               }}
+              placeholder="accentColor"
             />
-            <ThemedText>minute interval prop:</ThemedText>
-            <SegmentedControl
-              values={MINUTE_INTERVALS.map(String)}
-              selectedIndex={MINUTE_INTERVALS.indexOf(interval)}
-              onChange={(event) => {
-                setMinInterval(
-                  MINUTE_INTERVALS[event.nativeEvent.selectedSegmentIndex],
-                );
-              }}
-            />
-            <View style={styles.header}>
-              <ThemedText style={styles.textLabel}>
-                text color (iOS only)
-              </ThemedText>
-              <ThemedTextInput
-                value={textColor}
-                onChangeText={(text) => {
-                  setTextColor(text.toLowerCase());
-                }}
-                placeholder="textColor"
-              />
-            </View>
-            <View style={styles.header}>
-              <ThemedText style={styles.textLabel}>
-                accent color (iOS only)
-              </ThemedText>
-              <ThemedTextInput
-                value={accentColor}
-                onChangeText={(text) => {
-                  setAccentColor(text.toLowerCase());
-                }}
-                placeholder="accentColor"
-              />
-            </View>
-            <View style={styles.header}>
-              <ThemedText style={styles.textLabel}>
-                disabled (iOS only)
-              </ThemedText>
+          </View>
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
+              disabled (iOS only)
+            </ThemedText>
+            <View style={{flex: 1, alignItems: 'flex-start'}}>
               <Switch value={disabled} onValueChange={setDisabled} />
             </View>
-            <View style={styles.header}>
-              <ThemedText style={styles.textLabel}>
-                neutralButtonLabel (android only)
-              </ThemedText>
-              <ThemedTextInput
-                value={neutralButtonLabel}
-                onChangeText={setNeutralButtonLabel}
-                placeholder="neutralButtonLabel"
-                testID="neutralButtonLabelTextInput"
+          </View>
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
+              neutralButtonLabel (android only)
+            </ThemedText>
+            <ThemedTextInput
+              value={neutralButtonLabel}
+              onChangeText={setNeutralButtonLabel}
+              placeholder="neutralButtonLabel"
+              testID="neutralButtonLabelTextInput"
+            />
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'column',
+              flexWrap: 'wrap',
+              paddingBottom: 0,
+            }}>
+            <ThemedText style={styles.textLabel}>
+              firstDayOfWeek (android only)
+            </ThemedText>
+            <View style={styles.firstDayOfWeekContainer}>
+              <FlatList
+                testID="firstDayOfWeekSelector"
+                style={{marginBottom: 5}}
+                horizontal={true}
+                renderItem={renderDayOfWeekItem}
+                data={Object.entries(DAY_OF_WEEK)}
               />
             </View>
-            <View style={styles.header}>
-              <ThemedText style={styles.textLabel}>
-                [android] show and dismiss picker after 3 secs
-              </ThemedText>
-            </View>
-            <View style={styles.button}>
-              <Button
-                testID="showAndDismissPickerButton"
-                onPress={() => {
-                  setShow(true);
-                  setTimeout(() => {
-                    setShow(false);
-                  }, 6000);
-                }}
-                title="Show and dismiss picker!"
+          </View>
+
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
+              [android] show and dismiss picker after 3 secs
+            </ThemedText>
+          </View>
+          <View style={styles.button}>
+            <Button
+              testID="showAndDismissPickerButton"
+              onPress={() => {
+                setShow(true);
+                setTimeout(() => {
+                  setShow(false);
+                }, 6000);
+              }}
+              title="Show and dismiss picker!"
+            />
+          </View>
+          <View
+            style={[
+              styles.button,
+              {flexDirection: 'row', justifyContent: 'space-around'},
+            ]}>
+            <Button
+              testID="showPickerButton"
+              onPress={() => {
+                setShow(true);
+              }}
+              title="Show picker!"
+            />
+            <Button
+              testID="hidePicker"
+              onPress={() => setShow(false)}
+              title="Hide picker!"
+            />
+          </View>
+          <FlatList
+            testID="timezone"
+            style={{marginBottom: 10}}
+            horizontal={true}
+            renderItem={renderItem}
+            data={timezone}
+          />
+          <View style={styles.button}>
+            <Button
+              testID="setMinMax"
+              onPress={() => {
+                toggleMinMaxDateInUTC();
+                setShow(true);
+              }}
+              title="toggleMinMaxDate"
+            />
+          </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {/* This label ensures there is no regression in this former bug: https://github.com/react-native-datetimepicker/datetimepicker/issues/409 */}
+            <Text style={{flexShrink: 1}}>
+              This is a very very very very very very long text to showcase
+              behavior
+            </Text>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                timeZoneOffsetInMinutes={tzOffsetInMinutes}
+                timeZoneName={tzName}
+                minuteInterval={interval}
+                maximumDate={maximumDate}
+                minimumDate={minimumDate}
+                value={date}
+                mode={mode}
+                is24Hour
+                display={display}
+                onChange={onChange}
+                textColor={textColor || undefined}
+                accentColor={accentColor || undefined}
+                neutralButton={{label: neutralButtonLabel}}
+                negativeButton={{label: 'Cancel', textColor: 'red'}}
+                disabled={disabled}
+                firstDayOfWeek={firstDayOfWeek}
               />
-            </View>
-            <View
-              style={[
-                styles.button,
-                {flexDirection: 'row', justifyContent: 'space-around'},
-              ]}>
-              <Button
-                testID="showPickerButton"
-                onPress={() => {
-                  setShow(true);
-                }}
-                title="Show picker!"
-              />
-              <Button
-                testID="hidePicker"
-                onPress={() => setShow(false)}
-                title="Hide picker!"
-              />
-            </View>
-            <View
-              style={[
-                styles.header,
-                {flexDirection: 'row', justifyContent: 'space-around'},
-              ]}>
-              <ThemedText testID="dateText" style={styles.dateTimeText}>
-                {moment(date).format('MM/DD/YYYY')}
-              </ThemedText>
-              <Text> </Text>
-              <ThemedText testID="timeText" style={styles.dateTimeText}>
-                {moment(date).format('HH:mm')}
-              </ThemedText>
-              <Text> </Text>
-              <ThemedText style={styles.dateTimeText}>
-                tzOffset: {tzOffsetInMinutes ?? 'auto'}
-              </ThemedText>
-            </View>
-            <View style={styles.button}>
-              <Button
-                testID="setTzOffsetToZero"
-                onPress={() => {
-                  setTzOffsetInMinutes(0);
-                }}
-                title="setTzOffsetInMinutes to 0"
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                testID="setTzOffset"
-                onPress={() => {
-                  setTzOffsetInMinutes(120);
-                }}
-                title="setTzOffsetInMinutes to 120"
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                testID="setMinMax"
-                onPress={() => {
-                  toggleMinMaxDateInUTC();
-                  setShow(true);
-                }}
-                title="toggleMinMaxDate"
-              />
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              {/* This label ensures there is no regression in this former bug: https://github.com/react-native-datetimepicker/datetimepicker/issues/409 */}
-              <Text style={{flexShrink: 1}}>
-                This is a very very very very very very long text to showcase
-                behavior
-              </Text>
-              {show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  timeZoneOffsetInMinutes={tzOffsetInMinutes}
-                  minuteInterval={interval}
-                  maximumDate={maximumDate}
-                  minimumDate={minimumDate}
-                  value={date}
-                  mode={mode}
-                  is24Hour
-                  display={display}
-                  onChange={onChange}
-                  textColor={textColor || undefined}
-                  accentColor={accentColor || undefined}
-                  neutralButton={{label: neutralButtonLabel}}
-                  negativeButton={{label: 'Cancel', textColor: 'red'}}
-                  disabled={disabled}
-                />
-              )}
-            </View>
+            )}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -550,7 +647,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textLabel: {
-    margin: 10,
+    marginHorizontal: 5,
     flex: 1,
   },
   textInput: {
@@ -577,4 +674,12 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     width: 350,
   },
+  firstDayOfWeekContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: 5,
+  },
 });
+
+export default App;

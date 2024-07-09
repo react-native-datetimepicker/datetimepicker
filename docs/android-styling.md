@@ -34,7 +34,7 @@
 }
 ```
 
-Due to a limitation in the way the plugin system works, works, it's not possible to write a custom styles.xml for the values-night, so when customizing a specific property, you must declare a value for both the `light` and `dark` themes. If you don't, the plugin will not work and the following error will be thrown:
+Due to a limitation in the way the plugin system works, it's not possible to write a custom styles.xml for the values-night, so when customizing a specific property, you must declare a value for both the `light` and `dark` themes. If you don't, the plugin will not work and the following error will be thrown:
 
 > Error: The color "*" in values-night has no declaration in the base values folder; this can lead to crashes when the resource is queried in a configuration that does not match this qualifier
 

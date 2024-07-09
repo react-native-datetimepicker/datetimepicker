@@ -30,12 +30,6 @@ const project = (() => {
 })();
 
 module.exports = {
-  dependencies: {
-    // Help rn-cli find and autolink this library
-    '@react-native-community/datetimepicker': {
-      root: __dirname,
-    },
-  },
   dependency: {
     platforms: {
       windows: {
@@ -43,6 +37,23 @@ module.exports = {
         solutionFile: 'DateTimePickerWindows.sln',
       },
     },
+  },
+  dependencies: {
+    ...(project
+      ? {
+        // Help rn-cli find and autolink this library
+        '@react-native-community/datetimepicker': {
+          root: __dirname,
+        },
+        'expo': {
+          // otherwise RN cli will try to autolink expo
+          platforms: {
+            ios: null,
+            android: null,
+          },
+        },
+      }
+      : undefined),
   },
   ...(project ? {project} : undefined),
 };

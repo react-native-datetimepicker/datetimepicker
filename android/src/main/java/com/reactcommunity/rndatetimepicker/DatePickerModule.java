@@ -35,6 +35,11 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
   @VisibleForTesting
   public static final String NAME = "RNCDatePicker";
 
+  @Override
+  public boolean canOverrideExistingModule() {
+    return true;
+  }
+
   public DatePickerModule(ReactApplicationContext reactContext) {
     super(reactContext);
   }

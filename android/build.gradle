@@ -1,3 +1,5 @@
+import java.nio.file.Paths
+
 buildscript {
     repositories {
         google()
@@ -17,6 +19,20 @@ def isNewArchitectureEnabled() {
     return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
 
+static def findNodeModulePath(baseDir, packageName) {
+    def basePath = baseDir.toPath().normalize()
+    // Node's module resolution algorithm searches up to the root directory,
+    // after which the base path will be null
+    while (basePath) {
+        def candidatePath = Paths.get(basePath.toString(), "node_modules", packageName)
+        if (candidatePath.toFile().exists()) {
+            return candidatePath.toString()
+        }
+        basePath = basePath.getParent()
+    }
+    return null
+}
+
 apply plugin: 'com.android.library'
 if (isNewArchitectureEnabled()) {
   apply plugin: "com.facebook.react"
@@ -24,13 +40,18 @@ if (isNewArchitectureEnabled()) {
 
 
 android {
-    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
-    if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
-      namespace "com.reactcommunity.rndatetimepicker"
-    }
-
     compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
 
+    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
+    def majorVersion = agpVersion[0].toInteger()
+    def minorVersion = agpVersion[1].toInteger()
+
+    if ((majorVersion == 7 && minorVersion >= 3) || majorVersion > 7) {
+        namespace "com.reactcommunity.rndatetimepicker"
+        buildFeatures {
+            buildConfig true
+        }
+    }
     // Used to override the NDK path/version on internal CI or by allowing
     // users to customize the NDK path/version from their root project (e.g. for M1 support)
     if (rootProject.hasProperty("ndkPath")) {
@@ -46,6 +67,13 @@ android {
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
     }
 
+    if (majorVersion < 8) {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
     sourceSets.main {
         java {
             if (!isNewArchitectureEnabled()) {
@@ -55,9 +83,13 @@ android {
     }
 }
 
+def reactNativePath = findNodeModulePath(projectDir, "react-native")
+
 repositories {
+    maven {
+        url "${reactNativePath}/android"
+    }
     google()
-    mavenLocal()
     mavenCentral()
 }
 

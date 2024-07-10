@@ -13,23 +13,25 @@ Make changes as documented below and then run the following commands to see the 
 {
   "expo": {
     "plugins": [
-      "@react-native-community/datetimepicker",
-      {
-        "android": {
-          "datePicker": {
-            "colorAccent": {
-              "light": "#FF5722"
+      [
+        "@react-native-community/datetimepicker",
+        {
+          "android": {
+            "datePicker": {
+              "colorAccent": {
+                "light": "#FF5722"
+              },
+              "textColorPrimary": {
+                "light": "#FF5722"
+              }
             },
-            "textColorPrimary": {
-              "light": "#FF5722"
+            "timePicker": {
+              "background": {"light": "#FF5722", "dark": "#383838"},
+              "numbersBackgroundColor": {"light": "#FF5722", "dark": "#383838"}
             }
-          },
-          "timePicker": {
-            "background": {"light": "#FF5722", "dark": "#383838"},
-            "numbersBackgroundColor": {"light": "#FF5722", "dark": "#383838"}
           }
         }
-      }
+      ]
     ]
   }
 }

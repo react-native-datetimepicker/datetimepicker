@@ -6,10 +6,6 @@ Please support maintenance of the module with a monthly donation or help us with
 
 See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/issues/313) for context. Thank you!
 
-<a href="https://opencollective.com/react-native-datetimepicker/donate" target="_blank">
-  <img src="https://opencollective.com/react-native-datetimepicker/backers.svg?width=890" width=890 />
-</a>
-
 <br>
 <br>
 <br>

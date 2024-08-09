@@ -1,6 +1,6 @@
 ## Android Styling
 
-To use the features documented here, you need to use a [Expo Development build](https://docs.expo.dev/develop/development-builds/introduction/).
+To use the features documented here, you need to use version >= `8.2.0` and a [Expo Development build](https://docs.expo.dev/develop/development-builds/introduction/).
 
 Make changes as documented below and then run the following commands to see the updated colors:
 

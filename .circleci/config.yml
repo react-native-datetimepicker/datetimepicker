@@ -35,6 +35,7 @@ jobs:
     executor:
       name: rn/macos
       xcode_version: '15.3.0'
+      resource_class: macos.m1.medium.gen1
     steps:
       - checkout
       - run:
@@ -51,6 +52,7 @@ jobs:
     executor:
       name: rn/macos
       xcode_version: '15.3.0'
+      resource_class: macos.m1.medium.gen1
     steps:
       - checkout
       - run:

@@ -183,12 +183,10 @@ public class Common {
   }
 
   public static long minDateWithTimeZone(Bundle args) {
-    if (!args.containsKey(RNConstants.ARG_MINDATE)) {
-      return 0;
-    }
-
     Calendar minDate = Calendar.getInstance(getTimeZone(args));
-    minDate.setTimeInMillis(args.getLong(RNConstants.ARG_MINDATE));
+    long minDateTimeInMillis = args.containsKey(RNConstants.ARG_MINDATE) ?  args.getLong(RNConstants.ARG_MINDATE) : RNConstants.DEFAULT_MIN_DATE;
+
+    minDate.setTimeInMillis(minDateTimeInMillis);
     minDate.set(Calendar.HOUR_OF_DAY, 0);
     minDate.set(Calendar.MINUTE, 0);
     minDate.set(Calendar.SECOND, 0);

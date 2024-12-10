@@ -89,6 +89,8 @@ jobs:
       name: android/android-machine
       resource-class: large
       tag: default
+    environment:
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
     steps:
       - checkout
       - android/change-java-version:
@@ -139,6 +141,8 @@ jobs:
       name: android/android-machine
       resource-class: large
       tag: default
+    environment:
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
     steps:
       - checkout
       - android/change-java-version:

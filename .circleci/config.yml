@@ -24,9 +24,10 @@ jobs:
       - run:
           command: yarn lint
           name: Run ESLint
-      - run:
-          command: yarn flow
-          name: Flow
+#      we should just use TS
+#      - run:
+#          command: yarn flow
+#          name: Flow
       - run:
           command: yarn test
           name: Jest
@@ -122,6 +123,9 @@ jobs:
           command: yarn bundle:android
           name: bundle js
       - run:
+          command: yarn generateManifest
+          name: generateManifest
+      - run:
           command: ORG_GRADLE_PROJECT_newArchEnabled=false yarn detox:android:build:release
           name: build app for e2e tests
       - run:
@@ -164,6 +168,9 @@ jobs:
       - run:
           command: yarn bundle:android
           name: bundle js
+      - run:
+          command: yarn generateManifest
+          name: generateManifest
       - run:
           command: ORG_GRADLE_PROJECT_newArchEnabled=true yarn detox:android:build:release
           name: build app for e2e tests

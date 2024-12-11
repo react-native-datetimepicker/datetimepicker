@@ -35,7 +35,7 @@ jobs:
   new_arch_ios_build_only:
     executor:
       name: rn/macos
-      xcode_version: '15.3.0'
+      xcode_version: '16.1.0'
       resource_class: macos.m1.medium.gen1
     steps:
       - checkout
@@ -52,7 +52,7 @@ jobs:
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '15.3.0'
+      xcode_version: '16.1.0'
       resource_class: macos.m1.medium.gen1
     steps:
       - checkout
@@ -73,7 +73,7 @@ jobs:
       #      - rn/pod_install:
       #          pod_install_directory: 'example/ios'
       - run:
-          command: (cd example && npx pod-install)
+          command: (cd example && RCT_NEW_ARCH_ENABLED=0 npx pod-install)
           name: pod install
       - run:
           command: yarn detox:ios:build:release

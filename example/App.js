@@ -444,7 +444,9 @@ export const App = () => {
                 minimumDate={minimumDate}
                 value={date}
                 mode={mode}
+                // for consistent display
                 is24Hour
+                locale="en-US"
                 display={display}
                 onChange={onChange}
                 textColor={textColor || undefined}

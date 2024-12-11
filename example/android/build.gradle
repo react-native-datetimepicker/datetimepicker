@@ -40,10 +40,11 @@ allprojects {
         maven {
              // All of Detox' artifacts are provided via the npm module
              url "$rootDir/../../node_modules/detox/Detox-android"
-         }
+        }
         mavenCentral()
         google()
     }
+    // https://github.com/microsoft/react-native-test-app/wiki/Platform-Specifics:-Android#detox
     afterEvaluate { project ->
         def androidExtension = project.extensions.findByName('android')
         if (androidExtension != null && project.name == 'app') {
@@ -51,25 +52,17 @@ allprojects {
                 ndk {
                     abiFilters 'arm64-v8a', 'x86', 'x86_64'
                 }
+                // this along with `androidTestImplementation`s fixes
+                // Opening an oat file without a class loader. Are you using the deprecated DexFile APIs?
+                testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
             }
-
-            androidExtension.signingConfigs {
-                test {
-                    keyAlias "androiddebugkey"
-                    keyPassword "android"
-                    storeFile file("debug.keystore")
-                    storePassword "android"
-                }
-            }
-
-            androidExtension.buildTypes.debug.signingConfig = androidExtension.signingConfigs.test
-            androidExtension.buildTypes.release.signingConfig = androidExtension.signingConfigs.test
-            androidExtension.testBuildType = System.getProperty('testBuildType', 'debug')
 
             androidExtension.sourceSets.androidTest.java.srcDirs += "$rootDir/app/src/androidTest/java"
 
             project.dependencies {
                 androidTestImplementation('com.wix:detox:+')
+                androidTestImplementation 'androidx.test:runner:1.5.2'
+                androidTestImplementation 'androidx.test:rules:1.5.2'
             }
         }
     }

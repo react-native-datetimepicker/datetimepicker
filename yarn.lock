@@ -4882,7 +4882,7 @@ __metadata:
     react: "npm:18.3.1"
     react-native: "npm:^0.75.4"
     react-native-localize: "npm:^3.1.0"
-    react-native-test-app: "npm:^4.0.5"
+    react-native-test-app: "npm:^4.0.7"
     react-native-windows: "npm:^0.75.10"
     react-test-renderer: "npm:18.3.1"
     semantic-release: "npm:^19.0.3"
@@ -5772,12 +5772,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rnx-kit/react-native-host@npm:^0.5.0":
-  version: 0.5.1
-  resolution: "@rnx-kit/react-native-host@npm:0.5.1"
+"@rnx-kit/react-native-host@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "@rnx-kit/react-native-host@npm:0.5.2"
   peerDependencies:
     react-native: ">=0.66"
-  checksum: 10c0/11be684b181bbc3728556d2ba07b96ee373f33aed29899859fc4dd7e8a623cb94024473ac162dd7df9668cffcdbeddab3e5c4d641ac563c3d0c3784c1b5d7c7d
+  checksum: 10c0/2e02137d9e1ae4110d0729e65780add84ef1aa08f81ee72bd9b97ea4f3c42c681dc20a3c2754ba1eac6fc4c19fd3f26cff4ac2c4fd421ac6b93caa89a176b87b
   languageName: node
   linkType: hard
 
@@ -16842,11 +16842,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-test-app@npm:^4.0.5":
-  version: 4.0.5
-  resolution: "react-native-test-app@npm:4.0.5"
+"react-native-test-app@npm:^4.0.7":
+  version: 4.0.7
+  resolution: "react-native-test-app@npm:4.0.7"
   dependencies:
-    "@rnx-kit/react-native-host": "npm:^0.5.0"
+    "@rnx-kit/react-native-host": "npm:^0.5.2"
     "@rnx-kit/tools-react-native": "npm:^2.0.2"
     ajv: "npm:^8.0.0"
     cliui: "npm:^8.0.0"
@@ -16875,7 +16875,7 @@ __metadata:
     init: scripts/init.mjs
     init-test-app: scripts/init.mjs
     install-windows-test-app: windows/test-app.mjs
-  checksum: 10c0/de9fc28eaf07ad6c65906d860bf4bfd1e56cd0210324207a5f2b7e485b01d3d025653d07a4d8d77cfb522fb2f3dcd04f118087da6742b3c421b098425c1d8477
+  checksum: 10c0/cd23c8f27b0593e4d107e2ac13b3b8d5b816802787cd6080c91a7336e44a0f57f45923e0d7084afa2b8a5b366309c30e406befb7f485e09007641eeb8094c6c7
   languageName: node
   linkType: hard
 

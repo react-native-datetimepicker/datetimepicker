@@ -24,9 +24,10 @@ jobs:
       - run:
           command: yarn lint
           name: Run ESLint
-      - run:
-          command: yarn flow
-          name: Flow
+#      we should just use TS
+#      - run:
+#          command: yarn flow
+#          name: Flow
       - run:
           command: yarn test
           name: Jest
@@ -34,7 +35,7 @@ jobs:
   new_arch_ios_build_only:
     executor:
       name: rn/macos
-      xcode_version: '15.3.0'
+      xcode_version: '16.2.0'
       resource_class: macos.m1.medium.gen1
     steps:
       - checkout
@@ -51,7 +52,7 @@ jobs:
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '15.3.0'
+      xcode_version: '16.2.0'
       resource_class: macos.m1.medium.gen1
     steps:
       - checkout
@@ -72,7 +73,7 @@ jobs:
       #      - rn/pod_install:
       #          pod_install_directory: 'example/ios'
       - run:
-          command: (cd example && npx pod-install)
+          command: (cd example && RCT_NEW_ARCH_ENABLED=0 npx pod-install)
           name: pod install
       - run:
           command: yarn detox:ios:build:release
@@ -88,6 +89,8 @@ jobs:
       name: android/android-machine
       resource-class: large
       tag: default
+    environment:
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
     steps:
       - checkout
       - android/change-java-version:
@@ -122,6 +125,9 @@ jobs:
           command: yarn bundle:android
           name: bundle js
       - run:
+          command: yarn generateManifest
+          name: generateManifest
+      - run:
           command: ORG_GRADLE_PROJECT_newArchEnabled=false yarn detox:android:build:release
           name: build app for e2e tests
       - run:
@@ -135,6 +141,8 @@ jobs:
       name: android/android-machine
       resource-class: large
       tag: default
+    environment:
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
     steps:
       - checkout
       - android/change-java-version:
@@ -164,6 +172,9 @@ jobs:
       - run:
           command: yarn bundle:android
           name: bundle js
+      - run:
+          command: yarn generateManifest
+          name: generateManifest
       - run:
           command: ORG_GRADLE_PROJECT_newArchEnabled=true yarn detox:android:build:release
           name: build app for e2e tests

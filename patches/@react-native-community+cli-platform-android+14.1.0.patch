@@ -1,0 +1,13 @@
+diff --git a/node_modules/@react-native-community/cli-platform-android/build/config/findPackageClassName.js b/node_modules/@react-native-community/cli-platform-android/build/config/findPackageClassName.js
+index cc9858a..0bbb24b 100644
+--- a/node_modules/@react-native-community/cli-platform-android/build/config/findPackageClassName.js
++++ b/node_modules/@react-native-community/cli-platform-android/build/config/findPackageClassName.js
+@@ -90,7 +90,7 @@ function matchClassName(file) {
+   if (nativeModuleMatch) {
+     return nativeModuleMatch;
+   } else {
+-    return file.match(/class\s+(\w+[^(\s]*)[\s\w():]*(\s+extends\s+|:)[\s\w():,]*[^{]*TurboReactPackage/);
++    return file.match(/class\s+(\w+[^(\s]*)[\s\w():]*(\s+extends\s+|:)[\s\w():,]*[^{]*(Base|Turbo)ReactPackage/);
+   }
+ }
+ 

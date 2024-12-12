@@ -57,6 +57,21 @@ allprojects {
                 testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
             }
 
+            // needed for release signing
+            androidExtension.signingConfigs {
+                test {
+                    keyAlias "androiddebugkey"
+                    keyPassword "android"
+                    storeFile file("debug.keystore")
+                    storePassword "android"
+                }
+            }
+
+            androidExtension.buildTypes.debug.signingConfig = androidExtension.signingConfigs.test
+            androidExtension.buildTypes.release.signingConfig = androidExtension.signingConfigs.test
+            androidExtension.testBuildType = System.getProperty('testBuildType', 'debug')
+            // end needed for release signing
+
             androidExtension.sourceSets.androidTest.java.srcDirs += "$rootDir/app/src/androidTest/java"
 
             project.dependencies {

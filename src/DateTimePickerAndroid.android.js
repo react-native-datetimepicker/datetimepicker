@@ -118,7 +118,7 @@ function open(props: AndroidNativeProps) {
 
 function dismiss(mode: AndroidNativeProps['mode']): Promise<boolean> {
   // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
-  return pickers[mode].dismiss();
+  return pickers[mode]?.dismiss();
 }
 
 export const DateTimePickerAndroid = {open, dismiss};

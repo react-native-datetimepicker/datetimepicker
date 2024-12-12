@@ -35,7 +35,7 @@ jobs:
   new_arch_ios_build_only:
     executor:
       name: rn/macos
-      xcode_version: '16.1.0'
+      xcode_version: '16.2.0'
       resource_class: macos.m1.medium.gen1
     steps:
       - checkout
@@ -52,7 +52,7 @@ jobs:
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '16.1.0'
+      xcode_version: '16.2.0'
       resource_class: macos.m1.medium.gen1
     steps:
       - checkout

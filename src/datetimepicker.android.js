@@ -33,14 +33,18 @@ export default function RNDateTimePickerAndroid(
     neutralButtonLabel,
     testID,
     firstDayOfWeek,
+    title,
+    initialInputMode,
+    design,
+    fullscreen,
   } = props;
   const valueTimestamp = value.getTime();
 
   useEffect(() => {
     // This effect runs on unmount / with mode change, and will ensure the picker is closed.
     // This allows for controlling the opening state of the picker through declarative logic in jsx.
-    return () => DateTimePickerAndroid.dismiss(mode);
-  }, [mode]);
+    return () => DateTimePickerAndroid.dismiss(mode, design);
+  }, [mode, design]);
 
   useEffect(
     function showOrUpdatePicker() {
@@ -64,6 +68,10 @@ export default function RNDateTimePickerAndroid(
         neutralButtonLabel,
         testID,
         firstDayOfWeek,
+        title,
+        initialInputMode,
+        design,
+        fullscreen,
       };
       DateTimePickerAndroid.open(params);
     },

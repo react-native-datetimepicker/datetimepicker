@@ -3,11 +3,13 @@
  * @flow strict-local
  */
 import {ANDROID_DISPLAY, ANDROID_MODE} from './constants';
-import pickers from './picker';
+import defaultPickers from './picker';
 import type {AndroidNativeProps, DateTimePickerResult} from './types';
 import {sharedPropsValidation} from './utils';
 import invariant from 'invariant';
 import {processColor} from 'react-native';
+import MaterialDatePickerAndroid from './materialdatepicker';
+import MaterialTimePickerAndroid from './materialtimepicker';
 
 type Timestamp = number;
 
@@ -32,6 +34,10 @@ type OpenParams = {
     negative: ProcessedButton,
     neutral: ProcessedButton,
   },
+  initialInputMode: AndroidNativeProps['initialInputMode'],
+  title: AndroidNativeProps['title'],
+  design: AndroidNativeProps['design'],
+  fullscreen: AndroidNativeProps['fullscreen'],
 };
 
 export type PresentPickerCallback =
@@ -39,7 +45,10 @@ export type PresentPickerCallback =
 
 function getOpenPicker(
   mode: AndroidNativeProps['mode'],
+  design: AndroidNativeProps['design'],
 ): PresentPickerCallback {
+  const pickers = design === 'material' ? materialPickers : defaultPickers;
+
   switch (mode) {
     case ANDROID_MODE.time:
       return ({
@@ -50,6 +59,8 @@ function getOpenPicker(
         timeZoneOffsetInMinutes,
         timeZoneName,
         dialogButtons,
+        title,
+        initialInputMode,
       }: OpenParams) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[mode].open({
@@ -60,6 +71,8 @@ function getOpenPicker(
           timeZoneOffsetInMinutes,
           timeZoneName,
           dialogButtons,
+          title,
+          initialInputMode,
         });
     default:
       return ({
@@ -72,6 +85,9 @@ function getOpenPicker(
         dialogButtons,
         testID,
         firstDayOfWeek,
+        title,
+        initialInputMode,
+        fullscreen,
       }: OpenParams) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
@@ -84,6 +100,9 @@ function getOpenPicker(
           dialogButtons,
           testID,
           firstDayOfWeek,
+          title,
+          initialInputMode,
+          fullscreen,
         });
   }
 }
@@ -107,4 +126,13 @@ function validateAndroidProps(props: AndroidNativeProps) {
     );
   }
 }
-export {getOpenPicker, validateAndroidProps};
+
+const materialPickers: {
+  date: typeof MaterialDatePickerAndroid,
+  time: typeof MaterialTimePickerAndroid,
+  ...
+} = {
+  [ANDROID_MODE.date]: MaterialDatePickerAndroid,
+  [ANDROID_MODE.time]: MaterialTimePickerAndroid,
+};
+

@@ -109,6 +109,9 @@ function getOpenPicker(
 
 function validateAndroidProps(props: AndroidNativeProps) {
   sharedPropsValidation({value: props?.value});
+
+  if (props.design !== 'material') validateMaterial3PropsNotUsed(props);
+
   const {mode, display} = props;
   invariant(
     !(display === ANDROID_DISPLAY.calendar && mode === ANDROID_MODE.time) &&
@@ -125,6 +128,17 @@ function validateAndroidProps(props: AndroidNativeProps) {
         'Use positive / negative / neutralButton prop instead.',
     );
   }
+}
+
+function validateMaterial3PropsNotUsed(props: AndroidNativeProps) {
+  if (props.initialInputMode)
+    console.warn('initialInputMode prop is not supported in default pickers.');
+
+  if (props.title !== undefined)
+    console.warn('title prop is not supported in default pickers.');
+
+  if (props.fullscreen !== undefined)
+    console.warn('fullscreen prop is not supported in default pickers.');
 }
 
 const materialPickers: {

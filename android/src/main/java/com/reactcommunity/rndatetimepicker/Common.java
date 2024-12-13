@@ -206,6 +206,15 @@ public class Common {
     if (options.hasKey(RNConstants.ARG_TZ_NAME) && !options.isNull(RNConstants.ARG_TZ_NAME)) {
       args.putString(RNConstants.ARG_TZ_NAME, options.getString(RNConstants.ARG_TZ_NAME));
     }
+    if (options.hasKey(RNConstants.ARG_TITLE) && !options.isNull(RNConstants.ARG_TITLE)) {
+      args.putString(RNConstants.ARG_TITLE, options.getString(RNConstants.ARG_TITLE));
+    }
+    if (options.hasKey(RNConstants.ARG_INITIAL_INPUT_MODE) && !options.isNull(RNConstants.ARG_INITIAL_INPUT_MODE)) {
+      args.putString(RNConstants.ARG_INITIAL_INPUT_MODE, options.getString(RNConstants.ARG_INITIAL_INPUT_MODE));
+    }
+
+    return args;
+  }
 
   public static Bundle createDatePickerArguments(ReadableMap options) {
     final Bundle args = Common.createFragmentArguments(options);
@@ -227,6 +236,9 @@ public class Common {
     }
     if (options.hasKey(RNConstants.ARG_TESTID) && !options.isNull(RNConstants.ARG_TESTID)) {
       args.putString(RNConstants.ARG_TESTID, options.getString(RNConstants.ARG_TESTID));
+    }
+    if (options.hasKey(RNConstants.ARG_FULLSCREEN) && !options.isNull(RNConstants.ARG_FULLSCREEN)) {
+      args.putBoolean(RNConstants.ARG_FULLSCREEN, options.getBoolean(RNConstants.ARG_FULLSCREEN));
     }
     if (options.hasKey(RNConstants.FIRST_DAY_OF_WEEK) && !options.isNull(RNConstants.FIRST_DAY_OF_WEEK)) {
       // FIRST_DAY_OF_WEEK is 0-indexed, since it uses the same constants DAY_OF_WEEK used in the Windows implementation

@@ -20,6 +20,10 @@ public class RNDateTimePickerPackage extends TurboReactPackage {
       return new DatePickerModule(reactContext);
     } else if (name.equals(TimePickerModule.NAME)) {
       return new TimePickerModule(reactContext);
+    } else if (name.equals(MaterialDatePickerModule.NAME)) {
+      return new MaterialDatePickerModule(reactContext);
+    } else if (name.equals(MaterialTimePickerModule.NAME)) {
+      return new MaterialTimePickerModule(reactContext);
     } else {
       return null;
     }
@@ -46,6 +50,28 @@ public class RNDateTimePickerPackage extends TurboReactPackage {
         new ReactModuleInfo(
           TimePickerModule.NAME,
           TimePickerModule.NAME,
+          false, // canOverrideExistingModule
+          false, // needsEagerInit
+          false, // hasConstants
+          false, // isCxxModule
+          isTurboModule // isTurboModule
+        ));
+      moduleInfos.put(
+        MaterialDatePickerModule.NAME,
+        new ReactModuleInfo(
+          MaterialDatePickerModule.NAME,
+          MaterialDatePickerModule.NAME,
+          false, // canOverrideExistingModule
+          false, // needsEagerInit
+          false, // hasConstants
+          false, // isCxxModule
+          isTurboModule // isTurboModule
+        ));
+      moduleInfos.put(
+        MaterialTimePickerModule.NAME,
+        new ReactModuleInfo(
+          MaterialTimePickerModule.NAME,
+          MaterialTimePickerModule.NAME,
           false, // canOverrideExistingModule
           false, // needsEagerInit
           false, // hasConstants

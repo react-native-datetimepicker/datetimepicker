@@ -22,7 +22,7 @@ export default class TimePickerAndroid {
    *     the picker shows an AM/PM chooser. If undefined, the default for the current locale
    *     is used.
    *   * `minuteInterval` (enum(1 | 5 | 10 | 15 | 20 | 30)`) - set the time picker minutes' interval
-   *   * `mode` (`enum('clock', 'spinner', 'default')`) - set the time picker mode
+   *   * `display` (`enum('clock', 'spinner', 'default')`) - set the time picker mode
    *     - 'clock': Show a time picker in clock mode.
    *     - 'spinner': Show a time picker in spinner mode.
    *     - 'default': Show a default time picker based on Android versions.

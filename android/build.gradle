@@ -18,6 +18,7 @@ def isNewArchitectureEnabled() {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
 if (isNewArchitectureEnabled()) {
   apply plugin: "com.facebook.react"
 }
@@ -53,6 +54,9 @@ android {
             }
         }
     }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
 }
 
 repositories {
@@ -64,4 +68,5 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'
+    implementation 'androidx.core:core-ktx:1.13.1'
 }

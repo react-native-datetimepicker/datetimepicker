@@ -206,6 +206,28 @@ export type AndroidNativeProps = Readonly<
     }
 >;
 
+export type MaterialRangePickerProps = {
+  title?: string;
+  maximumDate?: Date;
+  minimumDate?: Date;
+  timeZoneOffsetInMinutes?: number;
+  timeZoneName?: string;
+  testID?: string;
+  initialInputMode?: string;
+  dialogButtons?: {
+    positive: {label: string};
+    negative: {label: string};
+  };
+  fullscreen?: boolean;
+  value?: Range;
+  onChange?: (event: RangePickerEvent, range?: Range) => void;
+};
+
+type Range = {
+  start?: Date;
+  end?: Date;
+};
+
 export type DatePickerOptions = DateOptions & {
   display?: Display;
 };
@@ -251,9 +273,15 @@ declare namespace DateTimePickerAndroidType {
   const dismiss: (mode: AndroidNativeProps['mode']) => Promise<boolean>;
 }
 
+declare namespace MaterialRangePickerType {
+  const open: (args: MaterialRangePickerProps) => void;
+  const dismiss: () => Promise<boolean>;
+}
+
 declare const RNDateTimePicker: FC<
   IOSNativeProps | AndroidNativeProps | WindowsNativeProps
 >;
 
 export default RNDateTimePicker;
 export const DateTimePickerAndroid: typeof DateTimePickerAndroidType;
+export const MaterialRangePicker: typeof MaterialRangePickerType;

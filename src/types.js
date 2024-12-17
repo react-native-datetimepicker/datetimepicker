@@ -297,3 +297,36 @@ export type WindowsNativeProps = $ReadOnly<{|
   minuteInterval?: number,
   accessibilityLabel?: string,
 |}>;
+
+export type MaterialRangeProps = $ReadOnly<{|
+  title?: string,
+  maximumDate?: Date,
+  minimumDate?: Date,
+  timeZoneOffsetInMinutes?: number,
+  timeZoneName?: string,
+  testID?: string,
+  initialInputMode?: string,
+  dialogButtons?: {
+    positive: {label: string},
+    negative: {label: string},
+  },
+  fullscreen?: boolean,
+  value?: Range,
+  onChange?: ?(event: RangePickerEvent, range?: Range) => void,
+|}>;
+
+export type RangePickerEvent = {
+  type: 'set' | 'dismiss',
+  nativeEvent: $ReadOnly<{
+    startTimestamp: number,
+    endTimestamp: number,
+    utcOffset: number,
+    ...
+  }>,
+  ...
+};
+
+export type Range = $ReadOnly<{|
+  start?: Date,
+  end?: Date,
+|}>;

@@ -55,6 +55,9 @@ React Native date & time picker component for iOS, Android and Windows (please n
     <td><p align="center"><img src="./docs/images/android_material_date.jpg" width="200" height="400"/></p></td>
     <td><p align="center"><img src="./docs/images/android_material_time.jpg" width="200" height="400"/></p></td>
   </tr>
+  <tr>
+    <td colspan=2><p align="center"><img src="./docs/images/android_material_range.jpg" width="200" height="400"/></p></td>
+  </tr>
   <tr><td colspan=1><strong>Windows</strong></td></tr>
   <tr>
     <td><p align="center"><img src="./docs/images/windows_date.png" width="380" height="430"/></p></td>
@@ -78,6 +81,7 @@ React Native date & time picker component for iOS, Android and Windows (please n
   - [Localization note](#localization-note)
   - [Android imperative API](#android-imperative-api)
   - [Android styling](#android-styling)
+  - [Date range picker (Android only)](#date-range-picker)
   - [Props / params](#component-props--params-of-the-android-imperative-api)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
@@ -300,6 +304,57 @@ If you'd like to use the Material pickers, your app theme will need to inherit f
 Styling of the dialogs on Android can be easily customized by using the provided config plugin, provided that you use a [Expo development build](https://docs.expo.dev/develop/development-builds/introduction/). The plugin allows you to configure color properties that cannot be set at runtime and requires building a new app binary to take effect.
 
 Refer to this documentation for more information: [android-styling.md](/docs/android-styling.md).
+
+### Date range picker (Android only)
+
+Android has an additional component that allows users to select a range of dates (start and end dates). This is only available as a Material picker, meaning your application theme must inherit from `Theme.Material3.DayNight.NoActionBar` in `styles.xml`.
+
+The component is accessible through an imperative API, similar to the Android date and time pickers.
+
+```js
+MaterialRangePicker.open({
+  value: {
+    start: LAST_SUNDAY,
+    end: NEXT_SUNDAY,
+  },
+  onChange: handleChange,
+  fullscreen: true,
+});
+```
+
+The range picker supports many of the same props as the Material date picker with a few modifications:
+
+### `value` (`optional`)
+
+The value is an optional object with two properties: `start` and `end`. Both properties can be `null` or a `Date` object.
+
+```js
+MaterialRangePicker.open({
+  value: {
+    start: new Date(),
+    end: new Date(),
+  },
+});
+```
+
+This will pre-select the range picker with the provided dates. If no value is provided, the user will be able to select any range.
+
+### `onChange` (`required`)
+
+Range change handler.
+
+This is called when the user changes the range. It receives the event and the new range as parameters. The range will be in the same format as the `value` prop.
+
+```js
+const setRange = (event: RangePickerEvent, range: Range) => {
+  const {
+    type,
+    nativeEvent: {startTimestamp, endTimestamp, utcOffset},
+  } = event;
+};
+```
+
+The utcOffset field is only available on Android and iOS. It is the offset in minutes between the selected date and UTC time.
 
 ## Component props / params of the Android imperative api
 

@@ -13,7 +13,9 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker, {
+  MaterialRangePicker,
+} from '@react-native-community/datetimepicker';
 import SegmentedControl from './SegmentedControl';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useRef, useState} from 'react';
@@ -214,6 +216,22 @@ export const App = () => {
       .add(1, 'day')
       .toDate();
     setMaximumDate(minimumDate ? undefined : endOfTomorrowUTC);
+  };
+
+  const handleShowRangePicker = () => {
+    MaterialRangePicker.open({
+      fullscreen: isFullscreen,
+      initialInputMode: inputMode,
+      maximumDate,
+      minimumDate,
+      title,
+      timeZoneOffsetInMinutes: tzOffsetInMinutes,
+      timeZoneName: tzName,
+      dialogButtons: {
+        negative: {label: 'Nope'},
+        positive: {label: 'Yes'},
+      },
+    });
   };
 
   if (Platform.OS !== 'windows') {
@@ -434,6 +452,14 @@ export const App = () => {
               }}
               title="Show and dismiss picker!"
             />
+          </View>
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
+              [android] show range picker
+            </ThemedText>
+          </View>
+          <View style={styles.button}>
+            <Button onPress={handleShowRangePicker} title="Show range picker" />
           </View>
           <View
             style={[

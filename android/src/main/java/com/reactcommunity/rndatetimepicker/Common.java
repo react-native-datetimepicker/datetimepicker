@@ -248,6 +248,20 @@ public class Common {
     return args;
   }
 
+  public static Bundle createRangePickerArguments(ReadableMap options) {
+    final Bundle args = createDatePickerArguments(options);
+
+    if (options.hasKey(RNConstants.ARG_START_TIMESTAMP) && !options.isNull(RNConstants.ARG_START_TIMESTAMP)) {
+      args.putLong(RNConstants.ARG_START_TIMESTAMP, (long) options.getDouble(RNConstants.ARG_START_TIMESTAMP));
+    }
+
+    if (options.hasKey(RNConstants.ARG_END_TIMESTAMP) && !options.isNull(RNConstants.ARG_END_TIMESTAMP)) {
+      args.putLong(RNConstants.ARG_END_TIMESTAMP, (long) options.getDouble(RNConstants.ARG_END_TIMESTAMP));
+    }
+
+    return args;
+  }
+
   public static Bundle createTimePickerArguments(ReadableMap options) {
     final Bundle args = Common.createFragmentArguments(options);
 

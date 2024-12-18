@@ -21,6 +21,7 @@ import com.facebook.react.bridge.*;
 import com.facebook.react.common.annotations.VisibleForTesting;
 import com.facebook.react.module.annotations.ReactModule;
 
+import static com.reactcommunity.rndatetimepicker.Common.createDatePickerArguments;
 import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
 
 import java.util.Calendar;
@@ -144,7 +145,7 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
       RNDatePickerDialogFragment oldFragment =
               (RNDatePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
 
-      Bundle arguments = createFragmentArguments(options);
+      Bundle arguments = createDatePickerArguments(options);
 
       if (oldFragment != null) {
         oldFragment.update(arguments);
@@ -161,34 +162,5 @@ public class DatePickerModule extends NativeModuleDatePickerSpec {
       fragment.setOnNeutralButtonActionListener(listener);
       fragment.show(fragmentManager, NAME);
     });
-  }
-
-  private Bundle createFragmentArguments(ReadableMap options) {
-    final Bundle args = Common.createFragmentArguments(options);
-
-    if (options.hasKey(RNConstants.ARG_MINDATE) && !options.isNull(RNConstants.ARG_MINDATE)) {
-      args.putLong(RNConstants.ARG_MINDATE, (long) options.getDouble(RNConstants.ARG_MINDATE));
-    }
-    if (options.hasKey(RNConstants.ARG_MAXDATE) && !options.isNull(RNConstants.ARG_MAXDATE)) {
-      args.putLong(RNConstants.ARG_MAXDATE, (long) options.getDouble(RNConstants.ARG_MAXDATE));
-    }
-    if (options.hasKey(RNConstants.ARG_DISPLAY) && !options.isNull(RNConstants.ARG_DISPLAY)) {
-      args.putString(RNConstants.ARG_DISPLAY, options.getString(RNConstants.ARG_DISPLAY));
-    }
-    if (options.hasKey(RNConstants.ARG_DIALOG_BUTTONS) && !options.isNull(RNConstants.ARG_DIALOG_BUTTONS)) {
-      args.putBundle(RNConstants.ARG_DIALOG_BUTTONS, Arguments.toBundle(options.getMap(RNConstants.ARG_DIALOG_BUTTONS)));
-    }
-    if (options.hasKey(RNConstants.ARG_TZOFFSET_MINS) && !options.isNull(RNConstants.ARG_TZOFFSET_MINS)) {
-      args.putLong(RNConstants.ARG_TZOFFSET_MINS, (long) options.getDouble(RNConstants.ARG_TZOFFSET_MINS));
-    }
-    if (options.hasKey(RNConstants.ARG_TESTID) && !options.isNull(RNConstants.ARG_TESTID)) {
-      args.putString(RNConstants.ARG_TESTID, options.getString(RNConstants.ARG_TESTID));
-    }
-    if (options.hasKey(RNConstants.FIRST_DAY_OF_WEEK) && !options.isNull(RNConstants.FIRST_DAY_OF_WEEK)) {
-      // FIRST_DAY_OF_WEEK is 0-indexed, since it uses the same constants DAY_OF_WEEK used in the Windows implementation
-      // Android DatePicker uses 1-indexed values, SUNDAY being 1 and SATURDAY being 7, so the +1 is necessary in this case
-      args.putInt(RNConstants.FIRST_DAY_OF_WEEK, options.getInt(RNConstants.FIRST_DAY_OF_WEEK)+1);
-    }
-    return args;
   }
 }

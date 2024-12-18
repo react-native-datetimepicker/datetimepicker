@@ -87,6 +87,8 @@ const DISPLAY_VALUES = Platform.select({
   windows: [],
 });
 const MINUTE_INTERVALS = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30];
+const DESIGNS = ['default', 'material'];
+const INPUT_MODES = ['default', 'keyboard'];
 
 export const App = () => {
   // Sat, 13 Nov 2021 10:00:00 GMT (local: Saturday, November 13, 2021 11:00:00 AM GMT+01:00)
@@ -103,8 +105,14 @@ export const App = () => {
   const [interval, setMinInterval] = useState(1);
   const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
   const [disabled, setDisabled] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [minimumDate, setMinimumDate] = useState();
   const [maximumDate, setMaximumDate] = useState();
+  const [design, setDesign] = useState(DESIGNS[0]);
+  const [inputMode, setInputMode] = useState(INPUT_MODES[0]);
+  const [title, setTitle] = useState('');
+
+  const isMaterialDesign = design === 'material';
 
   // Windows-specific
   const [time, setTime] = useState(undefined);
@@ -312,6 +320,32 @@ export const App = () => {
               );
             }}
           />
+          <ThemedText>Design (android only):</ThemedText>
+          <SegmentedControl
+            values={DESIGNS.map(String)}
+            selectedIndex={DESIGNS.indexOf(design)}
+            onChange={(event) => {
+              setDesign(DESIGNS[event.nativeEvent.selectedSegmentIndex]);
+            }}
+          />
+          <ThemedText>Input mode (android only):</ThemedText>
+          <SegmentedControl
+            values={INPUT_MODES.map(String)}
+            selectedIndex={INPUT_MODES.indexOf(inputMode)}
+            onChange={(event) => {
+              setInputMode(INPUT_MODES[event.nativeEvent.selectedSegmentIndex]);
+            }}
+          />
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
+              title (android only)
+            </ThemedText>
+            <ThemedTextInput
+              value={title}
+              onChangeText={setTitle}
+              placeholder="title for dialog"
+            />
+          </View>
           <View style={styles.header}>
             <ThemedText style={styles.textLabel}>
               text color (iOS only)
@@ -342,6 +376,14 @@ export const App = () => {
             </ThemedText>
             <View style={{flex: 1, alignItems: 'flex-start'}}>
               <Switch value={disabled} onValueChange={setDisabled} />
+            </View>
+          </View>
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
+              fullscreen (android only)
+            </ThemedText>
+            <View style={{flex: 1, alignItems: 'flex-start'}}>
+              <Switch value={isFullscreen} onValueChange={setIsFullscreen} />
             </View>
           </View>
           <View style={styles.header}>
@@ -455,6 +497,10 @@ export const App = () => {
                 negativeButton={{label: 'Cancel', textColor: 'red'}}
                 disabled={disabled}
                 firstDayOfWeek={firstDayOfWeek}
+                title={isMaterialDesign ? title : undefined}
+                initialInputMode={isMaterialDesign ? inputMode : undefined}
+                design={design}
+                fullscreen={isMaterialDesign ? isFullscreen : undefined}
               />
             )}
           </View>

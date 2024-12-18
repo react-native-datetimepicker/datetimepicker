@@ -23,4 +23,5 @@ public class RNDate {
   public int day() { return now.get(Calendar.DAY_OF_MONTH); }
   public int hour() { return now.get(Calendar.HOUR_OF_DAY); }
   public int minute() { return now.get(Calendar.MINUTE); }
+  public Long timestamp() { return now.getTimeInMillis(); }
 }

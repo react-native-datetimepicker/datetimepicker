@@ -14,6 +14,9 @@ public final class RNConstants {
   public static final String ARG_TZOFFSET_MINS = "timeZoneOffsetInMinutes";
   public static final String ARG_TZ_NAME = "timeZoneName";
   public static final String ARG_TESTID = "testID";
+  public static final String ARG_TITLE = "title";
+  public static final String ARG_INITIAL_INPUT_MODE = "initialInputMode";
+  public static final String ARG_FULLSCREEN = "fullscreen";
   public static final String ACTION_DATE_SET = "dateSetAction";
   public static final String ACTION_TIME_SET = "timeSetAction";
   public static final String ACTION_DISMISSED = "dismissedAction";

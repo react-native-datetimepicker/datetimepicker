@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.util.RNLog;
@@ -204,6 +205,66 @@ public class Common {
     }
     if (options.hasKey(RNConstants.ARG_TZ_NAME) && !options.isNull(RNConstants.ARG_TZ_NAME)) {
       args.putString(RNConstants.ARG_TZ_NAME, options.getString(RNConstants.ARG_TZ_NAME));
+    }
+    if (options.hasKey(RNConstants.ARG_TITLE) && !options.isNull(RNConstants.ARG_TITLE)) {
+      args.putString(RNConstants.ARG_TITLE, options.getString(RNConstants.ARG_TITLE));
+    }
+    if (options.hasKey(RNConstants.ARG_INITIAL_INPUT_MODE) && !options.isNull(RNConstants.ARG_INITIAL_INPUT_MODE)) {
+      args.putString(RNConstants.ARG_INITIAL_INPUT_MODE, options.getString(RNConstants.ARG_INITIAL_INPUT_MODE));
+    }
+
+    return args;
+  }
+
+  public static Bundle createDatePickerArguments(ReadableMap options) {
+    final Bundle args = Common.createFragmentArguments(options);
+
+    if (options.hasKey(RNConstants.ARG_MINDATE) && !options.isNull(RNConstants.ARG_MINDATE)) {
+      args.putLong(RNConstants.ARG_MINDATE, (long) options.getDouble(RNConstants.ARG_MINDATE));
+    }
+    if (options.hasKey(RNConstants.ARG_MAXDATE) && !options.isNull(RNConstants.ARG_MAXDATE)) {
+      args.putLong(RNConstants.ARG_MAXDATE, (long) options.getDouble(RNConstants.ARG_MAXDATE));
+    }
+    if (options.hasKey(RNConstants.ARG_DISPLAY) && !options.isNull(RNConstants.ARG_DISPLAY)) {
+      args.putString(RNConstants.ARG_DISPLAY, options.getString(RNConstants.ARG_DISPLAY));
+    }
+    if (options.hasKey(RNConstants.ARG_DIALOG_BUTTONS) && !options.isNull(RNConstants.ARG_DIALOG_BUTTONS)) {
+      args.putBundle(RNConstants.ARG_DIALOG_BUTTONS, Arguments.toBundle(options.getMap(RNConstants.ARG_DIALOG_BUTTONS)));
+    }
+    if (options.hasKey(RNConstants.ARG_TZOFFSET_MINS) && !options.isNull(RNConstants.ARG_TZOFFSET_MINS)) {
+      args.putLong(RNConstants.ARG_TZOFFSET_MINS, (long) options.getDouble(RNConstants.ARG_TZOFFSET_MINS));
+    }
+    if (options.hasKey(RNConstants.ARG_TESTID) && !options.isNull(RNConstants.ARG_TESTID)) {
+      args.putString(RNConstants.ARG_TESTID, options.getString(RNConstants.ARG_TESTID));
+    }
+    if (options.hasKey(RNConstants.ARG_FULLSCREEN) && !options.isNull(RNConstants.ARG_FULLSCREEN)) {
+      args.putBoolean(RNConstants.ARG_FULLSCREEN, options.getBoolean(RNConstants.ARG_FULLSCREEN));
+    }
+    if (options.hasKey(RNConstants.FIRST_DAY_OF_WEEK) && !options.isNull(RNConstants.FIRST_DAY_OF_WEEK)) {
+      // FIRST_DAY_OF_WEEK is 0-indexed, since it uses the same constants DAY_OF_WEEK used in the Windows implementation
+      // Android DatePicker uses 1-indexed values, SUNDAY being 1 and SATURDAY being 7, so the +1 is necessary in this case
+      args.putInt(RNConstants.FIRST_DAY_OF_WEEK, options.getInt(RNConstants.FIRST_DAY_OF_WEEK)+1);
+    }
+    return args;
+  }
+
+  public static Bundle createTimePickerArguments(ReadableMap options) {
+    final Bundle args = Common.createFragmentArguments(options);
+
+    if (options.hasKey(RNConstants.ARG_IS24HOUR) && !options.isNull(RNConstants.ARG_IS24HOUR)) {
+      args.putBoolean(RNConstants.ARG_IS24HOUR, options.getBoolean(RNConstants.ARG_IS24HOUR));
+    }
+    if (options.hasKey(RNConstants.ARG_DISPLAY) && !options.isNull(RNConstants.ARG_DISPLAY)) {
+      args.putString(RNConstants.ARG_DISPLAY, options.getString(RNConstants.ARG_DISPLAY));
+    }
+    if (options.hasKey(RNConstants.ARG_DIALOG_BUTTONS) && !options.isNull(RNConstants.ARG_DIALOG_BUTTONS)) {
+      args.putBundle(RNConstants.ARG_DIALOG_BUTTONS, Arguments.toBundle(options.getMap(RNConstants.ARG_DIALOG_BUTTONS)));
+    }
+    if (options.hasKey(RNConstants.ARG_INTERVAL) && !options.isNull(RNConstants.ARG_INTERVAL)) {
+      args.putInt(RNConstants.ARG_INTERVAL, options.getInt(RNConstants.ARG_INTERVAL));
+    }
+    if (options.hasKey(RNConstants.ARG_TZOFFSET_MINS) && !options.isNull(RNConstants.ARG_TZOFFSET_MINS)) {
+      args.putLong(RNConstants.ARG_TZOFFSET_MINS, (long) options.getDouble(RNConstants.ARG_TZOFFSET_MINS));
     }
 
     return args;

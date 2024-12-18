@@ -173,8 +173,10 @@ export type AndroidNativeProps = $ReadOnly<{|
 
   /**
    * The display options.
+   *
+   * Not supported in Material 3 pickers
    */
-  display: Display,
+  display?: Display,
 
   /**
    * Timezone offset in minutes.
@@ -186,11 +188,46 @@ export type AndroidNativeProps = $ReadOnly<{|
   timeZoneOffsetInMinutes?: ?number,
 
   /**
+   * Title to show in dialog
+   *
+   * Only available when design is 'material'
+   */
+  title?: string,
+
+  /**
+   * Controls if the date picker should appear as a fullscreen dialog
+   *
+   * Only available when design is 'material'
+   */
+  fullscreen?: boolean,
+
+  /**
+   * Input mode for the picker
+   *
+   * This will by default show a clock for the time picker and a calendar for the date picker.
+   * You can specify that it initially shows the keyboard mode instead.
+   *
+   * Only available when design is 'material'.
+   */
+  initialInputMode?: 'default' | 'keyboard',
+
+  /**
+   * Pickers can appear as the original pickers or with Material 3 styling
+   *
+   * Not all options/props are available for each design.
+   */
+  design?: 'default' | 'material',
+
+  /**
    * The interval at which minutes can be selected.
+   *
+   * Not supported in Material 3 pickers
    */
   minuteInterval?: MinuteInterval,
 
   positiveButton?: ButtonType,
+
+  // Not supported in Material 3 pickers
   neutralButton?: ButtonType,
   negativeButton?: ButtonType,
   /**

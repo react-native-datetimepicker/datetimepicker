@@ -6,6 +6,8 @@ type AndroidMode = 'date' | 'time';
 type Display = 'spinner' | 'default' | 'clock' | 'calendar';
 type IOSDisplay = 'default' | 'compact' | 'inline' | 'spinner';
 type MinuteInterval = 1 | 2 | 3 | 4 | 5 | 6 | 10 | 12 | 15 | 20 | 30;
+type Design = 'default' | 'material';
+type InputMode = 'default' | 'keyboard';
 type DAY_OF_WEEK = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export type Event = SyntheticEvent<
@@ -143,15 +145,23 @@ export type AndroidNativeProps = Readonly<
 
       /**
        * The display options.
+       *
+       * Not supported for Material 3 pickers
        */
       display?: Display;
 
       /**
        * The interval at which minutes can be selected.
+       *
+       * Not supported for Material 3 pickers
        */
       minuteInterval?: MinuteInterval;
 
       positiveButton?: ButtonType;
+
+      /**
+       * Not supported for Material 3 pickers
+       */
       neutralButton?: ButtonType;
       negativeButton?: ButtonType;
 
@@ -175,6 +185,24 @@ export type AndroidNativeProps = Readonly<
        * callback when an error occurs inside the date picker native code (such as null activity)
        */
       onError?: (_arg: Error) => void;
+      /**
+       * (Material 3 only) The initial input mode when the dialog opens.
+       *
+       * If not provided, a calendar is initially shown for the date picker and a clock for the time picker.
+       */
+      initialInputMode?: InputMode;
+      /**
+       * (Material 3 only) The title of the dialog
+       */
+      title?: string;
+      /**
+       * (Material 3 only) Controls if the date picker should be shown as fullscreen dialog
+       */
+      fullscreen?: boolean;
+      /**
+       * Use Material 3 pickers or the default ones
+       */
+      design?: Design;
     }
 >;
 

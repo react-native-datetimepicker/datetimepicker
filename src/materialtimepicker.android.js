@@ -9,10 +9,10 @@
  */
 import {TIME_SET_ACTION, DISMISS_ACTION, ANDROID_DISPLAY} from './constants';
 import {toMilliseconds} from './utils';
-import RNTimePickerAndroid from './specs/NativeModuleTimePicker';
+import RNMaterialTimePickerAndroid from './specs/NativeModuleMaterialTimePicker';
 import type {TimePickerOptions, DateTimePickerResult} from './types';
 
-export default class TimePickerAndroid {
+export default class MaterialTimePickerAndroid {
   /**
    * Opens the standard Android time picker dialog.
    *
@@ -21,11 +21,9 @@ export default class TimePickerAndroid {
    *   * `is24Hour` (boolean) - If `true`, the picker uses the 24-hour format. If `false`,
    *     the picker shows an AM/PM chooser. If undefined, the default for the current locale
    *     is used.
-   *   * `minuteInterval` (enum(1 | 5 | 10 | 15 | 20 | 30)`) - set the time picker minutes' interval
-   *   * `display` (`enum('clock', 'spinner', 'default')`) - set the time picker mode
-   *     - 'clock': Show a time picker in clock mode.
-   *     - 'spinner': Show a time picker in spinner mode.
-   *     - 'default': Show a default time picker based on Android versions.
+   *   * `initialInputMode` (enum('default' | 'keyboard')) - sets the input mode for the time picker.
+   *      The user can still switch to the other input mode. The default is a clock.
+   *   * `title` (string) - set the title of the dialog
    *
    * Returns a Promise which will be invoked an object containing `action`, `hour` (0-23),
    * `minute` (0-59) if the user picked a time. If the user dismissed the dialog, the Promise will
@@ -35,11 +33,11 @@ export default class TimePickerAndroid {
   static async open(options: TimePickerOptions): Promise<DateTimePickerResult> {
     toMilliseconds(options, 'value');
     options.display = options.display || ANDROID_DISPLAY.default;
-    return RNTimePickerAndroid.open(options);
+    return RNMaterialTimePickerAndroid.open(options);
   }
 
   static async dismiss(): Promise<boolean> {
-    return RNTimePickerAndroid.dismiss();
+    return RNMaterialTimePickerAndroid.dismiss();
   }
 
   /**

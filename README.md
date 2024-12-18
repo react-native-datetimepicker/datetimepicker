@@ -51,6 +51,10 @@ React Native date & time picker component for iOS, Android and Windows (please n
     <td><p align="center"><img src="./docs/images/android_date.png" width="200" height="400"/></p></td>
     <td><p align="center"><img src="./docs/images/android_time.png" width="200" height="400"/></p></td>
   </tr>
+  <tr>
+    <td><p align="center"><img src="./docs/images/android_material_date.jpg" width="200" height="400"/></p></td>
+    <td><p align="center"><img src="./docs/images/android_material_time.jpg" width="200" height="400"/></p></td>
+  </tr>
   <tr><td colspan=1><strong>Windows</strong></td></tr>
   <tr>
     <td><p align="center"><img src="./docs/images/windows_date.png" width="380" height="430"/></p></td>
@@ -77,6 +81,10 @@ React Native date & time picker component for iOS, Android and Windows (please n
   - [Props / params](#component-props--params-of-the-android-imperative-api)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
+    - [`design` (`optional`, `Android only`)](#design-optional)
+    - [`initialInputMode` (`optional`, `Android only`)](#initialinputmode-optional-android-only)
+    - [`title` (`optional`, `Android only`)](#title-optional-android-only)
+    - [`fullscreen` (`optional`, `Android only`)](#fullscreen-optional-android-only)
     - [`onChange` (`optional`)](#onchange-optional)
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
@@ -287,6 +295,8 @@ The reason we recommend the imperative API is: on Android, the date/time picker 
 
 ### Android styling
 
+If you'd like to use the Material pickers, your app theme will need to inherit from `Theme.Material3.DayNight.NoActionBar` in `styles.xml`.
+
 Styling of the dialogs on Android can be easily customized by using the provided config plugin, provided that you use a [Expo development build](https://docs.expo.dev/develop/development-builds/introduction/). The plugin allows you to configure color properties that cannot be set at runtime and requires building a new app binary to take effect.
 
 Refer to this documentation for more information: [android-styling.md](/docs/android-styling.md).
@@ -332,6 +342,19 @@ List of possible values for iOS (maps to [preferredDatePickerStyle](https://deve
 
 ```js
 <RNDateTimePicker display="spinner" />
+```
+
+#### `design` (`optional`, `Android only`)
+
+Defines if the picker should use Material 3 components or the default picker. The default value is `"default"`.
+
+List of possible values
+
+- `"default"`
+- `"material"`
+
+```js
+<RNDateTimePicker design="material" />
 ```
 
 #### `onChange` (`optional`)
@@ -480,6 +503,35 @@ Allows changing of the time picker to a 24-hour format. By default, this value i
 
 ```js
 <RNDateTimePicker is24Hour={true} />
+```
+
+#### `initialInputMode` (`optional`, `Android only`)
+
+:warning: Has effect only when `design` is "material". Allows setting the initial input mode of the picker.
+
+List of possible values:
+
+- `"default"` - Recommended. Date pickers will show the calendar view by default, and time pickers will show the clock view by default.
+- `"keyboard"` - Both pickers will show an input where the user can type the date or time.
+
+```js
+<RNDateTimePicker initialInputMode="default" />
+```
+
+#### `title` (`optional`, `Android only`)
+
+:warning: Has effect only when `design` is "material". Allows setting the title of the dialog for the pickers.
+
+```js
+<RNDateTimePicker title="Choose anniversary" />
+```
+
+#### `fullscreen` (`optional`, `Android only`)
+
+:warning: Has effect only when `design` is "material". Allows setting the date picker dialog to be fullscreen.
+
+```js
+<RNDateTimePicker fullscreen={true} />
 ```
 
 #### `positiveButton` (`optional`, `Android only`)

@@ -13,8 +13,12 @@ import {
 import invariant from 'invariant';
 
 import type {AndroidNativeProps} from './types';
-import {getOpenPicker, validateAndroidProps} from './androidUtils';
-import pickers from './picker';
+import {
+  getOpenPicker,
+  validateAndroidProps,
+  materialPickers,
+} from './androidUtils';
+import defaultPickers from './picker';
 import {
   createDateTimeSetEvtParams,
   createDismissEvtParams,
@@ -43,12 +47,16 @@ function open(props: AndroidNativeProps) {
     negativeButtonLabel,
     testID,
     firstDayOfWeek,
+    title,
+    initialInputMode,
+    design,
+    fullscreen,
   } = props;
   validateAndroidProps(props);
   invariant(originalValue, 'A date or time must be specified as `value` prop.');
 
   const valueTimestamp = originalValue.getTime();
-  const openPicker = getOpenPicker(mode);
+  const openPicker = getOpenPicker(mode, design);
 
   const presentPicker = async () => {
     try {
@@ -86,6 +94,9 @@ function open(props: AndroidNativeProps) {
         dialogButtons,
         testID,
         firstDayOfWeek,
+        title,
+        initialInputMode,
+        fullscreen,
       });
 
       switch (action) {
@@ -116,7 +127,11 @@ function open(props: AndroidNativeProps) {
   presentPicker();
 }
 
-function dismiss(mode: AndroidNativeProps['mode']): Promise<boolean> {
+function dismiss(
+  mode: AndroidNativeProps['mode'],
+  design?: AndroidNativeProps['design'] = 'default',
+): Promise<boolean> {
+  const pickers = design === 'material' ? materialPickers : defaultPickers;
   // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
   return pickers[mode].dismiss();
 }

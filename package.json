@@ -43,7 +43,8 @@
     "detox:android:test:release": "adb shell service call alarm 3 s16 Europe/Prague && detox test -c android.emu.release --record-videos all --record-logs all --headless -l verbose",
     "detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build",
     "plugin:build": "expo-module build plugin",
-    "generateManifest": "node node_modules/react-native-test-app/android/android-manifest.js example/app.json example/android/app/build/generated/rnta/src/main/AndroidManifest.xml"
+    "generateManifest": "node node_modules/react-native-test-app/android/android-manifest.js example/app.json example/android/app/build/generated/rnta/src/main/AndroidManifest.xml",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -91,6 +92,8 @@
     "jest": "^29.5.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.41",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.8.8",
     "react": "18.3.1",
     "react-native": "^0.75.4",

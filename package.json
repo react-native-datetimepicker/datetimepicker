@@ -24,7 +24,7 @@
     "access": "public"
   },
   "scripts": {
-    "start": "react-native start",
+    "start": "patch-package && react-native start",
     "start:android": "react-native run-android",
     "start:ios": "react-native run-ios",
     "start:windows": "react-native run-windows --sln example/windows/date-time-picker-example.sln",
@@ -43,8 +43,7 @@
     "detox:android:test:release": "adb shell service call alarm 3 s16 Europe/Prague && detox test -c android.emu.release --record-videos all --record-logs all --headless -l verbose",
     "detox:clean": "rimraf example/android/build && rimraf example/android/app/build && rimraf example/android/.gradle && rimraf example/ios/build",
     "plugin:build": "expo-module build plugin",
-    "generateManifest": "node node_modules/react-native-test-app/android/android-manifest.js example/app.json example/android/app/build/generated/rnta/src/main/AndroidManifest.xml",
-    "postinstall": "patch-package"
+    "generateManifest": "node node_modules/react-native-test-app/android/android-manifest.js example/app.json example/android/app/build/generated/rnta/src/main/AndroidManifest.xml"
   },
   "repository": {
     "type": "git",

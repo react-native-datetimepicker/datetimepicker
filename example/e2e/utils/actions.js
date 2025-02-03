@@ -35,7 +35,7 @@ async function userOpensPicker({
   await elementById('DateTimePickerScrollView').scrollTo('top');
 
   await element(by.text(mode)).tap();
-  await element(by.text(display)).tap();
+  await element(by.text(display)).atIndex(0).tap();
   if (interval) {
     await element(by.text(String(interval))).tap();
   }
@@ -47,6 +47,7 @@ async function userOpensPicker({
   if (firstDayOfWeek) {
     await element(by.id(firstDayOfWeek)).tap();
   }
+  await elementById('DateTimePickerScrollView').scrollTo('bottom');
   await element(by.id('showPickerButton')).tap();
 }
 

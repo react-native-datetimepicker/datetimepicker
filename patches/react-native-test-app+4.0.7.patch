@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-test-app/android/app/src/main/res/values/styles.xml b/node_modules/react-native-test-app/android/app/src/main/res/values/styles.xml
+index e58cbf3..ba878cb 100644
+--- a/node_modules/react-native-test-app/android/app/src/main/res/values/styles.xml
++++ b/node_modules/react-native-test-app/android/app/src/main/res/values/styles.xml
+@@ -1,7 +1,7 @@
+ <resources>
+ 
+     <!-- Base application theme. -->
+-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
++    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+         <!-- Customize your theme here. -->
+         <item name="colorPrimary">@color/colorPrimary</item>
+         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

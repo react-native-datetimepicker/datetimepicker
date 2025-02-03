@@ -168,6 +168,7 @@ describe('e2e tests', () => {
       await expect(elementById('overriddenTzName')).toHaveText('Europe/Prague');
 
       let timeZone = 'America/Vancouver';
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
       await waitFor(elementById('timezone')).toBeVisible().withTimeout(1000);
       await userSwipesTimezoneListUntilDesiredIsVisible(timeZone);
 
@@ -192,6 +193,7 @@ describe('e2e tests', () => {
 
     it('daylight saving should work properly', async () => {
       let timeZone = 'America/Vancouver';
+      await elementById('DateTimePickerScrollView').scrollTo('bottom');
       await waitFor(elementById('timezone')).toBeVisible().withTimeout(1000);
       await userSwipesTimezoneListUntilDesiredIsVisible(timeZone);
 
@@ -373,6 +375,7 @@ describe('e2e tests', () => {
   });
 
   it(':android: when component unmounts, dialog is dismissed', async () => {
+    await elementById('DateTimePickerScrollView').scrollTo('bottom');
     await elementById('showAndDismissPickerButton').tap();
     await waitFor(getDatePickerAndroid()).toExist().withTimeout(4000);
     await wait(6000);

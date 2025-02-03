@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import static com.reactcommunity.rndatetimepicker.Common.createTimePickerArguments;
 import static com.reactcommunity.rndatetimepicker.Common.dismissDialog;
 
 import java.util.Calendar;
@@ -119,7 +120,7 @@ public class TimePickerModule extends NativeModuleTimePickerSpec {
       RNTimePickerDialogFragment oldFragment =
               (RNTimePickerDialogFragment) fragmentManager.findFragmentByTag(NAME);
 
-      Bundle arguments = createFragmentArguments(options);
+      Bundle arguments = createTimePickerArguments(options);
 
       if (oldFragment != null) {
         oldFragment.update(arguments);
@@ -136,26 +137,5 @@ public class TimePickerModule extends NativeModuleTimePickerSpec {
       fragment.setOnNeutralButtonActionListener(listener);
       fragment.show(fragmentManager, NAME);
     });
-  }
-
-  private Bundle createFragmentArguments(ReadableMap options) {
-    final Bundle args = Common.createFragmentArguments(options);
-
-    if (options.hasKey(RNConstants.ARG_IS24HOUR) && !options.isNull(RNConstants.ARG_IS24HOUR)) {
-      args.putBoolean(RNConstants.ARG_IS24HOUR, options.getBoolean(RNConstants.ARG_IS24HOUR));
-    }
-    if (options.hasKey(RNConstants.ARG_DISPLAY) && !options.isNull(RNConstants.ARG_DISPLAY)) {
-      args.putString(RNConstants.ARG_DISPLAY, options.getString(RNConstants.ARG_DISPLAY));
-    }
-    if (options.hasKey(RNConstants.ARG_DIALOG_BUTTONS) && !options.isNull(RNConstants.ARG_DIALOG_BUTTONS)) {
-      args.putBundle(RNConstants.ARG_DIALOG_BUTTONS, Arguments.toBundle(options.getMap(RNConstants.ARG_DIALOG_BUTTONS)));
-    }
-    if (options.hasKey(RNConstants.ARG_INTERVAL) && !options.isNull(RNConstants.ARG_INTERVAL)) {
-      args.putInt(RNConstants.ARG_INTERVAL, options.getInt(RNConstants.ARG_INTERVAL));
-    }
-    if (options.hasKey(RNConstants.ARG_TZOFFSET_MINS) && !options.isNull(RNConstants.ARG_TZOFFSET_MINS)) {
-      args.putLong(RNConstants.ARG_TZOFFSET_MINS, (long) options.getDouble(RNConstants.ARG_TZOFFSET_MINS));
-    }
-    return args;
   }
 }

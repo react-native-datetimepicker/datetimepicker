@@ -106,6 +106,10 @@
   "dependencies": {
     "invariant": "^2.2.4"
   },
+  "resolutions": {
+    "@react-native-community/cli": "14.1.2",
+    "@react-native-community/cli-platform-android": "14.1.2"
+  },
   "peerDependencies": {
     "expo": ">=50.0.0",
     "react": "*",

@@ -21,9 +21,15 @@ exports[`DateTimePicker namedExports have the expected shape 1`] = `
     "dismiss": [Function],
     "open": [Function],
   },
+  "MaterialRangePicker": {
+    "dismiss": [Function],
+    "open": [Function],
+  },
   "createDateTimeSetEvtParams": [Function],
   "createDismissEvtParams": [Function],
   "createNeutralEvtParams": [Function],
+  "createRangeDismissEvtParams": [Function],
+  "createRangeSetEvtParams": [Function],
   "default": [Function],
 }
 `;

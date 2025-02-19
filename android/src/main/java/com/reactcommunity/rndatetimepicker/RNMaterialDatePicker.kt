@@ -2,6 +2,7 @@ package com.reactcommunity.rndatetimepicker
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.FragmentManager
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -13,6 +14,7 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
+import com.google.android.material.R
 import java.util.Calendar
 
 class RNMaterialDatePicker(
@@ -97,12 +99,23 @@ class RNMaterialDatePicker(
 
   private fun setFullscreen() {
     val isFullscreen = args.getBoolean(RNConstants.ARG_FULLSCREEN)
-
     if (isFullscreen) {
-      builder.setTheme(com.google.android.material.R.style.ThemeOverlay_Material3_MaterialCalendar_Fullscreen)
+      val themeId = obtainMaterialThemeOverlayId(R.attr.materialCalendarFullscreenTheme)
+      builder.setTheme(themeId)
     } else {
-      builder.setTheme(com.google.android.material.R.style.ThemeOverlay_Material3_MaterialCalendar)
+      val themeId = obtainMaterialThemeOverlayId(R.attr.materialCalendarTheme)
+      builder.setTheme(themeId)
     }
+  }
+
+  private fun obtainMaterialThemeOverlayId(resId: Int): Int {
+    if (reactContext.currentActivity?.theme == null) {
+      return resId
+    }
+
+    val typedValue = TypedValue()
+    reactContext.currentActivity!!.theme!!.resolveAttribute(resId, typedValue, true)
+    return typedValue.resourceId
   }
 
   private fun addListeners() {

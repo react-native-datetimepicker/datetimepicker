@@ -95,7 +95,7 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.8.8",
     "react": "^19.0.0",
-    "react-native": "^0.75.4",
+    "react-native": "^0.79.2",
     "react-native-localize": "^3.1.0",
     "react-native-test-app": "^4.0.7",
     "react-native-windows": "^0.75.10",
@@ -108,8 +108,8 @@
   },
   "peerDependencies": {
     "expo": ">=50.0.0",
-    "react": "*",
-    "react-native": "*",
+    "react": "^19.0.0",
+    "react-native": "^0.79.2"
     "react-native-windows": "*"
   },
   "peerDependenciesMeta": {

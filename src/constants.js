@@ -55,6 +55,7 @@ export const DAY_OF_WEEK = Object.freeze({
 
 export const DATE_SET_ACTION = 'dateSetAction';
 export const TIME_SET_ACTION = 'timeSetAction';
+export const RANGE_SET_ACTION = 'rangeSetAction';
 export const DISMISS_ACTION = 'dismissedAction';
 
 export const NEUTRAL_BUTTON_ACTION = 'neutralButtonAction';

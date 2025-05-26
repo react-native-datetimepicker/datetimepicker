@@ -109,12 +109,12 @@ class RNMaterialDatePicker(
   }
 
   private fun obtainMaterialThemeOverlayId(resId: Int): Int {
-    if (reactContext.currentActivity?.theme == null) {
+    val theme = reactContext.currentActivity?.theme ?: run {
       return resId
     }
 
     val typedValue = TypedValue()
-    reactContext.currentActivity!!.theme!!.resolveAttribute(resId, typedValue, true)
+    theme.resolveAttribute(resId, typedValue, true)
     return typedValue.resourceId
   }
 

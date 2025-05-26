@@ -5495,7 +5495,7 @@ __metadata:
     semantic-release: "npm:^19.0.3"
     typescript: "npm:^5.5.3"
   peerDependencies:
-    expo: ">=50.0.0"
+    expo: ">=52.0.0"
     react: "*"
     react-native: "*"
     react-native-windows: "*"

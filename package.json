@@ -107,7 +107,7 @@
     "invariant": "^2.2.4"
   },
   "peerDependencies": {
-    "expo": ">=50.0.0",
+    "expo": ">=52.0.0",
     "react": "*",
     "react-native": "*",
     "react-native-windows": "*"

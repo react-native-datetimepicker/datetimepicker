@@ -94,4 +94,4 @@ yarn start:ios
 #### Android
 
 The date time picker does not have a native UI component for Android but a native module.
-([read more about native modules here](https://reactnative.dev/docs/native-modules-intro)).
+([read more about native modules here](https://reactnative.dev/docs/turbo-native-modules-introduction)).

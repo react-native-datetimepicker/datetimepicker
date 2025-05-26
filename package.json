@@ -84,7 +84,7 @@
     "eslint-plugin-ft-flow": "^2.0.1",
     "eslint-plugin-jest": "^28.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "expo": "^51.0.18",
+    "expo": "^52.0.30",
     "expo-module-scripts": "^3.5.2",
     "flow-bin": "^0.217.0",
     "flow-typed": "^3.9.0",
@@ -107,7 +107,7 @@
     "invariant": "^2.2.4"
   },
   "peerDependencies": {
-    "expo": ">=50.0.0",
+    "expo": ">=52.0.0",
     "react": "*",
     "react-native": "*",
     "react-native-windows": "*"

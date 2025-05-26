@@ -3,7 +3,7 @@ package com.reactcommunity.rndatetimepicker;
 
 import androidx.annotation.Nullable;
 
-import com.facebook.react.TurboReactPackage;
+import com.facebook.react.BaseReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.module.model.ReactModuleInfo;
@@ -12,7 +12,7 @@ import com.facebook.react.module.model.ReactModuleInfoProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RNDateTimePickerPackage extends TurboReactPackage {
+public class RNDateTimePickerPackage extends BaseReactPackage {
   @Nullable
   @Override
   public NativeModule getModule(String name, ReactApplicationContext reactContext) {
@@ -41,7 +41,6 @@ public class RNDateTimePickerPackage extends TurboReactPackage {
           DatePickerModule.NAME,
           false, // canOverrideExistingModule
           false, // needsEagerInit
-          false, // hasConstants
           false, // isCxxModule
           isTurboModule // isTurboModule
         ));
@@ -52,7 +51,6 @@ public class RNDateTimePickerPackage extends TurboReactPackage {
           TimePickerModule.NAME,
           false, // canOverrideExistingModule
           false, // needsEagerInit
-          false, // hasConstants
           false, // isCxxModule
           isTurboModule // isTurboModule
         ));

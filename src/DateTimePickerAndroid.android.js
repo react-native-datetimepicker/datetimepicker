@@ -133,7 +133,7 @@ function dismiss(
 ): Promise<boolean> {
   const pickers = design === 'material' ? materialPickers : defaultPickers;
   // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
-  return pickers[mode].dismiss();
+  return pickers[mode]?.dismiss();
 }
 
 export const DateTimePickerAndroid = {open, dismiss};

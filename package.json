@@ -126,6 +126,11 @@
     "jsSrcsDir": "src/specs",
     "android": {
       "javaPackageName": "com.reactcommunity.rndatetimepicker"
+    },
+    "ios": {
+      "componentProvider": {
+        "RNDateTimePicker": "RNDateTimePickerComponentView"
+      }
     }
   },
   "packageManager": "yarn@4.1.1"

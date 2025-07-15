@@ -21,6 +21,16 @@ NSDate* convertJSTimeToDate (double jsTime) {
     return [NSDate dateWithTimeIntervalSince1970: time];
 }
 
+NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
+    NSInteger minute = [[NSCalendar currentCalendar] component:NSCalendarUnitMinute fromDate:minimumDate];
+    NSInteger remainder = minute % minuteInterval;
+    NSInteger adjustment = (remainder == 0) ? 0 : (minuteInterval - remainder);
+    return [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute
+                                                    value:adjustment
+                                                   toDate:minimumDate
+                                                  options:0];
+}
+
 @interface RNDateTimePickerComponentView () <RCTRNDateTimePickerViewProtocol>
 @end
 
@@ -160,7 +170,8 @@ NSDate* convertJSTimeToDate (double jsTime) {
     }
 
     if (oldPickerProps.minimumDate != newPickerProps.minimumDate) {
-        picker.minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
+        NSDate *minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
+        picker.minimumDate = adjustMinimumDate(minimumDate, newPickerProps.minuteInterval);
     }
 
     if (oldPickerProps.maximumDate != newPickerProps.maximumDate) {

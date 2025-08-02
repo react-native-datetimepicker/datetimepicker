@@ -22,7 +22,17 @@ NSDate* convertJSTimeToDate (double jsTime) {
 }
 
 NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
+    NSLog(@"[DateTimePicker] adjustMinimumDate called with minuteInterval=%d", minuteInterval);
+    
+    // If minuteInterval is not set or invalid, return the date unchanged
+    if (minuteInterval <= 0) {
+        NSLog(@"[DateTimePicker] minuteInterval is %d, returning minimumDate without adjustment", minuteInterval);
+        return minimumDate;
+    }
+    
     NSInteger minute = [[NSCalendar currentCalendar] component:NSCalendarUnitMinute fromDate:minimumDate];
+    NSLog(@"[DateTimePicker] Adjusting minimumDate minute=%ld to align with interval=%d", (long)minute, minuteInterval);
+    
     NSInteger remainder = minute % minuteInterval;
     NSInteger adjustment = (remainder == 0) ? 0 : (minuteInterval - remainder);
     return [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute
@@ -171,6 +181,7 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
 
     if (oldPickerProps.minimumDate != newPickerProps.minimumDate) {
         NSDate *minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
+        NSLog(@"[DateTimePicker] Setting minimumDate, minuteInterval from props: %d", newPickerProps.minuteInterval);
         picker.minimumDate = adjustMinimumDate(minimumDate, newPickerProps.minuteInterval);
     }
 

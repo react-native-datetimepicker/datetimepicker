@@ -177,7 +177,6 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
 
     if (oldPickerProps.minimumDate != newPickerProps.minimumDate) {
         NSDate *minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
-        NSLog(@"[DateTimePicker] Setting minimumDate, minuteInterval from props: %d", newPickerProps.minuteInterval);
         picker.minimumDate = adjustMinimumDate(minimumDate, newPickerProps.minuteInterval);
     }
 

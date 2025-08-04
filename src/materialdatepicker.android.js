@@ -7,7 +7,7 @@
  * @format
  * @flow strict-local
  */
-import {DATE_SET_ACTION, DISMISS_ACTION, ANDROID_DISPLAY} from './constants';
+import {DATE_SET_ACTION, DISMISS_ACTION} from './constants';
 import {toMilliseconds} from './utils';
 import RNMaterialDatePickerAndroid from './specs/NativeModuleMaterialDatePicker';
 import type {DatePickerOptions, DateTimePickerResult} from './types';

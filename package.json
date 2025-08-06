@@ -124,9 +124,6 @@
       "optional": true
     }
   },
-  "resolutions": {
-    "typescript": "5.8.3"
-  },
   "codegenConfig": {
     "name": "RNDateTimePickerCGen",
     "type": "all",

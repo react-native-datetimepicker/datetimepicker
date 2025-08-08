@@ -24,7 +24,6 @@ NSDate* convertJSTimeToDate (double jsTime) {
 NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
     // If minuteInterval is not set or invalid, return the date unchanged
     if (minuteInterval <= 0) {
-        NSLog(@"[DateTimePicker] minuteInterval is %d, returning minimumDate without adjustment", minuteInterval);
         return minimumDate;
     }
     

@@ -22,6 +22,11 @@ NSDate* convertJSTimeToDate (double jsTime) {
 }
 
 NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
+    // If minuteInterval is not set or invalid, return the date unchanged
+    if (minuteInterval <= 0) {
+        return minimumDate;
+    }
+    
     NSInteger minute = [[NSCalendar currentCalendar] component:NSCalendarUnitMinute fromDate:minimumDate];
     NSInteger remainder = minute % minuteInterval;
     NSInteger adjustment = (remainder == 0) ? 0 : (minuteInterval - remainder);

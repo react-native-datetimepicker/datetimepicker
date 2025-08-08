@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   SafeAreaView,
   ScrollView,
@@ -170,7 +171,7 @@ export const App = () => {
 
   const renderItem = ({item}) => {
     const isNumber = typeof item === 'number';
-    const title = isNumber
+    const buttonTitle = isNumber
       ? item > 0
         ? `+${item} mins`
         : `${item} mins`
@@ -178,7 +179,7 @@ export const App = () => {
     return (
       <View style={{marginHorizontal: 1}} testID={`${item}`}>
         <Button
-          title={title || 'undefined'}
+          title={buttonTitle || 'undefined'}
           onPress={() => {
             setTzOffsetInMinutes(isNumber ? item : undefined);
             setTzName(isNumber ? undefined : item);

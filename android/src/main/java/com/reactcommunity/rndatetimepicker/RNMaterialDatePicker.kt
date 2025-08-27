@@ -3,6 +3,10 @@ package com.reactcommunity.rndatetimepicker
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -42,6 +46,8 @@ class RNMaterialDatePicker(
     setFullscreen()
 
     datePicker = builder.build()
+
+    setYearPickerFirst()
   }
 
   private fun setInitialDate() {
@@ -106,6 +112,42 @@ class RNMaterialDatePicker(
       val themeId = obtainMaterialThemeOverlayId(R.attr.materialCalendarTheme)
       builder.setTheme(themeId)
     }
+  }
+
+  private fun setYearPickerFirst() {
+    val showYearPickerFirst = args.getBoolean(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST)
+    if (!showYearPickerFirst) return
+    val initialDate = RNDate(args)
+    val activity = reactContext.currentActivity as? AppCompatActivity
+    activity?.let { lifecycleOwner ->
+      datePicker!!.viewLifecycleOwnerLiveData.observe(lifecycleOwner) { owner ->
+        if (owner != null) {
+          datePicker?.requireDialog()?.window?.decorView?.post {
+            val root = datePicker!!.dialog?.window?.decorView ?: return@post
+
+            val yearText = initialDate.year().toString()
+            val hit = findViewBy(root) { v ->
+              v is TextView && v.isShown && v.isClickable && v.text?.toString()?.contains(yearText) == true
+            }
+            if (hit != null) {
+              hit.performClick()
+              return@post
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private fun findViewBy(root: View, pred: (View) -> Boolean): View? {
+    if (pred(root)) return root
+
+    if (root is ViewGroup) {
+      for (i in 0 until root.childCount) {
+        findViewBy(root.getChildAt(i), pred)?.let { return it }
+      }
+    }
+    return null
   }
 
   private fun obtainMaterialThemeOverlayId(resId: Int): Int {

@@ -1,4 +1,3 @@
-/* eslint-disable jest/expect-expect */
 /**
  * @format
  * @flow strict-local

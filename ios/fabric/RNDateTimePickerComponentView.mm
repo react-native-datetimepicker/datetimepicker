@@ -26,7 +26,7 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
     if (minuteInterval <= 0) {
         return minimumDate;
     }
-    
+
     NSInteger minute = [[NSCalendar currentCalendar] component:NSCalendarUnitMinute fromDate:minimumDate];
     NSInteger remainder = minute % minuteInterval;
     NSInteger adjustment = (remainder == 0) ? 0 : (minuteInterval - remainder);
@@ -175,12 +175,21 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
     }
 
     if (oldPickerProps.minimumDate != newPickerProps.minimumDate) {
-        NSDate *minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
-        picker.minimumDate = adjustMinimumDate(minimumDate, newPickerProps.minuteInterval);
+        if (newPickerProps.minimumDate == 0.0) {
+            picker.minimumDate = nil;
+        } else {
+            NSDate *minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
+            picker.minimumDate = adjustMinimumDate(minimumDate, newPickerProps.minuteInterval);
+        }
     }
 
     if (oldPickerProps.maximumDate != newPickerProps.maximumDate) {
-        picker.maximumDate = convertJSTimeToDate(newPickerProps.maximumDate);
+        if (newPickerProps.maximumDate == 0.0) {
+            picker.maximumDate = nil;
+        } else {
+            NSDate *maximumDate = convertJSTimeToDate(newPickerProps.maximumDate);
+            picker.maximumDate = adjustMaximumDate(maximumDate, newPickerProps.minuteInterval);
+        }
     }
 
     if (oldPickerProps.locale != newPickerProps.locale) {
@@ -313,4 +322,3 @@ Class<RCTComponentViewProtocol> RNDateTimePickerCls(void)
 {
     return RNDateTimePickerComponentView.class;
 }
-

@@ -187,8 +187,7 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
         if (newPickerProps.maximumDate == 0.0) {
             picker.maximumDate = nil;
         } else {
-            NSDate *maximumDate = convertJSTimeToDate(newPickerProps.maximumDate);
-            picker.maximumDate = adjustMaximumDate(maximumDate, newPickerProps.minuteInterval);
+            picker.maximumDate = convertJSTimeToDate(newPickerProps.maximumDate);
         }
     }
 

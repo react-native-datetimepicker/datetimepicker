@@ -120,22 +120,25 @@ class RNMaterialDatePicker(
     val initialDate = RNDate(args)
     val activity = reactContext.currentActivity as? AppCompatActivity
     activity?.let { lifecycleOwner ->
-      datePicker!!.viewLifecycleOwnerLiveData.observe(lifecycleOwner) { owner ->
-        if (owner != null) {
-          datePicker?.requireDialog()?.window?.decorView?.post {
-            val root = datePicker!!.dialog?.window?.decorView ?: return@post
+        val picker = datePicker ?: return@let
+        val liveData = picker.viewLifecycleOwnerLiveData
+        liveData.observe(lifecycleOwner) { owner ->
+          if (owner == null) return@observe
+          picker.requireDialog().window?.decorView?.post {
+            val root = picker.dialog?.window?.decorView ?: return@post
 
             val yearText = initialDate.year().toString()
             val hit = findViewBy(root) { v ->
-              v is TextView && v.isShown && v.isClickable && v.text?.toString()?.contains(yearText) == true
+              v is TextView && v.isShown && v.isClickable && v.text?.toString()
+                ?.contains(yearText) == true
             }
             if (hit != null) {
               hit.performClick()
               return@post
             }
+            liveData.removeObservers(lifecycleOwner)
           }
         }
-      }
     }
   }
 

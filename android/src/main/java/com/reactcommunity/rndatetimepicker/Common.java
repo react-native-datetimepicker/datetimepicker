@@ -102,6 +102,7 @@ public class Common {
         DatePicker datePicker = datePickerDialog.getDatePicker();
 
         int yearId = Resources.getSystem().getIdentifier("date_picker_header_year", "id", "android");
+        if (yearId == 0) return;
         View yearView = datePicker.findViewById(yearId);
         if (yearView != null) {
           yearView.performClick();

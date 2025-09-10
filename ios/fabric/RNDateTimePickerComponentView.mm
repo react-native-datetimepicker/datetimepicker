@@ -174,11 +174,12 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
         needsToUpdateMeasurements = true;
     }
 
-    if (oldPickerProps.minimumDate != newPickerProps.minimumDate || 
-        oldPickerProps.maximumDate != newPickerProps.maximumDate) {
-        
-        NSDate *newMinDate = convertJSTimeToDate(newPickerProps.minimumDate);
-        NSDate *newMaxDate = convertJSTimeToDate(newPickerProps.maximumDate);
+    Boolean minDateChanged = oldPickerProps.minimumDate != newPickerProps.minimumDate;
+    Boolean maxDateChanged = oldPickerProps.maximumDate != newPickerProps.maximumDate;
+    
+    if (minDateChanged || maxDateChanged) {
+        NSDate *newMinDate = newPickerProps.minimumDate ? convertJSTimeToDate(newPickerProps.minimumDate) : nil;
+        NSDate *newMaxDate = newPickerProps.maximumDate ? convertJSTimeToDate(newPickerProps.maximumDate) : nil;
         
         if (newMinDate) {
             newMinDate = adjustMinimumDate(newMinDate, newPickerProps.minuteInterval);

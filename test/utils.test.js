@@ -73,7 +73,7 @@ describe('utils', () => {
 
         expect(() => {
           sharedPropsValidation({value, minimumDate, maximumDate});
-        }).toThrow('DateTimePicker: minimumDate (2023-12-31T00:00:00.000Z) is after maximumDate (2023-01-01T00:00:00.000Z). Please ensure minimumDate <= maximumDate.');
+        }).toThrow('DateTimePicker: minimumDate (2023-12-31T00:00:00.000Z) is after maximumDate (2023-01-01T00:00:00.000Z). Please ensure minimumDate < maximumDate.');
       });
     });
   });

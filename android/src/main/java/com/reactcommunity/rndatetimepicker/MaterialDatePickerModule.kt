@@ -18,12 +18,12 @@ class MaterialDatePickerModule(reactContext: ReactApplicationContext): NativeMod
   }
 
   override fun dismiss(promise: Promise?) {
-    val activity = currentActivity as FragmentActivity?
+    val activity = reactApplicationContext.currentActivity as FragmentActivity?
     dismissDialog(activity, NAME, promise)
   }
 
   override fun open(params: ReadableMap, promise: Promise) {
-    val activity = currentActivity as FragmentActivity?
+    val activity = reactApplicationContext.currentActivity as FragmentActivity?
     if (activity == null) {
       promise.reject(
         RNConstants.ERROR_NO_ACTIVITY,

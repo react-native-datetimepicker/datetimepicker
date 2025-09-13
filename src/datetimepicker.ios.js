@@ -61,7 +61,7 @@ export default function Picker({
   disabled = false,
   ...other
 }: IOSNativeProps): React.Node {
-  sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName});
+  sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName, minimumDate, maximumDate});
 
   const display = getDisplaySafe(providedDisplay);
 

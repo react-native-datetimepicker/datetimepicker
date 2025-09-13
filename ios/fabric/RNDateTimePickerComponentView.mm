@@ -174,13 +174,27 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
         needsToUpdateMeasurements = true;
     }
 
-    if (oldPickerProps.minimumDate != newPickerProps.minimumDate) {
-        NSDate *minimumDate = convertJSTimeToDate(newPickerProps.minimumDate);
-        picker.minimumDate = adjustMinimumDate(minimumDate, newPickerProps.minuteInterval);
-    }
-
-    if (oldPickerProps.maximumDate != newPickerProps.maximumDate) {
-        picker.maximumDate = convertJSTimeToDate(newPickerProps.maximumDate);
+    Boolean minDateChanged = oldPickerProps.minimumDate != newPickerProps.minimumDate;
+    Boolean maxDateChanged = oldPickerProps.maximumDate != newPickerProps.maximumDate;
+    
+    if (minDateChanged || maxDateChanged) {
+        NSDate *newMinDate = newPickerProps.minimumDate ? convertJSTimeToDate(newPickerProps.minimumDate) : nil;
+        NSDate *newMaxDate = newPickerProps.maximumDate ? convertJSTimeToDate(newPickerProps.maximumDate) : nil;
+        
+        if (newMinDate) {
+            newMinDate = adjustMinimumDate(newMinDate, newPickerProps.minuteInterval);
+        }
+        
+        // avoid crash when min > max by ensuring a clean initial state
+        picker.minimumDate = nil;
+        picker.maximumDate = nil;
+        
+        // set the dates in all cases (whether unset/nil, some set, or both set)
+        // UNLESS min > max, then we leave them as nil and rely on our LogBox in JS
+        if (!newMinDate || !newMaxDate || [newMinDate compare:newMaxDate] != NSOrderedDescending) {
+            picker.minimumDate = newMinDate;
+            picker.maximumDate = newMaxDate;
+        }
     }
 
     if (oldPickerProps.locale != newPickerProps.locale) {

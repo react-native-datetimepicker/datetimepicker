@@ -51,6 +51,7 @@ function open(props: AndroidNativeProps) {
     initialInputMode,
     design,
     fullscreen,
+    showYearPickerFirst,
   } = props;
   validateAndroidProps(props);
   invariant(originalValue, 'A date or time must be specified as `value` prop.');
@@ -97,6 +98,7 @@ function open(props: AndroidNativeProps) {
         title,
         initialInputMode,
         fullscreen,
+        showYearPickerFirst,
       });
 
       switch (action) {

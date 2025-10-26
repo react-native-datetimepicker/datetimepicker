@@ -4,6 +4,13 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [8.4.6](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.4.5...v8.4.6) (2025-10-26)
+
+
+### Bug Fixes
+
+* **ios:** avoid min&gt;max date picker crash ([#1009](https://github.com/react-native-datetimepicker/datetimepicker/issues/1009)) ([08db857](https://github.com/react-native-datetimepicker/datetimepicker/commit/08db8575d7167d03a8aa2aeaade84957f2ddc0ba))
+
 ### 2.6.0
 
 - Add time picker for Windows [#206](https://github.com/react-native-community/datetimepicker/pull/206)

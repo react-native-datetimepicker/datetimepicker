@@ -5,6 +5,8 @@ import android.app.TimePickerDialog;
 public final class RNConstants {
   public static final String ERROR_NO_ACTIVITY = "E_NO_ACTIVITY";
   public static final String ARG_VALUE = "value";
+  public static final String ARG_START_TIMESTAMP = "startTimestamp";
+  public static final String ARG_END_TIMESTAMP = "endTimestamp";
   public static final String ARG_MINDATE = "minimumDate";
   public static final String ARG_MAXDATE = "maximumDate";
   public static final String ARG_INTERVAL = "minuteInterval";
@@ -18,6 +20,7 @@ public final class RNConstants {
   public static final String ARG_INITIAL_INPUT_MODE = "initialInputMode";
   public static final String ARG_FULLSCREEN = "fullscreen";
   public static final String ACTION_DATE_SET = "dateSetAction";
+  public static final String ACTION_RANGE_SET = "rangeSetAction";
   public static final String ACTION_TIME_SET = "timeSetAction";
   public static final String ACTION_DISMISSED = "dismissedAction";
   public static final String ACTION_NEUTRAL_BUTTON = "neutralButtonAction";

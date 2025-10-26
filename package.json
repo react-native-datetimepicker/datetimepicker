@@ -46,10 +46,7 @@
     "plugin:build": "expo-module build plugin",
     "generateManifest": "node node_modules/react-native-test-app/android/android-manifest.js example/app.json example/android/app/build/generated/rnta/src/main/AndroidManifest.xml"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/react-native-community/datetimepicker.git"
-  },
+  "repository": "https://github.com/react-native-datetimepicker/datetimepicker",
   "keywords": [
     "react-native-component",
     "react-native",

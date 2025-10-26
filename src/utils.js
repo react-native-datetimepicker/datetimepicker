@@ -35,10 +35,14 @@ export function sharedPropsValidation({
   value,
   timeZoneName,
   timeZoneOffsetInMinutes,
+  minimumDate,
+  maximumDate,
 }: {
   value: Date,
   timeZoneName?: ?string,
   timeZoneOffsetInMinutes?: ?number,
+  minimumDate?: ?Date,
+  maximumDate?: ?Date,
 }) {
   invariant(value, 'A date or time must be specified as `value` prop');
   invariant(
@@ -49,6 +53,14 @@ export function sharedPropsValidation({
     timeZoneName == null || timeZoneOffsetInMinutes == null,
     '`timeZoneName` and `timeZoneOffsetInMinutes` cannot be specified at the same time',
   );
+
+  if (minimumDate && maximumDate) {
+    invariant(
+      minimumDate <= maximumDate,
+      `DateTimePicker: minimumDate (${minimumDate.toISOString()}) is after maximumDate (${maximumDate.toISOString()}). Ensure minimumDate < maximumDate.`,
+    );
+  }
+
   if (timeZoneOffsetInMinutes !== undefined) {
     console.warn(
       '`timeZoneOffsetInMinutes` is deprecated and will be removed in a future release. Use `timeZoneName` instead.',

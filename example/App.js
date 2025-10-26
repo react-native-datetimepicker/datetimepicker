@@ -471,6 +471,24 @@ export const App = () => {
               title="toggleMinMaxDate"
             />
           </View>
+          {/* This button allows for testing the error box that should show when the minimumDate prop is greater than the maximumDate prop */}
+          <View style={styles.button}>
+            <Button
+              testID="setInvertedMinMax"
+              onPress={() => {
+                if (minimumDate && maximumDate && minimumDate > maximumDate) {
+                  setMinimumDate(undefined);
+                  setMaximumDate(undefined);
+                  setShow(false);
+                } else {  
+                  setMinimumDate(new Date('2025-09-05'));
+                  setMaximumDate(new Date('2025-09-01'));
+                  setShow(true);
+                }
+              }}
+              title={minimumDate && maximumDate && minimumDate > maximumDate ? "undo min > max" : "set min > max (errors)"}
+            />
+          </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             {/* This label ensures there is no regression in this former bug: https://github.com/react-native-datetimepicker/datetimepicker/issues/409 */}
             <Text style={{flexShrink: 1}}>

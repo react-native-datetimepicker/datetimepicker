@@ -57,7 +57,7 @@ export function sharedPropsValidation({
   if (minimumDate && maximumDate) {
     invariant(
       minimumDate <= maximumDate,
-      `DateTimePicker: minimumDate (${minimumDate.toISOString()}) is after maximumDate (${maximumDate.toISOString()}). Please ensure minimumDate < maximumDate.`,
+      `DateTimePicker: minimumDate (${minimumDate.toISOString()}) is after maximumDate (${maximumDate.toISOString()}). Ensure minimumDate < maximumDate.`,
     );
   }
 

@@ -4,6 +4,13 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [8.4.7](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.4.6...v8.4.7) (2025-10-26)
+
+
+### Bug Fixes
+
+* **ci:** correct repo url ([#1018](https://github.com/react-native-datetimepicker/datetimepicker/issues/1018)) ([933f8dd](https://github.com/react-native-datetimepicker/datetimepicker/commit/933f8dd39190b3e89034b843456d06d84cf7b278))
+
 ## [8.4.6](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.4.5...v8.4.6) (2025-10-26)
 
 

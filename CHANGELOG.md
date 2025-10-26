@@ -4,6 +4,13 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [8.5.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.4.7...v8.5.0) (2025-10-26)
+
+
+### Features
+
+* remove deprecated react native api usages ([#950](https://github.com/react-native-datetimepicker/datetimepicker/issues/950)) ([1ff05e1](https://github.com/react-native-datetimepicker/datetimepicker/commit/1ff05e180817318a99e086643f89ddd4e8ff5549))
+
 ## [8.4.7](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.4.6...v8.4.7) (2025-10-26)
 
 

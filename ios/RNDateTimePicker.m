@@ -72,4 +72,12 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
     }
 }
 
+- (CGSize)intrinsicContentSize {
+    CGSize size = [super intrinsicContentSize];
+    // iOS DatePicker requires a minimum width of 280 points for proper display
+    // See: https://github.com/react-native-datetimepicker/datetimepicker/issues/1014
+    size.width = MAX(size.width, 280);
+    return size;
+}
+
 @end

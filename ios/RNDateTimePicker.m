@@ -77,6 +77,15 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
     // iOS DatePicker requires a minimum width of 280 points for proper display
     // See: https://github.com/react-native-datetimepicker/datetimepicker/issues/1014
     size.width = MAX(size.width, 280);
+    
+    // For inline (calendar) display style, suggest a larger width
+    // This helps the calendar expand to fill available width
+    if (@available(iOS 14.0, *)) {
+        if (self.preferredDatePickerStyle == UIDatePickerStyleInline) {
+            size.width = MAX(size.width, 375); // Standard iPhone width
+        }
+    }
+    
     return size;
 }
 

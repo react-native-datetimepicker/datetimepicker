@@ -72,7 +72,27 @@ static YGSize RNDateTimePickerShadowViewMeasure(YGNodeConstRef node, float width
     // iOS DatePicker requires a minimum width of 280 points for proper display
     // See: https://github.com/react-native-datetimepicker/datetimepicker/issues/1014
     size.width = MAX(size.width, 280);
-    size.width += 10;
+    
+    // Respect the provided width constraint to allow the picker to expand to full width
+    // when a specific width is provided or when measuring at-most mode
+    if (widthMode == YGMeasureModeExactly) {
+      size.width = width;
+    } else if (widthMode == YGMeasureModeAtMost) {
+      // For inline/calendar style, try to use the full available width
+      // For other styles, use the minimum width needed
+      if (@available(iOS 14.0, *)) {
+        if (shadowPickerView.picker.preferredDatePickerStyle == UIDatePickerStyleInline) {
+          size.width = width; // Use full available width for calendar
+        } else {
+          size.width = MIN(size.width + 10, width);
+        }
+      } else {
+        size.width = MIN(size.width + 10, width);
+      }
+    } else {
+      // For undefined mode, add small padding
+      size.width += 10;
+    }
   });
 
   return (YGSize){

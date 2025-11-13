@@ -107,13 +107,17 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
     // See: https://github.com/react-native-datetimepicker/datetimepicker/issues/1014
     size.width = MAX(size.width, 280);
     
-    // For inline (calendar) display style, use a larger default width to fill the container
-    // The actual width will be constrained by the parent container's layout
+    // For inline (calendar) display style, use larger dimensions to fill the container
+    // The actual size will be constrained by the parent container's layout
     if (@available(iOS 14.0, *)) {
         if (_dummyPicker.preferredDatePickerStyle == UIDatePickerStyleInline) {
             // Use a large width that will be constrained by the parent
             // This allows the calendar to expand to full width of its container
             size.width = 375; // Standard iPhone width, will be constrained by parent if smaller
+            
+            // UICalendarView requires sufficient height to render its content
+            // Without this, we get: "UICalendarView's height is smaller than it can render its content in"
+            size.height = MAX(size.height, 330);
         } else {
             size.width += 10;
         }

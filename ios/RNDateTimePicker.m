@@ -78,11 +78,14 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
     // See: https://github.com/react-native-datetimepicker/datetimepicker/issues/1014
     size.width = MAX(size.width, 280);
     
-    // For inline (calendar) display style, suggest a larger width
-    // This helps the calendar expand to fill available width
+    // For inline (calendar) display style, suggest larger dimensions
+    // UICalendarView requires sufficient height to render its content
     if (@available(iOS 14.0, *)) {
         if (self.preferredDatePickerStyle == UIDatePickerStyleInline) {
             size.width = MAX(size.width, 375); // Standard iPhone width
+            // UICalendarView needs minimum height to avoid content rendering warning
+            // Typical calendar height is around 320-360 points
+            size.height = MAX(size.height, 330);
         }
     }
     

@@ -69,9 +69,6 @@ static YGSize RNDateTimePickerShadowViewMeasure(YGNodeConstRef node, float width
     }
 
     size = [shadowPickerView.picker sizeThatFits:UILayoutFittingCompressedSize];
-    // iOS DatePicker requires a minimum width of 280 points for proper display
-    // See: https://github.com/react-native-datetimepicker/datetimepicker/issues/1014
-    size.width = MAX(size.width, 280);
     
     // Check if we're using inline/calendar style
     BOOL isInlineStyle = NO;
@@ -79,31 +76,37 @@ static YGSize RNDateTimePickerShadowViewMeasure(YGNodeConstRef node, float width
       isInlineStyle = shadowPickerView.picker.preferredDatePickerStyle == UIDatePickerStyleInline;
     }
     
-    // Respect the provided width constraint to allow the picker to expand to full width
-    // when a specific width is provided or when measuring at-most mode
+    // iOS DatePicker requires a minimum width of 280 points for proper display
+    // UICalendarView (inline) requires a minimum height of 330 points
+    // See: https://github.com/react-native-datetimepicker/datetimepicker/issues/1014
+    size.width = MAX(size.width, 280);
+    if (isInlineStyle) {
+      size.height = MAX(size.height, 330);
+    }
+    
+    // Handle width constraints
     if (widthMode == YGMeasureModeExactly) {
       size.width = width;
     } else if (widthMode == YGMeasureModeAtMost) {
-      // For inline/calendar style, try to use the full available width
-      // For other styles, use the minimum width needed
+      // For inline/calendar style, use the full available width
       if (isInlineStyle) {
-        size.width = width; // Use full available width for calendar
+        size.width = MAX(280, MIN(width, 500)); // Use available width, max 500pt
       } else {
         size.width = MIN(size.width + 10, width);
       }
     } else {
-      // For undefined mode, add small padding
-      size.width += 10;
+      // For undefined mode with inline style, suggest a larger width
+      if (isInlineStyle) {
+        size.width = MAX(size.width, 375);
+      } else {
+        size.width += 10;
+      }
     }
     
-    // UICalendarView (inline style) requires sufficient height to render content
-    // Without this, we get: "UICalendarView's height is smaller than it can render its content in"
+    // Handle height constraints for inline style
     if (isInlineStyle) {
-      size.height = MAX(size.height, 330);
-      
-      // Respect height constraints if provided
       if (heightMode == YGMeasureModeExactly) {
-        size.height = height;
+        size.height = MAX(height, 280); // Enforce reasonable minimum even for exact mode
       } else if (heightMode == YGMeasureModeAtMost) {
         size.height = MIN(size.height, height);
       }

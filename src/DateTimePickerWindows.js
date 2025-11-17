@@ -3,4 +3,4 @@
  * @flow strict-local
  */
 
-export {DateTimePickerWindows} from './DateTimePickerWindows';
+export {DateTimePickerWindows} from './DateTimePickerWindows.windows';

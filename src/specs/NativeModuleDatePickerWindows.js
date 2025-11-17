@@ -26,4 +26,4 @@ export interface Spec extends TurboModule {
   +open: (params: DatePickerOpenParams) => Promise<DatePickerResult>;
 }
 
-export default (TurboModuleRegistry.getEnforcing<Spec>('RNCDatePickerWindows'): ?Spec);
+export default (TurboModuleRegistry.get<Spec>('RNCDatePickerWindows'): ?Spec);

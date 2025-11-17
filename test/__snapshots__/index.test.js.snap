@@ -21,6 +21,10 @@ exports[`DateTimePicker namedExports have the expected shape 1`] = `
     "dismiss": [Function],
     "open": [Function],
   },
+  "DateTimePickerWindows": {
+    "dismiss": [Function],
+    "open": [Function],
+  },
   "createDateTimeSetEvtParams": [Function],
   "createDismissEvtParams": [Function],
   "createNeutralEvtParams": [Function],

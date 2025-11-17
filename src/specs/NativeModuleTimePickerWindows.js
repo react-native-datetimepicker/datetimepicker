@@ -22,4 +22,4 @@ export interface Spec extends TurboModule {
   +open: (params: TimePickerOpenParams) => Promise<TimePickerResult>;
 }
 
-export default (TurboModuleRegistry.getEnforcing<Spec>('RNCTimePickerWindows'): ?Spec);
+export default (TurboModuleRegistry.get<Spec>('RNCTimePickerWindows'): ?Spec);

@@ -10,6 +10,7 @@
 
 #ifdef RNW_NEW_ARCH
 #include "DateTimePickerFabric.h"
+#include "TimePickerFabric.h"
 #include "DatePickerModuleWindows.h"
 #include "TimePickerModuleWindows.h"
 #endif
@@ -20,8 +21,9 @@ namespace winrt::DateTimePicker::implementation {
 
   void ReactPackageProvider::CreatePackage(IReactPackageBuilder const& packageBuilder) noexcept {
 #ifdef RNW_NEW_ARCH
-      // Register Fabric (New Architecture) component
+      // Register Fabric (New Architecture) components
       RegisterDateTimePickerComponentView(packageBuilder);
+      RegisterTimePickerComponentView(packageBuilder);
       
       // Register TurboModules
       AddAttributedModules(packageBuilder, true);

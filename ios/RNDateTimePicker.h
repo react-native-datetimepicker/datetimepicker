@@ -9,6 +9,4 @@
 
 @interface RNDateTimePicker : UIDatePicker
 
-- (void)reset;
-
 @end

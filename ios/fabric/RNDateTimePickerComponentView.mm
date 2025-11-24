@@ -40,9 +40,9 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
 @end
 
 @implementation RNDateTimePickerComponentView {
-    RNDateTimePicker *_picker;
+    UIDatePicker *_picker;
     // Dummy picker to apply prop changes and calculate/update the size before the actual picker gets updated
-    RNDateTimePicker *_dummyPicker;
+    UIDatePicker *_dummyPicker;
     RNDateTimePickerShadowNode::ConcreteState::Shared _state;
 }
 
@@ -119,8 +119,6 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
 {
     [super prepareForRecycle];
     _state.reset();
-    [_picker reset];
-    [_dummyPicker reset];
 }
 
 -(void)updateTextColorForPicker:(UIDatePicker *)picker color:(UIColor *)color

@@ -72,11 +72,4 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
     }
 }
 
-- (void)reset
-{
-  self.minimumDate = nil;
-  self.maximumDate = nil;
-  self.date = [NSDate date];
-}
-
 @end

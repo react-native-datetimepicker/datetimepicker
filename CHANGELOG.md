@@ -4,6 +4,13 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [8.5.1](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.5.0...v8.5.1) (2025-11-25)
+
+
+### Bug Fixes
+
+* **ios:** internal picker state persisting with recycling ([#1026](https://github.com/react-native-datetimepicker/datetimepicker/issues/1026)) ([48e89d2](https://github.com/react-native-datetimepicker/datetimepicker/commit/48e89d2020b4b87552bc63a869e37db2376f94d2))
+
 ## [8.5.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.4.7...v8.5.0) (2025-10-26)
 
 

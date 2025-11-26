@@ -219,6 +219,13 @@ export type AndroidNativeProps = $ReadOnly<{|
   design?: 'default' | 'material',
 
   /**
+   * If true, the date picker will open with the year selector first.
+   *
+   * Only supported for default pickers.
+   */
+  showYearPickerFirst?: boolean,
+
+  /**
    * The interval at which minutes can be selected.
    *
    * Not supported in Material 3 pickers

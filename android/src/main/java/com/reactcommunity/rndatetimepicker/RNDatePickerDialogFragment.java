@@ -7,7 +7,9 @@
 
 package com.reactcommunity.rndatetimepicker;
 
+import static com.reactcommunity.rndatetimepicker.Common.combine;
 import static com.reactcommunity.rndatetimepicker.Common.getDisplayDate;
+import static com.reactcommunity.rndatetimepicker.Common.openYearDialog;
 import static com.reactcommunity.rndatetimepicker.Common.setButtonTextColor;
 import static com.reactcommunity.rndatetimepicker.Common.setButtonTitles;
 
@@ -101,7 +103,14 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       if (activityContext != null) {
         RNDatePickerDisplay display = getDisplayDate(args);
         boolean needsColorOverride = display == RNDatePickerDisplay.SPINNER;
-        dialog.setOnShowListener(setButtonTextColor(activityContext, dialog, args, needsColorOverride));
+        boolean canOpenYearDialog = display == RNDatePickerDisplay.DEFAULT;
+        boolean showYearPickerFirst = args.getBoolean(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST);
+        dialog.setOnShowListener(
+          combine(
+            openYearDialog(dialog, canOpenYearDialog, showYearPickerFirst),
+            setButtonTextColor(activityContext, dialog, args, needsColorOverride)
+          )
+        );
       }
     }
 

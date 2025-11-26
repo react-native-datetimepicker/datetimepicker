@@ -21,14 +21,28 @@ struct DateTimePickerComponentView : public winrt::implements<DateTimePickerComp
                                      Codegen::BaseDateTimePicker<DateTimePickerComponentView> {
   void InitializeContentIsland(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-    winrt::Microsoft::ReactNative::Xaml::implementation::XamlApplication::EnsureCreated();
-
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_calendarDatePicker = winrt::Microsoft::UI::Xaml::Controls::CalendarDatePicker{};
-    m_xamlIsland.Content(m_calendarDatePicker);
     islandView.Connect(m_xamlIsland.ContentIsland());
 
     RegisterEvents();
+    
+    // Mount the CalendarDatePicker immediately so it's visible
+    m_xamlIsland.Content(m_calendarDatePicker);
+  }
+
+  void MountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childView,
+      uint32_t index) noexcept {
+    // Mount the CalendarDatePicker into the XamlIsland
+    m_xamlIsland.Content(m_calendarDatePicker);
+  }
+
+  void UnmountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childView,
+      uint32_t index) noexcept {
+    // Unmount the CalendarDatePicker from the XamlIsland
+    m_xamlIsland.Content(nullptr);
   }
 
   void RegisterEvents() {
@@ -117,7 +131,7 @@ struct DateTimePickerComponentView : public winrt::implements<DateTimePickerComp
 
 private:
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
-  winrt::Microsoft::UI::Xaml::Controls::CalendarDatePicker m_calendarDatePicker{nullptr};
+  winrt::Windows::UI::Xaml::Controls::CalendarDatePicker m_calendarDatePicker{nullptr};
   int64_t m_timeZoneOffsetInSeconds = 0;
   bool m_updating = false;
 
@@ -145,12 +159,27 @@ void RegisterDateTimePickerComponentView(winrt::Microsoft::ReactNative::IReactPa
       winrt::DateTimePicker::DateTimePickerComponentView>(
       packageBuilder,
       [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder &builder) {
+        builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
         builder.SetContentIslandComponentViewInitializer(
             [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
               auto userData = winrt::make_self<winrt::DateTimePicker::DateTimePickerComponentView>();
               userData->InitializeContentIsland(islandView);
               islandView.UserData(*userData);
             });
+
+        builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                                     const winrt::Microsoft::ReactNative::ComponentView &childView,
+                                                     uint32_t index) noexcept {
+          auto userData = view.UserData().as<winrt::DateTimePicker::DateTimePickerComponentView>();
+          userData->MountChildComponentView(childView, index);
+        });
+
+        builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                                       const winrt::Microsoft::ReactNative::ComponentView &childView,
+                                                       uint32_t index) noexcept {
+          auto userData = view.UserData().as<winrt::DateTimePicker::DateTimePickerComponentView>();
+          userData->UnmountChildComponentView(childView, index);
+        });
       });
 }
 

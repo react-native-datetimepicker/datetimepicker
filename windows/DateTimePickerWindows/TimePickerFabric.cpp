@@ -19,14 +19,28 @@ namespace winrt::DateTimePicker {
 struct TimePickerComponentView : public winrt::implements<TimePickerComponentView, winrt::IInspectable> {
   void InitializeContentIsland(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-    winrt::Microsoft::ReactNative::Xaml::implementation::XamlApplication::EnsureCreated();
-
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_timePicker = winrt::Microsoft::UI::Xaml::Controls::TimePicker{};
-    m_xamlIsland.Content(m_timePicker);
     islandView.Connect(m_xamlIsland.ContentIsland());
 
     RegisterEvents();
+    
+    // Mount the TimePicker immediately so it's visible
+    m_xamlIsland.Content(m_timePicker);
+  }
+
+  void MountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childView,
+      uint32_t index) noexcept {
+    // Mount the TimePicker into the XamlIsland
+    m_xamlIsland.Content(m_timePicker);
+  }
+
+  void UnmountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childView,
+      uint32_t index) noexcept {
+    // Unmount the TimePicker from the XamlIsland
+    m_xamlIsland.Content(nullptr);
   }
 
   void RegisterEvents() {
@@ -100,7 +114,7 @@ struct TimePickerComponentView : public winrt::implements<TimePickerComponentVie
 
 private:
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
-  winrt::Microsoft::UI::Xaml::Controls::TimePicker m_timePicker{nullptr};
+  winrt::Windows::UI::Xaml::Controls::TimePicker m_timePicker{nullptr};
   bool m_updating = false;
   winrt::Microsoft::ReactNative::Composition::ViewComponentView::EventEmitterDelegate m_eventEmitter;
 };
@@ -111,6 +125,7 @@ void RegisterTimePickerComponentView(winrt::Microsoft::ReactNative::IReactPackag
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
       L"RNTimePickerWindows",
       [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+        builder.XamlSupport(true);
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         compBuilder.SetContentIslandComponentViewInitializer(
@@ -134,6 +149,20 @@ void RegisterTimePickerComponentView(winrt::Microsoft::ReactNative::IReactPackag
                                                     const winrt::Microsoft::ReactNative::Composition::ViewComponentView::EventEmitterDelegate &eventEmitter) noexcept {
           auto userData = view.UserData().as<winrt::DateTimePicker::TimePickerComponentView>();
           userData->SetEventEmitter(eventEmitter);
+        });
+
+        compBuilder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                                         const winrt::Microsoft::ReactNative::ComponentView &childView,
+                                                         uint32_t index) noexcept {
+          auto userData = view.UserData().as<winrt::DateTimePicker::TimePickerComponentView>();
+          userData->MountChildComponentView(childView, index);
+        });
+
+        compBuilder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                                           const winrt::Microsoft::ReactNative::ComponentView &childView,
+                                                           uint32_t index) noexcept {
+          auto userData = view.UserData().as<winrt::DateTimePicker::TimePickerComponentView>();
+          userData->UnmountChildComponentView(childView, index);
         });
       });
 }

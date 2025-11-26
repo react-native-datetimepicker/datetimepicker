@@ -131,7 +131,7 @@ struct DateTimePickerComponentView : public winrt::implements<DateTimePickerComp
 
 private:
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
-  winrt::Windows::UI::Xaml::Controls::CalendarDatePicker m_calendarDatePicker{nullptr};
+  winrt::Microsoft::UI::Xaml::Controls::CalendarDatePicker m_calendarDatePicker{nullptr};
   int64_t m_timeZoneOffsetInSeconds = 0;
   bool m_updating = false;
 

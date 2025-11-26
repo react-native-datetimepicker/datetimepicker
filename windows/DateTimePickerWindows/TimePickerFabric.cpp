@@ -114,7 +114,7 @@ struct TimePickerComponentView : public winrt::implements<TimePickerComponentVie
 
 private:
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
-  winrt::Windows::UI::Xaml::Controls::TimePicker m_timePicker{nullptr};
+  winrt::Microsoft::UI::Xaml::Controls::TimePicker m_timePicker{nullptr};
   bool m_updating = false;
   winrt::Microsoft::ReactNative::Composition::ViewComponentView::EventEmitterDelegate m_eventEmitter;
 };

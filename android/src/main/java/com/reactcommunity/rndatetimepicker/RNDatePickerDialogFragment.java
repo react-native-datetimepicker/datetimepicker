@@ -103,11 +103,10 @@ public class RNDatePickerDialogFragment extends DialogFragment {
       if (activityContext != null) {
         RNDatePickerDisplay display = getDisplayDate(args);
         boolean needsColorOverride = display == RNDatePickerDisplay.SPINNER;
-        boolean canOpenYearDialog = display == RNDatePickerDisplay.DEFAULT;
-        boolean showYearPickerFirst = args.getBoolean(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST);
+        boolean canOpenYearDialog = display == RNDatePickerDisplay.DEFAULT && args.getBoolean(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST);
         dialog.setOnShowListener(
           combine(
-            openYearDialog(dialog, canOpenYearDialog, showYearPickerFirst),
+            openYearDialog(dialog, canOpenYearDialog),
             setButtonTextColor(activityContext, dialog, args, needsColorOverride)
           )
         );

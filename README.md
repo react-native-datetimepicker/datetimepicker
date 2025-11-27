@@ -85,7 +85,7 @@ React Native date & time picker component for iOS, Android and Windows (please n
     - [`initialInputMode` (`optional`, `Android only`)](#initialinputmode-optional-android-only)
     - [`title` (`optional`, `Android only`)](#title-optional-android-only)
     - [`fullscreen` (`optional`, `Android only`)](#fullscreen-optional-android-only)
-    - [`showYearPickerFirst` (`optional`, `Android only`)](#showyearpickerfirst-optional-android-only)
+    - [`startOnYearSelection` (`optional`, `Android only`)](#startOnYearSelection-optional-android-only)
     - [`onChange` (`optional`)](#onchange-optional)
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
@@ -535,12 +535,12 @@ List of possible values:
 <RNDateTimePicker fullscreen={true} />
 ```
 
-#### `showYearPickerFirst` (`optional`, `Android only`)
+#### `startOnYearSelection` (`optional`, `Android only`)
 
 If true, the date picker will open with the year selector first.
 
 ```js
-<RNDateTimePicker showYearPickerFirst={true} />
+<RNDateTimePicker startOnYearSelection={true} />
 ```
 
 #### `positiveButton` (`optional`, `Android only`)

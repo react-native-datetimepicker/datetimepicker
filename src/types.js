@@ -223,7 +223,7 @@ export type AndroidNativeProps = $ReadOnly<{|
    *
    * Only supported for default pickers.
    */
-  showYearPickerFirst?: boolean,
+  startOnYearSelection?: boolean,
 
   /**
    * The interval at which minutes can be selected.

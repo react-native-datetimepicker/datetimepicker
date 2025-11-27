@@ -115,8 +115,8 @@ class RNMaterialDatePicker(
   }
 
   private fun setYearPickerFirst() {
-    val showYearPickerFirst = args.getBoolean(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST)
-    if (!showYearPickerFirst) return
+    val startOnYearSelection = args.getBoolean(RNConstants.ARG_START_ON_YEAR_SELECTION)
+    if (!startOnYearSelection) return
     val initialDate = RNDate(args)
     val activity = reactContext.currentActivity as? AppCompatActivity
     activity?.let { lifecycleOwner ->

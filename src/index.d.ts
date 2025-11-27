@@ -206,7 +206,7 @@ export type AndroidNativeProps = Readonly<
       /**
        * Show the year picker first when opening the calendar dialog.
        */
-      showYearPickerFirst?: boolean;
+      startOnYearSelection?: boolean;
     }
 >;
 

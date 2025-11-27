@@ -273,8 +273,8 @@ public class Common {
       // Android DatePicker uses 1-indexed values, SUNDAY being 1 and SATURDAY being 7, so the +1 is necessary in this case
       args.putInt(RNConstants.FIRST_DAY_OF_WEEK, options.getInt(RNConstants.FIRST_DAY_OF_WEEK)+1);
     }
-    if (options.hasKey(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST) && !options.isNull(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST)) {
-      args.putBoolean(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST, options.getBoolean(RNConstants.ARG_SHOW_YEAR_PICKER_FIRST));
+    if (options.hasKey(RNConstants.ARG_START_ON_YEAR_SELECTION) && !options.isNull(RNConstants.ARG_START_ON_YEAR_SELECTION)) {
+      args.putBoolean(RNConstants.ARG_START_ON_YEAR_SELECTION, options.getBoolean(RNConstants.ARG_START_ON_YEAR_SELECTION));
     }
     return args;
   }

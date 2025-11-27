@@ -37,6 +37,7 @@ export default function RNDateTimePickerAndroid(
     initialInputMode,
     design,
     fullscreen,
+    startOnYearSelection,
   } = props;
   const valueTimestamp = value.getTime();
 
@@ -72,6 +73,7 @@ export default function RNDateTimePickerAndroid(
         initialInputMode,
         design,
         fullscreen,
+        startOnYearSelection,
       };
       DateTimePickerAndroid.open(params);
     },

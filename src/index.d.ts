@@ -203,6 +203,10 @@ export type AndroidNativeProps = Readonly<
        * Use Material 3 pickers or the default ones
        */
       design?: Design;
+      /**
+       * Show the year picker first when opening the calendar dialog.
+       */
+      startOnYearSelection?: boolean;
     }
 >;
 

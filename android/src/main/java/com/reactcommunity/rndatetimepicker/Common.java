@@ -1,13 +1,16 @@
 package com.reactcommunity.rndatetimepicker;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
@@ -91,6 +94,31 @@ public class Common {
       setTextColor(neutralButton, NEUTRAL, args, needsColorOverride, textColorPrimary);
     };
 	}
+
+  @NonNull
+  public static DialogInterface.OnShowListener openYearDialog(final AlertDialog dialog, final boolean canOpenYearDialog) {
+    return dialogInterface -> {
+      if (canOpenYearDialog && dialog instanceof DatePickerDialog datePickerDialog) {
+        DatePicker datePicker = datePickerDialog.getDatePicker();
+
+        int yearId = Resources.getSystem().getIdentifier("date_picker_header_year", "id", "android");
+        if (yearId == 0) return;
+        View yearView = datePicker.findViewById(yearId);
+        if (yearView != null) {
+          yearView.performClick();
+        }
+      }
+    };
+  }
+
+  @NonNull
+  public static DialogInterface.OnShowListener combine(@NonNull DialogInterface.OnShowListener... listeners) {
+    return dialogInterface -> {
+      for (DialogInterface.OnShowListener l : listeners) {
+        if (l != null) l.onShow(dialogInterface);
+      }
+    };
+  }
 
   private static void setTextColor(Button button, String buttonKey, final Bundle args, final boolean needsColorOverride, int textColorPrimary) {
     if (button == null) return;
@@ -244,6 +272,9 @@ public class Common {
       // FIRST_DAY_OF_WEEK is 0-indexed, since it uses the same constants DAY_OF_WEEK used in the Windows implementation
       // Android DatePicker uses 1-indexed values, SUNDAY being 1 and SATURDAY being 7, so the +1 is necessary in this case
       args.putInt(RNConstants.FIRST_DAY_OF_WEEK, options.getInt(RNConstants.FIRST_DAY_OF_WEEK)+1);
+    }
+    if (options.hasKey(RNConstants.ARG_START_ON_YEAR_SELECTION) && !options.isNull(RNConstants.ARG_START_ON_YEAR_SELECTION)) {
+      args.putBoolean(RNConstants.ARG_START_ON_YEAR_SELECTION, options.getBoolean(RNConstants.ARG_START_ON_YEAR_SELECTION));
     }
     return args;
   }

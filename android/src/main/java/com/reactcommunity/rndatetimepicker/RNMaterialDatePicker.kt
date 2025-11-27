@@ -3,6 +3,10 @@ package com.reactcommunity.rndatetimepicker
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -42,6 +46,8 @@ class RNMaterialDatePicker(
     setFullscreen()
 
     datePicker = builder.build()
+
+    setYearPickerFirst()
   }
 
   private fun setInitialDate() {
@@ -106,6 +112,45 @@ class RNMaterialDatePicker(
       val themeId = obtainMaterialThemeOverlayId(R.attr.materialCalendarTheme)
       builder.setTheme(themeId)
     }
+  }
+
+  private fun setYearPickerFirst() {
+    val startOnYearSelection = args.getBoolean(RNConstants.ARG_START_ON_YEAR_SELECTION)
+    if (!startOnYearSelection) return
+    val initialDate = RNDate(args)
+    val activity = reactContext.currentActivity as? AppCompatActivity
+    activity?.let { lifecycleOwner ->
+        val picker = datePicker ?: return@let
+        val liveData = picker.viewLifecycleOwnerLiveData
+        liveData.observe(lifecycleOwner) { owner ->
+          if (owner == null) return@observe
+          picker.requireDialog().window?.decorView?.post {
+            val root = picker.dialog?.window?.decorView ?: return@post
+
+            val yearText = initialDate.year().toString()
+            val hit = findViewBy(root) { v ->
+              v is TextView && v.isShown && v.isClickable && v.text?.toString()
+                ?.contains(yearText) == true
+            }
+            if (hit != null) {
+              hit.performClick()
+              return@post
+            }
+            liveData.removeObservers(lifecycleOwner)
+          }
+        }
+    }
+  }
+
+  private fun findViewBy(root: View, pred: (View) -> Boolean): View? {
+    if (pred(root)) return root
+
+    if (root is ViewGroup) {
+      for (i in 0 until root.childCount) {
+        findViewBy(root.getChildAt(i), pred)?.let { return it }
+      }
+    }
+    return null
   }
 
   private fun obtainMaterialThemeOverlayId(resId: Int): Int {

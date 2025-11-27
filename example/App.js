@@ -107,6 +107,7 @@ export const App = () => {
   const [neutralButtonLabel, setNeutralButtonLabel] = useState(undefined);
   const [disabled, setDisabled] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [startOnYearSelection, setStartOnYearSelection] = useState(false);
   const [minimumDate, setMinimumDate] = useState();
   const [maximumDate, setMaximumDate] = useState();
   const [design, setDesign] = useState(DESIGNS[0]);
@@ -389,6 +390,14 @@ export const App = () => {
           </View>
           <View style={styles.header}>
             <ThemedText style={styles.textLabel}>
+              startOnYearSelection (android only)
+            </ThemedText>
+            <View style={{flex: 1, alignItems: 'flex-start'}}>
+              <Switch value={startOnYearSelection} onValueChange={setStartOnYearSelection} />
+            </View>
+          </View>
+          <View style={styles.header}>
+            <ThemedText style={styles.textLabel}>
               neutralButtonLabel (android only)
             </ThemedText>
             <ThemedTextInput
@@ -520,6 +529,7 @@ export const App = () => {
                 initialInputMode={isMaterialDesign ? inputMode : undefined}
                 design={design}
                 fullscreen={isMaterialDesign ? isFullscreen : undefined}
+                startOnYearSelection={startOnYearSelection}
               />
             )}
           </View>

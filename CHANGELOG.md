@@ -4,6 +4,13 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [8.6.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.5.1...v8.6.0) (2026-01-06)
+
+
+### Features
+
+* **android:** date picker startOnYearSelection ([#1004](https://github.com/react-native-datetimepicker/datetimepicker/issues/1004)) ([8dc498d](https://github.com/react-native-datetimepicker/datetimepicker/commit/8dc498d4f4be0c340496fb1757a683e1eccf23ac))
+
 ## [8.5.1](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.5.0...v8.5.1) (2025-11-25)
 
 

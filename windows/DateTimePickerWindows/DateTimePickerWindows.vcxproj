@@ -5,9 +5,10 @@
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
-    <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
+    <!-- Only generate WinMD in XAML/Paper mode, not in Fabric mode -->
+    <CppWinRTGenerateWindowsMetadata Condition="'$(UseFabric)'!='true'">true</CppWinRTGenerateWindowsMetadata>
+    <CppWinRTGenerateWindowsMetadata Condition="'$(UseFabric)'=='true'">false</CppWinRTGenerateWindowsMetadata>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <RnwNewArch>true</RnwNewArch>
     <ProjectGuid>{0986a4db-8e72-4bb7-ae32-7d9df1758a9d}</ProjectGuid>
     <ProjectName>DateTimePicker</ProjectName>
     <RootNamespace>DateTimePicker</RootNamespace>
@@ -74,14 +75,13 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
-    <Import Project="..\..\..\..\react-native-windows\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" Condition="Exists('..\..\..\..\react-native-windows\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems')" />
-    <Import Project="..\..\node_modules\react-native-windows\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" Condition="Exists('..\..\node_modules\react-native-windows\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems')" />
+    <!-- Removed: Using NuGet packages instead of shared items to avoid JSI header conflicts -->
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppLib.props" />
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppLib.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -97,11 +97,15 @@
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
       <PreprocessorDefinitions>_WINRT_DLL;WIN32_LEAN_AND_MEAN;WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">RNW_NEW_ARCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <!-- Only generate WinMD in XAML/Paper mode, not in Fabric mode -->
+      <GenerateWindowsMetadata Condition="'$(UseFabric)'!='true'">true</GenerateWindowsMetadata>
+      <GenerateWindowsMetadata Condition="'$(UseFabric)'=='true'">false</GenerateWindowsMetadata>
       <ModuleDefinitionFile>DateTimePickerWindows.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
@@ -120,54 +124,51 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DateTimePickerViewManager.h" />
+    <!-- Common headers -->
     <ClInclude Include="resource.h" />
-    <ClInclude Include="TimePickerViewManager.h" />
-    <ClInclude Include="DateTimePickerFabric.h" />
-    <ClInclude Include="TimePickerFabric.h" />
-    <ClInclude Include="DatePickerModuleWindows.h" />
-    <ClInclude Include="TimePickerModuleWindows.h" />
     <ClInclude Include="DateTimeHelpers.h" />
-    <ClInclude Include="DatePickerComponent.h" />
-    <ClInclude Include="TimePickerComponent.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="ReactPackageProvider.h">
-      <DependentUpon>ReactPackageProvider.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="DateTimePickerView.h">
+    <ClInclude Include="ReactPackageProvider.h" />
+    <!-- XAML/Paper headers (excluded in Fabric) -->
+    <ClInclude Include="DateTimePickerViewManager.h" Condition="'$(UseFabric)'!='true'" />
+    <ClInclude Include="TimePickerViewManager.h" Condition="'$(UseFabric)'!='true'" />
+    <ClInclude Include="DateTimePickerView.h" Condition="'$(UseFabric)'!='true'">
       <DependentUpon>DateTimePickerView.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="TimePickerView.h">
+    <ClInclude Include="TimePickerView.h" Condition="'$(UseFabric)'!='true'">
       <DependentUpon>DateTimePickerView.idl</DependentUpon>
     </ClInclude>
+    <!-- Fabric headers (only in Fabric) -->
+    <ClInclude Include="DateTimePickerFabric.h" Condition="'$(UseFabric)'=='true'" />
+    <ClInclude Include="TimePickerFabric.h" Condition="'$(UseFabric)'=='true'" />
+    <ClInclude Include="codegen\react\components\DateTimePicker\DateTimePicker.g.h" Condition="'$(UseFabric)'=='true'" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DateTimePickerViewManager.cpp" />
-    <ClCompile Include="TimePickerViewManager.cpp" />
-    <ClCompile Include="DateTimePickerFabric.cpp" />
-    <ClCompile Include="TimePickerFabric.cpp" />
-    <ClCompile Include="DatePickerModuleWindows.cpp" />
-    <ClCompile Include="TimePickerModuleWindows.cpp" />
+    <!-- Common source files -->
     <ClCompile Include="DateTimeHelpers.cpp" />
-    <ClCompile Include="DatePickerComponent.cpp" />
-    <ClCompile Include="TimePickerComponent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="DateTimePickerView.cpp">
+    <!-- module.g.cpp is generated from IDL, only needed for XAML/Paper -->
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" Condition="'$(UseFabric)'!='true'" />
+    <ClCompile Include="ReactPackageProvider.cpp" />
+    <!-- XAML/Paper source files (excluded in Fabric) -->
+    <ClCompile Include="DateTimePickerViewManager.cpp" Condition="'$(UseFabric)'!='true'" />
+    <ClCompile Include="TimePickerViewManager.cpp" Condition="'$(UseFabric)'!='true'" />
+    <ClCompile Include="DateTimePickerView.cpp" Condition="'$(UseFabric)'!='true'">
       <DependentUpon>DateTimePickerView.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="TimePickerView.cpp">
+    <ClCompile Include="TimePickerView.cpp" Condition="'$(UseFabric)'!='true'">
       <DependentUpon>DateTimePickerView.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="ReactPackageProvider.cpp">
-      <DependentUpon>ReactPackageProvider.idl</DependentUpon>
-    </ClCompile>
+    <!-- Fabric source files (only in Fabric) -->
+    <ClCompile Include="DateTimePickerFabric.cpp" Condition="'$(UseFabric)'=='true'" />
+    <ClCompile Include="TimePickerFabric.cpp" Condition="'$(UseFabric)'=='true'" />
+    <ClCompile Include="FabricModule.cpp" Condition="'$(UseFabric)'=='true'" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="DateTimePickerView.idl" />
-    <Midl Include="ReactPackageProvider.idl" />
+    <!-- IDL files (only needed for XAML/Paper) -->
+    <Midl Include="DateTimePickerView.idl" Condition="'$(UseFabric)'!='true'" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DateTimePickerWindows.def" />
@@ -180,7 +181,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\react-native-windows\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" Condition="Exists('..\..\..\..\react-native-windows\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj')">
+    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
       <Private>false</Private>
     </ProjectReference>
@@ -190,14 +191,25 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ReactNativeWindowsTargets">
-    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppLib.targets" />
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppLib.targets" />
   </ImportGroup>
+  
+  <!-- In Fabric mode, override CppWinRTGetResolvedWinMD to not return a WinMD path since we don't generate one -->
+  <Target Name="CppWinRTGetResolvedWinMD" 
+          Condition="'$(UseFabric)'=='true'"
+          Returns="@(WinMDFullPath)">
+    <!-- Return nothing - no WinMD is generated in Fabric mode -->
+    <ItemGroup>
+      <WinMDFullPath Remove="@(WinMDFullPath)" />
+    </ItemGroup>
+  </Target>
+  
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references targets in your node_modules\react-native-windows folder. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppLib.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppLib.props'))" />
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppLib.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppLib.targets'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppLib.props')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppLib.props'))" />
+    <Error Condition="!Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppLib.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.CppLib.targets'))" />
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.200316.3\build\native\Microsoft.Windows.CppWinRT.targets')" />

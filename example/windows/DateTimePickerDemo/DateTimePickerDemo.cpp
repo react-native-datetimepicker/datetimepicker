@@ -8,6 +8,11 @@
 
 #include "NativeModules.h"
 
+// Windows App SDK Bootstrap
+#include <MddBootstrap.h>
+#include <WindowsAppSDK-VersionInfo.h>
+#pragma comment(lib, "Microsoft.WindowsAppRuntime.Bootstrap.lib")
+
 // A PackageProvider containing any turbo modules you define within this app project
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
@@ -19,6 +24,20 @@ struct CompReactPackageProvider
 
 // The entry point of the Win32 application
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+  // Initialize the Windows App SDK for non-packaged apps
+  const UINT32 majorMinorVersion = WINDOWSAPPSDK_RELEASE_MAJORMINOR;
+  const PCWSTR versionTag = WINDOWSAPPSDK_RELEASE_VERSION_TAG_W;
+  PACKAGE_VERSION minVersion{};
+  minVersion.Version = WINDOWSAPPSDK_RUNTIME_VERSION_UINT64;
+  
+  HRESULT hr = MddBootstrapInitialize(majorMinorVersion, versionTag, minVersion);
+  if (FAILED(hr)) {
+    WCHAR msg[256];
+    swprintf_s(msg, L"MddBootstrapInitialize failed with HRESULT: 0x%08X", hr);
+    MessageBoxW(nullptr, msg, L"Bootstrap Error", MB_OK | MB_ICONERROR);
+    return 1;
+  }
+
   // Initialize WinRT
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
@@ -30,8 +49,14 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
   PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
-  // Create a ReactNativeWin32App with the ReactNativeAppBuilder
-  auto reactNativeWin32App{winrt::Microsoft::ReactNative::ReactNativeAppBuilder().Build()};
+  // DEBUG: Check we got past init
+  OutputDebugStringW(L"DEBUG: About to create ReactNativeAppBuilder\n");
+  
+  try {
+    // Create a ReactNativeWin32App with the ReactNativeAppBuilder
+    winrt::Microsoft::ReactNative::ReactNativeAppBuilder builder{};
+    OutputDebugStringW(L"DEBUG: Builder created, calling Build()\n");
+    auto reactNativeWin32App{builder.Build()};
 
   // Configure the initial InstanceSettings for the app's ReactNativeHost
   auto settings{reactNativeWin32App.ReactNativeHost().InstanceSettings()};
@@ -87,4 +112,16 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Start the app
   reactNativeWin32App.Start();
+  
+  } catch (const winrt::hresult_error& e) {
+    WCHAR msg[1024];
+    swprintf_s(msg, L"WinRT error: 0x%08X\n%s", e.code().value, e.message().c_str());
+    MessageBoxW(nullptr, msg, L"Error", MB_OK | MB_ICONERROR);
+    return 1;
+  } catch (...) {
+    MessageBoxW(nullptr, L"Unknown exception occurred", L"Error", MB_OK | MB_ICONERROR);
+    return 1;
+  }
+  
+  return 0;
 }

@@ -3,21 +3,15 @@
 
 #pragma once
 
-#include "ReactPackageProvider.g.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace winrt::DateTimePicker::implementation
+namespace DateTimePicker::implementation
 {
-    struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
+    struct ReactPackageProvider : winrt::implements<ReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider>
     {
-        ReactPackageProvider() = default;
-
+    public:
         void CreatePackage(IReactPackageBuilder const& packageBuilder) noexcept;
     };
-}  
-
-namespace winrt::DateTimePicker::factory_implementation
-{
-    struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
 }

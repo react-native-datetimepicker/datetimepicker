@@ -146,7 +146,6 @@ void RegisterDateTimePickerComponentView(winrt::Microsoft::ReactNative::IReactPa
       winrt::DateTimePicker::DateTimePickerComponentView>(
       packageBuilder,
       [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder &builder) {
-        builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().XamlSupport(true);
         builder.SetContentIslandComponentViewInitializer(
             [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
               auto userData = winrt::make_self<winrt::DateTimePicker::DateTimePickerComponentView>();

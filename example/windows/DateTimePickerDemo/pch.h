@@ -13,5 +13,4 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Composition.h>
-
-#include <wil/cppwinrt.h>
+#include <winrt/Microsoft.UI.Windowing.h>

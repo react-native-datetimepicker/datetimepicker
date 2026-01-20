@@ -11,8 +11,6 @@
 
 #if defined(RNW_NEW_ARCH)
 
-#include <winrt/Microsoft.ReactNative.Xaml.h>
-
 namespace winrt::DateTimePicker {
 
 // TimePickerComponentView method implementations
@@ -40,11 +38,15 @@ void TimePickerComponentView::RegisterEvents() {
       auto hour = static_cast<int32_t>(totalMinutes / 60);
       auto minute = static_cast<int32_t>(totalMinutes % 60);
       
-      winrt::Microsoft::ReactNative::JSValueObject eventData;
-      eventData["hour"] = hour;
-      eventData["minute"] = minute;
-      
-      m_eventEmitter(L"topChange", std::move(eventData));
+      // Emit the change event
+      m_eventEmitter.DispatchEvent(L"change", [hour, minute](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
+        writer.WriteObjectBegin();
+        writer.WritePropertyName(L"hour");
+        writer.WriteInt64(hour);
+        writer.WritePropertyName(L"minute");
+        writer.WriteInt64(minute);
+        writer.WriteObjectEnd();
+      });
     }
   });
 }
@@ -65,10 +67,12 @@ void WithEventSuspended(TRevoker& revoker, TSetup setup, TAction action) {
 
 void TimePickerComponentView::UpdateProps(
     const winrt::Microsoft::ReactNative::ComponentView &view,
-    const winrt::Microsoft::ReactNative::IJSValueReader &propsReader) noexcept {
+    const winrt::com_ptr<TimePickerProps> &newProps,
+    const winrt::com_ptr<TimePickerProps> &oldProps) noexcept {
   
-  const winrt::Microsoft::ReactNative::JSValueObject props =
-      winrt::Microsoft::ReactNative::JSValueObject::ReadFrom(propsReader);
+  if (!newProps) {
+    return;
+  }
 
   // Suspend the TimeChanged event while updating properties programmatically
   // to avoid triggering onChange events for prop changes from JavaScript
@@ -82,33 +86,34 @@ void TimePickerComponentView::UpdateProps(
           auto hour = static_cast<int32_t>(totalMinutes / 60);
           auto minute = static_cast<int32_t>(totalMinutes % 60);
           
-          winrt::Microsoft::ReactNative::JSValueObject eventData;
-          eventData["hour"] = hour;
-          eventData["minute"] = minute;
-          
-          m_eventEmitter(L"topChange", std::move(eventData));
+          m_eventEmitter.DispatchEvent(L"change", [hour, minute](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
+            writer.WriteObjectBegin();
+            writer.WritePropertyName(L"hour");
+            writer.WriteInt64(hour);
+            writer.WritePropertyName(L"minute");
+            writer.WriteInt64(minute);
+            writer.WriteObjectEnd();
+          });
         }
       });
     },
-    [this, &props]() {
+    [this, &newProps]() {
       // Update clock format (12-hour vs 24-hour)
-      if (props.find("is24Hour") != props.end()) {
-        const bool is24Hour = props["is24Hour"].AsBoolean();
+      if (newProps->is24Hour.has_value()) {
         m_timePicker.ClockIdentifier(
-            is24Hour 
+            newProps->is24Hour.value() 
                 ? winrt::to_hstring("24HourClock")
                 : winrt::to_hstring("12HourClock"));
       }
 
       // Update minute increment
-      if (props.find("minuteInterval") != props.end()) {
-        const int32_t minuteInterval = static_cast<int32_t>(props["minuteInterval"].AsInt64());
-        m_timePicker.MinuteIncrement(minuteInterval);
+      if (newProps->minuteInterval.has_value()) {
+        m_timePicker.MinuteIncrement(newProps->minuteInterval.value());
       }
 
       // Update selected time
-      if (props.find("selectedTime") != props.end()) {
-        const int64_t timeInMilliseconds = props["selectedTime"].AsInt64();
+      if (newProps->selectedTime.has_value()) {
+        const int64_t timeInMilliseconds = newProps->selectedTime.value();
         const auto timeInSeconds = timeInMilliseconds / 1000;
         const auto hours = (timeInSeconds / 3600) % 24;
         const auto minutes = (timeInSeconds / 60) % 60;
@@ -123,8 +128,8 @@ void TimePickerComponentView::UpdateProps(
   );
 }
 
-void TimePickerComponentView::SetEventEmitter(
-    winrt::Microsoft::ReactNative::Composition::ViewComponentView::EventEmitterDelegate const &eventEmitter) noexcept {
+void TimePickerComponentView::UpdateEventEmitter(
+    const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
   m_eventEmitter = eventEmitter;
 }
 
@@ -134,8 +139,12 @@ void RegisterTimePickerComponentView(winrt::Microsoft::ReactNative::IReactPackag
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
       L"RNTimePickerWindows",
       [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
-        builder.XamlSupport(true);
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
+
+        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
+                              const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
+            return winrt::make<winrt::DateTimePicker::TimePickerProps>(props, cloneFrom); 
+        });
 
         compBuilder.SetContentIslandComponentViewInitializer(
             [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
@@ -148,16 +157,15 @@ void RegisterTimePickerComponentView(winrt::Microsoft::ReactNative::IReactPackag
                                          const winrt::Microsoft::ReactNative::IComponentProps &newProps,
                                          const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
           auto userData = view.UserData().as<winrt::DateTimePicker::TimePickerComponentView>();
-          auto reader = newProps.as<winrt::Microsoft::ReactNative::IComponentProps>().try_as<winrt::Microsoft::ReactNative::IJSValueReader>();
-          if (reader) {
-            userData->UpdateProps(view, reader);
-          }
+          userData->UpdateProps(view, 
+              newProps ? newProps.as<winrt::DateTimePicker::TimePickerProps>() : nullptr, 
+              oldProps ? oldProps.as<winrt::DateTimePicker::TimePickerProps>() : nullptr);
         });
 
-        compBuilder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
-                                                    const winrt::Microsoft::ReactNative::Composition::ViewComponentView::EventEmitterDelegate &eventEmitter) noexcept {
+        builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                                const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
           auto userData = view.UserData().as<winrt::DateTimePicker::TimePickerComponentView>();
-          userData->SetEventEmitter(eventEmitter);
+          userData->UpdateEventEmitter(eventEmitter);
         });
       });
 }

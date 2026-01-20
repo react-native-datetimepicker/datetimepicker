@@ -16,7 +16,11 @@ namespace winrt {
 
 namespace winrt::DateTimePicker::implementation {
 
-    TimePickerView::TimePickerView(winrt::IReactContext const& reactContext) : m_reactContext(reactContext) {
+    TimePickerView::TimePickerView() {
+    }
+
+    void TimePickerView::SetReactContext(winrt::IReactContext const& reactContext) {
+        m_reactContext = reactContext;
         RegisterEvents();
     }
 

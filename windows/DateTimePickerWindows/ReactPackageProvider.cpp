@@ -3,32 +3,26 @@
 
 #include "pch.h"
 #include "ReactPackageProvider.h"
-#include "ReactPackageProvider.g.cpp"
 
-#include "DateTimePickerViewManager.h"
-#include "TimePickerViewManager.h"
-
-#ifdef RNW_NEW_ARCH
+#if defined(RNW_NEW_ARCH)
 #include "DateTimePickerFabric.h"
 #include "TimePickerFabric.h"
-#include "DatePickerModuleWindows.h"
-#include "TimePickerModuleWindows.h"
+#else
+#include "DateTimePickerViewManager.h"
+#include "TimePickerViewManager.h"
 #endif
 
 using namespace winrt::Microsoft::ReactNative;
 
-namespace winrt::DateTimePicker::implementation {
+namespace DateTimePicker::implementation {
 
   void ReactPackageProvider::CreatePackage(IReactPackageBuilder const& packageBuilder) noexcept {
-#ifdef RNW_NEW_ARCH
-      // Register Fabric (New Architecture) components
+#if defined(RNW_NEW_ARCH)
+      // Register Fabric component views for new architecture
       RegisterDateTimePickerComponentView(packageBuilder);
       RegisterTimePickerComponentView(packageBuilder);
-      
-      // Register TurboModules
-      AddAttributedModules(packageBuilder, true);
 #else
-      // Register legacy ViewManagers (Old Architecture)
+      // Register XAML ViewManagers for old architecture
       packageBuilder.AddViewManager(L"DateTimePickerViewManager", []() { return winrt::make<DateTimePickerViewManager>(); });
       packageBuilder.AddViewManager(L"TimePickerViewManager", []() { return winrt::make<TimePickerViewManager>(); });
 #endif

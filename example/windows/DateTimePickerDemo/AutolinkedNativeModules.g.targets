@@ -5,6 +5,8 @@
     <!-- Projects from @react-native-community/datetimepicker -->
     <ProjectReference Include="$(ProjectDir)..\..\..\windows\DateTimePickerWindows\DateTimePickerWindows.vcxproj">
       <Project>{0986a4db-8e72-4bb7-ae32-7d9df1758a9d}</Project>
+      <!-- In Fabric mode, no WinMD is generated - tell CppWinRT not to look for it -->
+      <WinMDFile Condition="'$(UseFabric)'=='true'">false</WinMDFile>
     </ProjectReference>
   </ItemGroup>
 </Project>

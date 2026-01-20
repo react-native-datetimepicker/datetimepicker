@@ -1,10 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-
-// Check if we have an example windows project
-const exampleWindowsSln = path.join(__dirname, 'example', 'windows', 'DateTimePickerDemo.sln');
-const hasExampleWindows = fs.existsSync(exampleWindowsSln);
-
+// react-native.config.js
 module.exports = {
   dependency: {
     platforms: {
@@ -14,44 +8,15 @@ module.exports = {
         projects: [
           {
             projectFile: 'DateTimePickerWindows\\DateTimePickerWindows.vcxproj',
+            projectName: 'DateTimePicker',
+            projectLang: 'cpp',
+            projectGuid: '{0986A4DB-8E72-4BB7-AE32-7D9DF1758A9D}',
             directDependency: true,
+            cppHeaders: ['winrt/DateTimePicker.h'],
+            cppPackageProviders: ['DateTimePicker::ReactPackageProvider'],
           },
         ],
       },
     },
   },
-  dependencies: {
-    ...(hasExampleWindows
-      ? {
-        // Help rn-cli find and autolink this library
-        '@react-native-community/datetimepicker': {
-          root: __dirname,
-        },
-        'expo': {
-          // otherwise RN cli will try to autolink expo
-          platforms: {
-            ios: null,
-            android: null,
-          },
-        },
-      }
-      : undefined),
-  },
-  ...(hasExampleWindows ? {
-    project: {
-      android: {
-        sourceDir: path.join('example', 'android'),
-      },
-      ios: {
-        sourceDir: path.join('example', 'ios'),
-      },
-      windows: {
-        sourceDir: path.join('example', 'windows'),
-        solutionFile: 'DateTimePickerDemo.sln',
-        project: {
-          projectFile: path.join('DateTimePickerDemo', 'DateTimePickerDemo.vcxproj'),
-        },
-      },
-    },
-  } : undefined),
 };

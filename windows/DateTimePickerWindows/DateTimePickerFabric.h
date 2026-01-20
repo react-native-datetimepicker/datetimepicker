@@ -9,7 +9,6 @@
 
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Windows.Globalization.h>
-#include <winrt/Microsoft.ReactNative.Xaml.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 
 namespace winrt::DateTimePicker {

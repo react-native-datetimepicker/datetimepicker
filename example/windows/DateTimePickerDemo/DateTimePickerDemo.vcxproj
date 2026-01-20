@@ -7,6 +7,7 @@
     <MinimalCoreWin>true</MinimalCoreWin>
     <RnwNewArch>true</RnwNewArch>
     <DisableAutolink>true</DisableAutolink>
+    <RunAutolinkCheck>false</RunAutolinkCheck>
     <ProjectGuid>{120733fe-7210-414d-9b08-a117cb99ad15}</ProjectGuid>
     <ProjectName>DateTimePickerDemo</ProjectName>
     <Keyword>Win32Proj</Keyword>
@@ -81,11 +82,13 @@
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>
         $(MSBuildThisFileDirectory);
+        $(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\Microsoft.ReactNative\Generated Files;
+        $(SolutionDir)..\..\..\windows\DateTimePickerWindows;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>shell32.lib;user32.lib;windowsapp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shell32.lib;user32.lib;windowsapp.lib;$(SolutionDir)$(Platform)\$(Configuration)\DateTimePicker.lib;$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)\Microsoft.ReactNative\Microsoft.ReactNative.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
@@ -112,10 +115,12 @@
     <ClCompile Include="DateTimePickerDemo.cpp" />
     <ClCompile Include="ReactPackageProvider.cpp" />
     <ClCompile Include="AutolinkedNativeModules.g.cpp" />
+    <ClCompile Include="WinRTStubs.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <!-- module.g.cpp is only generated when there are IDL files, not needed for Fabric/Composition apps -->
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" Condition="'$(UseFabric)'!='true'" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DateTimePickerDemo.rc" />
@@ -129,6 +134,11 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <!-- Microsoft.ReactNative project reference for linking -->
+    <ProjectReference Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
+      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
+      <Name>Microsoft.ReactNative</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ReactNativeWindowsTargets">

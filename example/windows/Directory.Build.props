@@ -3,5 +3,7 @@
   <PropertyGroup>
     <!-- Enable New Architecture for all projects in this solution -->
     <RnwNewArch>true</RnwNewArch>
+    <!-- Enable Fabric to generate Composition APIs in Microsoft.ReactNative -->
+    <UseFabric>true</UseFabric>
   </PropertyGroup>
 </Project>

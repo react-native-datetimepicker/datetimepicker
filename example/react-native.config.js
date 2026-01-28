@@ -3,6 +3,15 @@
 const path = require('path');
 
 module.exports = {
+  // Disable autolinking for datetimepicker - the autolink files are already pre-configured
+  dependencies: {
+    '@react-native-community/datetimepicker': {
+      root: path.resolve(__dirname, '..'),
+      platforms: {
+        windows: null, // Disable autolink for this dependency on Windows
+      },
+    },
+  },
   // Project configuration for this example app
   project: {
     windows: {
@@ -14,12 +23,8 @@ module.exports = {
         projectLang: 'cpp',
         projectGuid: '{120733fe-7210-414d-9b08-a117cb99ad15}',
       },
-    },
-  },
-  // Dependencies configuration - point to the parent folder (the library)
-  dependencies: {
-    '@react-native-community/datetimepicker': {
-      root: path.resolve(__dirname, '..'),
+      // Skip deploy step - run the exe directly instead of deploying as packaged app
+      directDebugging: true,
     },
   },
 };

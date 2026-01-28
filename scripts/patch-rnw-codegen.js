@@ -10,7 +10,20 @@
 const fs = require('fs');
 const path = require('path');
 
-const codegenDir = path.join(__dirname, '..', 'node_modules', 'react-native-windows', 'codegen');
+// Support running from both root and example directory
+// When run via postinstall, process.cwd() is the package root
+const cwd = process.cwd();
+let codegenDir = path.join(cwd, 'node_modules', 'react-native-windows', 'codegen');
+
+// Fallback to __dirname-based path if cwd doesn't have react-native-windows
+if (!fs.existsSync(codegenDir)) {
+  codegenDir = path.join(__dirname, '..', 'node_modules', 'react-native-windows', 'codegen');
+}
+
+if (!fs.existsSync(codegenDir)) {
+  console.log('  react-native-windows codegen not found, skipping patch');
+  process.exit(0);
+}
 
 // Patch rnwcoreJSI.h
 const headerFile = path.join(codegenDir, 'rnwcoreJSI.h');

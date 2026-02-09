@@ -3,13 +3,13 @@
  * Windows-specific entry point with DateTimePicker
  */
 
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   AppRegistry,
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
+  Pressable,
   ScrollView,
   TextInput,
 } from 'react-native';
@@ -25,6 +25,19 @@ function DateTimePickerApp() {
   const [editingTime, setEditingTime] = useState(false);
   const [dateInput, setDateInput] = useState('');
   const [timeInput, setTimeInput] = useState('');
+
+  const dateInputRef = React.useRef('');
+  const timeInputRef = React.useRef('');
+
+  const onDateInputChange = useCallback((text) => {
+    dateInputRef.current = text;
+    setDateInput(text);
+  }, []);
+
+  const onTimeInputChange = useCallback((text) => {
+    timeInputRef.current = text;
+    setTimeInput(text);
+  }, []);
 
   const formatDate = (d) => {
     return d.toLocaleDateString('en-US', {
@@ -42,17 +55,34 @@ function DateTimePickerApp() {
     });
   };
 
-  const handleDateSubmit = () => {
-    const parsed = new Date(dateInput);
-    if (!isNaN(parsed.getTime())) {
+  const handleDateSubmit = useCallback(() => {
+    const input = dateInputRef.current;
+    if (!input) {
+      return;
+    }
+    // Manually parse MM/DD/YYYY since Hermes doesn't support new Date("MM/DD/YYYY")
+    const parts = input.split('/');
+    let parsed;
+    if (parts.length === 3) {
+      const [month, day, year] = parts.map(Number);
+      if (!isNaN(month) && !isNaN(day) && !isNaN(year)) {
+        parsed = new Date(year, month - 1, day);
+      }
+    }
+    if (parsed && !isNaN(parsed.getTime())) {
       setDate(parsed);
     }
     setEditingDate(false);
     setDateInput('');
-  };
+    dateInputRef.current = '';
+  }, []);
 
-  const handleTimeSubmit = () => {
-    const [hours, minutes] = timeInput.split(':').map(Number);
+  const handleTimeSubmit = useCallback(() => {
+    const input = timeInputRef.current;
+    if (!input) {
+      return;
+    }
+    const [hours, minutes] = input.split(':').map(Number);
     if (!isNaN(hours) && !isNaN(minutes)) {
       const newTime = new Date();
       newTime.setHours(hours, minutes, 0, 0);
@@ -60,7 +90,8 @@ function DateTimePickerApp() {
     }
     setEditingTime(false);
     setTimeInput('');
-  };
+    timeInputRef.current = '';
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -90,19 +121,18 @@ function DateTimePickerApp() {
                   style={styles.input}
                   placeholder="Enter date (MM/DD/YYYY)"
                   value={dateInput}
-                  onChangeText={setDateInput}
-                  onSubmitEditing={handleDateSubmit}
+                  onChangeText={onDateInputChange}
                 />
-                <TouchableOpacity style={styles.smallButton} onPress={handleDateSubmit}>
+                <Pressable style={styles.smallButton} onPress={handleDateSubmit}>
                   <Text style={styles.smallButtonText}>Set</Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
             ) : (
-              <TouchableOpacity
+              <Pressable
                 style={styles.button}
                 onPress={() => setEditingDate(true)}>
                 <Text style={styles.buttonText}>Change Date</Text>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
         </View>
@@ -120,19 +150,18 @@ function DateTimePickerApp() {
                   style={styles.input}
                   placeholder="Enter time (HH:MM)"
                   value={timeInput}
-                  onChangeText={setTimeInput}
-                  onSubmitEditing={handleTimeSubmit}
+                  onChangeText={onTimeInputChange}
                 />
-                <TouchableOpacity style={styles.smallButton} onPress={handleTimeSubmit}>
+                <Pressable style={styles.smallButton} onPress={handleTimeSubmit}>
                   <Text style={styles.smallButtonText}>Set</Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
             ) : (
-              <TouchableOpacity
+              <Pressable
                 style={styles.button}
                 onPress={() => setEditingTime(true)}>
                 <Text style={styles.buttonText}>Change Time</Text>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
         </View>
@@ -154,12 +183,12 @@ function DateTimePickerApp() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>⚡ Quick Select</Text>
           <View style={styles.quickButtons}>
-            <TouchableOpacity
+            <Pressable
               style={styles.quickButton}
               onPress={() => setDate(new Date())}>
               <Text style={styles.quickButtonText}>Today</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </Pressable>
+            <Pressable
               style={styles.quickButton}
               onPress={() => {
                 const tomorrow = new Date();
@@ -167,8 +196,8 @@ function DateTimePickerApp() {
                 setDate(tomorrow);
               }}>
               <Text style={styles.quickButtonText}>Tomorrow</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </Pressable>
+            <Pressable
               style={styles.quickButton}
               onPress={() => {
                 const nextWeek = new Date();
@@ -176,7 +205,7 @@ function DateTimePickerApp() {
                 setDate(nextWeek);
               }}>
               <Text style={styles.quickButtonText}>Next Week</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </View>
@@ -290,6 +319,12 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
+  },
+  smallButtonWrapper: {
+    justifyContent: 'center',
+  },
+  buttonWrapper: {
+    marginTop: 8,
   },
   combinedText: {
     fontSize: 18,

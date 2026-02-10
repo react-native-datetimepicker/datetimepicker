@@ -3,7 +3,7 @@
  * Windows-specific entry point with DateTimePicker
  */
 
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useMemo} from 'react';
 import {
   AppRegistry,
   View,
@@ -18,21 +18,263 @@ import {
 // This demo shows the app structure - the native picker will work once the Fabric
 // component registration is complete.
 
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+const DAY_NAMES = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+function getDaysInMonth(month, year) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function CalendarPicker({selectedDate, onDateSelect}) {
+  const [viewMonth, setViewMonth] = useState(selectedDate.getMonth());
+  const [viewYear, setViewYear] = useState(selectedDate.getFullYear());
+
+  const goToPrevMonth = useCallback(() => {
+    setViewMonth((m) => {
+      if (m === 0) {
+        setViewYear((y) => y - 1);
+        return 11;
+      }
+      return m - 1;
+    });
+  }, []);
+
+  const goToNextMonth = useCallback(() => {
+    setViewMonth((m) => {
+      if (m === 11) {
+        setViewYear((y) => y + 1);
+        return 0;
+      }
+      return m + 1;
+    });
+  }, []);
+
+  const calendarDays = useMemo(() => {
+    const firstDay = new Date(viewYear, viewMonth, 1).getDay(); // 0=Sun
+    const daysInMonth = getDaysInMonth(viewMonth, viewYear);
+    const daysInPrevMonth = getDaysInMonth(
+      viewMonth === 0 ? 11 : viewMonth - 1,
+      viewMonth === 0 ? viewYear - 1 : viewYear,
+    );
+
+    const cells = [];
+
+    // Previous month trailing days
+    for (let i = firstDay - 1; i >= 0; i--) {
+      cells.push({
+        day: daysInPrevMonth - i,
+        currentMonth: false,
+        month: viewMonth === 0 ? 11 : viewMonth - 1,
+        year: viewMonth === 0 ? viewYear - 1 : viewYear,
+      });
+    }
+
+    // Current month days
+    for (let d = 1; d <= daysInMonth; d++) {
+      cells.push({day: d, currentMonth: true, month: viewMonth, year: viewYear});
+    }
+
+    // Next month leading days to fill remaining row(s)
+    const remaining = 7 - (cells.length % 7);
+    if (remaining < 7) {
+      for (let i = 1; i <= remaining; i++) {
+        cells.push({
+          day: i,
+          currentMonth: false,
+          month: viewMonth === 11 ? 0 : viewMonth + 1,
+          year: viewMonth === 11 ? viewYear + 1 : viewYear,
+        });
+      }
+    }
+
+    return cells;
+  }, [viewMonth, viewYear]);
+
+  const rows = useMemo(() => {
+    const result = [];
+    for (let i = 0; i < calendarDays.length; i += 7) {
+      result.push(calendarDays.slice(i, i + 7));
+    }
+    return result;
+  }, [calendarDays]);
+
+  const isSelected = (cell) =>
+    cell.day === selectedDate.getDate() &&
+    cell.month === selectedDate.getMonth() &&
+    cell.year === selectedDate.getFullYear();
+
+  const isToday = (cell) => {
+    const today = new Date();
+    return (
+      cell.day === today.getDate() &&
+      cell.month === today.getMonth() &&
+      cell.year === today.getFullYear()
+    );
+  };
+
+  const headerLabel = selectedDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  return (
+    <View style={calStyles.container}>
+      {/* Selected date header */}
+      <View style={calStyles.header}>
+        <Text style={calStyles.headerText}>{headerLabel}</Text>
+      </View>
+
+      {/* Month / Year nav */}
+      <View style={calStyles.monthNav}>
+        <Text style={calStyles.monthLabel}>
+          {MONTHS[viewMonth]} {viewYear}
+        </Text>
+        <View style={calStyles.navButtons}>
+          <Pressable onPress={goToPrevMonth} style={calStyles.navButton}>
+            <Text style={calStyles.navButtonText}>▲</Text>
+          </Pressable>
+          <Pressable onPress={goToNextMonth} style={calStyles.navButton}>
+            <Text style={calStyles.navButtonText}>▼</Text>
+          </Pressable>
+        </View>
+      </View>
+
+      {/* Day-of-week headers */}
+      <View style={calStyles.weekRow}>
+        {DAY_NAMES.map((d) => (
+          <View key={d} style={calStyles.weekCell}>
+            <Text style={calStyles.weekText}>{d}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Day grid */}
+      {rows.map((row, ri) => (
+        <View key={ri} style={calStyles.weekRow}>
+          {row.map((cell, ci) => {
+            const selected = isSelected(cell);
+            const today = isToday(cell);
+            return (
+              <Pressable
+                key={ci}
+                style={[
+                  calStyles.dayCell,
+                  selected && calStyles.dayCellSelected,
+                  today && !selected && calStyles.dayCellToday,
+                ]}
+                onPress={() =>
+                  onDateSelect(new Date(cell.year, cell.month, cell.day))
+                }>
+                <Text
+                  style={[
+                    calStyles.dayText,
+                    !cell.currentMonth && calStyles.dayTextOther,
+                    selected && calStyles.dayTextSelected,
+                  ]}>
+                  {cell.day}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      ))}
+    </View>
+  );
+}
+
+const calStyles = StyleSheet.create({
+  container: {
+    backgroundColor: '#2d2d2d',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 12,
+  },
+  header: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#444',
+    paddingBottom: 10,
+    marginBottom: 10,
+  },
+  headerText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  monthNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  monthLabel: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  navButtons: {
+    flexDirection: 'row',
+  },
+  navButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
+  navButtonText: {
+    color: '#aaa',
+    fontSize: 12,
+  },
+  weekRow: {
+    flexDirection: 'row',
+  },
+  weekCell: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 6,
+  },
+  weekText: {
+    color: '#aaa',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  dayCell: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  dayCellSelected: {
+    backgroundColor: '#0078D4',
+    borderRadius: 20,
+  },
+  dayCellToday: {
+    borderWidth: 1,
+    borderColor: '#0078D4',
+    borderRadius: 20,
+  },
+  dayText: {
+    color: '#fff',
+    fontSize: 14,
+  },
+  dayTextOther: {
+    color: '#666',
+  },
+  dayTextSelected: {
+    color: '#fff',
+    fontWeight: '700',
+  },
+});
+
 function DateTimePickerApp() {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
-  const [editingDate, setEditingDate] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
   const [editingTime, setEditingTime] = useState(false);
-  const [dateInput, setDateInput] = useState('');
   const [timeInput, setTimeInput] = useState('');
 
-  const dateInputRef = React.useRef('');
   const timeInputRef = React.useRef('');
-
-  const onDateInputChange = useCallback((text) => {
-    dateInputRef.current = text;
-    setDateInput(text);
-  }, []);
 
   const onTimeInputChange = useCallback((text) => {
     timeInputRef.current = text;
@@ -55,26 +297,8 @@ function DateTimePickerApp() {
     });
   };
 
-  const handleDateSubmit = useCallback(() => {
-    const input = dateInputRef.current;
-    if (!input) {
-      return;
-    }
-    // Manually parse MM/DD/YYYY since Hermes doesn't support new Date("MM/DD/YYYY")
-    const parts = input.split('/');
-    let parsed;
-    if (parts.length === 3) {
-      const [month, day, year] = parts.map(Number);
-      if (!isNaN(month) && !isNaN(day) && !isNaN(year)) {
-        parsed = new Date(year, month - 1, day);
-      }
-    }
-    if (parsed && !isNaN(parsed.getTime())) {
-      setDate(parsed);
-    }
-    setEditingDate(false);
-    setDateInput('');
-    dateInputRef.current = '';
+  const handleDateSelect = useCallback((newDate) => {
+    setDate(newDate);
   }, []);
 
   const handleTimeSubmit = useCallback(() => {
@@ -113,27 +337,29 @@ function DateTimePickerApp() {
           <Text style={styles.sectionTitle}>📅 Date Selection</Text>
           <View style={styles.card}>
             <Text style={styles.label}>Selected Date:</Text>
-            <Text style={styles.value}>{formatDate(date)}</Text>
-            
-            {editingDate ? (
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter date (MM/DD/YYYY)"
-                  value={dateInput}
-                  onChangeText={onDateInputChange}
-                />
-                <Pressable style={styles.smallButton} onPress={handleDateSubmit}>
-                  <Text style={styles.smallButtonText}>Set</Text>
-                </Pressable>
+            <Pressable onPress={() => setCalendarOpen(!calendarOpen)}>
+              <View style={styles.dateDisplay}>
+                <Text style={styles.value}>{formatDate(date)}</Text>
+                <Text style={styles.toggleArrow}>
+                  {calendarOpen ? '▲' : '▼'}
+                </Text>
               </View>
-            ) : (
-              <Pressable
-                style={styles.button}
-                onPress={() => setEditingDate(true)}>
-                <Text style={styles.buttonText}>Change Date</Text>
-              </Pressable>
+            </Pressable>
+
+            {calendarOpen && (
+              <CalendarPicker
+                selectedDate={date}
+                onDateSelect={handleDateSelect}
+              />
             )}
+
+            <Pressable
+              style={styles.button}
+              onPress={() => setCalendarOpen(!calendarOpen)}>
+              <Text style={styles.buttonText}>
+                {calendarOpen ? 'Done' : 'Pick Date'}
+              </Text>
+            </Pressable>
           </View>
         </View>
 
@@ -281,6 +507,16 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#1a1a1a',
     marginBottom: 12,
+  },
+  dateDisplay: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  toggleArrow: {
+    fontSize: 14,
+    color: '#666',
   },
   button: {
     backgroundColor: '#0078D4',

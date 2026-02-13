@@ -23,8 +23,6 @@ module.exports = {
         projectLang: 'cpp',
         projectGuid: '{120733fe-7210-414d-9b08-a117cb99ad15}',
       },
-      // Skip deploy step - run the exe directly instead of deploying as packaged app
-      directDebugging: true,
     },
   },
 };

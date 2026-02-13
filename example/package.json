@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "node ../scripts/patch-rnw-codegen.js",
+    "react-native": "node scripts/react-native-wrapper.js",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "windows": "react-native run-windows",

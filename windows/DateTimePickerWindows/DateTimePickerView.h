@@ -13,7 +13,8 @@ namespace winrt::DateTimePicker::implementation {
     
     class DateTimePickerView : public DateTimePickerViewT<DateTimePickerView> {
     public:
-        DateTimePickerView(Microsoft::ReactNative::IReactContext const& reactContext);
+        DateTimePickerView();
+        void SetReactContext(Microsoft::ReactNative::IReactContext const& reactContext);
         void UpdateProperties(Microsoft::ReactNative::IJSValueReader const& reader);
 
     private:

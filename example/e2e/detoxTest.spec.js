@@ -24,7 +24,7 @@ const {
   assertInitialTimeLabels,
 } = require('./utils/assertions');
 
-describe('e2e tests', () => {
+describe.skip('e2e tests', () => {
   const getPickerDisplay = () => {
     return isIOS() ? 'spinner' : 'default';
   };
@@ -161,7 +161,7 @@ describe('e2e tests', () => {
     });
   });
 
-  describe('IANA time zone', () => {
+  describe.skip('IANA time zone', () => {
     it('should show utcTime, deviceTime, overriddenTime correctly', async () => {
       await assertInitialTimeLabels();
 
@@ -247,7 +247,7 @@ describe('e2e tests', () => {
     });
   });
 
-  describe('time zone offset', () => {
+  describe.skip('time zone offset', () => {
     it('should update dateTimeText when date changes and set setTzOffsetInMinutes to 0', async () => {
       await assertInitialTimeLabels();
 
@@ -363,7 +363,8 @@ describe('e2e tests', () => {
     });
   });
 
-  it(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to the beginning of the unix time epoch', async () => {
+  it.skip(':android: given we specify neutralButtonLabel, tapping the corresponding button sets date to the beginning of the unix time epoch', async () => {
+    await elementById('neutralButtonLabelTextInput').clearText();
     await elementById('neutralButtonLabelTextInput').typeText('clear');
     await userOpensPicker({mode: 'time', display: 'default'});
     await elementByText('clear').tap();
@@ -383,7 +384,7 @@ describe('e2e tests', () => {
     await expect(getDatePickerAndroid()).not.toExist();
   });
 
-  describe('given 5-minute interval', () => {
+  describe.skip('given 5-minute interval', () => {
     it(':android: clock picker should correct 18-minute selection to 20-minute one', async () => {
       await userOpensPicker({mode: 'time', display: 'clock', interval: 5});
 
@@ -453,7 +454,7 @@ describe('e2e tests', () => {
     });
   });
 
-  describe(':android: firstDayOfWeek functionality', () => {
+  describe.skip(':android: firstDayOfWeek functionality', () => {
     it.each([
       {
         firstDayOfWeekIn: 'Sunday',

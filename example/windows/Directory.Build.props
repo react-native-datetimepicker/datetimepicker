@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Enable New Architecture for all projects in this solution -->
+    <RnwNewArch>true</RnwNewArch>
+    <!-- Enable Fabric to generate Composition APIs in Microsoft.ReactNative -->
+    <UseFabric>true</UseFabric>
+  </PropertyGroup>
+</Project>

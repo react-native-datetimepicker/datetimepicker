@@ -23,7 +23,9 @@ namespace winrt::DateTimePicker::implementation {
     }
 
     xaml::FrameworkElement TimePickerViewManager::CreateView() noexcept {
-        return winrt::DateTimePicker::TimePickerView(m_reactContext);
+        auto view = winrt::make<TimePickerView>();
+        view.as<TimePickerView>()->SetReactContext(m_reactContext);
+        return view;
     }
 
     // IViewManagerWithReactContext

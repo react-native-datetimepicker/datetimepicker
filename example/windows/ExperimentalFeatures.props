@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Prevent duplicate import warnings -->
+    <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
+    <!-- Enable Fabric/Composition APIs for React Native Windows -->
+    <UseFabric>true</UseFabric>
+    <!-- Enable New Architecture -->
+    <RnwNewArch>true</RnwNewArch>
+  </PropertyGroup>
+</Project>

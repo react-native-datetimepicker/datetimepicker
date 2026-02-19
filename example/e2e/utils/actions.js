@@ -45,6 +45,13 @@ async function userOpensPicker({
     await elementById('DateTimePickerScrollView').scrollTo('top');
   }
   if (firstDayOfWeek) {
+    // Scroll to make firstDayOfWeekSelector visible in viewport first
+    await elementById('DateTimePickerScrollView').scrollTo('bottom');
+    await waitFor(elementById('firstDayOfWeekSelector'))
+      .toBeVisible()
+      .withTimeout(1000);
+    // Scroll the horizontal FlatList to make the button visible
+    await elementById('firstDayOfWeekSelector').scroll(200, 'right');
     await element(by.id(firstDayOfWeek)).tap();
   }
   await elementById('DateTimePickerScrollView').scrollTo('bottom');

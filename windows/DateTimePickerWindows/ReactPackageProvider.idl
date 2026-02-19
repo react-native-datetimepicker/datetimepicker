@@ -5,7 +5,7 @@ namespace DateTimePicker
 {
     [webhosthidden]
     [default_interface]
-    runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+    runtimeclass ReactPackageProvider
     {
         ReactPackageProvider();
     };

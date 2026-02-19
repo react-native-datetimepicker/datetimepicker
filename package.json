@@ -25,10 +25,11 @@
     "provenance": true
   },
   "scripts": {
-    "start": "patch-package && react-native start",
+    "postinstall": "patch-package && node scripts/patch-rnw-codegen.js",
+    "start": "react-native start",
     "start:android": "react-native run-android",
     "start:ios": "react-native run-ios",
-    "start:windows": "react-native run-windows --sln example/windows/date-time-picker-example.sln",
+    "start:windows": "react-native run-windows --sln example/windows/DateTimePickerDemo.sln --proj example/windows/DateTimePickerDemo/DateTimePickerDemo.vcxproj --arch x64 --no-autolink --no-deploy",
     "bundle:android": "mkdir -p example/dist && react-native bundle --platform android --dev false --entry-file index.js --bundle-output example/dist/main.android.jsbundle --assets-dest example/dist/res",
     "bundle:ios": "mkdir -p example/dist && react-native bundle --platform ios --dev false --entry-file index.js --bundle-output example/dist/main.ios.jsbundle --assets-dest example/dist/assets",
     "test": "jest",
@@ -98,7 +99,7 @@
     "react-native": "0.79.5",
     "react-native-localize": "^3.5.1",
     "react-native-test-app": "^4.4.5",
-    "react-native-windows": "^0.79.3",
+    "react-native-windows": "0.79.5",
     "react-test-renderer": "19.0.0",
     "semantic-release": "^19.0.3",
     "typescript": "~5.8.3"

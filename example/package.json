@@ -1,0 +1,29 @@
+{
+  "name": "date-time-picker-example",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "postinstall": "node ../scripts/patch-rnw-codegen.js",
+    "react-native": "node scripts/react-native-wrapper.js",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "windows": "react-native run-windows",
+    "start": "react-native start",
+    "start:windows": "react-native start --config metro.config.windows.js"
+  },
+  "dependencies": {
+    "@react-native-community/datetimepicker": "link:..",
+    "@react-native-segmented-control/segmented-control": "2.5.7",
+    "react": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-windows": "0.79.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/runtime": "^7.28.0",
+    "@react-native/babel-preset": "0.79.5",
+    "@react-native/metro-config": "^0.79.5",
+    "metro-config": "^0.82.3"
+  }
+}

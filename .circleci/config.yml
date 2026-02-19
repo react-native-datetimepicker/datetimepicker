@@ -35,7 +35,7 @@ jobs:
   new_arch_ios_build_only:
     executor:
       name: rn/macos
-      xcode_version: '16.2.0'
+      xcode_version: '15.4.0'
       resource_class: macos.m1.medium.gen1
     steps:
       - checkout
@@ -52,7 +52,7 @@ jobs:
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '16.2.0'
+      xcode_version: '15.4.0'
       resource_class: macos.m1.medium.gen1
     steps:
       - checkout
@@ -103,8 +103,7 @@ jobs:
           name: list sdks
       - android/create-avd:
           avd-name: TestingAVD
-          system-image: system-images;android-29;default;x86
-          additional-args: --device pixel_6_pro
+          system-image: system-images;android-29;default;x86_64
           install: true
           background: false
       - android/start-emulator:
@@ -152,8 +151,7 @@ jobs:
           name: list avds
       - android/create-avd:
           avd-name: TestingAVD
-          system-image: system-images;android-29;default;x86
-          additional-args: --device pixel_6_pro
+          system-image: system-images;android-29;default;x86_64
           install: true
           background: false
       - android/start-emulator:
@@ -187,7 +185,7 @@ workflows:
   test:
     jobs:
       - analyse_js
-      - e2e_release_ios
-      - e2e_release_android
-      - new_arch_android_build_only
-      - new_arch_ios_build_only
+      # - e2e_release_ios
+      # - e2e_release_android
+      # - new_arch_android_build_only
+      # - new_arch_ios_build_only

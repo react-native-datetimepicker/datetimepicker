@@ -7,7 +7,7 @@
  * Step 1: react-native run-windows --no-deploy --no-launch --deploy-from-layout --arch x64 --logging
  * Step 2: react-native run-windows --no-build --deploy-from-layout --arch x64 --logging
  */
-const {execFileSync} = require('child_process');
+const {spawnSync} = require('child_process');
 const path = require('path');
 
 const args = process.argv.slice(2);
@@ -24,7 +24,15 @@ const reactNativeBin = path.resolve(
 
 function run(cmdArgs) {
   console.log(`\n>>> Running: react-native ${cmdArgs.join(' ')}\n`);
-  execFileSync(reactNativeBin, cmdArgs, {stdio: 'inherit', cwd: process.cwd()});
+  const result = spawnSync(reactNativeBin, cmdArgs, {
+    stdio: 'inherit',
+    cwd: process.cwd(),
+    shell: true,
+  });
+  if (result.error) {
+    throw result.error;
+  }
+  return result.status;
 }
 
 if (args[0] === 'run-windows' && !args.includes('--help') && !args.includes('-h')) {
@@ -44,29 +52,17 @@ if (args[0] === 'run-windows' && !args.includes('--help') && !args.includes('-h'
 
   // If user already passed --no-build or --no-deploy, just run as-is with defaults
   if (extraArgs.includes('--no-build') || extraArgs.includes('--no-deploy')) {
-    try {
-      run(['run-windows', ...extraArgs, ...defaultFlags]);
-    } catch (e) {
-      process.exit(e.status || 1);
-    }
+    run(['run-windows', ...extraArgs, ...defaultFlags]);
   } else {
-    try {
-      // Step 1: Build only (no deploy, no launch)
-      console.log('\n========== STEP 1: BUILD ==========');
-      run(['run-windows', '--no-deploy', '--no-launch', ...extraArgs, ...defaultFlags]);
+    // Step 1: Build only (no deploy, no launch)
+    console.log('\n========== STEP 1: BUILD ==========');
+    run(['run-windows', '--no-deploy', '--no-launch', ...extraArgs, ...defaultFlags]);
 
-      // Step 2: Deploy + Launch (no build)
-      console.log('\n========== STEP 2: DEPLOY + LAUNCH ==========');
-      run(['run-windows', '--no-build', ...extraArgs, ...defaultFlags]);
-    } catch (e) {
-      process.exit(e.status || 1);
-    }
+    // Step 2: Deploy + Launch (no build)
+    console.log('\n========== STEP 2: DEPLOY + LAUNCH ==========');
+    run(['run-windows', '--no-build', ...extraArgs, ...defaultFlags]);
   }
 } else {
   // Non-run-windows commands pass through unchanged
-  try {
-    run(args);
-  } catch (e) {
-    process.exit(e.status || 1);
-  }
+  run(args);
 }

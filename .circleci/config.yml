@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  rn: react-native-community/react-native@7
-  android: circleci/android@2.5.0
+  rn: react-native-community/react-native@8.0.1
+  android: circleci/android@3.2.0
 
 # - rn/yarn_install
 # fails with Error untarring cache: Error extracting tarball /var/folders/bq/mjrgbpkx5h1g_b22fpv0tlzc0000gn/T/cache376822577 : tmp/yarn/: Cannot extract through symlink tmp/yarn tmp/yarn/v6/: Cannot extract through symlink tmp/yarn/v6 tmp/yarn/v6/.tmp/: Cannot extract through symlink tmp/yarn/v6/.tmp tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/: Cannot extract through symlink tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel tmp/yarn/v6/npm-@babel-code-frame-7.8.3-33e25903d7481181534e12ec0a25f16b6fcf419e-integrity/node_modules/@babel/code-frame/: Cannot extract: exit status 1
@@ -35,8 +35,8 @@ jobs:
   new_arch_ios_build_only:
     executor:
       name: rn/macos
-      xcode_version: '16.2.0'
-      resource_class: macos.m1.medium.gen1
+      xcode_version: '26.3.0'
+      resource_class: m4pro.medium
     steps:
       - checkout
       - run:
@@ -52,8 +52,8 @@ jobs:
   e2e_release_ios:
     executor:
       name: rn/macos
-      xcode_version: '16.2.0'
-      resource_class: macos.m1.medium.gen1
+      xcode_version: '26.3.0'
+      resource_class: m4pro.medium
     steps:
       - checkout
       - run:
@@ -62,7 +62,7 @@ jobs:
             HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
             HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
       - rn/ios_simulator_start:
-          device: 'iPhone 15 Pro Max'
+          device: 'iPhone 17 Pro Max'
       # - rn/yarn_install
       - run:
           command: yarn install --immutable
@@ -86,35 +86,32 @@ jobs:
 
   e2e_release_android:
     executor:
-      name: android/android-machine
-      resource-class: large
+      name: android/android_machine
+      resource_class: large
       tag: default
     environment:
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
     steps:
       - checkout
-      - android/change-java-version:
-          java-version: 17
+      - android/change_java_version:
+          java_version: 17
       - run:
           command: avdmanager list
           name: list avds
       - run:
           command: sdkmanager --list
           name: list sdks
-      - android/create-avd:
-          avd-name: TestingAVD
-          system-image: system-images;android-29;default;x86
-          additional-args: --device pixel_6_pro
+      - android/create_avd:
+          avd_name: TestingAVD
+          system_image: system-images;android-29;default;x86
+          additional_args: --device pixel_6_pro
           install: true
           background: false
-      - android/start-emulator:
-          avd-name: TestingAVD
-          no-window: true
-          wait-for-emulator: true
-          disable-animations: true
-          restore-gradle-cache-post-emulator-launch: false
-          post-emulator-launch-assemble-command: 'pwd'
-      #      - android/disable-animations
+      - android/start_emulator:
+          avd_name: TestingAVD
+          no_window: true
+          disable_animations: true
+          post_emulator_launch_assemble_command: 'pwd'
       - run:
           command: npm install --global yarn
           name: install yarn
@@ -138,31 +135,29 @@ jobs:
 
   new_arch_android_build_only:
     executor:
-      name: android/android-machine
-      resource-class: large
+      name: android/android_machine
+      resource_class: large
       tag: default
     environment:
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
     steps:
       - checkout
-      - android/change-java-version:
-          java-version: 17
+      - android/change_java_version:
+          java_version: 17
       - run:
           command: avdmanager list
           name: list avds
-      - android/create-avd:
-          avd-name: TestingAVD
-          system-image: system-images;android-29;default;x86
-          additional-args: --device pixel_6_pro
+      - android/create_avd:
+          avd_name: TestingAVD
+          system_image: system-images;android-29;default;x86
+          additional_args: --device pixel_6_pro
           install: true
           background: false
-      - android/start-emulator:
-          avd-name: TestingAVD
-          no-window: true
-          wait-for-emulator: true
-          disable-animations: true
-          restore-gradle-cache-post-emulator-launch: false
-          post-emulator-launch-assemble-command: 'pwd'
+      - android/start_emulator:
+          avd_name: TestingAVD
+          no_window: true
+          disable_animations: true
+          post_emulator_launch_assemble_command: 'pwd'
       - run:
           command: npm install --global yarn
           name: install yarn
@@ -178,8 +173,8 @@ jobs:
       - run:
           command: ORG_GRADLE_PROJECT_newArchEnabled=true yarn detox:android:build:release
           name: build app for e2e tests
-      #      - android/wait-for-emulator
-      #      - android/disable-animations
+      #      - android/wait_for_emulator
+      #      - android/disable_animations
       - store_artifacts:
           path: ./artifacts
 

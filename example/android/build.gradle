@@ -25,17 +25,7 @@ buildscript {
 allprojects {
     repositories {
         maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url({
-                def searchDir = rootDir.toPath()
-                do {
-                    def p = searchDir.resolve("node_modules/react-native/android")
-                    if (p.toFile().exists()) {
-                        return p.toRealPath().toString()
-                    }
-                } while (searchDir = searchDir.getParent())
-                throw new GradleException("Could not find `react-native`");
-            }())
+             url "$rootDir/../../node_modules/react-native/android"
         }
         maven {
              // All of Detox' artifacts are provided via the npm module
@@ -56,21 +46,6 @@ allprojects {
                 // Opening an oat file without a class loader. Are you using the deprecated DexFile APIs?
                 testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
             }
-
-            // needed for release signing
-            androidExtension.signingConfigs {
-                test {
-                    keyAlias "androiddebugkey"
-                    keyPassword "android"
-                    storeFile file("debug.keystore")
-                    storePassword "android"
-                }
-            }
-
-            androidExtension.buildTypes.debug.signingConfig = androidExtension.signingConfigs.test
-            androidExtension.buildTypes.release.signingConfig = androidExtension.signingConfigs.test
-            androidExtension.testBuildType = System.getProperty('testBuildType', 'debug')
-            // end needed for release signing
 
             androidExtension.sourceSets.androidTest.java.srcDirs += "$rootDir/app/src/androidTest/java"
 

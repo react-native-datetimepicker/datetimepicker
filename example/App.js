@@ -16,7 +16,6 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SegmentedControl from './SegmentedControl';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import React, {useRef, useState} from 'react';
 import {Picker} from 'react-native-windows';
 import moment from 'moment-timezone';
@@ -28,6 +27,13 @@ import {
   IOS_DISPLAY,
 } from '@react-native-community/datetimepicker/src/constants';
 import * as RNLocalize from 'react-native-localize';
+
+const Colors = {
+  white: '#FFFFFF',
+  black: '#000000',
+  dark: '#333333',
+  lighter: '#F5F5F5',
+}
 
 const timezone = [
   120,
@@ -385,7 +391,10 @@ export const App = () => {
               startOnYearSelection (android only)
             </ThemedText>
             <View style={{flex: 1, alignItems: 'flex-start'}}>
-              <Switch value={startOnYearSelection} onValueChange={setStartOnYearSelection} />
+              <Switch
+                value={startOnYearSelection}
+                onValueChange={setStartOnYearSelection}
+              />
             </View>
           </View>
           <View style={styles.header}>
@@ -487,7 +496,11 @@ export const App = () => {
                   setShow(true);
                 }
               }}
-              title={minimumDate && maximumDate && minimumDate > maximumDate ? "undo min > max" : "set min > max (errors)"}
+              title={
+                minimumDate && maximumDate && minimumDate > maximumDate
+                  ? 'undo min > max'
+                  : 'set min > max (errors)'
+              }
             />
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>

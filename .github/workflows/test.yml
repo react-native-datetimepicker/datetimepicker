@@ -119,10 +119,15 @@ jobs:
         with:
           api-level: 29
           avd-name: TestingAVD
+          profile: pixel_6_pro
           disable-animations: true
           script: |
+            adb root
+            adb wait-for-device
             adb shell setprop persist.sys.timezone "Europe/Prague"
+            adb shell settings put global auto_time_zone 0
             adb shell am broadcast -a android.intent.action.TIMEZONE_CHANGED
+            adb shell getprop persist.sys.timezone
             yarn detox:android:test:release
       - uses: actions/upload-artifact@v7
         if: failure()

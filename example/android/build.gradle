@@ -52,7 +52,7 @@ allprojects {
                 test {
                     keyAlias "androiddebugkey"
                     keyPassword "android"
-                    storeFile file("debug.keystore")
+                    storeFile rootProject.file("debug.keystore")
                     storePassword "android"
                 }
             }

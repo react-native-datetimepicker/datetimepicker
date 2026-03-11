@@ -24,8 +24,17 @@ jobs:
       - name: Jest
         run: yarn test
 
-  e2e_release_ios:
+  e2e_ios:
     runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: old
+            pod-env: 'RCT_NEW_ARCH_ENABLED=0'
+          - arch: new
+            pod-env: 'RCT_NEW_ARCH_ENABLED=1'
+    name: e2e_ios (${{ matrix.arch }} arch)
     env:
       DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
     steps:
@@ -49,9 +58,9 @@ jobs:
       - uses: actions/cache@v5
         with:
           path: example/ios/Pods
-          key: pods-${{ runner.os }}-${{ hashFiles('example/ios/Podfile.lock') }}
+          key: pods-${{ matrix.arch }}-${{ runner.os }}-${{ hashFiles('example/ios/Podfile.lock') }}
       - name: Pod install
-        run: cd example && RCT_NEW_ARCH_ENABLED=0 npx pod-install
+        run: cd example && ${{ matrix.pod-env }} RCT_USE_RN_DEP=1 RCT_USE_PREBUILT_RNCORE=1 npx pod-install
       - name: Build app for e2e tests
         run: yarn detox:ios:build:release
       - name: Run e2e tests
@@ -59,33 +68,21 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: ios-e2e-artifacts
+          name: ios-e2e-${{ matrix.arch }}-artifacts
           path: artifacts
           retention-days: 14
 
-  new_arch_ios_build_only:
-    runs-on: macos-26
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
-    steps:
-      - uses: actions/checkout@v6
-      - run: corepack enable
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: yarn
-      - run: yarn install --immutable
-      - uses: actions/cache@v5
-        with:
-          path: example/ios/Pods
-          key: pods-newarch-${{ runner.os }}-${{ hashFiles('example/ios/Podfile.lock') }}
-      - name: Pod install (new arch)
-        run: cd example && RCT_NEW_ARCH_ENABLED=1 RCT_USE_RN_DEP=1 RCT_USE_PREBUILT_RNCORE=1 npx pod-install
-      - name: Build app with new arch
-        run: yarn detox:ios:build:release
-
-  e2e_release_android:
+  e2e_android:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: old
+            new-arch-enabled: false
+          - arch: new
+            new-arch-enabled: true
+    name: e2e_android (${{ matrix.arch }} arch)
     env:
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
     steps:
@@ -110,7 +107,7 @@ jobs:
         run: yarn bundle:android
       - run: yarn generateManifest
       - name: Build app for e2e tests
-        run: ORG_GRADLE_PROJECT_newArchEnabled=false yarn detox:android:build:release
+        run: ORG_GRADLE_PROJECT_newArchEnabled=${{ matrix.new-arch-enabled }} yarn detox:android:build:release
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -126,34 +123,6 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: android-e2e-artifacts
+          name: android-e2e-${{ matrix.arch }}-artifacts
           path: artifacts
           retention-days: 14
-
-  new_arch_android_build_only:
-    runs-on: ubuntu-latest
-    env:
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
-    steps:
-      - uses: actions/checkout@v6
-      - run: corepack enable
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: yarn
-      - uses: actions/setup-java@v5
-        with:
-          distribution: zulu
-          java-version: 17
-      - uses: actions/cache@v5
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-      - run: yarn install --immutable
-      - name: Bundle JS
-        run: yarn bundle:android
-      - run: yarn generateManifest
-      - name: Build app with new arch
-        run: ORG_GRADLE_PROJECT_newArchEnabled=true yarn detox:android:build:release

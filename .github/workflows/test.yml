@@ -120,7 +120,10 @@ jobs:
           api-level: 29
           avd-name: TestingAVD
           disable-animations: true
-          script: yarn detox:android:test:release
+          script: |
+            adb shell setprop persist.sys.timezone "Europe/Prague"
+            adb shell am broadcast -a android.intent.action.TIMEZONE_CHANGED
+            yarn detox:android:test:release
       - uses: actions/upload-artifact@v7
         if: failure()
         with:

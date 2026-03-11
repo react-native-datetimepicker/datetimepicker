@@ -52,7 +52,7 @@ module.exports = {
       binaryPath:
         'example/android/app/build/outputs/apk/release/app-release.apk',
       build:
-        'export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleRelease assembleReleaseAndroidTest)',
+        'export RCT_NO_LAUNCH_PACKAGER=true && (cd example/android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release)',
     },
   },
   configurations: {

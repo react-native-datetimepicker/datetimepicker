@@ -36,11 +36,7 @@ describe('e2e tests', () => {
   }, 300000);
 
   beforeEach(async () => {
-    if (isIOS()) {
-      await device.reloadReactNative();
-    } else {
-      await device.launchApp({newInstance: true});
-    }
+    await device.launchApp({newInstance: true});
     await waitFor(elementByText('Example DateTime Picker'))
       .toBeVisible()
       .withTimeout(5000);

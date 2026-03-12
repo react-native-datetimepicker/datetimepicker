@@ -1,0 +1,137 @@
+name: Test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyse_js:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: yarn
+      - run: yarn install --immutable
+      - name: Run ESLint
+        run: yarn lint
+      - name: Jest
+        run: yarn test
+
+  e2e_ios:
+    runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: old
+            pod-env: 'RCT_NEW_ARCH_ENABLED=0'
+          - arch: new
+            pod-env: 'RCT_NEW_ARCH_ENABLED=1'
+    name: e2e_ios (${{ matrix.arch }} arch)
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v6
+      - name: Boot iPhone 17 Pro Max simulator
+        run: |
+          DEVICE_ID=$(xcrun simctl list devices available -j | jq -r '.devices | to_entries[] | .value[] | select(.name == "iPhone 17 Pro Max") | .udid' | head -1)
+          xcrun simctl boot "$DEVICE_ID"
+      - name: Install applesimutils
+        run: |
+          HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
+          HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: yarn
+      - run: yarn install --immutable
+      - name: Bundle JS
+        run: yarn bundle:ios
+      - uses: actions/cache@v5
+        with:
+          path: example/ios/Pods
+          key: pods-${{ matrix.arch }}-${{ runner.os }}-${{ hashFiles('example/ios/Podfile.lock') }}
+      - name: Pod install
+        run: cd example && ${{ matrix.pod-env }} RCT_USE_RN_DEP=1 RCT_USE_PREBUILT_RNCORE=1 npx pod-install
+      - name: Build app for e2e tests
+        run: yarn detox:ios:build:release
+      - name: Run e2e tests
+        run: yarn detox:ios:test:release
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: ios-e2e-${{ matrix.arch }}-artifacts
+          path: artifacts
+          retention-days: 14
+
+  e2e_android:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: old
+            new-arch-enabled: false
+          - arch: new
+            new-arch-enabled: true
+    name: e2e_android (${{ matrix.arch }} arch)
+    env:
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError" -Dorg.gradle.daemon=false'
+    steps:
+      - uses: actions/checkout@v6
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: yarn
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 17
+      - uses: actions/cache@v5
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      - run: yarn install --immutable
+      - name: Bundle JS
+        run: yarn bundle:android
+      - run: yarn generateManifest
+      - name: Build app for e2e tests
+        run: ORG_GRADLE_PROJECT_newArchEnabled=${{ matrix.new-arch-enabled }} yarn detox:android:build:release
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Run e2e tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          avd-name: TestingAVD
+          profile: pixel_6_pro
+          disable-animations: true
+          script: |
+            adb root
+            adb wait-for-device
+            adb shell setprop persist.sys.timezone "Europe/Prague"
+            adb shell settings put global auto_time_zone 0
+            adb shell am broadcast -a android.intent.action.TIMEZONE_CHANGED
+            adb shell getprop persist.sys.timezone
+            yarn detox:android:test:release
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: android-e2e-${{ matrix.arch }}-artifacts
+          path: artifacts
+          retention-days: 14

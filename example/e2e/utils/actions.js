@@ -95,7 +95,9 @@ async function userSelectsDayInCalendar(uiDevice, {xPos, yPos}) {
 }
 
 async function userDismissesCompactDatePicker() {
-  await element(by.type('_UIDatePickerContainerView')).tap();
+  // On iOS 26, _UIDatePickerContainerView is behind the RN views and not hittable.
+  // Tap the compact date picker element to toggle the popup closed instead.
+  await element(by.id('dateTimePicker')).tap();
 }
 
 module.exports = {

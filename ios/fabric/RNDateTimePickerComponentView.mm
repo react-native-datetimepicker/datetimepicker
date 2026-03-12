@@ -130,10 +130,9 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
     return concreteComponentDescriptorProvider<RNDateTimePickerComponentDescriptor>();
 }
 
-- (void)prepareForRecycle
++ (BOOL)shouldBeRecycled
 {
-    [super prepareForRecycle];
-    _state.reset();
+  return NO;
 }
 
 -(void)updateTextColorForPicker:(UIDatePicker *)picker color:(UIColor *)color

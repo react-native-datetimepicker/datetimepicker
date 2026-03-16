@@ -224,8 +224,14 @@ class RNMaterialDatePicker(
         )
       )
 
-      newCalendar.timeInMillis = selection
+      // Material DatePicker returns timestamp in UTC at midnight for the selected date.
+      // Extract year, month, day from UTC, then set them in the target timezone
+      val utcCalendar = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"))
+      utcCalendar.timeInMillis = selection
 
+      newCalendar[Calendar.YEAR] = utcCalendar[Calendar.YEAR]
+      newCalendar[Calendar.MONTH] = utcCalendar[Calendar.MONTH]
+      newCalendar[Calendar.DAY_OF_MONTH] = utcCalendar[Calendar.DAY_OF_MONTH]
       newCalendar[Calendar.HOUR_OF_DAY] = initialDate.hour()
       newCalendar[Calendar.MINUTE] = initialDate.minute()
       newCalendar[Calendar.SECOND] = 0

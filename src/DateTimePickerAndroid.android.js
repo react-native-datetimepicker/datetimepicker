@@ -42,9 +42,6 @@ function open(props: AndroidNativeProps) {
     positiveButton,
     negativeButton,
     neutralButton,
-    neutralButtonLabel,
-    positiveButtonLabel,
-    negativeButtonLabel,
     testID,
     firstDayOfWeek,
     title,
@@ -63,17 +60,14 @@ function open(props: AndroidNativeProps) {
     try {
       const dialogButtons = {
         positive: {
-          label: positiveButtonLabel,
           ...positiveButton,
           textColor: processColor(positiveButton?.textColor),
         },
         neutral: {
-          label: neutralButtonLabel,
           ...neutralButton,
           textColor: processColor(neutralButton?.textColor),
         },
         negative: {
-          label: negativeButtonLabel,
           ...negativeButton,
           textColor: processColor(negativeButton?.textColor),
         },

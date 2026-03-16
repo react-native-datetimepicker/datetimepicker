@@ -568,31 +568,6 @@ Set the negative button label and text color.
 <RNDateTimePicker negativeButton={{label: 'Cancel', textColor: 'red'}} />
 ```
 
-#### `positiveButtonLabel` (`optional`, `Android only`, deprecated)
-
-Changes the label of the positive button.
-
-```js
-<RNDateTimePicker positiveButtonLabel="OK!" />
-```
-
-#### `negativeButtonLabel` (`optional`, `Android only`, deprecated)
-
-Changes the label of the negative button.
-
-```js
-<RNDateTimePicker negativeButtonLabel="Negative" />
-```
-
-#### `neutralButtonLabel` (`optional`, `Android only`, deprecated)
-
-Allows displaying neutral button on picker dialog.
-Pressing button can be observed in onChange handler as `event.type === 'neutralButtonPressed'`
-
-```js
-<RNDateTimePicker neutralButtonLabel="clear" />
-```
-
 #### `minuteInterval` (`optional`)
 
 The interval at which minutes can be selected.

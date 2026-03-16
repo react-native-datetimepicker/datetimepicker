@@ -4,6 +4,22 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [9.0.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.6.0...v9.0.0) (2026-03-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **android:** remove deprecated positiveButtonLabel, negativeButtonLabel, neutralButtonLabel props ([#1039](https://github.com/react-native-datetimepicker/datetimepicker/issues/1039))
+
+### Features
+
+* **android:** remove deprecated positiveButtonLabel, negativeButtonLabel, neutralButtonLabel props ([#1039](https://github.com/react-native-datetimepicker/datetimepicker/issues/1039)) ([4e463d3](https://github.com/react-native-datetimepicker/datetimepicker/commit/4e463d3fedf8e012e3349990351e1faae061bbe7))
+
+
+### Bug Fixes
+
+* **android:** material date picker off by one day ([#1031](https://github.com/react-native-datetimepicker/datetimepicker/issues/1031)) ([2577e71](https://github.com/react-native-datetimepicker/datetimepicker/commit/2577e7117a78f275a17b971278c76fcdd01ad2e6))
+
 ## [8.6.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.5.1...v8.6.0) (2026-01-06)
 
 

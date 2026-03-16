@@ -121,16 +121,6 @@ function validateAndroidProps(props: AndroidNativeProps) {
       !(display === ANDROID_DISPLAY.clock && mode === ANDROID_MODE.date),
     `display: ${display} and mode: ${mode} cannot be used together.`,
   );
-  if (
-    props?.positiveButtonLabel !== undefined ||
-    props?.negativeButtonLabel !== undefined ||
-    props?.neutralButtonLabel !== undefined
-  ) {
-    console.warn(
-      'positiveButtonLabel, negativeButtonLabel and neutralButtonLabel are deprecated.' +
-        'Use positive / negative / neutralButton prop instead.',
-    );
-  }
 }
 
 function validateMaterial3PropsNotUsed(props: AndroidNativeProps) {

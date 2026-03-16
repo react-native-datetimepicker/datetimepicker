@@ -166,18 +166,6 @@ export type AndroidNativeProps = Readonly<
       negativeButton?: ButtonType;
 
       /**
-       * @deprecated use neutralButton instead
-       * */
-      neutralButtonLabel?: string;
-      /**
-       * @deprecated use positiveButton instead
-       * */
-      positiveButtonLabel?: string;
-      /**
-       * @deprecated use negativeButton instead
-       * */
-      negativeButtonLabel?: string;
-      /**
        * Sets the first day of the week shown in the calendar
        */
       firstDayOfWeek?: DAY_OF_WEEK;

@@ -50,13 +50,28 @@ type BaseOptions = {|
   value: Date,
 
   /**
-   * change handler.
+   * @deprecated Use onValueChange, onDismiss, and onNeutralButtonPress instead.
    *
-   * This is called when the user changes the date or time in the UI.
-   * Or when they clear / dismiss the dialog.
-   * The first argument is an Event, the second a selected Date.
+   * Called when the user changes the date/time, dismisses the picker,
+   * or presses the neutral button. The event type is encoded in event.type.
+   * If the new specific listeners are provided, they take precedence.
    */
   onChange?: ?(event: DateTimePickerEvent, date?: Date) => void,
+
+  /**
+   * Called when the user selects a date or time.
+   */
+  onValueChange?: ?(date: Date) => void,
+
+  /**
+   * Called when the picker is dismissed without selecting a value.
+   */
+  onDismiss?: ?() => void,
+
+  /**
+   * Called when the neutral button is pressed (Android only).
+   */
+  onNeutralButtonPress?: ?() => void,
 |};
 
 type DateOptions = {|

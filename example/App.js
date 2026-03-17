@@ -138,32 +138,31 @@ export const App = () => {
     setDate(undefined);
   };
 
-  const onChange = (event, selectedDate) => {
+  const onValueChange = (selectedDate) => {
+    setDate(selectedDate);
+  };
+
+  const onDismiss = () => {
     if (Platform.OS === 'android') {
       setShow(false);
     }
-    if (event.type === 'dismissed') {
-      Alert.alert(
-        'picker was dismissed',
-        undefined,
-        [
-          {
-            text: 'great',
-          },
-        ],
-        {cancelable: true},
-      );
-      return;
-    }
-
-    if (event.type === 'neutralButtonPressed') {
-      setDate(new Date(0));
-    } else {
-      setDate(selectedDate);
-    }
+    Alert.alert(
+      'picker was dismissed',
+      undefined,
+      [
+        {
+          text: 'great',
+        },
+      ],
+      {cancelable: true},
+    );
   };
 
-  const onTimeChange = (event: any, newTime?: Date) => {
+  const onNeutralButtonPress = () => {
+    setDate(new Date(0));
+  };
+
+  const onTimeChange = (newTime: Date) => {
     if (Platform.OS === 'windows') {
       setTime(newTime);
     }
@@ -523,7 +522,9 @@ export const App = () => {
                 is24Hour
                 locale="en-US"
                 display={display}
-                onChange={onChange}
+                onValueChange={onValueChange}
+                onDismiss={onDismiss}
+                onNeutralButtonPress={onNeutralButtonPress}
                 textColor={textColor || undefined}
                 accentColor={accentColor || undefined}
                 neutralButton={{label: neutralButtonLabel}}
@@ -621,7 +622,7 @@ export const App = () => {
                 <DateTimePicker
                   testID="dateTimePicker"
                   value={date}
-                  onChange={onChange}
+                  onValueChange={onValueChange}
                   style={styles.windowsPicker}
                   firstDayOfWeek={firstDayOfWeek}
                   maxDate={maxDate}
@@ -671,7 +672,7 @@ export const App = () => {
                   mode="time"
                   value={time}
                   style={{width: 300, opacity: 1, height: 30, marginTop: 50}}
-                  onChange={onTimeChange}
+                  onValueChange={onTimeChange}
                   is24Hour={is24Hours}
                   minuteInterval={interval}
                 />

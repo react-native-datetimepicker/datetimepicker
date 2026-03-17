@@ -28,10 +28,9 @@ See this [issue](https://github.com/react-native-datetimepicker/datetimepicker/i
 This repository was moved out of the react native community GH organization, in accordance to [this proposal](https://github.com/react-native-community/discussions-and-proposals/issues/176).
 The module is still published on `npm` under the old namespace (as documented) but will be published under a new namespace at some point, with a major version bump.
 
-![CircleCI Status][circle-ci-status]
+[![npm downloads][npm-downloads-badge]][npm-downloads-link]
 ![Supports Android and iOS][support-badge]
 ![MIT License][license-badge]
-[![Lean Core Badge][lean-core-badge]][lean-core-issue]
 
 React Native date & time picker component for iOS, Android and Windows (please note Windows is not actively maintained).
 
@@ -74,28 +73,30 @@ React Native date & time picker component for iOS, Android and Windows (please n
   - [Expo users notice](#expo-users-notice)
   - [Getting started](#getting-started)
   - [Usage](#usage)
-  - [React Native Support](#react-native-support)
   - [Localization note](#localization-note)
   - [Android imperative API](#android-imperative-api)
   - [Android styling](#android-styling)
   - [Props / params](#component-props--params-of-the-android-imperative-api)
     - [`mode` (`optional`)](#mode-optional)
     - [`display` (`optional`)](#display-optional)
-    - [`design` (`optional`, `Android only`)](#design-optional)
+    - [`design` (`optional`, `Android only`)](#design-optional-android-only)
     - [`initialInputMode` (`optional`, `Android only`)](#initialinputmode-optional-android-only)
     - [`title` (`optional`, `Android only`)](#title-optional-android-only)
     - [`fullscreen` (`optional`, `Android only`)](#fullscreen-optional-android-only)
     - [`startOnYearSelection` (`optional`, `Android only`)](#startOnYearSelection-optional-android-only)
-    - [`onChange` (`optional`)](#onchange-optional)
+    - [`onValueChange` (`optional`)](#onvaluechange-optional)
+    - [`onDismiss` (`optional`)](#ondismiss-optional)
+    - [`onNeutralButtonPress` (`optional`, `Android only`)](#onneutralbuttonpress-optional-android-only)
+    - [`onChange` (`optional`, `deprecated`)](#onchange-optional-deprecated)
     - [`value` (`required`)](#value-required)
     - [`maximumDate` (`optional`)](#maximumdate-optional)
     - [`minimumDate` (`optional`)](#minimumdate-optional)
     - [`timeZoneName` (`optional`, `iOS or Android only`)](#timeZoneName-optional-ios-and-android-only)
     - [`timeZoneOffsetInMinutes` (`optional`, `iOS or Android only`)](#timezoneoffsetinminutes-optional-ios-and-android-only)
-    - [`timeZoneOffsetInSeconds` (`optional`, `Windows only`)](#timezoneoffsetinsecond-optional-windows-only)
+    - [`timeZoneOffsetInSeconds` (`optional`, `Windows only`)](#timezoneoffsetinseconds-optional-windows-only)
     - [`dayOfWeekFormat` (`optional`, `Windows only`)](#dayOfWeekFormat-optional-windows-only)
     - [`dateFormat` (`optional`, `Windows only`)](#dateFormat-optional-windows-only)
-    - [`firstDayOfWeek` (`optional`, `Windows only`)](#firstDayOfWeek-optional-windows-only)
+    - [`firstDayOfWeek` (`optional`, `Android and Windows only`)](#firstdayofweek-optional-android-and-windows-only)
     - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
     - [`accentColor` (`optional`, `iOS only`)](#accentColor-optional-ios-only)
     - [`themeVariant` (`optional`, `iOS only`)](#themevariant-optional-ios-only)
@@ -117,15 +118,12 @@ React Native date & time picker component for iOS, Android and Windows (please n
 
 ## Requirements
 
-- Only Android API level >=21 (Android 5), iOS >= 11 are supported.
-- Tested with Xcode 14.0 and RN 0.72.7. Other configurations are very likely to work as well but have not been tested.
-
-The module supports the [new React Native architecture](https://reactnative.dev/docs/next/the-new-architecture/why) (Fabric rendering of iOS components, and turbomodules on Android). If you are using the new architecture, you will need to use React Native 0.71.4 or higher.
+The module supports the [new React Native architecture](https://reactnative.dev/docs/next/the-new-architecture/why) (Fabric rendering of iOS components, and turbomodules on Android).
 
 ## Expo users notice
 
-This module is part of Expo Managed Workflow - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo SDK in the Managed Workflow may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available in Expo Managed Workflow.
-If you use the Managed Workflow, use the command `expo install @react-native-community/datetimepicker` (not `yarn` or `npm`) to install this module - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
+This module is part of Expo Go - [see docs](https://docs.expo.io/versions/latest/sdk/date-time-picker/). However, Expo Go may not contain the latest version of the module and therefore, the newest features and bugfixes may not be available.
+If you use Expo Go, use the command `npx expo install @react-native-community/datetimepicker` (not `yarn` or `npm`) to install this module - Expo will automatically install the latest version compatible with your Expo SDK (which may _not_ be the latest version of the module available).
 
 If you're using a [Dev Client](https://docs.expo.dev/development/create-development-builds/), rebuild the Dev Client after installing the dependencies.
 
@@ -145,20 +143,7 @@ yarn add @react-native-community/datetimepicker
 
 Autolinking is not yet implemented on Windows, so [manual installation ](/docs/manual-installation.md) is needed.
 
-#### RN >= 0.60
-
-If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
-
-## React Native Support
-
-Check the `react-native` version support table below to find the corresponding `datetimepicker` version to meet support requirements. Maintenance is only provided for last 3 stable react-native versions.
-
-| react-native version | version |
-| -------------------- | ------- |
-| 0.73.0+              | 7.6.3+  |
-| <=0.72.0             | <=7.6.2 |
-| 0.70.0+              | 7.0.1+  |
-| <0.70.0              | <=7.0.0 |
+On iOS, run `npx pod-install` after installing. Then rebuild your project.
 
 ## Usage
 
@@ -181,15 +166,10 @@ Read more about the motivation in [Android imperative API](#android-imperative-a
 export const App = () => {
   const [date, setDate] = useState(new Date(1598051730000));
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDate(currentDate);
-  };
-
   const showMode = (currentMode) => {
     DateTimePickerAndroid.open({
       value: date,
-      onChange,
+      onValueChange: setDate,
       mode: currentMode,
       is24Hour: true,
     });
@@ -221,12 +201,6 @@ export const App = () => {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
-
   const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
@@ -251,7 +225,8 @@ export const App = () => {
           value={date}
           mode={mode}
           is24Hour={true}
-          onChange={onChange}
+          onValueChange={setDate}
+          onDismiss={() => setShow(false)}
         />
       )}
     </SafeAreaView>
@@ -358,7 +333,36 @@ List of possible values
 <RNDateTimePicker design="material" />
 ```
 
-#### `onChange` (`optional`)
+#### `onValueChange` (`optional`)
+
+Called when the user selects a date or time. Receives the selected `Date` as its only argument.
+
+```js
+<RNDateTimePicker onValueChange={(date) => setDate(date)} />
+```
+
+#### `onDismiss` (`optional`)
+
+Called when the picker is dismissed without selecting a value. Receives no arguments.
+
+```js
+<RNDateTimePicker onDismiss={() => setShow(false)} />
+```
+
+#### `onNeutralButtonPress` (`optional`, `Android only`)
+
+Called when the neutral button is pressed. Receives no arguments. See [`neutralButton`](#neutralButton-optional-android-only).
+
+```js
+<RNDateTimePicker
+  neutralButton={{label: 'Clear', textColor: 'grey'}}
+  onNeutralButtonPress={() => clearDate()}
+/>
+```
+
+#### `onChange` (`optional`, `deprecated`)
+
+> **Deprecated:** Use `onValueChange`, `onDismiss`, and `onNeutralButtonPress` instead. If the new specific listeners are provided, they take precedence over `onChange` for their respective event types.
 
 Date change handler.
 
@@ -554,7 +558,7 @@ Set the positive button label and text color.
 #### `neutralButton` (`optional`, `Android only`)
 
 Allows displaying neutral button on picker dialog.
-Pressing button can be observed in onChange handler as `event.type === 'neutralButtonPressed'`
+Pressing the button can be observed via the [`onNeutralButtonPress`](#onneutralbuttonpress-optional-android-only) callback.
 
 ```js
 <RNDateTimePicker neutralButton={{label: 'Clear', textColor: 'grey'}} />
@@ -643,9 +647,7 @@ Please see [manual-installation.md](/docs/manual-installation.md)
 
 This project is tested with BrowserStack.
 
-[circle-ci-badge]: https://img.shields.io/circleci/project/github/react-native-community/datetimepicker/master.svg?style=flat-square
-[circle-ci-status]: https://circleci.com/gh/react-native-datetimepicker/datetimepicker.svg?style=svg
+[npm-downloads-badge]: https://img.shields.io/npm/dm/@react-native-community/datetimepicker.svg?style=flat-square
+[npm-downloads-link]: https://www.npmjs.com/package/@react-native-community/datetimepicker
 [support-badge]: https://img.shields.io/badge/platforms-android%20%7C%20ios%20%7C%20windows-lightgrey.svg?style=flat-square
-[license-badge]: https://img.shields.io/npm/l/@react-native-community/slider.svg?style=flat-square
-[lean-core-badge]: https://img.shields.io/badge/Lean%20Core-Extracted-brightgreen.svg?style=flat-square
-[lean-core-issue]: https://github.com/facebook/react-native/issues/23313
+[license-badge]: https://img.shields.io/npm/l/@react-native-community/datetimepicker.svg?style=flat-square

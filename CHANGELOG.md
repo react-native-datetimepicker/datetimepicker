@@ -4,6 +4,13 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [9.1.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.0.0...v9.1.0) (2026-03-17)
+
+
+### Features
+
+* introduce more granular event listeners ([#1040](https://github.com/react-native-datetimepicker/datetimepicker/issues/1040)) ([ad3f799](https://github.com/react-native-datetimepicker/datetimepicker/commit/ad3f79933cc1a3c87bf70308524894fe6574b345))
+
 ## [9.0.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v8.6.0...v9.0.0) (2026-03-16)
 
 

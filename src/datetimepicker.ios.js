@@ -10,7 +10,11 @@
  * @flow strict-local
  */
 import RNDateTimePicker from './picker';
-import {dateToMilliseconds, sharedPropsValidation} from './utils';
+import {
+  dateToMilliseconds,
+  sharedPropsValidation,
+  warnIfOnChangeIsUsed,
+} from './utils';
 import {
   IOS_DISPLAY,
   EVENT_TYPE_SET,
@@ -63,7 +67,14 @@ export default function Picker({
   disabled = false,
   ...other
 }: IOSNativeProps): React.Node {
-  sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName, minimumDate, maximumDate});
+  sharedPropsValidation({
+    value,
+    timeZoneOffsetInMinutes,
+    timeZoneName,
+    minimumDate,
+    maximumDate,
+  });
+  warnIfOnChangeIsUsed(onChange);
 
   const display = getDisplaySafe(providedDisplay);
 

@@ -25,6 +25,7 @@ import {
   createNeutralEvtParams,
 } from './eventCreators';
 import {processColor} from 'react-native';
+import {warnIfOnChangeIsUsed} from './utils';
 
 function open(props: AndroidNativeProps) {
   const {
@@ -54,6 +55,7 @@ function open(props: AndroidNativeProps) {
     startOnYearSelection,
   } = props;
   validateAndroidProps(props);
+  warnIfOnChangeIsUsed(onChange);
   invariant(originalValue, 'A date or time must be specified as `value` prop.');
 
   const valueTimestamp = originalValue.getTime();

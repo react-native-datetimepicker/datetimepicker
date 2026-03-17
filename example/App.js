@@ -139,6 +139,9 @@ export const App = () => {
   };
 
   const onValueChange = (selectedDate) => {
+    if (Platform.OS === 'android') {
+      setShow(false);
+    }
     setDate(selectedDate);
   };
 

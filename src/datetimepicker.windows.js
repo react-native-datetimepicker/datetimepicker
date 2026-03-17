@@ -6,10 +6,7 @@
  */
 'use strict';
 
-import {
-  requireNativeComponent,
-  StyleSheet,
-} from 'react-native';
+import {requireNativeComponent, StyleSheet} from 'react-native';
 import type {
   WindowsNativeProps,
   WindowsDatePickerChangeEvent,
@@ -17,7 +14,7 @@ import type {
 } from './types';
 import * as React from 'react';
 import {EVENT_TYPE_SET, WINDOWS_MODE} from './constants';
-import {sharedPropsValidation} from './utils';
+import {sharedPropsValidation, warnIfOnChangeIsUsed} from './utils';
 
 const styles = StyleSheet.create({
   rnDatePicker: {
@@ -38,6 +35,7 @@ export default function RNDateTimePickerQWE(
   props: WindowsNativeProps,
 ): React.Node {
   sharedPropsValidation({value: props?.value});
+  warnIfOnChangeIsUsed(props.onChange);
 
   const localProps = {
     accessibilityLabel: props.accessibilityLabel,

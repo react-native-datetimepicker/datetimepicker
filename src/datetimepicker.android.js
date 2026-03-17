@@ -81,7 +81,14 @@ export default function RNDateTimePickerAndroid(
     // as an alternative, use the DateTimePickerAndroid whose reason for existence is described in
     // https://github.com/react-native-datetimepicker/datetimepicker/pull/327#issuecomment-723160992
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onChange, onValueChange, onDismiss, onNeutralButtonPress, valueTimestamp, mode],
+    [
+      onChange,
+      onValueChange,
+      onDismiss,
+      onNeutralButtonPress,
+      valueTimestamp,
+      mode,
+    ],
   );
 
   return null;

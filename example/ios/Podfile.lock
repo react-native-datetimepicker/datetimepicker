@@ -1810,7 +1810,7 @@ PODS:
     - React-Core
     - React-jsi
   - ReactTestApp-Resources (1.0.0-dev)
-  - RNDateTimePicker (8.6.0):
+  - RNDateTimePicker (9.0.0):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2176,7 +2176,7 @@ SPEC CHECKSUMS:
   ReactNativeHost: 147a222a7c577801639023140b694160987738ef
   ReactTestApp-DevSupport: 0e7676c00b33b0545e72d89ea09f990d737db6d3
   ReactTestApp-Resources: 1bd9ff10e4c24f2ad87101a32023721ae923bccf
-  RNDateTimePicker: 9c0a849bbe1c256f0854fea255734b715f5ea876
+  RNDateTimePicker: a8b45651bfa11872964f1439d1cae9a1712dc108
   RNLocalize: 390c6e0c4061855a7bd7a91e21dd6a317b45c46c
   Yoga: 1f66b0bb07f6c5f0199562b772bfb2ac54cad91a
 

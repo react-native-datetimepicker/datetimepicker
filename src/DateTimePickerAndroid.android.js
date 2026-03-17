@@ -25,6 +25,7 @@ import {
   createNeutralEvtParams,
 } from './eventCreators';
 import {processColor} from 'react-native';
+import {warnIfOnChangeIsUsed} from './utils';
 
 function open(props: AndroidNativeProps) {
   const {
@@ -38,6 +39,9 @@ function open(props: AndroidNativeProps) {
     timeZoneOffsetInMinutes,
     timeZoneName,
     onChange,
+    onValueChange,
+    onDismiss,
+    onNeutralButtonPress,
     onError,
     positiveButton,
     negativeButton,
@@ -51,6 +55,7 @@ function open(props: AndroidNativeProps) {
     startOnYearSelection,
   } = props;
   validateAndroidProps(props);
+  warnIfOnChangeIsUsed(onChange);
   invariant(originalValue, 'A date or time must be specified as `value` prop.');
 
   const valueTimestamp = originalValue.getTime();
@@ -99,20 +104,32 @@ function open(props: AndroidNativeProps) {
         case DATE_SET_ACTION:
         case TIME_SET_ACTION: {
           const date = new Date(timestamp);
-          const [event] = createDateTimeSetEvtParams(date, utcOffset);
-          onChange?.(event, date);
+          if (onValueChange) {
+            onValueChange({nativeEvent: {timestamp, utcOffset}}, date);
+          } else {
+            const [event] = createDateTimeSetEvtParams(date, utcOffset);
+            onChange?.(event, date);
+          }
           break;
         }
 
         case NEUTRAL_BUTTON_ACTION: {
-          const [event] = createNeutralEvtParams(originalValue, utcOffset);
-          onChange?.(event, originalValue);
+          if (onNeutralButtonPress) {
+            onNeutralButtonPress();
+          } else {
+            const [event] = createNeutralEvtParams(originalValue, utcOffset);
+            onChange?.(event, originalValue);
+          }
           break;
         }
         case DISMISS_ACTION:
         default: {
-          const [event] = createDismissEvtParams(originalValue, utcOffset);
-          onChange?.(event, originalValue);
+          if (onDismiss) {
+            onDismiss();
+          } else {
+            const [event] = createDismissEvtParams(originalValue, utcOffset);
+            onChange?.(event, originalValue);
+          }
           break;
         }
       }

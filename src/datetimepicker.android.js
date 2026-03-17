@@ -18,10 +18,13 @@ export default function RNDateTimePickerAndroid(
     display = ANDROID_DISPLAY.default,
     value,
     onChange,
+    onValueChange,
     is24Hour,
     minimumDate,
     maximumDate,
     minuteInterval,
+    onDismiss,
+    onNeutralButtonPress,
     onError,
     timeZoneOffsetInMinutes,
     timeZoneName,
@@ -56,6 +59,9 @@ export default function RNDateTimePickerAndroid(
         minuteInterval,
         timeZoneOffsetInMinutes,
         timeZoneName,
+        onValueChange,
+        onDismiss,
+        onNeutralButtonPress,
         onError,
         onChange,
         positiveButton,
@@ -75,7 +81,14 @@ export default function RNDateTimePickerAndroid(
     // as an alternative, use the DateTimePickerAndroid whose reason for existence is described in
     // https://github.com/react-native-datetimepicker/datetimepicker/pull/327#issuecomment-723160992
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onChange, valueTimestamp, mode],
+    [
+      onChange,
+      onValueChange,
+      onDismiss,
+      onNeutralButtonPress,
+      valueTimestamp,
+      mode,
+    ],
   );
 
   return null;

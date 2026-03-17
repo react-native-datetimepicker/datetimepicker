@@ -10,7 +10,11 @@
  * @flow strict-local
  */
 import RNDateTimePicker from './picker';
-import {dateToMilliseconds, sharedPropsValidation} from './utils';
+import {
+  dateToMilliseconds,
+  sharedPropsValidation,
+  warnIfOnChangeIsUsed,
+} from './utils';
 import {
   IOS_DISPLAY,
   EVENT_TYPE_SET,
@@ -55,41 +59,56 @@ export default function Picker({
   accentColor,
   themeVariant,
   onChange,
+  onValueChange,
+  onDismiss: onDismissProp,
   mode = IOS_MODE.date,
   display: providedDisplay = IOS_DISPLAY.default,
   // $FlowFixMe[incompatible-type]
   disabled = false,
   ...other
 }: IOSNativeProps): React.Node {
-  sharedPropsValidation({value, timeZoneOffsetInMinutes, timeZoneName, minimumDate, maximumDate});
+  sharedPropsValidation({
+    value,
+    timeZoneOffsetInMinutes,
+    timeZoneName,
+    minimumDate,
+    maximumDate,
+  });
+  warnIfOnChangeIsUsed(onChange);
 
   const display = getDisplaySafe(providedDisplay);
 
   const _onChange = (event: NativeEventIOS) => {
     const timestamp = event.nativeEvent.timestamp;
-    const unifiedEvent: DateTimePickerEvent = {
-      ...event,
-      type: EVENT_TYPE_SET,
-    };
-
     const date = timestamp !== undefined ? new Date(timestamp) : undefined;
 
-    onChange && onChange(unifiedEvent, date);
+    if (onValueChange && date) {
+      onValueChange(event, date);
+    } else if (onChange) {
+      const unifiedEvent: DateTimePickerEvent = {
+        ...event,
+        type: EVENT_TYPE_SET,
+      };
+      onChange(unifiedEvent, date);
+    }
   };
 
   const onDismiss = () => {
-    // TODO introduce separate onDismissed event listener
-    onChange &&
-      onChange(
-        {
-          type: EVENT_TYPE_DISMISSED,
-          nativeEvent: {
-            timestamp: value.getTime(),
-            utcOffset: 0, // TODO vonovak - the dismiss event should not carry any date information
+    if (onDismissProp) {
+      onDismissProp();
+    } else {
+      onChange &&
+        onChange(
+          {
+            type: EVENT_TYPE_DISMISSED,
+            nativeEvent: {
+              timestamp: value.getTime(),
+              utcOffset: 0,
+            },
           },
-        },
-        value,
-      );
+          value,
+        );
+    }
   };
 
   return (

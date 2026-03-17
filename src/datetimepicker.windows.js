@@ -6,10 +6,7 @@
  */
 'use strict';
 
-import {
-  requireNativeComponent,
-  StyleSheet,
-} from 'react-native';
+import {requireNativeComponent, StyleSheet} from 'react-native';
 import type {
   WindowsNativeProps,
   WindowsDatePickerChangeEvent,
@@ -17,7 +14,7 @@ import type {
 } from './types';
 import * as React from 'react';
 import {EVENT_TYPE_SET, WINDOWS_MODE} from './constants';
-import {sharedPropsValidation} from './utils';
+import {sharedPropsValidation, warnIfOnChangeIsUsed} from './utils';
 
 const styles = StyleSheet.create({
   rnDatePicker: {
@@ -38,6 +35,7 @@ export default function RNDateTimePickerQWE(
   props: WindowsNativeProps,
 ): React.Node {
   sharedPropsValidation({value: props?.value});
+  warnIfOnChangeIsUsed(props.onChange);
 
   const localProps = {
     accessibilityLabel: props.accessibilityLabel,
@@ -53,18 +51,23 @@ export default function RNDateTimePickerQWE(
   };
 
   const _onChange = (event: WindowsDatePickerChangeEvent) => {
-    const {onChange} = props;
-    const unifiedEvent: DateTimePickerEvent = {
-      ...event,
-      nativeEvent: {
-        ...event.nativeEvent,
-        timestamp: event.nativeEvent.newDate,
-        utcOffset: 0,
-      },
-      type: EVENT_TYPE_SET,
-    };
+    const {onChange, onValueChange} = props;
+    const date = new Date(event.nativeEvent.newDate);
 
-    onChange && onChange(unifiedEvent, new Date(event.nativeEvent.newDate));
+    if (onValueChange) {
+      onValueChange({nativeEvent: {timestamp: event.nativeEvent.newDate, utcOffset: 0}}, date);
+    } else if (onChange) {
+      const unifiedEvent: DateTimePickerEvent = {
+        ...event,
+        nativeEvent: {
+          ...event.nativeEvent,
+          timestamp: event.nativeEvent.newDate,
+          utcOffset: 0,
+        },
+        type: EVENT_TYPE_SET,
+      };
+      onChange(unifiedEvent, date);
+    }
   };
 
   // $FlowFixMe[recursive-definition]

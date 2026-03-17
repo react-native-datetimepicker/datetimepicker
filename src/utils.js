@@ -67,3 +67,13 @@ export function sharedPropsValidation({
     );
   }
 }
+
+let hasWarnedOnChange = false;
+export function warnIfOnChangeIsUsed(onChange: ?Function) {
+  if (__DEV__ && onChange && !hasWarnedOnChange) {
+    hasWarnedOnChange = true;
+    console.warn(
+      'DateTimePicker: `onChange` is deprecated. Use `onValueChange`, `onDismiss`, and `onNeutralButtonPress` instead.',
+    );
+  }
+}

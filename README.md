@@ -169,7 +169,7 @@ export const App = () => {
   const showMode = (currentMode) => {
     DateTimePickerAndroid.open({
       value: date,
-      onValueChange: setDate,
+      onValueChange: (event, selectedDate) => setDate(selectedDate),
       mode: currentMode,
       is24Hour: true,
     });
@@ -225,7 +225,7 @@ export const App = () => {
           value={date}
           mode={mode}
           is24Hour={true}
-          onValueChange={setDate}
+          onValueChange={(event, selectedDate) => setDate(selectedDate)}
           onDismiss={() => setShow(false)}
         />
       )}
@@ -335,10 +335,10 @@ List of possible values
 
 #### `onValueChange` (`optional`)
 
-Called when the user selects a date or time. Receives the selected `Date` as its only argument.
+Called when the user selects a date or time. Receives an `event` with `nativeEvent: { timestamp, utcOffset }` and the selected `Date`.
 
 ```js
-<RNDateTimePicker onValueChange={(date) => setDate(date)} />
+<RNDateTimePicker onValueChange={(event, date) => setDate(date)} />
 ```
 
 #### `onDismiss` (`optional`)

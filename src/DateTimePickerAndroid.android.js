@@ -105,7 +105,7 @@ function open(props: AndroidNativeProps) {
         case TIME_SET_ACTION: {
           const date = new Date(timestamp);
           if (onValueChange) {
-            onValueChange(date);
+            onValueChange({nativeEvent: {timestamp, utcOffset}}, date);
           } else {
             const [event] = createDateTimeSetEvtParams(date, utcOffset);
             onChange?.(event, date);

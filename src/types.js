@@ -43,6 +43,15 @@ export type DateTimePickerEvent = {
   ...
 };
 
+export type DateTimePickerChangeEvent = {
+  nativeEvent: $ReadOnly<{
+    timestamp: number,
+    utcOffset: number,
+    ...
+  }>,
+  ...
+};
+
 type BaseOptions = {|
   /**
    * The currently selected date.
@@ -61,7 +70,7 @@ type BaseOptions = {|
   /**
    * Called when the user selects a date or time.
    */
-  onValueChange?: ?(date: Date) => void,
+  onValueChange?: ?(event: DateTimePickerChangeEvent, date: Date) => void,
 
   /**
    * Called when the picker is dismissed without selecting a value.

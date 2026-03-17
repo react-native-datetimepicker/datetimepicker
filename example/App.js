@@ -138,7 +138,7 @@ export const App = () => {
     setDate(undefined);
   };
 
-  const onValueChange = (selectedDate) => {
+  const onValueChange = (event, selectedDate) => {
     if (Platform.OS === 'android') {
       setShow(false);
     }
@@ -165,7 +165,7 @@ export const App = () => {
     setDate(new Date(0));
   };
 
-  const onTimeChange = (newTime: Date) => {
+  const onTimeChange = (event: any, newTime?: Date) => {
     if (Platform.OS === 'windows') {
       setTime(newTime);
     }

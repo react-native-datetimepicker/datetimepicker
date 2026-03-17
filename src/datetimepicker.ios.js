@@ -82,10 +82,8 @@ export default function Picker({
     const timestamp = event.nativeEvent.timestamp;
     const date = timestamp !== undefined ? new Date(timestamp) : undefined;
 
-    if (onValueChange) {
-      if (date) {
-        onValueChange(date);
-      }
+    if (onValueChange && date) {
+      onValueChange(event, date);
     } else if (onChange) {
       const unifiedEvent: DateTimePickerEvent = {
         ...event,

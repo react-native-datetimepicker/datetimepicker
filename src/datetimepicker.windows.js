@@ -55,7 +55,7 @@ export default function RNDateTimePickerQWE(
     const date = new Date(event.nativeEvent.newDate);
 
     if (onValueChange) {
-      onValueChange(date);
+      onValueChange({nativeEvent: {timestamp: event.nativeEvent.newDate, utcOffset: 0}}, date);
     } else if (onChange) {
       const unifiedEvent: DateTimePickerEvent = {
         ...event,

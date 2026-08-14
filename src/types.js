@@ -178,9 +178,9 @@ export type IOSNativeProps = $ReadOnly<{|
   display?: IOSDisplay,
 
   /**
-   * Is this picker enabled?
+   * Is this picker disabled?
    */
-  enabled?: boolean,
+  disabled?: boolean,
 |}>;
 
 export type ButtonType = {label?: string, textColor?: ColorValue};

@@ -59,6 +59,9 @@ const TIME_PICKER_ALLOWED_ATTRIBUTES = {
   numbersBackgroundColor: {
     attrName: 'android:numbersBackgroundColor',
   },
+  numbersInnerTextColor: {
+    attrName: 'android:numbersInnerTextColor',
+  },
   numbersSelectorColor: {
     attrName: 'android:numbersSelectorColor',
   },

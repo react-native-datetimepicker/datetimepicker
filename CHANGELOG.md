@@ -4,6 +4,19 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [9.2.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.1.0...v9.2.0) (2026-08-31)
+
+
+### Features
+
+* **android:** support inner time picker text color ([#1052](https://github.com/react-native-datetimepicker/datetimepicker/issues/1052)) ([91788ec](https://github.com/react-native-datetimepicker/datetimepicker/commit/91788ec0978d5b761ad721e81df4c86d4331cc77))
+
+
+### Bug Fixes
+
+* **ios:** correct Flow prop type from enabled to disabled ([#1048](https://github.com/react-native-datetimepicker/datetimepicker/issues/1048)) ([b318cb7](https://github.com/react-native-datetimepicker/datetimepicker/commit/b318cb7da0d74079c8008adf92393e4884676119))
+* resolve config plugins through Expo ([#1053](https://github.com/react-native-datetimepicker/datetimepicker/issues/1053)) ([5db4a48](https://github.com/react-native-datetimepicker/datetimepicker/commit/5db4a48416f292f6661c2333b8d56c2f6644752b))
+
 ## [9.1.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.0.0...v9.1.0) (2026-03-17)
 
 

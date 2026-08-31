@@ -4,7 +4,7 @@ import {
   withAndroidColors,
   withAndroidColorsNight,
   withAndroidStyles,
-} from '@expo/config-plugins';
+} from 'expo/config-plugins';
 
 type ResourceXML = AndroidConfig.Resources.ResourceXML;
 

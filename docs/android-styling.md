@@ -69,5 +69,6 @@ The following illustrations show the different styles that can be applied to the
 | background             | android:background             |
 | headerBackground       | android:headerBackground       |
 | numbersBackgroundColor | android:numbersBackgroundColor |
+| numbersInnerTextColor  | android:numbersInnerTextColor  |
 | numbersSelectorColor   | android:numbersSelectorColor   |
 | numbersTextColor       | android:numbersTextColor       |

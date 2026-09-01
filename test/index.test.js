@@ -5,6 +5,7 @@ import RNDateTimePickerWindows, {
 } from '../src/datetimepicker.windows';
 import RNDateTimePickerAndroid from '../src/datetimepicker.android';
 import NativeDateTimePickerIOS from '../src/picker.ios';
+import {DateTimePickerAndroid} from '../src/DateTimePickerAndroid';
 import {render, fireEvent, waitFor} from '@testing-library/react-native';
 import {EVENT_TYPE_SET} from '../src/constants';
 
@@ -53,6 +54,29 @@ describe('DateTimePicker', () => {
       ],
     ])('throws when invalid props %s are passed', (props, expected) => {
       expect(() => RNDateTimePickerAndroid(props)).toThrow(expected);
+    });
+
+    it('reopens the picker when the design changes', () => {
+      const open = jest
+        .spyOn(DateTimePickerAndroid, 'open')
+        .mockImplementation(() => {});
+      jest
+        .spyOn(DateTimePickerAndroid, 'dismiss')
+        .mockImplementation(() => Promise.resolve(true));
+
+      const {rerender} = render(
+        <RNDateTimePickerAndroid value={new Date(DATE)} design="default" />,
+      );
+      rerender(
+        <RNDateTimePickerAndroid value={new Date(DATE)} design="material" />,
+      );
+
+      expect(open.mock.calls.map(([params]) => params.design)).toEqual([
+        'default',
+        'material',
+      ]);
+
+      jest.restoreAllMocks();
     });
   });
 

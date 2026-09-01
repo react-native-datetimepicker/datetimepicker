@@ -88,6 +88,7 @@ export default function RNDateTimePickerAndroid(
       onNeutralButtonPress,
       valueTimestamp,
       mode,
+      design,
     ],
   );
 

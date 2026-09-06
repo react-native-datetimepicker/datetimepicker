@@ -70,12 +70,11 @@ export default function RNDateTimePickerQWE(
     }
   };
 
-  // $FlowFixMe[recursive-definition]
   const timezoneOffsetInSeconds = (() => {
     // The Date object returns timezone in minutes. Convert that to seconds
     // and multiply by -1 so that the offset can be added to UTC+0 time to get
     // the correct value on the native side.
-    if (timezoneOffsetInSeconds == null && props.value != null) {
+    if (props.timeZoneOffsetInSeconds == null && props.value != null) {
       return -60 * props.value.getTimezoneOffset();
     }
     return props.timeZoneOffsetInSeconds;

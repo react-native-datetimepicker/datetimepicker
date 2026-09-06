@@ -67,6 +67,31 @@ describe('DateTimePicker', () => {
     });
   });
 
+  describe('RNDateTimePickerWindows', () => {
+    it.each([0, 3600, -18000])(
+      'passes timeZoneOffsetInSeconds %s to native Component',
+      async (timeZoneOffsetInSeconds) => {
+        const {toJSON} = await renderPicker(RNDateTimePickerWindows, {
+          timeZoneOffsetInSeconds,
+        });
+
+        expect(toJSON()).toHaveProperty(
+          'props.timeZoneOffsetInSeconds',
+          timeZoneOffsetInSeconds,
+        );
+      },
+    );
+
+    it('falls back to the device offset when timeZoneOffsetInSeconds is omitted', async () => {
+      const {toJSON} = await renderPicker(RNDateTimePickerWindows);
+
+      expect(toJSON()).toHaveProperty(
+        'props.timeZoneOffsetInSeconds',
+        -60 * new Date(DATE).getTimezoneOffset(),
+      );
+    });
+  });
+
   test.each([
     [RNDateTimePickerIOS, NativeDateTimePickerIOS, 'timestamp'],
     [RNDateTimePickerWindows, NativeDateTimePickerWindows, 'newDate'],

@@ -6,7 +6,6 @@ import RNDateTimePickerWindows, {
 import RNDateTimePickerAndroid from '../src/datetimepicker.android';
 import {DateTimePickerAndroid} from '../src/DateTimePickerAndroid.android';
 import NativeDateTimePickerIOS from '../src/picker.ios';
-import {DateTimePickerAndroid} from '../src/DateTimePickerAndroid';
 import {render, fireEvent, waitFor} from '@testing-library/react-native';
 import {EVENT_TYPE_SET} from '../src/constants';
 

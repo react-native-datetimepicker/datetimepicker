@@ -111,7 +111,13 @@ function getOpenPicker(
 }
 
 function validateAndroidProps(props: AndroidNativeProps) {
-  sharedPropsValidation({value: props?.value});
+  sharedPropsValidation({
+    value: props?.value,
+    timeZoneName: props?.timeZoneName,
+    timeZoneOffsetInMinutes: props?.timeZoneOffsetInMinutes,
+    minimumDate: props?.minimumDate,
+    maximumDate: props?.maximumDate,
+  });
 
   if (props.design !== 'material') validateMaterial3PropsNotUsed(props);
 

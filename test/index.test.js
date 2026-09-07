@@ -4,8 +4,8 @@ import RNDateTimePickerWindows, {
   RNDateTimePickerWindows as NativeDateTimePickerWindows,
 } from '../src/datetimepicker.windows';
 import RNDateTimePickerAndroid from '../src/datetimepicker.android';
+import {DateTimePickerAndroid} from '../src/DateTimePickerAndroid.android';
 import NativeDateTimePickerIOS from '../src/picker.ios';
-import {DateTimePickerAndroid} from '../src/DateTimePickerAndroid';
 import {render, fireEvent, waitFor} from '@testing-library/react-native';
 import {EVENT_TYPE_SET} from '../src/constants';
 
@@ -56,6 +56,31 @@ describe('DateTimePicker', () => {
       expect(() => RNDateTimePickerAndroid(props)).toThrow(expected);
     });
 
+    it.each([
+      [
+        {
+          value: new Date('2023-06-15'),
+          minimumDate: new Date('2023-12-31'),
+          maximumDate: new Date('2023-01-01'),
+        },
+        'DateTimePicker: minimumDate (2023-12-31T00:00:00.000Z) is after maximumDate (2023-01-01T00:00:00.000Z). Ensure minimumDate < maximumDate.',
+      ],
+      [
+        {
+          value: new Date(DATE),
+          timeZoneName: 'Europe/Prague',
+          timeZoneOffsetInMinutes: 60,
+        },
+        '`timeZoneName` and `timeZoneOffsetInMinutes` cannot be specified at the same time',
+      ],
+    ])(
+      'runs the shared prop validation on %s, in both the component and the imperative api',
+      (props, expected) => {
+        expect(() => DateTimePickerAndroid.open(props)).toThrow(expected);
+        expect(() => RNDateTimePickerAndroid(props)).toThrow(expected);
+      },
+    );
+    
     it('reopens the picker when the design changes', () => {
       const open = jest
         .spyOn(DateTimePickerAndroid, 'open')

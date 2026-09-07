@@ -47,6 +47,7 @@ jobs:
       - name: Install applesimutils
         run: |
           HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew >/dev/null
+          HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew trust wix/brew >/dev/null
           HOMEBREW_NO_INSTALL_CLEANUP=1 HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils >/dev/null
       - run: corepack enable
       - uses: actions/setup-node@v6

@@ -5,6 +5,8 @@ import RNDateTimePickerWindows, {
 } from '../src/datetimepicker.windows';
 import RNDateTimePickerAndroid from '../src/datetimepicker.android';
 import {DateTimePickerAndroid} from '../src/DateTimePickerAndroid.android';
+// jest resolves platform files as ios, so the component uses this fallback module
+import {DateTimePickerAndroid as ResolvedDateTimePickerAndroid} from '../src/DateTimePickerAndroid';
 import NativeDateTimePickerIOS from '../src/picker.ios';
 import {render, fireEvent, waitFor} from '@testing-library/react-native';
 import {EVENT_TYPE_SET} from '../src/constants';
@@ -80,13 +82,13 @@ describe('DateTimePicker', () => {
         expect(() => RNDateTimePickerAndroid(props)).toThrow(expected);
       },
     );
-    
+
     it('reopens the picker when the design changes', () => {
       const open = jest
-        .spyOn(DateTimePickerAndroid, 'open')
+        .spyOn(ResolvedDateTimePickerAndroid, 'open')
         .mockImplementation(() => {});
       jest
-        .spyOn(DateTimePickerAndroid, 'dismiss')
+        .spyOn(ResolvedDateTimePickerAndroid, 'dismiss')
         .mockImplementation(() => Promise.resolve(true));
 
       const {rerender} = render(

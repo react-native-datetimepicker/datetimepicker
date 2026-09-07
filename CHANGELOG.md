@@ -4,6 +4,16 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [9.2.1](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.2.0...v9.2.1) (2026-09-07)
+
+
+### Bug Fixes
+
+* **android:** reopen picker when design prop changes ([#1055](https://github.com/react-native-datetimepicker/datetimepicker/issues/1055)) ([c324523](https://github.com/react-native-datetimepicker/datetimepicker/commit/c324523f97c1f30f4b3ba71d8860249c65bebd68))
+* **android:** skip explicit Kotlin plugin when AGP provides built-in Kotlin ([#1058](https://github.com/react-native-datetimepicker/datetimepicker/issues/1058)) ([8a5abf2](https://github.com/react-native-datetimepicker/datetimepicker/commit/8a5abf2b77ce114bbebecddd18f1bd48da8cfea3))
+* **types:** allow design argument in DateTimePickerAndroid.dismiss ([#1059](https://github.com/react-native-datetimepicker/datetimepicker/issues/1059)) ([4621a0d](https://github.com/react-native-datetimepicker/datetimepicker/commit/4621a0dd8edb8cbf8c05e7074e58b6cc5a3dd8f7))
+* **windows:** respect the timeZoneOffsetInSeconds prop ([#1061](https://github.com/react-native-datetimepicker/datetimepicker/issues/1061)) ([dcc4611](https://github.com/react-native-datetimepicker/datetimepicker/commit/dcc46110a5997b4bf7cb6aeaa411b9f335221493))
+
 ## [9.2.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.1.0...v9.2.0) (2026-08-31)
 
 

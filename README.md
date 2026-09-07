@@ -264,7 +264,7 @@ The `params` is an object with the same properties as the component props docume
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 DateTimePickerAndroid.open(params: AndroidNativeProps)
-DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
+DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'], design?: AndroidNativeProps['design'])
 ```
 
 The reason we recommend the imperative API is: on Android, the date/time picker opens in a dialog, similar to `ReactNative.alert()` from core react native. The imperative api models this behavior better than the declarative component api. While the component approach is perfectly functional, based on the issue tracker history, it appears to be more prone to introducing bugs.

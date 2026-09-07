@@ -47,6 +47,13 @@ static YGSize RNDateTimePickerShadowViewMeasure(YGNodeConstRef node, float width
 
   __block CGSize size;
   dispatch_sync(dispatch_get_main_queue(), ^{
+    if (@available(iOS 14.0, *)) {
+      // if this is not reset to the default before setting style it can result in a crash
+      // use case: picker was first shown with mode that is not UIDatePickerModeCountDownTimer then
+      // displayed again in different UI with mode UIDatePickerModeCountDownTimer
+      [shadowPickerView.picker setDatePickerMode:UIDatePickerModeDateAndTime];
+      [shadowPickerView.picker setPreferredDatePickerStyle:shadowPickerView.displayIOS];
+    }
     [shadowPickerView.picker setDate:shadowPickerView.date];
     [shadowPickerView.picker setDatePickerMode:shadowPickerView.mode];
     [shadowPickerView.picker setLocale:shadowPickerView.locale];

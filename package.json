@@ -98,7 +98,7 @@
     "react-native": "0.83.3",
     "react-native-localize": "^3.5.1",
     "react-native-test-app": "^5.1.0",
-    "react-native-windows": "^0.81.4",
+    "react-native-windows": "^0.82.0",
     "react-test-renderer": "19.2.0",
     "semantic-release": "^19.0.3",
     "typescript": "~5.8.3"

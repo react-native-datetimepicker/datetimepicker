@@ -335,7 +335,7 @@ List of possible values
 
 #### `onValueChange` (`optional`)
 
-Called when the user selects a date or time. Receives an `event` with `nativeEvent: { timestamp, utcOffset }` and the selected `Date`.
+Called when the user selects a date or time. Receives an `event` with `nativeEvent: { timestamp, utcOffset }` and the selected `Date`. On iOS, `nativeEvent.target` is also present (the React tag of the picker view).
 
 ```js
 <RNDateTimePicker onValueChange={(event, date) => setDate(date)} />
@@ -371,6 +371,7 @@ It is also called when user dismisses the picker, which you can detect by checki
 The values can be: `'set' | 'dismissed' | 'neutralButtonPressed'`. (`neutralButtonPressed` is only available on Android).
 
 The `utcOffset` field is only available on Android and iOS. It is the offset in minutes between the selected date and UTC time.
+On iOS, `nativeEvent.target` is the React tag of the picker view (injected by React Native). It is omitted on Android, where the picker is a dialog rather than a view, and on iOS dismiss events.
 
 ```js
 const setDate = (event: DateTimePickerEvent, date: Date) => {

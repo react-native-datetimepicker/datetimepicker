@@ -30,6 +30,7 @@ export type NativeEventIOS = SyntheticEvent<
   $ReadOnly<{|
     timestamp: number,
     utcOffset: number,
+    target?: number,
   |}>,
 >;
 
@@ -38,6 +39,7 @@ export type DateTimePickerEvent = {
   nativeEvent: $ReadOnly<{
     timestamp: number,
     utcOffset: number,
+    target?: number,
     ...
   }>,
   ...
@@ -47,6 +49,7 @@ export type DateTimePickerChangeEvent = {
   nativeEvent: $ReadOnly<{
     timestamp: number,
     utcOffset: number,
+    target?: number,
     ...
   }>,
   ...

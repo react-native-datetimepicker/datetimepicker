@@ -23,6 +23,7 @@ export type DateTimePickerEvent = {
   nativeEvent: {
     timestamp: number;
     utcOffset: number;
+    target?: number;
   };
 };
 
@@ -30,6 +31,7 @@ export type DateTimePickerChangeEvent = {
   nativeEvent: {
     timestamp: number;
     utcOffset: number;
+    target?: number;
   };
 };
 

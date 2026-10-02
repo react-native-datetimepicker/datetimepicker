@@ -23,6 +23,9 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
     private Handler handler = new Handler();
     private Runnable runnable;
     private Context mContext;
+    private NumberPicker mMinuteSpinner;
+    private int mLastHour = -1;
+    private int mLastMinute = -1;
 
     public MinuteIntervalSnappableTimePickerDialog(
             Context context,
@@ -188,8 +191,31 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
         handler.postDelayed(runnable, 500);
     }
 
+    /**
+     * The platform spinner treats a minute change from its max to its min value (and vice versa)
+     * as the minute wheel wrapping around, and moves the hour by one. When the minute spinner has
+     * too few values to wrap (e.g. minuteInterval 20 or 30), such a change is not a wrap,
+     * so the hour is restored.
+     *
+     * @return true if the hour was restored (another onTimeChanged will follow)
+     */
+    private boolean restoreHourIfChangedByMinuteSpinner(final TimePicker view, final int hourOfDay, final int minute) {
+        boolean minuteSpinnerCanWrap = mMinuteSpinner == null || mMinuteSpinner.getWrapSelectorWheel();
+        if (!minuteSpinnerCanWrap && mLastHour != -1 && hourOfDay != mLastHour && minute != mLastMinute) {
+            // will fire another onTimeChanged
+            view.setCurrentHour(mLastHour);
+            return true;
+        }
+        mLastHour = hourOfDay;
+        mLastMinute = minute;
+        return false;
+    }
+
     @Override
     public void onTimeChanged(final TimePicker view, final int hourOfDay, final int minute) {
+        if (isSpinner() && restoreHourIfChangedByMinuteSpinner(view, hourOfDay, minute)) {
+            return;
+        }
         final int realMinutes = getRealMinutes(minute);
         // *always* remove pending 'validation' callbacks, otherwise a valid value might be rewritten
         handler.removeCallbacks(runnable);
@@ -264,6 +290,8 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
             setSpinnerDisplayedValues();
             int selectedIndex = snapRealMinutesToInterval(realMinuteBackup) / mTimePickerInterval;
             mTimePicker.setCurrentMinute(selectedIndex);
+            mLastHour = mTimePicker.getCurrentHour();
+            mLastMinute = mTimePicker.getCurrentMinute();
         } else {
             int snappedRealMinute = snapRealMinutesToInterval(realMinuteBackup);
             mTimePicker.setCurrentMinute(snappedRealMinute);
@@ -274,6 +302,7 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
     private void setSpinnerDisplayedValues() {
         int minutePickerId = mContext.getResources().getIdentifier("minute", "id", "android");
         NumberPicker minutePicker = this.findViewById(minutePickerId);
+        mMinuteSpinner = minutePicker;
 
         minutePicker.setMinValue(0);
         minutePicker.setMaxValue((60 / mTimePickerInterval) - 1);

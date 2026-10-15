@@ -1,6 +1,7 @@
 package com.reactcommunity.rndatetimepicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -9,9 +10,11 @@ import android.content.DialogInterface;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.TimePicker;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
@@ -262,6 +265,7 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
 
         if (isSpinner()) {
             setSpinnerDisplayedValues();
+            setSpinnerAccessibilityDelegate();
             int selectedIndex = snapRealMinutesToInterval(realMinuteBackup) / mTimePickerInterval;
             mTimePicker.setCurrentMinute(selectedIndex);
         } else {
@@ -284,6 +288,22 @@ class MinuteIntervalSnappableTimePickerDialog extends TimePickerDialog {
         }
 
         minutePicker.setDisplayedValues(displayedValues.toArray(new String[0]));
+    }
+
+    private void setSpinnerAccessibilityDelegate() {
+        mTimePicker.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public boolean dispatchPopulateAccessibilityEvent(View host, AccessibilityEvent event) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, mTimePicker.getCurrentHour());
+                calendar.set(Calendar.MINUTE, getRealMinutes());
+
+                int flags = DateUtils.FORMAT_SHOW_TIME
+                        | (mTimePicker.is24HourView() ? DateUtils.FORMAT_24HOUR : DateUtils.FORMAT_12HOUR);
+                event.getText().add(DateUtils.formatDateTime(mContext, calendar.getTimeInMillis(), flags));
+                return true;
+            }
+        });
     }
 
     @Override

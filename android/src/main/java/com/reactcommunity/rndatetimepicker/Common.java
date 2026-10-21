@@ -213,7 +213,7 @@ public class Common {
 
   public static long minDateWithTimeZone(Bundle args) {
     if (!args.containsKey(RNConstants.ARG_MINDATE)) {
-      return 0;
+      return Long.MIN_VALUE;
     }
 
     Calendar minDate = Calendar.getInstance(getTimeZone(args));

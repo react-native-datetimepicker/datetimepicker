@@ -4,6 +4,14 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [9.2.2](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.2.1...v9.2.2) (2026-10-21)
+
+
+### Bug Fixes
+
+* **android:** allow dates before 1970 when only maximumDate is set ([#1067](https://github.com/react-native-datetimepicker/datetimepicker/issues/1067)) ([3e8603c](https://github.com/react-native-datetimepicker/datetimepicker/commit/3e8603c1bb53148d53dffbd148b3d33aa63b6dad))
+* **android:** announce real minutes for spinner with minuteInterval ([#1071](https://github.com/react-native-datetimepicker/datetimepicker/issues/1071)) ([ed3df63](https://github.com/react-native-datetimepicker/datetimepicker/commit/ed3df63814b48a7aec5196a2dae4b8f5c29bcfdd))
+
 ## [9.2.1](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.2.0...v9.2.1) (2026-09-07)
 
 

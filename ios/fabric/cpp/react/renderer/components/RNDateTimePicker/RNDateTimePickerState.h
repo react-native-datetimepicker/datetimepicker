@@ -5,7 +5,11 @@
 
 #pragma once
 
+#if __has_include(<React/Graphics.h>)
+#include <React/Graphics.h>
+#else
 #include <react/renderer/graphics/Geometry.h>
+#endif
 
 namespace facebook {
 namespace react {

@@ -1,6 +1,6 @@
 {
   "name": "@react-native-community/datetimepicker",
-  "version": "9.2.2",
+  "version": "9.3.0",
   "description": "DateTimePicker component for React Native",
   "main": "./src/index.js",
   "types": "src/index.d.ts",

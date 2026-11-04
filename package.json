@@ -18,7 +18,8 @@
     "!**/__fixtures__",
     "!**/__mocks__",
     "plugin/build",
-    "app.plugin.js"
+    "app.plugin.js",
+    "Package.swift"
   ],
   "publishConfig": {
     "access": "public",
@@ -133,5 +134,8 @@
       }
     }
   },
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.9.2",
+  "swiftpmConfig": {
+    "name": "RNDateTimePicker"
+  }
 }

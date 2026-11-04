@@ -94,7 +94,7 @@ public class RNTimePickerDialogFragment extends DialogFragment {
   }
 
   private TimePickerDialog createDialog(Bundle args) {
-    Context activityContext = getActivity();
+    Context activityContext = Common.applyThemeVariant(getActivity(), args);
     TimePickerDialog dialog = getDialog(args, activityContext, mOnTimeSetListener);
 
     if (args != null) {

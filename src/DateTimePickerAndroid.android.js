@@ -53,6 +53,7 @@ function open(props: AndroidNativeProps) {
     design,
     fullscreen,
     startOnYearSelection,
+    themeVariant,
   } = props;
   validateAndroidProps(props);
   warnIfOnChangeIsUsed(onChange);
@@ -98,6 +99,7 @@ function open(props: AndroidNativeProps) {
         initialInputMode,
         fullscreen,
         startOnYearSelection,
+        themeVariant,
       });
 
       switch (action) {

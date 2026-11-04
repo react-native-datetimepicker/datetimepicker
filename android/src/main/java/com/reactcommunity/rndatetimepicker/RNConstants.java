@@ -23,6 +23,7 @@ public final class RNConstants {
   public static final String ACTION_NEUTRAL_BUTTON = "neutralButtonAction";
   public static final String FIRST_DAY_OF_WEEK = "firstDayOfWeek";
   public static final String ARG_START_ON_YEAR_SELECTION = "startOnYearSelection";
+  public static final String ARG_THEME_VARIANT = "themeVariant";
 
   /**
    * Minimum date supported by {@link TimePickerDialog}, 01 Jan 1900

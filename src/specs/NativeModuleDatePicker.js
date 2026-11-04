@@ -12,6 +12,7 @@ export type DatePickerOpenParams = $ReadOnly<{
   timeZoneName?: number,
   timeZoneOffsetInMinutes?: number,
   startOnYearSelection?: boolean,
+  themeVariant?: string,
 }>;
 
 type DateSetAction = 'dateSetAction' | 'dismissedAction';

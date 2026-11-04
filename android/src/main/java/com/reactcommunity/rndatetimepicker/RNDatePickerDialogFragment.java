@@ -95,7 +95,7 @@ public class RNDatePickerDialogFragment extends DialogFragment {
   }
 
   private DatePickerDialog createDialog(Bundle args) {
-    Context activityContext = getActivity();
+    Context activityContext = Common.applyThemeVariant(getActivity(), args);
     DatePickerDialog dialog = getDialog(args, activityContext, mOnDateSetListener);
 
     if (args != null) {

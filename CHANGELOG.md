@@ -4,6 +4,13 @@
 
 Please see the [releases page](https://github.com/react-native-community/datetimepicker/releases)
 
+## [9.3.0](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.2.2...v9.3.0) (2026-11-04)
+
+
+### Features
+
+* **ios:** add Swift Package Manager support ([#1073](https://github.com/react-native-datetimepicker/datetimepicker/issues/1073)) ([f07ffd5](https://github.com/react-native-datetimepicker/datetimepicker/commit/f07ffd52b5af1b9461b7932834877d9beab5cad8))
+
 ## [9.2.2](https://github.com/react-native-datetimepicker/datetimepicker/compare/v9.2.1...v9.2.2) (2026-10-21)
 
 

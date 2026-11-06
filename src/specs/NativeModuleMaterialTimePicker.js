@@ -8,6 +8,7 @@ export type TimePickerOpenParams = $ReadOnly<{
   initialInputMode?: string,
   title?: string,
   is24Hour?: boolean,
+  timeZoneName?: string,
   timeZoneOffsetInMinutes?: number,
 }>;
 

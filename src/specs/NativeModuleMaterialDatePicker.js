@@ -11,7 +11,7 @@ export type DatePickerOpenParams = $ReadOnly<{
   minimumDate?: number,
   fullscreen?: boolean,
   testID?: string,
-  timeZoneName?: number,
+  timeZoneName?: string,
   timeZoneOffsetInMinutes?: number,
   firstDayOfWeek?: number,
   startOnYearSelection?: boolean,

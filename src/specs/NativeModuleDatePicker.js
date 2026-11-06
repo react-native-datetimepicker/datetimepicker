@@ -9,7 +9,7 @@ export type DatePickerOpenParams = $ReadOnly<{
   maximumDate?: number,
   minimumDate?: number,
   testID?: string,
-  timeZoneName?: number,
+  timeZoneName?: string,
   timeZoneOffsetInMinutes?: number,
   startOnYearSelection?: boolean,
 }>;

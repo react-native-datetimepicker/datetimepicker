@@ -9,6 +9,7 @@ export type TimePickerOpenParams = $ReadOnly<{
   is24Hour?: boolean,
   minuteInterval?: number,
   timeZoneOffsetInMinutes?: number,
+  themeVariant?: string,
 }>;
 
 type TimeSetAction = 'timeSetAction' | 'dismissedAction';

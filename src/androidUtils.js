@@ -39,6 +39,7 @@ type OpenParams = {
   design: AndroidNativeProps['design'],
   fullscreen: AndroidNativeProps['fullscreen'],
   startOnYearSelection: AndroidNativeProps['startOnYearSelection'],
+  themeVariant: AndroidNativeProps['themeVariant'],
 };
 
 export type PresentPickerCallback =
@@ -62,6 +63,7 @@ function getOpenPicker(
         dialogButtons,
         title,
         initialInputMode,
+        themeVariant,
       }: OpenParams) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[mode].open({
@@ -74,6 +76,7 @@ function getOpenPicker(
           dialogButtons,
           title,
           initialInputMode,
+          themeVariant,
         });
     default:
       return ({
@@ -90,6 +93,7 @@ function getOpenPicker(
         initialInputMode,
         fullscreen,
         startOnYearSelection,
+        themeVariant,
       }: OpenParams) =>
         // $FlowFixMe - `AbstractComponent` [1] is not an instance type.
         pickers[ANDROID_MODE.date].open({
@@ -106,6 +110,7 @@ function getOpenPicker(
           initialInputMode,
           fullscreen,
           startOnYearSelection,
+          themeVariant,
         });
   }
 }

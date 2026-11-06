@@ -139,7 +139,8 @@ export type IOSNativeProps = Readonly<
     accentColor?: string;
 
     /**
-     * Override theme variant used by iOS native picker
+     * Override theme variant used by the native picker (iOS, and Android's
+     * default design dialogs)
      */
     themeVariant?: 'dark' | 'light';
 
@@ -165,6 +166,12 @@ export type AndroidNativeProps = Readonly<
        * The date picker mode.
        */
       mode?: AndroidMode;
+
+      /**
+       * Override the light/dark theme of the default (non-material) date and
+       * time dialogs, independent of the Activity's night mode.
+       */
+      themeVariant?: 'dark' | 'light';
 
       /**
        * The display options.

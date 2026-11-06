@@ -105,6 +105,45 @@ describe('DateTimePicker', () => {
 
       jest.restoreAllMocks();
     });
+
+    it('forwards themeVariant to the default date and time pickers', async () => {
+      const result = {action: 'dismissedAction', timestamp: 0, utcOffset: 0};
+      const dateOpen = jest.fn(() => Promise.resolve(result));
+      const timeOpen = jest.fn(() => Promise.resolve(result));
+      let IsolatedDateTimePickerAndroid;
+      jest.isolateModules(() => {
+        jest.doMock('../src/picker', () => ({
+          __esModule: true,
+          default: {date: {open: dateOpen}, time: {open: timeOpen}},
+        }));
+        ({
+          DateTimePickerAndroid: IsolatedDateTimePickerAndroid,
+        } = require('../src/DateTimePickerAndroid.android'));
+      });
+
+      const onValueChange = jest.fn();
+      IsolatedDateTimePickerAndroid.open({
+        value: new Date(DATE),
+        mode: 'date',
+        themeVariant: 'light',
+        onValueChange,
+      });
+      IsolatedDateTimePickerAndroid.open({
+        value: new Date(DATE),
+        mode: 'time',
+        themeVariant: 'dark',
+        onValueChange,
+      });
+      await waitFor(() => expect(timeOpen).toHaveBeenCalled());
+
+      expect(dateOpen).toHaveBeenCalledWith(
+        expect.objectContaining({themeVariant: 'light'}),
+      );
+      expect(timeOpen).toHaveBeenCalledWith(
+        expect.objectContaining({themeVariant: 'dark'}),
+      );
+      jest.dontMock('../src/picker');
+    });
   });
 
   describe('RNDateTimePickerIOS', () => {

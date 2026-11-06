@@ -4,7 +4,12 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.ContextWrapper;
+import android.view.LayoutInflater;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -15,6 +20,7 @@ import android.widget.DatePicker;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
@@ -244,6 +250,90 @@ public class Common {
     return args;
   }
 
+  /**
+   * Returns a context for the picker dialog whose light/dark look matches the
+   * `themeVariant` arg ('light' | 'dark'), independent of the Activity's
+   * current night mode. The theme is built fresh from the Activity's theme
+   * resource on resources whose uiMode night bit is forced; it is not copied
+   * from the Activity's live Theme, which may hold attributes resolved under
+   * the other night mode. Window/system services still come from the
+   * Activity. Without a themeVariant the Activity context is returned as is.
+   */
+  @Nullable
+  public static Context applyThemeVariant(@Nullable Context activityContext, @Nullable Bundle args) {
+    if (activityContext == null || args == null) {
+      return activityContext;
+    }
+    final String variant = args.getString(RNConstants.ARG_THEME_VARIANT);
+    final int nightFlag;
+    if ("dark".equals(variant)) {
+      nightFlag = Configuration.UI_MODE_NIGHT_YES;
+    } else if ("light".equals(variant)) {
+      nightFlag = Configuration.UI_MODE_NIGHT_NO;
+    } else {
+      return activityContext;
+    }
+
+    int themeResId = 0;
+    if (activityContext instanceof Activity) {
+      Activity activity = (Activity) activityContext;
+      try {
+        themeResId = activity.getPackageManager()
+          .getActivityInfo(activity.getComponentName(), 0)
+          .getThemeResource();
+      } catch (PackageManager.NameNotFoundException ignored) {
+        // fall through to the application theme
+      }
+    }
+    if (themeResId == 0) {
+      themeResId = activityContext.getApplicationInfo().theme;
+    }
+
+    final Configuration current = activityContext.getResources().getConfiguration();
+    final Configuration override = new Configuration(current);
+    override.uiMode = (current.uiMode & ~Configuration.UI_MODE_NIGHT_MASK) | nightFlag;
+    final Resources resources = activityContext.createConfigurationContext(override).getResources();
+    final Resources.Theme theme = resources.newTheme();
+    theme.applyStyle(themeResId, true);
+
+    return new ThemeVariantContext(activityContext, resources, theme);
+  }
+
+  /** Activity context with the picker's own resources and theme. */
+  private static final class ThemeVariantContext extends ContextWrapper {
+    private final Resources mResources;
+    private final Resources.Theme mTheme;
+
+    ThemeVariantContext(Context base, Resources resources, Resources.Theme theme) {
+      super(base);
+      mResources = resources;
+      mTheme = theme;
+    }
+
+    @Override
+    public Resources getResources() {
+      return mResources;
+    }
+
+    @Override
+    public Resources.Theme getTheme() {
+      return mTheme;
+    }
+
+    @Override
+    public void setTheme(int resid) {
+      mTheme.applyStyle(resid, true);
+    }
+
+    @Override
+    public Object getSystemService(String name) {
+      if (Context.LAYOUT_INFLATER_SERVICE.equals(name)) {
+        return LayoutInflater.from(getBaseContext()).cloneInContext(this);
+      }
+      return super.getSystemService(name);
+    }
+  }
+
   public static Bundle createDatePickerArguments(ReadableMap options) {
     final Bundle args = Common.createFragmentArguments(options);
 
@@ -276,6 +366,9 @@ public class Common {
     if (options.hasKey(RNConstants.ARG_START_ON_YEAR_SELECTION) && !options.isNull(RNConstants.ARG_START_ON_YEAR_SELECTION)) {
       args.putBoolean(RNConstants.ARG_START_ON_YEAR_SELECTION, options.getBoolean(RNConstants.ARG_START_ON_YEAR_SELECTION));
     }
+    if (options.hasKey(RNConstants.ARG_THEME_VARIANT) && !options.isNull(RNConstants.ARG_THEME_VARIANT)) {
+      args.putString(RNConstants.ARG_THEME_VARIANT, options.getString(RNConstants.ARG_THEME_VARIANT));
+    }
     return args;
   }
 
@@ -296,6 +389,9 @@ public class Common {
     }
     if (options.hasKey(RNConstants.ARG_TZOFFSET_MINS) && !options.isNull(RNConstants.ARG_TZOFFSET_MINS)) {
       args.putLong(RNConstants.ARG_TZOFFSET_MINS, (long) options.getDouble(RNConstants.ARG_TZOFFSET_MINS));
+    }
+    if (options.hasKey(RNConstants.ARG_THEME_VARIANT) && !options.isNull(RNConstants.ARG_THEME_VARIANT)) {
+      args.putString(RNConstants.ARG_THEME_VARIANT, options.getString(RNConstants.ARG_THEME_VARIANT));
     }
 
     return args;

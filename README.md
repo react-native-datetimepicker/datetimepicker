@@ -99,7 +99,7 @@ React Native date & time picker component for iOS, Android and Windows (please n
     - [`firstDayOfWeek` (`optional`, `Android and Windows only`)](#firstdayofweek-optional-android-and-windows-only)
     - [`textColor` (`optional`, `iOS only`)](#textColor-optional-ios-only)
     - [`accentColor` (`optional`, `iOS only`)](#accentColor-optional-ios-only)
-    - [`themeVariant` (`optional`, `iOS only`)](#themevariant-optional-ios-only)
+    - [`themeVariant` (`optional`)](#themevariant-optional)
     - [`locale` (`optional`, `iOS only`)](#locale-optional-ios-only)
     - [`is24Hour` (`optional`, `Windows and Android only`)](#is24hour-optional-windows-and-android-only)
     - [`positiveButton` (`optional`, `Android only`)](#positiveButton-optional-android-only)
@@ -477,12 +477,14 @@ Allows changing of the textColor of the date picker. Has effect only when `displ
 Allows changing the accentColor (tintColor) of the date picker.
 Has no effect when `display` is `"spinner"`.
 
-#### `themeVariant` (`optional`, `iOS only`)
+#### `themeVariant` (`optional`)
 
 Allows overriding system theme variant (dark or light mode) used by the date picker.
+
+On Android this applies to the default (non-material) date and time dialogs, per dialog, without changing the Activity's night mode. This helps apps with an in-app theme switch that differs from the system theme.
 However, we recommend that you instead control the theme of the whole application using [react-native-theme-control](https://github.com/vonovak/react-native-theme-control).
 
-:warning: Has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
+:warning: On iOS, has effect only on iOS 14 and later. On iOS 13 & less, use `textColor` to make the picker dark-theme compatible
 
 List of possible values:
 

@@ -33,6 +33,13 @@ public:
         traits.set(ShadowNodeTraits::Trait::LeafYogaNode);
         return traits;
     }
+
+    void setMeasuredHeight(float height) const {
+        auto style = yogaNode_.style();
+        style.setDimension(yoga::Dimension::Height, yoga::StyleSizeLength::points(height));
+        yogaNode_.setStyle(style);
+        yogaNode_.setDirty(true);
+    }
 };
 
 } // namespace react

@@ -104,6 +104,21 @@ NSDate* adjustMinimumDate (NSDate* minimumDate, int minuteInterval) {
     }
     CGSize size = [_dummyPicker sizeThatFits:UILayoutFittingCompressedSize];
     size.width += 10;
+
+    // Workaround: sizeThatFits: returns incorrect height for
+    // UIDatePickerModeDateAndTime + UIDatePickerStyleInline (Apple bug).
+    // The returned height only accounts for the calendar, missing the time row.
+    if (@available(iOS 14.0, *)) {
+        if (_dummyPicker.datePickerMode == UIDatePickerModeDateAndTime &&
+            _dummyPicker.preferredDatePickerStyle == UIDatePickerStyleInline) {
+            UIDatePicker *timePicker = [UIDatePicker new];
+            timePicker.datePickerMode = UIDatePickerModeTime;
+            timePicker.preferredDatePickerStyle = UIDatePickerStyleInline;
+            CGSize timeSize = [timePicker sizeThatFits:UILayoutFittingCompressedSize];
+            size.height += timeSize.height;
+        }
+    }
+
     auto newState = RNDateTimePickerState{RCTSizeFromCGSize(size)};
     _state->updateState(std::move(newState));
 }

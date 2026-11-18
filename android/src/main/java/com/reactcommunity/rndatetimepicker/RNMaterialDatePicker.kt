@@ -52,7 +52,15 @@ class RNMaterialDatePicker(
 
   private fun setInitialDate() {
     val initialDate = RNDate(args)
-    builder.setSelection(initialDate.timestamp())
+
+    // Material DatePicker reads the selection as midnight UTC of the day to show.
+    // Pass the day of the value in the target timezone, not the raw timestamp,
+    // which can fall on the previous or next day in UTC.
+    val selection = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"))
+    selection.clear()
+    selection.set(initialDate.year(), initialDate.month(), initialDate.day())
+
+    builder.setSelection(selection.timeInMillis)
   }
 
   private fun setTitle() {

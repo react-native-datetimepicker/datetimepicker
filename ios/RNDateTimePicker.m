@@ -65,6 +65,21 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   _reactMinuteInterval = minuteInterval;
 }
 
+- (void)setTimeZone:(NSTimeZone *)timeZone
+{
+  // A loaded calendar keeps its visible month across a time zone change. With a minimum/maximum date
+  // near a month boundary that month can fall outside the range in the new zone, and UIKit throws
+  // (e.g. "Trying to scroll to a month marked as visible that is not loaded."). Clearing the range
+  // while the zone changes avoids that; restoring it re-applies the limits in the new zone.
+  NSDate *minimumDate = self.minimumDate;
+  NSDate *maximumDate = self.maximumDate;
+  self.minimumDate = nil;
+  self.maximumDate = nil;
+  [super setTimeZone:timeZone];
+  self.minimumDate = minimumDate;
+  self.maximumDate = maximumDate;
+}
+
 - (void)setDate:(NSDate *)date {
     // Need to avoid the case where values coming back through the bridge trigger a new valueChanged event
     if (![self.date isEqualToDate:date]) {
